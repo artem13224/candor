@@ -9,11 +9,12 @@
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Candor — B Corp & Sustainability Certification Vancouver"/>
 <meta property="og:description" content="Flat-fee B Corp and Climate Neutral certification for BC small businesses. No Big Four markup. Artem Furman, Vancouver."/>
-<meta property="og:url" content="https://candorcertified.ca"/>
-<meta property="og:image" content="https://candorcertified.ca/images/hero.jpg"/>
+<meta property="og:url" content="https://candorcertified.com"/>
+<meta property="og:image" content="https://candorcertified.com/images/webshare.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<link rel="canonical" href="https://candorcertified.ca"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Candor","description":"B Corp and sustainability certification consulting for BC small businesses","url":"https://candorcertified.ca","email":"artem@candorcertified.ca","address":{"@type":"PostalAddress","addressLocality":"Vancouver","addressRegion":"BC","addressCountry":"CA"},"founder":{"@type":"Person","name":"Artem Furman"},"areaServed":"British Columbia","hasOfferCatalog":{"@type":"OfferCatalog","name":"Certification Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"B Corp Certification"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Climate Neutral Certification"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Sustainability Consulting"}}]}}</script>
+<meta name="twitter:image" content="https://candorcertified.com/images/webshare.jpg"/>
+<link rel="canonical" href="https://candorcertified.com"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["LocalBusiness","ProfessionalService"],"name":"Candor","description":"B Corp and sustainability certification consulting for BC small businesses. Flat-fee, no firm markup. Artem Furman, Vancouver.","url":"https://candorcertified.com","email":"artem@candorcertified.com","priceRange":"$$","address":{"@type":"PostalAddress","addressLocality":"Vancouver","addressRegion":"BC","addressCountry":"CA"},"founder":{"@type":"Person","name":"Artem Furman"},"areaServed":"British Columbia","sameAs":["https://candorcertified.com"],"knowsAbout":["B Corp Certification","Climate Neutral Certification","Sustainability Consulting","ESG Reporting","1% for the Planet"],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Certification Services","itemListElement":[{"@type":"Offer","name":"Readiness Audit","price":"1800","priceCurrency":"CAD","description":"Two-week diagnostic covering full B Impact Assessment, gap analysis, and written certification roadmap.","itemOffered":{"@type":"Service","name":"B Corp Readiness Audit"}},{"@type":"Offer","name":"Gap-Closing Engagement","price":"6500","priceCurrency":"CAD","description":"3–4 month engagement covering policy drafts, tracking systems, and evidence package preparation.","itemOffered":{"@type":"Service","name":"Sustainability Gap-Closing Engagement"}},{"@type":"Offer","name":"Full Path to Certification","price":"12000","priceCurrency":"CAD","description":"End-to-end B Corp certification from assessment through B Lab submission, correspondence, and launch plan.","itemOffered":{"@type":"Service","name":"Full B Corp Certification Path"}}]}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap"/>
@@ -23,7 +24,8 @@
 :root{color-scheme:light only}
 @media(prefers-color-scheme:dark){html,body{background:#ECEAE2!important;color:#0E110D!important}}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;background:#ECEAE2}
+html,body{scroll-behavior:smooth}
+html{background:#ECEAE2}
 body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans-serif;font-weight:400;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none}
 :root{
   --bg:#ECEAE2;--bg2:#E2DFD5;--bg3:#D6D3C6;
@@ -92,11 +94,6 @@ nav.on{background:rgba(236,234,226,.94);backdrop-filter:blur(20px) saturate(160%
 .hero-img-col img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 2s var(--ease)}
 .hero-img-col:hover img{transform:scale(1.03)}
 .hero-img-col .img-tag{position:absolute;bottom:12px;left:12px;font-family:var(--u);font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--white);background:rgba(14,17,13,.55);backdrop-filter:blur(6px);padding:5px 10px;border-radius:2px}
-.hero-bar{max-width:1400px;margin:0 auto;width:100%;padding:18px var(--px);border-top:1px solid rgba(14,17,13,.1);display:flex;flex-wrap:wrap;gap:0;opacity:0;animation:fdup .8s 1.4s var(--ease) forwards}
-.hb-item{padding:10px 24px 10px 0;border-right:1px solid rgba(14,17,13,.1);margin-right:24px;flex-shrink:0}
-.hb-item:last-child{border-right:none;margin-right:0}
-.hb-n{font-family:var(--u);font-weight:700;font-size:26px;letter-spacing:-.02em;color:var(--green);line-height:1;margin-bottom:3px}
-.hb-l{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--ink4);line-height:1.4}
 
 /* MARQUEE */
 .mq{background:#0E110D;padding:18px 0;overflow:hidden}
@@ -144,13 +141,13 @@ nav.on{background:rgba(236,234,226,.94);backdrop-filter:blur(20px) saturate(160%
 
 /* SERVICES ACCORDION */
 .svc-list{margin-top:44px;border-top:1px solid rgba(14,17,13,.12)}
-.svc-item{border-bottom:1px solid rgba(14,17,13,.12);overflow:hidden}
+.svc-item{border-bottom:1px solid rgba(14,17,13,.12);overflow:visible}
 .svc-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:26px 0;cursor:pointer}
 .svc-head-l{display:flex;align-items:baseline;gap:16px;min-width:0}
 .svc-num{font-family:var(--u);font-weight:800;font-size:12px;letter-spacing:.12em;color:var(--ink4);flex-shrink:0}
 .svc-name{font-family:var(--u);font-weight:700;font-size:clamp(20px,2.8vw,30px);letter-spacing:-.015em;color:#0E110D;line-height:1;transition:color .3s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .svc-item:hover .svc-name{color:var(--green)}
-.svc-head-r{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.svc-head-r{display:flex;align-items:center;gap:14px;flex-shrink:0;padding-right:4px}
 .svc-price{font-family:var(--u);font-weight:700;font-style:italic;font-size:19px;color:var(--green);white-space:nowrap}
 .svc-dur{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--ink4);display:none}
 .svc-tog{width:30px;height:30px;border:1.5px solid rgba(14,17,13,.2);border-radius:2px;flex-shrink:0;position:relative;transition:background .3s,border-color .3s,transform .45s var(--ease)}
@@ -428,47 +425,65 @@ footer{background:#080B08;padding:22px var(--px);display:flex;justify-content:sp
 
 #loader-svg{ width:72px;height:72px;overflow:visible; }
 
+/* outer ring: draws clockwise from 12 o'clock (rotate -90° shifts start point) */
 #l-outer{
   stroke-dasharray:75.4;stroke-dashoffset:75.4;
-  animation:draw 1.1s .2s cubic-bezier(.4,0,.2,1) forwards;
+  animation:draw .9s .2s cubic-bezier(.4,0,.2,1) forwards;
 }
+/* inner ring: draws same way */
 #l-inner{
-  stroke-dasharray:40.8;stroke-dashoffset:40.8;
-  animation:draw .75s .9s cubic-bezier(.4,0,.2,1) forwards,
-            ring-pulse .9s 2.7s ease-out forwards;
+  stroke-dasharray:40.84;stroke-dashoffset:40.84;
+  animation:draw .7s 1.1s cubic-bezier(.4,0,.2,1) forwards;
 }
-#l-hand{
-  stroke-dasharray:16;stroke-dashoffset:16;
-  animation:draw .5s 1.45s cubic-bezier(.4,0,.2,1) forwards,
-            hand-settle .65s 1.75s var(--ease) forwards;
+/* inner ring wrapper: gentle vibration after minute hand lands */
+#l-inner-g{
+  transform-box:view-box;transform-origin:50% 50%;
+  animation:ring-vibrate .4s 2.95s ease-in-out forwards;
 }
+/* hour hand draws from center toward 4 o'clock */
+#l-hour{
+  stroke-dasharray:5;stroke-dashoffset:5;
+  animation:draw .35s 1.8s cubic-bezier(.4,0,.2,1) forwards;
+}
+/* minute hand draws from center upward (12 o'clock) */
+#l-minute{
+  stroke-dasharray:6;stroke-dashoffset:6;
+  animation:draw .35s 1.8s cubic-bezier(.4,0,.2,1) forwards;
+}
+/* minute hand wrapper: rotates to 10-past after beat */
+#l-minhand{
+  transform-box:view-box;transform-origin:50% 50%;
+  animation:minute-rotate .5s 2.45s ease-in-out forwards;
+}
+
 @keyframes draw{ to{ stroke-dashoffset:0 } }
-@keyframes ring-pulse{
-  0%  { stroke:#2D6B42;stroke-width:1.5px }
-  45% { stroke:#5DBF7A;stroke-width:2.8px }
-  100%{ stroke:#2D6B42;stroke-width:1.5px }
+@keyframes minute-rotate{
+  from{ transform:rotate(0deg) }
+  to  { transform:rotate(60deg) }
 }
-@keyframes hand-settle{
-  from{ transform-origin:13px 13px;transform:rotate(-18deg) }
-  to  { transform-origin:13px 13px;transform:rotate(0deg)   }
+@keyframes ring-vibrate{
+  0%  { transform:scale(1) }
+  35% { transform:scale(1.06) }
+  70% { transform:scale(0.97) }
+  100%{ transform:scale(1) }
 }
 
 #loader-name{
   font-family:var(--u);font-weight:800;font-size:26px;
   letter-spacing:.14em;text-transform:uppercase;color:var(--white);
-  opacity:0;animation:fdup .55s 1.9s var(--ease) forwards;
+  opacity:0;animation:fdup .55s 3.35s var(--ease) forwards;
 }
 #loader-sub{
   font-family:var(--o);font-style:italic;font-size:13px;
   color:rgba(245,243,238,.42);letter-spacing:.04em;
-  opacity:0;animation:fdup .45s 2.15s var(--ease) forwards;
+  opacity:0;animation:fdup .45s 3.55s var(--ease) forwards;
 }
 #loader-skip{
   position:absolute;bottom:28px;
   font-family:var(--u);font-size:10px;font-weight:500;
   letter-spacing:.18em;text-transform:uppercase;
   color:rgba(245,243,238,.28);
-  opacity:0;animation:fdup .4s 2.4s var(--ease) forwards;
+  opacity:0;animation:fdup .4s 3.75s var(--ease) forwards;
   pointer-events:none;user-select:none;
 }
 
@@ -515,15 +530,24 @@ body{transition:background-color 1.2s ease}
 <div id="loader" aria-hidden="true">
   <div id="loader-logo">
     <svg id="loader-svg" viewBox="0 0 26 26" fill="none">
-      <!-- Outer ring -->
+      <!-- Outer ring: rotate -90° so draw starts at 12 o'clock -->
       <circle id="l-outer" cx="13" cy="13" r="12"
+        transform="rotate(-90,13,13)"
         stroke="rgba(245,243,238,0.88)" stroke-width="1.5"/>
-      <!-- Inner ring -->
-      <circle id="l-inner" cx="13" cy="13" r="6.5"
-        stroke="#2D6B42" stroke-width="1.5"/>
-      <!-- Clock hand -->
-      <path id="l-hand" d="M13 6.5V13L17.5 17.5"
+      <!-- Inner ring (wrapped for vibration) -->
+      <g id="l-inner-g">
+        <circle id="l-inner" cx="13" cy="13" r="6.5"
+          transform="rotate(-90,13,13)"
+          stroke="#2D6B42" stroke-width="1.5"/>
+      </g>
+      <!-- Hour hand: draws from center toward 4 o'clock (~120° from 12) -->
+      <path id="l-hour" d="M13 13 L17.3 15.5"
         stroke="rgba(245,243,238,0.88)" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Minute hand: draws from center to 12 o'clock, then rotates to 10-past -->
+      <g id="l-minhand">
+        <path id="l-minute" d="M13 13 L13 7"
+          stroke="rgba(245,243,238,0.88)" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
     </svg>
     <div id="loader-name">Candor</div>
     <div id="loader-sub">Sustainability certification, Vancouver</div>
@@ -579,18 +603,13 @@ body{transition:background-color 1.2s ease}
         <span class="hl"><span class="hl-in"><em>talk.</em></span></span>
         <span class="vh">B Corp sustainability certification consultant Vancouver BC</span>
       </h1>
+      <span class="vh">B Corp certification consultant Vancouver BC — sustainability certification for small businesses</span>
       <p class="hero-desc"><strong>Candor</strong> by Artem Furman — flat-fee B Corp, Climate Neutral, and sustainability certification for BC small businesses. No Big Four markup. No runaround. Just honest work.</p>
       <div class="hero-btns">
         <a href="#contact" class="btn btn-d" data-mag>Book a free call <span class="ar">→</span></a>
         <a href="#services" class="btn btn-g" data-mag>How it works</a>
       </div>
     </div>
-  </div>
-  <div class="hero-bar">
-    <div class="hb-item"><div class="hb-n">9,000+</div><div class="hb-l">Certified B Corps worldwide</div></div>
-    <div class="hb-item"><div class="hb-n">$1.8K</div><div class="hb-l">Starting flat fee</div></div>
-    <div class="hb-item"><div class="hb-n">2 wk</div><div class="hb-l">First deliverable</div></div>
-    <div class="hb-item"><div class="hb-n">100%</div><div class="hb-l">Direct access to Artem</div></div>
   </div>
 </section>
 
@@ -605,7 +624,7 @@ body{transition:background-color 1.2s ease}
 <!-- MISSION -->
 <div class="mission fu">
   <div class="mission-inner">
-    <p class="mission-txt">"Most businesses I meet are already doing <em>70% of what certification requires.</em> They just don't have the documentation to prove it. Closing that gap — that's the whole job."</p>
+    <p class="mission-txt">"Most businesses I meet are already doing <em>70% of what certification requires.</em> They just don't have the documentation to prove it."</p>
   </div>
 </div>
 
@@ -626,7 +645,6 @@ body{transition:background-color 1.2s ease}
 <!-- IMAGE BREAK 1 -->
 <div class="brk fu">
   <img src="images/break-1.jpg" sizes="100vw" alt="Mountain mist" loading="lazy"/>
-  <div class="brk-over"><div class="brk-label">Candor · Note 01</div><div class="brk-q">The certification doesn't change who you are. It makes sure <em>everyone else knows it.</em></div></div>
 </div>
 
 <!-- SERVICES -->
@@ -744,8 +762,8 @@ body{transition:background-color 1.2s ease}
 <!-- STATS -->
 <section class="sec sec-dk fu">
   <div class="mw">
-    <div class="ey ey-lt">06 — Why it matters financially</div>
-    <h2 class="dh dh-lt">The numbers behind the work.</h2>
+    <div class="ey ey-lt">06 — The numbers behind the work</div>
+    <h2 class="dh dh-lt">Why it matters financially.</h2>
     <div class="stats-g stg">
       <div class="stat-c"><div class="st-n"><span data-cnt="14">0</span><sub>%</sub></div><p class="st-l">Higher revenue growth for certified purpose-driven companies</p><span class="st-src">— Deloitte Global, 2023</span></div>
       <div class="stat-c"><div class="st-n"><span data-cnt="50">0</span><sub>%</sub></div><p class="st-l">Lower staff turnover in certified high-trust workplaces</p><span class="st-src">— Great Place to Work, 2023</span></div>
@@ -779,8 +797,8 @@ body{transition:background-color 1.2s ease}
     <div class="ey ey-lt">08 — Start here</div>
     <h2 class="cta-h">The first step is a <em>free call.</em></h2>
     <p class="cta-sub">No pitch. No pressure. If it's not the right fit, I'll say so. If it is, we'll figure out where to start.</p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap"><a href="mailto:artem@candorcertified.ca?subject=Let%27s%20talk%20certification" class="btn btn-d" data-mag>Book the call <span class="ar">→</span></a></div>
-    <div class="cta-mail">Or write directly — <a href="mailto:artem@candorcertified.ca">artem@candorcertified.ca</a></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><a href="mailto:artem@candorcertified.com?subject=Let%27s%20talk%20certification" class="btn btn-d" data-mag>Book the call <span class="ar">→</span></a></div>
+    <div class="cta-mail">Or write directly — <a href="mailto:artem@candorcertified.com">artem@candorcertified.com</a></div>
   </div>
 </section>
 
@@ -1212,22 +1230,6 @@ const cio = new IntersectionObserver(entries => {
 }, { threshold: .35 });
 document.querySelectorAll('.stats-g').forEach(el => cio.observe(el));
 
-/* ── Scramble hero stats ── */
-const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-function scramble(el, text, delay) {
-  setTimeout(() => {
-    let f = 0; const max = Math.ceil(text.length * 2.4);
-    (function run() {
-      let o = '';
-      for (let i = 0; i < text.length; i++) {
-        o += f > i * 2.1 ? text[i] : '<span style="color:var(--green2);opacity:.55">' + CHARS[Math.floor(Math.random() * CHARS.length)] + '</span>';
-      }
-      el.innerHTML = o; f++;
-      if (f < max) requestAnimationFrame(run); else el.textContent = text;
-    })();
-  }, delay);
-}
-setTimeout(() => { document.querySelectorAll('.hb-n').forEach((el, i) => scramble(el, el.textContent, 1500 + i * 110)); }, 0);
 
 /* ── Cursor ── */
 if (window.matchMedia('(pointer:fine)').matches) {
@@ -1277,13 +1279,6 @@ document.querySelectorAll('.fq').forEach(item => {
   q.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); q.click(); } });
 });
 
-/* ── Smooth scroll ── */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  });
-});
 
 /* ════════════════════════════════════
    EXTRA POLISH — 5 EFFECTS
@@ -1315,8 +1310,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') { dismiss(); document.removeEventListener('keydown', onKey); }
   });
 
-  /* logo draws ~2.4s, ring-pulse 2.7–3.6s, hold then fade */
-  setTimeout(dismiss, 4200);
+  /* rings+hands ~2.15s, beat, rotate 2.45–2.95s, vibrate 2.95–3.35s, names fade in, hold */
+  setTimeout(dismiss, 5000);
 })();
 
 /* 2. CURSOR INK TRAIL (fine pointer only) */
