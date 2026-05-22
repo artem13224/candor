@@ -409,7 +409,7 @@ nav.on{background:rgba(236,234,226,.94);backdrop-filter:blur(20px) saturate(160%
 .crd-modal-why{font-family:var(--u);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:6px}
 
 /* PROCESS */
-.proc-container{position:relative;margin-top:52px;max-width:800px}
+.proc-container{position:relative;margin-top:52px;max-width:800px;margin-left:auto;margin-right:auto}
 .proc-line{position:absolute;left:-8px;top:0;bottom:0;width:1.5px;background:rgba(14,17,13,.08)}
 .proc-line-fill{position:absolute;left:0;top:0;width:100%;background:var(--green);height:0%}
 .proc-step{display:grid;grid-template-columns:54px 1fr;gap:20px;padding:32px 0;align-items:start;position:relative}
@@ -820,9 +820,11 @@ body{transition:background-color 1.2s ease}
 <!-- PROCESS -->
 <section class="sec fu">
   <div class="mw">
-    <div class="ey">02 — How it works</div>
-    <h2 class="dh" style="max-width:620px;margin-bottom:0">From first call to the <em>logo on your site.</em></h2>
-    <p class="body-p" style="max-width:520px;margin-top:14px">Built to feel calm, not rushed. Most founders have too much on their plate already.</p>
+    <div style="max-width:800px;margin:0 auto">
+      <div class="ey">02 — How it works</div>
+      <h2 class="dh" style="max-width:620px;margin-bottom:0">From first call to the <em>logo on your site.</em></h2>
+      <p class="body-p" style="max-width:520px;margin-top:14px">Built to feel calm, not rushed. Most founders have too much on their plate already.</p>
+    </div>
     <div class="proc-container">
       <div class="proc-line"><div class="proc-line-fill" id="plf"></div></div>
       <div class="proc-step"><div class="proc-dot"><span class="proc-n">01</span></div><div><div class="proc-title">A free 20-minute call</div><p class="proc-txt">We talk through your business and whether certification actually makes sense. About a third of the time I point people toward a different credential than the one they came in asking about. No pitch, no pressure.</p><div class="proc-when">Week 1 · No cost</div></div></div>
