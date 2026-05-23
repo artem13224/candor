@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-Content 'C:\\\\Users\\\\tem\\\\.claude\\\\projects\\\\c--Users-tem-Desktop-Website\\\\627077fc-e54d-465c-be4c-f696bd3c1f86.jsonl' -Encoding utf8 | Where-Object { $_ -match 'PROBLEM CARDS|prob-txt|Priced for someone' } | Select-Object -First 5 | ForEach-Object { $_.Substring\\(0, [Math]::Min\\(2000, $_.Length\\)\\) })"
+    ]
+  }
+}
