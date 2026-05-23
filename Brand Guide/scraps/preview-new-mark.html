@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+body{margin:0;background:#222;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:40px}
+.cell{background:#ECEAE2;display:grid;place-items:center;padding:40px;border:1px solid #555}
+.dark{background:#0D1610}
+.green{background:#2D6B42}
+svg{width:200px;height:200px}
+.st0{fill:var(--cut,#ECEAE2)}
+.st1{fill:var(--peak,#2D6B42)}
+.st2{fill:var(--body,#0D1610)}
+.cell.dark{--cut:#0D1610;--body:#F5F3EE;--peak:#3D8A57}
+.cell.green{--cut:#2D6B42;--body:#F5F3EE;--peak:#F5F3EE}
+</style></head><body>
+<div class="cell" id="a"></div>
+<div class="cell dark" id="b"></div>
+<div class="cell green" id="c"></div>
+<script>
+fetch('../uploads/Candor-mark%20final-f2421d4f.svg').then(r=>r.text()).then(t=>{
+  for (const id of ['a','b','c']) {
+    document.getElementById(id).innerHTML = t;
+  }
+});
+</script>
+</body></html>
