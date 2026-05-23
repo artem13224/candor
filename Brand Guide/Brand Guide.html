@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Candor — Brand Guide v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand-guide.css" />
+</head>
+<body>
+
+<!-- Brand mark sprite — referenced via <use href="#island-mark"/>.
+     Color slots:
+       color (currentColor) → island fill
+       --island-cut  → inner contour cutouts (the underlying ground)
+       --island-peak → the peak accent dot -->
+<svg class="brand-sprite" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="island-mark" viewBox="0 0 100 100">
+      <path d="M 90.47 52.00 Q 90.47,52.00 90.44,54.53 Q 90.40,57.05 89.59,59.50 Q 88.77,61.94 87.26,64.16 Q 85.74,66.38 83.72,68.28 Q 81.69,70.18 79.33,71.74 Q 76.98,73.30 74.44,74.55 Q 71.90,75.80 69.26,76.77 Q 66.61,77.74 63.89,78.44 Q 61.17,79.15 58.40,79.58 Q 55.62,80.02 52.81,80.18 Q 50.00,80.33 47.18,80.22 Q 44.36,80.10 41.56,79.71 Q 38.75,79.33 35.98,78.68 Q 33.20,78.03 30.49,77.08 Q 27.78,76.14 25.22,74.86 Q 22.66,73.59 20.38,71.94 Q 18.10,70.30 16.28,68.29 Q 14.47,66.29 13.25,64.02 Q 12.03,61.74 11.48,59.31 Q 10.93,56.89 10.99,54.44 Q 11.05,52.00 11.60,49.63 Q 12.16,47.27 13.06,45.01 Q 13.97,42.76 15.15,40.61 Q 16.33,38.46 17.80,36.41 Q 19.27,34.37 21.09,32.49 Q 22.91,30.61 25.13,29.00 Q 27.36,27.39 29.96,26.18 Q 32.56,24.98 35.42,24.25 Q 38.28,23.53 41.24,23.29 Q 44.19,23.05 47.10,23.20 Q 50.00,23.35 52.79,23.76 Q 55.58,24.17 58.29,24.74 Q 60.99,25.30 63.66,25.99 Q 66.34,26.69 69.01,27.57 Q 71.68,28.45 74.28,29.61 Q 76.88,30.78 79.26,32.31 Q 81.65,33.85 83.62,35.76 Q 85.60,37.68 87.01,39.91 Q 88.42,42.14 89.19,44.57 Q 89.95,47.00 90.21,49.50 Z" fill="currentColor"/>
+      <path d="M 79.39 49.00 Q 79.39,49.00 79.53,50.72 Q 79.66,52.44 79.37,54.18 Q 79.08,55.91 78.32,57.57 Q 77.57,59.24 76.37,60.73 Q 75.17,62.23 73.63,63.50 Q 72.09,64.78 70.32,65.84 Q 68.55,66.90 66.64,67.77 Q 64.73,68.63 62.72,69.35 Q 60.71,70.06 58.59,70.60 Q 56.46,71.15 54.23,71.46 Q 52.00,71.77 49.71,71.75 Q 47.42,71.73 45.18,71.32 Q 42.94,70.91 40.89,70.10 Q 38.84,69.29 37.10,68.14 Q 35.36,67.00 33.97,65.63 Q 32.57,64.26 31.49,62.79 Q 30.41,61.33 29.55,59.83 Q 28.69,58.33 27.99,56.82 Q 27.28,55.31 26.70,53.77 Q 26.13,52.22 25.73,50.61 Q 25.33,49.00 25.19,47.32 Q 25.05,45.65 25.25,43.93 Q 25.44,42.22 26.03,40.53 Q 26.62,38.84 27.59,37.23 Q 28.57,35.63 29.92,34.17 Q 31.26,32.70 32.94,31.45 Q 34.61,30.19 36.56,29.20 Q 38.52,28.21 40.69,27.55 Q 42.85,26.88 45.14,26.59 Q 47.42,26.30 49.71,26.38 Q 52.00,26.47 54.19,26.89 Q 56.37,27.31 58.39,27.98 Q 60.41,28.65 62.26,29.49 Q 64.11,30.32 65.83,31.25 Q 67.55,32.18 69.17,33.21 Q 70.80,34.23 72.32,35.38 Q 73.84,36.54 75.17,37.86 Q 76.51,39.19 77.55,40.70 Q 78.59,42.21 79.21,43.87 Q 79.83,45.54 79.61,47.27 Z" fill="none" stroke="var(--island-cut, #F5F3EE)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 71.72 47.00 Q 71.72,47.00 71.45,48.06 Q 71.19,49.12 70.76,50.12 Q 70.34,51.13 69.77,52.08 Q 69.21,53.03 68.50,53.91 Q 67.79,54.79 66.94,55.60 Q 66.09,56.41 65.11,57.13 Q 64.13,57.85 63.03,58.48 Q 61.94,59.11 60.72,59.65 Q 59.51,60.19 58.18,60.61 Q 56.86,61.04 55.43,61.31 Q 54.00,61.58 52.50,61.65 Q 51.00,61.72 49.50,61.53 Q 48.01,61.35 46.61,60.88 Q 45.21,60.42 44.00,59.71 Q 42.80,58.99 41.85,58.09 Q 40.90,57.19 40.20,56.19 Q 39.50,55.20 39.00,54.17 Q 38.50,53.14 38.13,52.12 Q 37.76,51.10 37.48,50.09 Q 37.19,49.07 37.01,48.04 Q 36.82,47.00 36.78,45.94 Q 36.74,44.87 36.93,43.80 Q 37.11,42.73 37.57,41.70 Q 38.02,40.67 38.74,39.73 Q 39.47,38.79 40.41,37.98 Q 41.36,37.17 42.46,36.49 Q 43.56,35.82 44.75,35.27 Q 45.95,34.71 47.22,34.27 Q 48.49,33.82 49.84,33.48 Q 51.18,33.15 52.59,32.95 Q 54.00,32.75 55.46,32.73 Q 56.91,32.71 58.36,32.90 Q 59.81,33.10 61.18,33.52 Q 62.56,33.94 63.80,34.56 Q 65.03,35.19 66.09,35.98 Q 67.15,36.77 68.01,37.69 Q 68.86,38.60 69.50,39.60 Q 70.15,40.60 70.57,41.65 Q 70.99,42.71 71.18,43.78 Q 71.37,44.86 71.54,45.93 Z" fill="none" stroke="var(--island-cut, #F5F3EE)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 65.16 45.00 Q 65.16,45.00 64.97,45.54 Q 64.77,46.08 64.51,46.58 Q 64.25,47.09 63.95,47.56 Q 63.65,48.03 63.29,48.48 Q 62.94,48.92 62.53,49.34 Q 62.11,49.75 61.62,50.12 Q 61.12,50.48 60.55,50.78 Q 59.99,51.09 59.36,51.31 Q 58.73,51.53 58.06,51.67 Q 57.39,51.81 56.69,51.87 Q 56.00,51.93 55.30,51.91 Q 54.60,51.89 53.90,51.80 Q 53.20,51.70 52.52,51.52 Q 51.85,51.34 51.22,51.07 Q 50.59,50.80 50.03,50.44 Q 49.47,50.08 49.00,49.65 Q 48.53,49.22 48.16,48.74 Q 47.79,48.25 47.52,47.73 Q 47.25,47.21 47.08,46.66 Q 46.91,46.12 46.85,45.56 Q 46.78,45.00 46.83,44.44 Q 46.88,43.88 47.07,43.33 Q 47.26,42.79 47.59,42.29 Q 47.91,41.79 48.36,41.37 Q 48.81,40.94 49.35,40.59 Q 49.88,40.24 50.47,39.97 Q 51.05,39.70 51.64,39.47 Q 52.23,39.25 52.83,39.05 Q 53.43,38.86 54.05,38.67 Q 54.67,38.49 55.34,38.34 Q 56.00,38.18 56.71,38.10 Q 57.42,38.01 58.17,38.02 Q 58.91,38.04 59.64,38.19 Q 60.37,38.34 61.03,38.62 Q 61.69,38.91 62.24,39.32 Q 62.79,39.72 63.21,40.20 Q 63.64,40.68 63.94,41.21 Q 64.24,41.74 64.43,42.28 Q 64.62,42.82 64.72,43.37 Q 64.82,43.91 64.99,44.46 Z" fill="none" stroke="var(--island-cut, #F5F3EE)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="57" cy="44" r="3" fill="var(--island-peak, #2D6B42)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand-mini" style="display:flex; align-items:center; gap:8px;">
+      <svg width="20" height="20" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#ECEAE2; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+      <span>Candor<span style="color:var(--forest)">.</span></span>
+    </div>
+    <nav>
+      <a href="#identity">01 · Identity</a>
+      <a href="#color">02 · Color</a>
+      <a href="#type">03 · Type</a>
+      <a href="#voice">04 · Voice</a>
+      <a href="#applications">05 · Applications</a>
+    </nav>
+    <div class="mono mono-dim">v1.0 — 2026</div>
+  </div>
+</header>
+
+<section class="page cover">
+  <div class="meta-rail">
+    <div class="mono">Brand Guidelines · Internal + Partner Use</div>
+    <div class="mono mono-dim">Issue 01 / May 2026 / Vancouver, BC</div>
+  </div>
+
+  <div class="display-stack">
+    <div class="display">Tell&nbsp;the&nbsp;truth.<br/><em>Get&nbsp;certified.</em></div>
+  </div>
+
+  <p class="lede" style="max-width:62ch; margin-bottom: 40px;">
+    Candor is a sustainability certification practice for small businesses
+    that want the credential and aren&rsquo;t interested in the theatre. This
+    guide is how the brand looks, reads, and behaves &mdash; on a business
+    card, in an inbox, and at the bottom of a 40&#8209;page audit report.
+  </p>
+
+  <div class="cover-footer">
+    <div class="stat">
+      <span class="mono">What this covers</span>
+      <span class="val">Logo · Color · Type · Voice · Applications</span>
+    </div>
+    <div class="stat">
+      <span class="mono">Author</span>
+      <span class="val">Studio &mdash; Internal</span>
+    </div>
+    <div class="stat">
+      <span class="mono">Status</span>
+      <span class="val">v1.0 &mdash; Approved</span>
+    </div>
+  </div>
+</section>
+
+<section id="identity" class="page section">
+  <div class="tag-row">
+    <span class="tag-line"></span>
+    <span class="mono">Section 01 — Identity</span>
+  </div>
+
+  <div class="hgroup-head">
+    <div>
+      <h2 class="h-section">One mark.<br/>Many surfaces.</h2>
+    </div>
+    <p class="lede" style="max-width: 44ch;">
+      The Candor mark is a topographic landform &mdash; a small island read
+      from above, contours peeling back to a single verified peak. Quiet at
+      small sizes, distinct at large ones, never &ldquo;the leaf.&rdquo;
+    </p>
+  </div>
+
+  <div class="logo-grid">
+
+    <article class="logo-card">
+      <div class="label-bar">
+        <span class="name">A &middot; Primary lockup</span>
+        <span class="mono mono-dim">Mark + wordmark</span>
+      </div>
+
+      <div class="logo-stage-light">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <svg width="84" height="84" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-label="Candor mark"><use href="#island-mark"/></svg>
+          <span style="font-family:'Urbanist',sans-serif; font-weight:800; font-size:56px; letter-spacing:-2.5px; color:#0D1610;">Candor</span>
+        </div>
+      </div>
+
+      <div class="logo-stage-dark">
+        <div style="display:flex; align-items:center; gap:18px;">
+          <svg width="64" height="64" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#0D1610; --island-peak:#3D8A57;" aria-hidden="true"><use href="#island-mark"/></svg>
+          <span style="font-family:'Urbanist',sans-serif; font-weight:800; font-size:44px; letter-spacing:-2px; color:#F5F3EE;">Candor</span>
+        </div>
+      </div>
+
+      <div class="logo-stage-small">
+        <div class="left">
+          <svg width="24" height="24" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+          <span class="mono">24&thinsp;px favicon</span>
+        </div>
+        <div class="right">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg width="22" height="22" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+            <span style="font-family:'Urbanist',sans-serif; font-weight:800; font-size:24px; letter-spacing:-1px; color:#0D1610;">Candor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-spec">
+        <span class="mono">Use</span>
+        <span class="small">The default. Cover pages, the website header, business cards. Mark sits left of the wordmark with a generous gap; never set the mark above the type.</span>
+      </div>
+    </article>
+
+    <article class="logo-card">
+      <div class="label-bar">
+        <span class="name">B &middot; The mark</span>
+        <span class="mono mono-dim">Standalone bug</span>
+      </div>
+
+      <div class="logo-stage-light">
+        <svg width="140" height="140" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-label="Candor mark"><use href="#island-mark"/></svg>
+      </div>
+
+      <div class="logo-stage-dark">
+        <svg width="84" height="84" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#0D1610; --island-peak:#3D8A57;" aria-hidden="true"><use href="#island-mark"/></svg>
+      </div>
+
+      <div class="logo-stage-small">
+        <div class="left">
+          <svg width="24" height="24" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+          <span class="mono">24&thinsp;px favicon</span>
+        </div>
+        <div class="right">
+          <svg width="40" height="40" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+        </div>
+      </div>
+
+      <div class="logo-spec">
+        <span class="mono">Use</span>
+        <span class="small">Favicon, app icon, social avatar, certified bug on client deliverables. Never below 20&thinsp;px &mdash; the inner contours blur out and the mark turns to mush.</span>
+      </div>
+    </article>
+
+    <article class="logo-card">
+      <div class="label-bar">
+        <span class="name">C &middot; Approved fills</span>
+        <span class="mono mono-dim">Color &amp; ground</span>
+      </div>
+
+      <div class="logo-stage-light" style="background:#ECEAE2;">
+        <div style="display:flex; align-items:center; gap:22px;">
+          <svg width="64" height="64" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#ECEAE2; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+          <svg width="64" height="64" viewBox="0 0 100 100" style="color:#2D6B42; --island-cut:#ECEAE2; --island-peak:#F5F3EE;" aria-hidden="true"><use href="#island-mark"/></svg>
+        </div>
+      </div>
+
+      <div class="logo-stage-dark">
+        <div style="display:flex; align-items:center; gap:22px;">
+          <svg width="64" height="64" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#0D1610; --island-peak:#3D8A57;" aria-hidden="true"><use href="#island-mark"/></svg>
+          <svg width="64" height="64" viewBox="0 0 100 100" style="color:#3D8A57; --island-cut:#0D1610; --island-peak:#F5F3EE;" aria-hidden="true"><use href="#island-mark"/></svg>
+        </div>
+      </div>
+
+      <div class="logo-stage-small">
+        <div class="left">
+          <span class="mono">Combos</span>
+        </div>
+        <div class="right">
+          <span class="mono mono-dim">Ink &middot; Forest &middot; Paper</span>
+        </div>
+      </div>
+
+      <div class="logo-spec">
+        <span class="mono">Use</span>
+        <span class="small">Default: Ink on Paper or Oat. Forest may carry the mark on quiet grounds. Paper carries it on Ink. Never invent a fourth color or set the mark in Field Green at body size.</span>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="reco-strip">
+    <div style="max-width: 60ch;">
+      <span class="mono" style="display:block; margin-bottom: 10px;">Recommendation</span>
+      <p class="reco-copy">
+        Lead with <span style="color: var(--forest);">A &middot; Primary lockup</span> across every brand surface. Use <span style="color: var(--forest);">B &middot; The mark</span> alone for favicons, social avatars, and the certified bug on client work. Keep <span style="color: var(--forest);">C</span>&rsquo;s combos as the only approved fills.
+      </p>
+    </div>
+    <div class="mono mono-dim reco-side">
+      Lockup &nbsp;&middot;&nbsp; Bug &nbsp;&middot;&nbsp; Color
+    </div>
+  </div>
+</section>
+
+<section id="color" class="page section">
+  <div class="tag-row">
+    <span class="tag-line"></span>
+    <span class="mono">Section 02 — Color</span>
+  </div>
+
+  <div class="hgroup-head">
+    <div>
+      <h2 class="h-section">A short<br/>palette.</h2>
+    </div>
+    <p class="lede" style="max-width: 42ch;">
+      Warm oat ground, forest&#8209;black ink, a single committed green.
+      Auxiliary tones earn their place &mdash; one border, one hover, one
+      muted error. Nothing else dilutes the system.
+    </p>
+  </div>
+
+  <div class="swatch-grid">
+
+    <div class="swatch">
+      <div class="chip" style="background: #ECEAE2;">
+        <span class="ratio-pill">01 / Ground</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#ECEAE2</span>
+          <div class="nm">Warm Oat</div>
+        </div>
+        <p class="use">Default surface. Reports, web, packaging. Reads as paper before it reads as a color.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip dark" style="background: #0D1610;">
+        <span class="ratio-pill">02 / Ink</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#0D1610</span>
+          <div class="nm">Forest Black</div>
+        </div>
+        <p class="use">All headlines, body copy on light grounds, contract-grade text. Not pure black &mdash; cooler, with green undertone.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip dark" style="background: #2D6B42;">
+        <span class="ratio-pill">03 / Primary</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#2D6B42</span>
+          <div class="nm">Forest Green</div>
+        </div>
+        <p class="use">The only accent that should appear above the fold. Links, primary buttons, certified bug, the dot after "Candor."</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip dark" style="background: #3D8A57;">
+        <span class="ratio-pill">04 / Mid</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#3D8A57</span>
+          <div class="nm">Field Green</div>
+        </div>
+        <p class="use">Decorative use only &mdash; large type, illustrative fills, secondary states. Not for body text on oat (under AA).</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip" style="background: #F5F3EE;">
+        <span class="ratio-pill">05 / Paper</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#F5F3EE</span>
+          <div class="nm">Soft Paper</div>
+        </div>
+        <p class="use">Card surfaces, document interior, business&nbsp;card recto. A half&#8209;tone lighter than the ground.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip" style="background: #4A5548; color: #F5F3EE;">
+        <span class="ratio-pill" style="background:rgba(245,243,238,0.18); color:#F5F3EE;">06 / Body</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#4A5548</span>
+          <div class="nm">Slate Moss</div>
+        </div>
+        <p class="use">Body copy, secondary text, captions, metadata. Quieter than Ink without slipping into low contrast.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip" style="background: #C8C3B5;">
+        <span class="ratio-pill">07 / Rule</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#C8C3B5</span>
+          <div class="nm">Border Stone</div>
+        </div>
+        <p class="use">Hairline rules, table borders, dividers, input outlines. Never used for type.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip dark" style="background: #235437;">
+        <span class="ratio-pill">08 / Hover</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#235437</span>
+          <div class="nm">Deep Forest</div>
+        </div>
+        <p class="use">Hover &amp; pressed states for primary&#8209;green elements. Two steps darker than Forest Green.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip dark" style="background: #B8651E;">
+        <span class="ratio-pill">09 / Signal</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#B8651E</span>
+          <div class="nm">Burnt Amber</div>
+        </div>
+        <p class="use">Errors, validation, "needs attention" callouts. One signal color &mdash; we do not invent reds, yellows, blues.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip" style="background: #E8B888;">
+        <span class="ratio-pill">10 / Signal soft</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#E8B888</span>
+          <div class="nm">Amber Wash</div>
+        </div>
+        <p class="use">Tinted backgrounds for error/warning banners. Always paired with Burnt Amber text.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip" style="background: #E4E1D6;">
+        <span class="ratio-pill">11 / Tint</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#E4E1D6</span>
+          <div class="nm">Oat Deep</div>
+        </div>
+        <p class="use">Subtle row striping, table headers, large quiet blocks. Half a step below the ground.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip" style="background: #D8D3C3;">
+        <span class="ratio-pill">12 / Disabled</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#D8D3C3</span>
+          <div class="nm">Linen Mute</div>
+        </div>
+        <p class="use">Disabled buttons, placeholder fills, inactive avatar rings. Never the only signal &mdash; pair with text.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 80px;">
+    <div class="hgroup-head">
+      <h3 class="h-sub">Text contrast — WCAG AA</h3>
+      <span class="mono mono-dim">Tested against AA &mdash; ratio &ge; 4.5 normal, &ge; 3 large</span>
+    </div>
+
+    <div class="contrast-table" style="margin-top: 28px;">
+      <div class="row head">
+        <div class="cell num">#</div>
+        <div class="cell">Foreground</div>
+        <div class="cell">Background</div>
+        <div class="cell num">Ratio</div>
+        <div class="cell num">Grade</div>
+      </div>
+
+      <div class="row">
+        <div class="cell num">01</div>
+        <div class="cell" style="background:#ECEAE2;"><span class="preview" style="color:#0D1610;">Forest Black on Oat</span></div>
+        <div class="cell">Oat #ECEAE2 &nbsp;·&nbsp; Ink #0D1610</div>
+        <div class="cell num">14.9 : 1</div>
+        <div class="cell"><span class="pass aaa">AAA</span></div>
+      </div>
+
+      <div class="row">
+        <div class="cell num">02</div>
+        <div class="cell" style="background:#F5F3EE;"><span class="preview" style="color:#0D1610;">Ink on Paper</span></div>
+        <div class="cell">Paper #F5F3EE &nbsp;·&nbsp; Ink #0D1610</div>
+        <div class="cell num">16.1 : 1</div>
+        <div class="cell"><span class="pass aaa">AAA</span></div>
+      </div>
+
+      <div class="row">
+        <div class="cell num">03</div>
+        <div class="cell" style="background:#ECEAE2;"><span class="preview" style="color:#4A5548;">Body on Oat</span></div>
+        <div class="cell">Oat #ECEAE2 &nbsp;·&nbsp; Slate Moss #4A5548</div>
+        <div class="cell num">6.5 : 1</div>
+        <div class="cell"><span class="pass aaa">AAA</span></div>
+      </div>
+
+      <div class="row">
+        <div class="cell num">04</div>
+        <div class="cell" style="background:#ECEAE2;"><span class="preview" style="color:#2D6B42;">Forest on Oat</span></div>
+        <div class="cell">Oat #ECEAE2 &nbsp;·&nbsp; Forest #2D6B42</div>
+        <div class="cell num">5.3 : 1</div>
+        <div class="cell"><span class="pass aa">AA</span></div>
+      </div>
+
+      <div class="row">
+        <div class="cell num">05</div>
+        <div class="cell" style="background:#0D1610;"><span class="preview" style="color:#F5F3EE;">Paper on Ink</span></div>
+        <div class="cell">Ink #0D1610 &nbsp;·&nbsp; Paper #F5F3EE</div>
+        <div class="cell num">16.1 : 1</div>
+        <div class="cell"><span class="pass aaa">AAA</span></div>
+      </div>
+
+      <div class="row">
+        <div class="cell num">06</div>
+        <div class="cell" style="background:#0D1610;"><span class="preview" style="color:#3D8A57;">Field Green on Ink</span></div>
+        <div class="cell">Ink #0D1610 &nbsp;·&nbsp; Field #3D8A57</div>
+        <div class="cell num">4.7 : 1</div>
+        <div class="cell"><span class="pass aa">AA</span></div>
+      </div>
+
+      <div class="row">
+        <div class="cell num">07</div>
+        <div class="cell" style="background:#ECEAE2;"><span class="preview" style="color:#3D8A57;">Field on Oat (display only)</span></div>
+        <div class="cell">Oat #ECEAE2 &nbsp;·&nbsp; Field #3D8A57</div>
+        <div class="cell num">3.5 : 1</div>
+        <div class="cell"><span class="pass large">AA · Large only</span></div>
+      </div>
+
+      <div class="row">
+        <div class="cell num">08</div>
+        <div class="cell" style="background:#E8B888;"><span class="preview" style="color:#B8651E;">Amber error banner</span></div>
+        <div class="cell">Amber Wash #E8B888 &nbsp;·&nbsp; Burnt Amber #B8651E</div>
+        <div class="cell num">4.6 : 1</div>
+        <div class="cell"><span class="pass aa">AA</span></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top: 16px;">
+      <span class="mono" style="margin-right:8px;">Note</span>
+      "Large" = 24&thinsp;px regular or 18&thinsp;px bold and above. Field Green is approved for display headlines on oat but never for paragraph copy.
+    </p>
+  </div>
+</section>
+
+<section id="type" class="page section">
+  <div class="tag-row">
+    <span class="tag-line"></span>
+    <span class="mono">Section 03 — Typography</span>
+  </div>
+
+  <div class="hgroup-head">
+    <div>
+      <h2 class="h-section">Three<br/>typefaces.</h2>
+    </div>
+    <p class="lede" style="max-width: 42ch;">
+      Urbanist 800 carries every headline. Open Sans 300 holds the running
+      text. Space Mono labels and stamps. That&rsquo;s the whole kit &mdash;
+      no display webfont, no italic system, no fourth weight smuggled in
+      from a UI library.
+    </p>
+  </div>
+
+  <div style="margin-top: 64px;">
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">A &middot; Display</span>
+        <span class="nm">Hero / cover</span>
+      </div>
+      <div>
+        <div class="spec-display">Tell the truth.</div>
+      </div>
+      <div class="type-spec">
+        <span class="k">Family</span><span class="v">Urbanist</span>
+        <span class="k">Weight</span><span class="v">800 / ExtraBold</span>
+        <span class="k">Size</span><span class="v">72&ndash;168 px</span>
+        <span class="k">Line</span><span class="v">0.92</span>
+        <span class="k">Tracking</span><span class="v">-4.5%</span>
+        <span class="k">Use</span><span class="v">Cover headlines</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">B &middot; Section</span>
+        <span class="nm">Page openers</span>
+      </div>
+      <div>
+        <div class="spec-section">An audit, not a&nbsp;sermon.</div>
+      </div>
+      <div class="type-spec">
+        <span class="k">Family</span><span class="v">Urbanist</span>
+        <span class="k">Weight</span><span class="v">800 / ExtraBold</span>
+        <span class="k">Size</span><span class="v">44&ndash;80 px</span>
+        <span class="k">Line</span><span class="v">0.96</span>
+        <span class="k">Tracking</span><span class="v">-3.5%</span>
+        <span class="k">Use</span><span class="v">Section starters</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">C &middot; Subhead</span>
+        <span class="nm">Mid-page</span>
+      </div>
+      <div>
+        <div class="spec-subhead">B Corp and Climate Neutral, on a clean schedule.</div>
+      </div>
+      <div class="type-spec">
+        <span class="k">Family</span><span class="v">Urbanist</span>
+        <span class="k">Weight</span><span class="v">700 / Bold</span>
+        <span class="k">Size</span><span class="v">24&ndash;32 px</span>
+        <span class="k">Line</span><span class="v">1.15</span>
+        <span class="k">Tracking</span><span class="v">-1.5%</span>
+        <span class="k">Use</span><span class="v">Subheads, callouts</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">D &middot; Body</span>
+        <span class="nm">Running text</span>
+      </div>
+      <div>
+        <p class="spec-body">
+          Candor works on flat fees with small businesses who are tired of being
+          quoted six figures by big consultancies. We do the workbook, we
+          schedule the audit, we translate the assessor&rsquo;s notes into a
+          plan you can actually run. Three months later you either have the
+          certification or a clear letter telling you why not.
+        </p>
+      </div>
+      <div class="type-spec">
+        <span class="k">Family</span><span class="v">Open Sans</span>
+        <span class="k">Weight</span><span class="v">300 / Light</span>
+        <span class="k">Size</span><span class="v">16&ndash;18 px</span>
+        <span class="k">Line</span><span class="v">1.65</span>
+        <span class="k">Tracking</span><span class="v">0</span>
+        <span class="k">Use</span><span class="v">Paragraphs</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">E &middot; Small / label</span>
+        <span class="nm">UI labels, captions</span>
+      </div>
+      <div>
+        <div class="spec-label">Certification &middot; Vancouver &middot; Est. 2024</div>
+      </div>
+      <div class="type-spec">
+        <span class="k">Family</span><span class="v">Open Sans</span>
+        <span class="k">Weight</span><span class="v">500 / Medium</span>
+        <span class="k">Size</span><span class="v">12 px</span>
+        <span class="k">Line</span><span class="v">1.4</span>
+        <span class="k">Tracking</span><span class="v">+2%</span>
+        <span class="k">Case</span><span class="v">Upper</span>
+      </div>
+    </div>
+
+    <div class="type-row">
+      <div class="label">
+        <span class="mono">F &middot; Mono</span>
+        <span class="nm">Tag, stamp, code</span>
+      </div>
+      <div>
+        <div class="spec-mono">REF-2026-018 &nbsp;&middot;&nbsp; CLIMATE NEUTRAL &nbsp;&middot;&nbsp; SCOPE 1+2</div>
+      </div>
+      <div class="type-spec">
+        <span class="k">Family</span><span class="v">Space Mono</span>
+        <span class="k">Weight</span><span class="v">400 / Regular</span>
+        <span class="k">Size</span><span class="v">10&ndash;12 px</span>
+        <span class="k">Line</span><span class="v">1.5</span>
+        <span class="k">Tracking</span><span class="v">+10%</span>
+        <span class="k">Case</span><span class="v">Upper</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="voice" class="page section">
+  <div class="tag-row">
+    <span class="tag-line"></span>
+    <span class="mono">Section 04 — Voice</span>
+  </div>
+
+  <div class="hgroup-head">
+    <div>
+      <h2 class="h-section">Five rules<br/>for writing.</h2>
+    </div>
+    <p class="lede" style="max-width: 44ch;">
+      The single fastest way to lose Candor&rsquo;s voice is to write like a
+      sustainability firm. Read these once before you put anything in a
+      client&rsquo;s inbox.
+    </p>
+  </div>
+
+  <div class="voice-list">
+
+    <article class="voice-rule">
+      <div class="num">01</div>
+      <div>
+        <div class="head">Say the thing.</div>
+        <p class="body" style="margin-top: 14px;">
+          The hardest sentence is the first one. Get to the point in the subject line, the opening line, and the first 12 words.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">YES</span><span class="txt">"Your B Corp score came back at 74. We need 80."</span></div>
+        <div class="ex no"><span class="icon">NO&nbsp;</span><span class="txt">"Following up to circle back on the assessment outcomes."</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">02</div>
+      <div>
+        <div class="head">Use small words.</div>
+        <p class="body" style="margin-top: 14px;">
+          One Anglo&#8209;Saxon verb beats three Latinate nouns. "Help" not "facilitate." "Plan" not "strategic roadmap." If a word has more than three syllables, you usually have a shorter one.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">YES</span><span class="txt">"We help small brands get certified without the firm tax."</span></div>
+        <div class="ex no"><span class="icon">NO&nbsp;</span><span class="txt">"We facilitate stakeholder alignment toward credentialing outcomes."</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">03</div>
+      <div>
+        <div class="head">Be the person, not the firm.</div>
+        <p class="body" style="margin-top: 14px;">
+          First person singular. Sign the email, take the call, own the mistake. Candor never hides behind a "we." When you must use "we," mean it &mdash; "you and I."
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">YES</span><span class="txt">"I read the audit notes last night. Two things worth talking about."</span></div>
+        <div class="ex no"><span class="icon">NO&nbsp;</span><span class="txt">"Our team has reviewed the documentation provided."</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">04</div>
+      <div>
+        <div class="head">Tell the uncomfortable truth.</div>
+        <p class="body" style="margin-top: 14px;">
+          If a client isn&rsquo;t ready, say so. If a certification isn&rsquo;t right for them, say so. The brand is built on being the one consultant who didn&rsquo;t bill you for a project that wouldn&rsquo;t have worked anyway.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">YES</span><span class="txt">"Honest answer: B Corp isn&rsquo;t the right credential for you yet."</span></div>
+        <div class="ex no"><span class="icon">NO&nbsp;</span><span class="txt">"There are exciting pathways to explore for your sustainability journey."</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">05</div>
+      <div>
+        <div class="head">Don&rsquo;t do the sustainability voice.</div>
+        <p class="body" style="margin-top: 14px;">
+          No "journey," "ecosystem," "stewardship," "impact narrative," "doing the work." No leaves in emoji. No earnest verbs of motion. Talk about emissions, audits, scope, fees, and timelines &mdash; the things being measured.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">YES</span><span class="txt">"Scope 1 and 2 measured. Scope 3 starts next quarter."</span></div>
+        <div class="ex no"><span class="icon">NO&nbsp;</span><span class="txt">"We&rsquo;re passionate about your impact journey toward a better tomorrow."</span></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section id="applications" class="page section">
+  <div class="tag-row">
+    <span class="tag-line"></span>
+    <span class="mono">Section 05 — Applications</span>
+  </div>
+
+  <div class="hgroup-head">
+    <div>
+      <h2 class="h-section">The brand,<br/>in the world.</h2>
+    </div>
+    <p class="lede" style="max-width: 42ch;">
+      The four places this mark will live in its first 90 days &mdash; a card
+      handed across a coffee table, a profile square, an email footer, and the
+      front page of a delivered audit.
+    </p>
+  </div>
+
+  <div class="app-row">
+    <div class="legend">
+      <span class="mono">5.01</span>
+      <div class="nm">Business&nbsp;card</div>
+      <p class="desc">3.5 &times; 2 in. Recto and verso. Print on uncoated 32&#8209;pt stock; the oat ground should read as paper, not as ink.</p>
+    </div>
+    <div class="card-pair">
+      <div class="biz-card light">
+        <div class="top">
+          <svg width="40" height="40" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+          <span class="mono" style="font-size:9px;">REF / 026-018</span>
+        </div>
+        <div class="bot">
+          <div>
+            <div class="person">Maren Holloway</div>
+            <div class="role">Founder &middot; Certification lead</div>
+          </div>
+          <div class="lines">
+            <div>maren@candor.studio</div>
+            <div>+1&thinsp;604&thinsp;555&thinsp;0140</div>
+            <div>Vancouver, BC</div>
+          </div>
+        </div>
+      </div>
+      <div class="biz-card dark">
+        <div class="top">
+          <span class="mono" style="color:#3D8A57; font-size:10px; letter-spacing: 0.16em;">CANDOR &middot; CERT. CONSULTING</span>
+          <svg width="32" height="32" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#0D1610; --island-peak:#3D8A57;" aria-hidden="true"><use href="#island-mark"/></svg>
+        </div>
+        <div class="biz-card-headline">
+          Tell the truth.<br/>
+          <span style="color:#3D8A57;">Get certified.</span>
+        </div>
+        <div class="bot">
+          <span class="mono" style="color:#3D8A57; font-size:9px;">candor.studio</span>
+          <span class="mono" style="color:rgba(245,243,238,0.6); font-size:9px;">V.01 &middot; 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-row">
+    <div class="legend">
+      <span class="mono">5.02</span>
+      <div class="nm">Profile image</div>
+      <p class="desc">Square avatar for LinkedIn, X, Substack, podcasts. Use the standalone mark, not the wordmark &mdash; lockups disappear at platform&#8209;rendered small sizes.</p>
+    </div>
+    <div>
+      <div class="avatar-row">
+
+        <div class="avatar-stack">
+          <div class="avatar dark">
+            <svg width="64" height="64" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#0D1610; --island-peak:#3D8A57;" aria-hidden="true"><use href="#island-mark"/></svg>
+          </div>
+          <div class="avatar-meta"><span class="mono">Ink ground</span><span class="small">Default</span></div>
+        </div>
+
+        <div class="avatar-stack">
+          <div class="avatar green">
+            <svg width="64" height="64" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#2D6B42; --island-peak:#F5F3EE;" aria-hidden="true"><use href="#island-mark"/></svg>
+          </div>
+          <div class="avatar-meta"><span class="mono">Forest</span><span class="small">Campaign</span></div>
+        </div>
+
+        <div class="avatar-stack">
+          <div class="avatar oat">
+            <svg width="64" height="64" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+          </div>
+          <div class="avatar-meta"><span class="mono">Paper</span><span class="small">Light mode</span></div>
+        </div>
+
+        <div class="avatar-stack">
+          <div class="avatar dark sm">
+            <svg width="36" height="36" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#0D1610; --island-peak:#3D8A57;" aria-hidden="true"><use href="#island-mark"/></svg>
+          </div>
+          <div class="avatar-meta"><span class="mono">64&thinsp;px</span><span class="small">Listings</span></div>
+        </div>
+
+        <div class="avatar-stack">
+          <div class="avatar dark xs">
+            <svg width="18" height="18" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#0D1610; --island-peak:#3D8A57;" aria-hidden="true"><use href="#island-mark"/></svg>
+          </div>
+          <div class="avatar-meta"><span class="mono">32&thinsp;px</span><span class="small">Favicon</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="app-row">
+    <div class="legend">
+      <span class="mono">5.03</span>
+      <div class="nm">Email signature</div>
+      <p class="desc">Sets the tone before the recipient even reads the email. One line of role, two lines of contact, one phrase of voice. No social links, no booking widget, no quote.</p>
+    </div>
+    <div class="sig-frame">
+      <div class="sig-chrome">
+        <span class="dot"></span><span class="dot" style="background:#C8C3B5;"></span><span class="dot" style="background:#A6A192;"></span>
+        <span class="label">Reply &middot; 11:42 AM &middot; Drafts</span>
+      </div>
+      <div class="sig-body">
+        <p>Hey Sasha &mdash;</p>
+        <p style="margin-top: 12px;">I read the assessor&rsquo;s notes last night. Two things worth talking about: the supply&#8209;chain disclosure (we&rsquo;re short two suppliers) and a wording fix on your worker policy. The rest is fine. Twenty minutes on Thursday?</p>
+        <p class="closing">Maren</p>
+
+        <hr class="sig-rule" />
+
+        <div class="sig-block">
+          <svg width="48" height="48" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#FFFFFF; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+          <div>
+            <div class="sig-name">Maren Holloway</div>
+            <div class="sig-role">Founder &middot; Candor Certification</div>
+            <div class="sig-meta">
+              maren@candor.studio &nbsp;&middot;&nbsp; +1&thinsp;604&thinsp;555&thinsp;0140 &nbsp;&middot;&nbsp; <a href="#">candor.studio</a><br/>
+              <span style="color:var(--forest);">Flat&#8209;fee B Corp &amp; Climate Neutral certification, Vancouver.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-row">
+    <div class="legend">
+      <span class="mono">5.04</span>
+      <div class="nm">Document header</div>
+      <p class="desc">The opening page of every delivered audit. Mark, doctype, client, scope, dates &mdash; before any prose. The reader knows what they&rsquo;re reading in eight seconds.</p>
+    </div>
+    <div class="doc">
+      <div class="doc-header">
+        <div class="left">
+          <svg width="44" height="44" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#F5F3EE; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
+          <div>
+            <div style="font-family:'Urbanist',sans-serif; font-weight:800; font-size:20px; letter-spacing:-0.015em;">Candor</div>
+            <div class="mono" style="margin-top:2px;">Certification &middot; Vancouver</div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="doctype">Audit Report &middot; Final</div>
+          <div class="docid">REF&#8209;2026&#8209;018 &middot; Issued 14 May 2026</div>
+        </div>
+      </div>
+
+      <div class="doc-band">
+        <h1>B&nbsp;Corp recertification, <span style="color:var(--forest);">Year&nbsp;Three.</span></h1>
+        <p class="summary">A line-by-line read of Pinegrass Coffee Co.&rsquo;s B Impact Assessment, with the assessor&rsquo;s notes translated into work you can finish before September.</p>
+      </div>
+
+      <div class="doc-meta">
+        <div><span class="k">Client</span><span class="v">Pinegrass Coffee Co.</span></div>
+        <div><span class="k">Sector</span><span class="v">Food &amp; Beverage</span></div>
+        <div><span class="k">Scope</span><span class="v">Scope 1 + 2 &middot; Workforce</span></div>
+        <div><span class="k">Lead</span><span class="v">Maren Holloway</span></div>
+      </div>
+
+      <div class="doc-body">
+        <div class="toc">
+          <span class="mono" style="margin-bottom: 8px; display:block;">Contents</span>
+          <div class="item"><span>01 &nbsp; Summary</span><span>p. 02</span></div>
+          <div class="item"><span>02 &nbsp; Score by pillar</span><span>p. 04</span></div>
+          <div class="item"><span>03 &nbsp; Assessor notes</span><span>p. 07</span></div>
+          <div class="item"><span>04 &nbsp; What to do, in order</span><span>p. 12</span></div>
+          <div class="item"><span>05 &nbsp; Budget &amp; timeline</span><span>p. 18</span></div>
+          <div class="item"><span>06 &nbsp; What we won&rsquo;t fix</span><span>p. 22</span></div>
+        </div>
+        <div class="copy">
+          <h3>Summary</h3>
+          <p>Pinegrass recertifies. The score came back at 86 &mdash; up six points from the 2023 assessment, comfortably above the 80 threshold. The lift came almost entirely from the worker pillar; the supply&#8209;chain pillar dropped two points and is the only place this report spends time worrying.</p>
+          <div class="callout">"We are recommending recertification with two open notes &mdash; both fixable inside Q3, neither blocking."</div>
+          <p>The rest of this document is the work to keep the score above 80 for the next three years. It is short on purpose. If anything in here isn&rsquo;t clear, that&rsquo;s on me &mdash; reply to the email and I&rsquo;ll rewrite it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="page">
+  <div class="colophon">
+    <div>
+      <span class="row-mono">End of document</span>
+      <h4>Candor Brand Guide v1.0</h4>
+      <p>Prepared in&#8209;house, May 2026, Vancouver, BC. This document is the working source of truth for the visual identity of Candor Certification Consulting. Revisions live with the founder.</p>
+    </div>
+    <div>
+      <span class="row-mono">Contact</span>
+      <p>maren@candor.studio<br/>+1&thinsp;604&thinsp;555&thinsp;0140<br/>candor.studio</p>
+    </div>
+    <div>
+      <span class="row-mono">Type credits</span>
+      <p>Urbanist by Corey Toler&#8209;Franklin<br/>Open Sans by Steve Matteson<br/>Space Mono by Colophon Foundry</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

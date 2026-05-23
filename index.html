@@ -160,7 +160,7 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
   --u:'Urbanist',sans-serif;--o:'Open Sans',sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
   --px:clamp(20px,5vw,80px);
-  --nav-h:60px;
+  --nav-h:0px;
 }
 
 /* CURSOR */
@@ -169,45 +169,11 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
   #cur2{display:none}
   body.hov #cur{width:17px;height:17px;background:var(--green2)}
 }
-@media(pointer:coarse){#cur,#cur2{display:none}body,a,.btn,.nav-cta,.svc-head,.fq{cursor:auto}.btn,.nav-cta,.svc-head,.fq{cursor:pointer}}
+@media(pointer:coarse){#cur,#cur2{display:none}body,a,.btn,.nav-cta,.svc-head,.fq{cursor:auto}.btn,.nav-cta,.svc-head,.fq,#mob-dial,.mob-item,.nav-link{cursor:pointer}}
 
 /* PROGRESS */
 #pg{position:fixed;top:0;left:0;height:2px;width:0%;background:var(--green);z-index:999;will-change:width}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);padding:0 var(--px);display:flex;align-items:center;justify-content:space-between;gap:16px;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
-nav.on{background:rgba(236,234,226,.94);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid rgba(14,17,13,.1)}
-.logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;position:relative;z-index:510}
-.logo svg{width:26px;height:26px;flex-shrink:0}
-.logo-name{font-family:var(--u);font-weight:800;font-size:18px;letter-spacing:.08em;color:#0E110D;text-transform:uppercase;line-height:1;transition:color .3s}
-.nav-links{display:none;align-items:center;gap:clamp(10px,1.5vw,24px);flex:1;justify-content:center}
-.nav-l{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .25s;white-space:nowrap}
-.nav-l:hover{color:var(--ink)}
-.nav-r{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.nav-cta{font-family:var(--u);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#0E110D;text-decoration:none;padding:8px 16px;border:1.5px solid #0E110D;border-radius:2px;transition:background .25s,color .25s;white-space:nowrap}
-.nav-cta:hover{background:#0E110D;color:var(--white)}
-/* Hamburger — mountain cross-section icon */
-.nav-burger{background:none;border:none;cursor:pointer;padding:8px;margin:-8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative;z-index:510;flex-shrink:0}
-.nav-burger span{display:block;height:1.5px;background:#0E110D;border-radius:2px;transition:transform .45s var(--ease),opacity .3s ease,background .3s,width .45s var(--ease)}
-.nav-burger span:nth-child(1){width:22px}
-.nav-burger span:nth-child(2){width:14px}
-.nav-burger span:nth-child(3){width:6px}
-.nav-burger.open span,.menu-open .nav-burger span{background:var(--white)}
-.nav-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.nav-burger.open span:nth-child(3){width:22px;transform:translateY(-6.5px) rotate(-45deg)}
-/* Menu-open: logo text white */
-.menu-open .logo-name{color:var(--white)}
-.menu-open .nav-cta{color:var(--white);border-color:rgba(245,243,238,.35)}
-.menu-open .nav-cta:hover{background:var(--white);color:#0E110D}
-/* Mobile overlay */
-.nav-mob{position:fixed;inset:0;background:#0E110D;z-index:490;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--nav-h) + 24px) var(--px) 48px;opacity:0;pointer-events:none;transition:opacity .35s ease;overflow-y:auto}
-.nav-mob.open{opacity:1;pointer-events:auto}
-.nav-mob-list{list-style:none;border-top:1px solid rgba(245,243,238,.09);padding:0}
-.nav-mob-l{display:block;font-family:var(--u);font-weight:700;font-size:clamp(20px,5vw,36px);letter-spacing:-.015em;color:rgba(245,243,238,.8);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(245,243,238,.09);transition:color .2s,padding-left .3s var(--ease)}
-.nav-mob-l:hover{color:var(--white);padding-left:10px}
-.nav-mob-cta{display:inline-flex;align-items:center;gap:10px;margin-top:32px;font-family:var(--u);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--white);text-decoration:none;padding:13px 26px;background:var(--green);border-radius:2px;transition:background .3s}
-.nav-mob-cta:hover{background:var(--green2)}
 
 /* BTNS */
 .btn{font-family:var(--u);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:14px 26px;border-radius:2px;display:inline-flex;align-items:center;gap:10px;transition:background .28s,color .28s,transform .4s var(--ease);position:relative;overflow:hidden}
@@ -563,15 +529,9 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   .crd-modal.open .crd-modal-box{transform:scale(1) translateY(0)}
 }
 
-@media(min-width:900px){
-  .nav-links{display:flex}
-  .nav-burger{display:none}
-}
-
 /* RESPONSIVE 1024+ — show river, hide mobile swipe */
 @media(min-width:1024px){
   body{font-size:17px}
-  :root{--nav-h:64px}
   .sec{padding:120px var(--px)}
   .hero-body{padding-top:56px;padding-bottom:64px}
   /* river vs mobile swipe */
@@ -736,6 +696,188 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .cert-nudge-chev{width:12px;height:12px;border-right:1.5px solid rgba(14,17,13,.28);border-bottom:1.5px solid rgba(14,17,13,.28);transform:rotate(45deg);animation:nudge-bob 1.6s ease-in-out infinite}
 @keyframes nudge-bob{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
 @media(max-width:899px){.cert-nudge{display:none}}
+
+/* ═══════════════════════════════════════════
+   DESKTOP SITE HEADER
+   ═══════════════════════════════════════════ */
+#site-nav{
+  display:none;
+  position:fixed;top:0;left:0;right:0;z-index:600;
+  height:58px;padding:0 var(--px);
+  align-items:center;
+}
+@media(min-width:1024px){
+  #site-nav{display:flex}
+  :root{--nav-h:58px}
+}
+.nav-bg{
+  position:absolute;inset:0;
+  background:rgba(236,234,226,0);
+  border-bottom:1px solid transparent;
+  backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
+  transition:background .5s ease,border-color .5s ease,backdrop-filter .5s ease;
+  z-index:0;
+}
+#site-nav.nav-up .nav-bg{
+  background:rgba(236,234,226,.88);
+  border-bottom-color:rgba(14,17,13,.07);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.nav-inner{
+  position:relative;z-index:1;
+  display:flex;align-items:center;
+  width:100%;max-width:1400px;margin:0 auto;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:9px;
+  text-decoration:none;flex-shrink:0;
+  transition:opacity .3s;
+}
+.nav-logo:hover{opacity:.6}
+.nav-logo-svg{width:22px;height:22px;flex-shrink:0;transition:transform .7s var(--ease)}
+.nav-logo:hover .nav-logo-svg{transform:rotate(14deg)}
+.nav-wordmark{
+  font-family:var(--u);font-weight:800;font-size:14px;
+  letter-spacing:.22em;text-transform:uppercase;color:#0E110D;
+}
+.nav-links{
+  display:flex;align-items:center;gap:0;
+  margin-left:auto;margin-right:auto;
+  padding-left:40px;
+}
+.nav-link{
+  font-family:var(--u);font-size:11px;font-weight:500;
+  letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink3);text-decoration:none;
+  padding:6px 13px;
+  border-radius:2px;
+  position:relative;
+  transition:color .3s;
+}
+.nav-link::after{
+  content:'';position:absolute;bottom:1px;left:13px;right:13px;
+  height:1.5px;background:var(--green);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .38s var(--ease);
+}
+.nav-link:hover{color:#0E110D}
+.nav-link:hover::after{transform:scaleX(.6)}
+.nav-link.active{color:#0E110D}
+.nav-link.active::after{transform:scaleX(1)}
+@keyframes nav-click-flash{
+  0%{color:var(--green)}80%{color:var(--green)}100%{color:#0E110D}
+}
+.nav-link.nav-clicking{animation:nav-click-flash .5s var(--ease) forwards}
+.nav-cta-wrap{flex-shrink:0;margin-left:auto}
+.nav-cta{
+  font-family:var(--u);font-weight:600;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;padding:9px 18px;
+  background:#0E110D;color:var(--white);
+  border-radius:2px;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:background .28s,transform .35s var(--ease);
+}
+.nav-cta:hover{background:var(--green);transform:translateY(-1px)}
+.nav-cta .nav-ar{display:inline-block;transition:transform .35s var(--ease)}
+.nav-cta:hover .nav-ar{transform:translateX(4px)}
+
+/* ═══════════════════════════════════════════
+   MOBILE RADIAL DIAL NAV
+   ═══════════════════════════════════════════ */
+#mob-nav{
+  position:fixed;bottom:0;left:0;right:0;top:0;
+  z-index:450;pointer-events:none;
+}
+@media(min-width:1024px){#mob-nav{display:none}}
+#mob-backdrop{
+  position:absolute;inset:0;
+  background:rgba(14,17,13,0);
+  transition:background .4s ease;
+  pointer-events:none;
+}
+#mob-nav.mob-open #mob-backdrop{
+  background:rgba(14,17,13,.48);
+  pointer-events:auto;
+}
+/* Arc container anchored at dial center (bottom:24px+22px=46px) */
+#mob-arc{
+  position:absolute;
+  bottom:46px;left:50%;
+  width:0;height:0;
+}
+.mob-item{
+  position:absolute;
+  font-family:var(--u);font-size:11px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--white);text-decoration:none;
+  background:rgba(14,17,13,.82);
+  border:1px solid rgba(245,243,238,.18);
+  padding:8px 14px;border-radius:24px;
+  white-space:nowrap;
+  transform:translate(-50%,-50%);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease,transform .52s var(--ease),background .22s,border-color .22s;
+  will-change:transform,opacity;
+}
+.mob-item:hover,.mob-item:active{background:var(--green);border-color:var(--green)}
+#mob-nav.mob-open .mob-item{opacity:1;pointer-events:auto}
+#mob-nav.mob-open .mob-item:nth-child(1){transition-delay:.03s}
+#mob-nav.mob-open .mob-item:nth-child(2){transition-delay:.06s}
+#mob-nav.mob-open .mob-item:nth-child(3){transition-delay:.09s}
+#mob-nav.mob-open .mob-item:nth-child(4){transition-delay:.12s}
+#mob-nav.mob-open .mob-item:nth-child(5){transition-delay:.15s}
+#mob-nav.mob-open .mob-item:nth-child(6){transition-delay:.18s}
+/* Dial pill */
+#mob-dial{
+  position:absolute;bottom:24px;left:50%;
+  transform:translateX(-50%);
+  pointer-events:auto;
+  background:rgba(245,243,238,.94);
+  border:1.5px solid rgba(14,17,13,.13);
+  border-radius:22px;height:44px;
+  padding:0 15px 0 11px;
+  display:flex;align-items:center;gap:8px;
+  cursor:pointer;
+  box-shadow:0 4px 28px -8px rgba(14,17,13,.32);
+  z-index:2;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transition:background .35s,border-color .35s,box-shadow .35s,transform .4s var(--ease);
+  white-space:nowrap;
+}
+#mob-dial:active{transform:translateX(-50%) scale(.93)}
+#mob-nav.mob-open #mob-dial{
+  background:rgba(14,17,13,.9);
+  border-color:rgba(245,243,238,.1);
+  box-shadow:0 8px 40px -8px rgba(14,17,13,.6);
+}
+#dial-clock-svg{
+  width:18px;height:18px;flex-shrink:0;
+  transition:transform .65s var(--ease);
+}
+#mob-nav.mob-open #dial-clock-svg{transform:rotate(35deg)}
+#dial-lbl{
+  font-family:var(--u);font-size:9.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink4);
+  max-width:110px;overflow:hidden;
+  transition:opacity .3s ease,color .3s;
+  pointer-events:none;
+}
+#mob-nav.mob-open #dial-lbl{opacity:0}
+/* Sections flash on nav click */
+.sec-nav-flash{position:relative!important;overflow:hidden!important}
+.sec-nav-flash::before{
+  content:'';position:absolute;left:0;top:0;right:0;
+  height:2px;background:var(--green);z-index:10;
+  transform:scaleX(0);transform-origin:left;
+  animation:secflash .7s var(--ease) forwards;
+}
+@keyframes secflash{
+  0%{transform:scaleX(0);opacity:1}
+  55%{transform:scaleX(1);opacity:1}
+  100%{transform:scaleX(1);opacity:0}
+}
 </style>
 <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
@@ -772,6 +914,54 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <div id="cur2"></div>
 <div id="pg"></div>
 
+<!-- DESKTOP HEADER -->
+<header id="site-nav" aria-label="Site navigation">
+  <div class="nav-bg"></div>
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo logo" aria-label="Candor — back to top">
+      <svg class="nav-logo-svg" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <circle cx="13" cy="13" r="12" stroke="#0E110D" stroke-width="1.5"/>
+        <circle cx="13" cy="13" r="6.5" stroke="#2D6B42" stroke-width="1.5"/>
+        <line x1="13" y1="13" x2="17.3" y2="15.5" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="13" y1="13" x2="13" y2="7" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="nav-wordmark">Candor</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#services"  class="nav-link" data-nav="services">Services</a>
+      <a href="#process"   class="nav-link" data-nav="process">Process</a>
+      <a href="#who"       class="nav-link" data-nav="who">Who</a>
+      <a href="#about"     class="nav-link" data-nav="about">About</a>
+      <a href="#faq"       class="nav-link" data-nav="faq">FAQ</a>
+    </nav>
+    <div class="nav-cta-wrap">
+      <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a call <span class="nav-ar">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE RADIAL DIAL NAV -->
+<div id="mob-nav" aria-hidden="true">
+  <div id="mob-backdrop"></div>
+  <div id="mob-arc">
+    <a href="#services" class="mob-item">Services</a>
+    <a href="#process"  class="mob-item">Process</a>
+    <a href="#who"      class="mob-item">Who</a>
+    <a href="#about"    class="mob-item">About</a>
+    <a href="#faq"      class="mob-item">FAQ</a>
+    <a href="#contact"  class="mob-item">Contact</a>
+  </div>
+  <button id="mob-dial" aria-label="Open navigation" aria-expanded="false">
+    <svg id="dial-clock-svg" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+      <circle cx="13" cy="13" r="12" stroke="#0E110D" stroke-width="1.5"/>
+      <circle cx="13" cy="13" r="6.5" stroke="#2D6B42" stroke-width="1.5"/>
+      <line x1="13" y1="13" x2="17.3" y2="15.5" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round" class="dial-hand"/>
+      <line x1="13" y1="13" x2="13" y2="7" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round" class="dial-hand"/>
+    </svg>
+    <span id="dial-lbl" aria-hidden="true"></span>
+  </button>
+</div>
+
 <!-- MODAL (shared) -->
 <div class="crd-modal" id="crdModal" role="dialog" aria-modal="true" aria-labelledby="modalName">
   <div class="crd-modal-backdrop" id="modalBackdrop"></div>
@@ -789,40 +979,6 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
       <a href="https://calendly.com/artemfurman/30min" class="btn btn-d" id="modalCta" onclick="closeModal()" target="_blank" rel="noopener noreferrer">Book a free call <span class="ar">→</span></a>
     </div>
   </div>
-</div>
-
-<nav id="nav">
-  <a href="#top" class="logo">
-    <svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="12" stroke="#0E110D" stroke-width="1.5"/><circle cx="13" cy="13" r="6.5" stroke="#2D6B42" stroke-width="1.5"/><path d="M13 6.5V13L17.5 17.5" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round"/></svg>
-    <span class="logo-name">Candor</span>
-  </a>
-  <div class="nav-links">
-    <a href="#problem" class="nav-l">The problem</a>
-    <a href="#process" class="nav-l">How it works</a>
-    <a href="#services" class="nav-l">Services</a>
-    <a href="#certifications" class="nav-l">Certifications</a>
-    <a href="#about" class="nav-l">About</a>
-    <a href="#faq" class="nav-l">FAQ</a>
-  </div>
-  <div class="nav-r">
-    <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a call</a>
-    <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<div class="nav-mob" id="nav-mob" aria-hidden="true">
-  <ul class="nav-mob-list">
-    <li><a href="#problem" class="nav-mob-l">The problem</a></li>
-    <li><a href="#who" class="nav-mob-l">Who I work with</a></li>
-    <li><a href="#process" class="nav-mob-l">How it works</a></li>
-    <li><a href="#services" class="nav-mob-l">Services</a></li>
-    <li><a href="#certifications" class="nav-mob-l">Certifications</a></li>
-    <li><a href="#about" class="nav-mob-l">About</a></li>
-    <li><a href="#faq" class="nav-mob-l">FAQ</a></li>
-  </ul>
-  <a href="https://calendly.com/artemfurman/30min" class="nav-mob-cta" target="_blank" rel="noopener noreferrer">Book a free call <span class="ar">→</span></a>
 </div>
 
 <main>
@@ -1498,7 +1654,6 @@ window.addEventListener('resize', () => {
 }, { passive: true });
 
 const pg            = document.getElementById('pg');
-const nav           = document.getElementById('nav');
 const procContainer = document.querySelector('.proc-container');
 const procLineFill  = document.getElementById('plf');
 const procSteps     = document.querySelectorAll('.proc-step');
@@ -1510,9 +1665,8 @@ function onScroll() {
   const s = window.scrollY;
   const maxS = document.documentElement.scrollHeight - window.innerHeight;
 
-  /* Progress + nav */
+  /* Progress */
   pg.style.width = (maxS > 0 ? s / maxS * 100 : 0) + '%';
-  s > 60 ? nav.classList.add('on') : nav.classList.remove('on');
 
   /* Process line */
   if (procContainer && procLineFill) {
@@ -1990,46 +2144,201 @@ document.querySelectorAll('.river-card-d').forEach(el => {
 
 })();
 
-/* ── Nav burger ── */
+/* ══════════════════════════════════════════
+   DESKTOP NAV
+   ══════════════════════════════════════════ */
 (function(){
-  const burger = document.getElementById('nav-burger');
-  const mob    = document.getElementById('nav-mob');
-  if(!burger||!mob) return;
+  var nav = document.getElementById('site-nav');
+  if (!nav) return;
 
-  function open(){
-    burger.classList.add('open');
-    burger.setAttribute('aria-expanded','true');
-    mob.classList.add('open');
-    mob.setAttribute('aria-hidden','false');
-    document.body.classList.add('menu-open');
-    document.body.style.overflow = 'hidden';
+  /* Frosted-glass on scroll */
+  function checkScroll() {
+    nav.classList.toggle('nav-up', window.scrollY > 32);
   }
-  function close(){
-    burger.classList.remove('open');
-    burger.setAttribute('aria-expanded','false');
-    mob.classList.remove('open');
-    mob.setAttribute('aria-hidden','true');
-    document.body.classList.remove('menu-open');
-    document.body.style.overflow = '';
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
+
+  /* Active section tracking */
+  var links = nav.querySelectorAll('.nav-link');
+  var sections = Array.from(links).map(function(l) {
+    return document.getElementById(l.dataset.nav);
+  });
+
+  function setActive(id) {
+    links.forEach(function(l) {
+      l.classList.toggle('active', l.dataset.nav === id);
+    });
   }
 
-  burger.addEventListener('click', () => mob.classList.contains('open') ? close() : open());
+  var sectionObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) setActive(e.target.id);
+    });
+  }, { threshold: 0.2, rootMargin: '-60px 0px -35% 0px' });
 
-  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', e => {
-    const href = a.getAttribute('href');
-    if(href && href.startsWith('#')){
-      e.preventDefault();
-      close();
-      setTimeout(() => {
-        const el = document.querySelector(href);
-        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-      }, 360);
+  sections.forEach(function(s) { if (s) sectionObs.observe(s); });
+
+  /* Click: flash + section entrance line */
+  links.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      /* green flash on the link */
+      link.classList.remove('nav-clicking');
+      void link.offsetWidth;
+      link.classList.add('nav-clicking');
+      link.addEventListener('animationend', function() {
+        link.classList.remove('nav-clicking');
+      }, { once: true });
+
+      /* draw-in line on target section */
+      var target = document.getElementById(link.dataset.nav);
+      if (!target) return;
+      target.classList.remove('sec-nav-flash');
+      void target.offsetWidth;
+      target.classList.add('sec-nav-flash');
+      target.addEventListener('animationend', function() {
+        target.classList.remove('sec-nav-flash');
+      }, { once: true });
+    });
+  });
+})();
+
+/* ══════════════════════════════════════════
+   MOBILE RADIAL DIAL NAV
+   ══════════════════════════════════════════ */
+(function(){
+  var mobNav    = document.getElementById('mob-nav');
+  var dial      = document.getElementById('mob-dial');
+  var backdrop  = document.getElementById('mob-backdrop');
+  var arc       = document.getElementById('mob-arc');
+  var dialLbl   = document.getElementById('dial-lbl');
+  var dialSvg   = document.getElementById('dial-clock-svg');
+  if (!mobNav || !dial) return;
+
+  var items = arc.querySelectorAll('.mob-item');
+  var isOpen = false;
+
+  /* Arc positions: 6 items in 150° arc, opening upward
+     angle in degrees from +x axis, CCW = up
+     startAngle=30° (lower-right) → endAngle=150° (lower-left) */
+  var N = items.length;
+  var R = 105; /* radius px */
+  items.forEach(function(item, i) {
+    var deg = 30 + (150 - 30) * i / (N - 1);
+    var rad = deg * Math.PI / 180;
+    var x = R * Math.cos(rad);   /* right = positive */
+    var y = -R * Math.sin(rad);  /* up = negative in screen coords */
+    item._tx = x.toFixed(1);
+    item._ty = y.toFixed(1);
+    /* collapsed */
+    item.style.transform = 'translate(-50%,-50%)';
+  });
+
+  function openDial() {
+    isOpen = true;
+    mobNav.classList.add('mob-open');
+    dial.setAttribute('aria-expanded', 'true');
+    mobNav.setAttribute('aria-hidden', 'false');
+    /* update SVG hand colors to white */
+    dialSvg.querySelectorAll('.dial-hand').forEach(function(h) { h.setAttribute('stroke', 'var(--white)'); });
+    dialSvg.querySelectorAll('circle').forEach(function(c, ci) {
+      c.setAttribute('stroke', ci === 0 ? 'rgba(245,243,238,.55)' : '#2D6B42');
+    });
+    /* animate items outward */
+    items.forEach(function(item, i) {
+      setTimeout(function() {
+        item.style.transform = 'translate(calc(-50% + ' + item._tx + 'px), calc(-50% + ' + item._ty + 'px))';
+      }, i * 30);
+    });
+  }
+
+  function closeDial() {
+    isOpen = false;
+    mobNav.classList.remove('mob-open');
+    dial.setAttribute('aria-expanded', 'false');
+    mobNav.setAttribute('aria-hidden', 'true');
+    /* restore SVG colors */
+    dialSvg.querySelectorAll('.dial-hand').forEach(function(h) { h.setAttribute('stroke', '#0E110D'); });
+    dialSvg.querySelectorAll('circle').forEach(function(c, ci) {
+      c.setAttribute('stroke', ci === 0 ? '#0E110D' : '#2D6B42');
+    });
+    /* collapse items */
+    items.forEach(function(item) {
+      item.style.transform = 'translate(-50%,-50%)';
+    });
+  }
+
+  dial.addEventListener('click', function(e) {
+    e.stopPropagation();
+    isOpen ? closeDial() : openDial();
+  });
+
+  backdrop.addEventListener('click', closeDial);
+
+  items.forEach(function(item) {
+    item.addEventListener('click', function() {
+      closeDial();
+      /* section flash */
+      var href = item.getAttribute('href');
+      if (!href) return;
+      var target = document.querySelector(href);
+      if (!target) return;
+      target.classList.remove('sec-nav-flash');
+      void target.offsetWidth;
+      target.classList.add('sec-nav-flash');
+      target.addEventListener('animationend', function() {
+        target.classList.remove('sec-nav-flash');
+      }, { once: true });
+    });
+  });
+
+  /* Close on scroll */
+  var lastSY = 0;
+  window.addEventListener('scroll', function() {
+    if (isOpen && Math.abs(window.scrollY - lastSY) > 60) closeDial();
+    lastSY = window.scrollY;
+  }, { passive: true });
+
+  /* Keyboard close */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isOpen) closeDial();
+  });
+
+  /* Current section label in pill */
+  var sectionMap = [
+    { id: 'services', label: 'Services' },
+    { id: 'process',  label: 'Process' },
+    { id: 'who',      label: 'Who' },
+    { id: 'about',    label: 'About' },
+    { id: 'faq',      label: 'FAQ' },
+    { id: 'contact',  label: 'Contact' },
+  ];
+  var currentSection = '';
+
+  function updateLabel(id) {
+    if (id === currentSection) return;
+    currentSection = id;
+    var found = sectionMap.find(function(s) { return s.id === id; });
+    if (found) {
+      dialLbl.style.opacity = '0';
+      setTimeout(function() {
+        dialLbl.textContent = found.label;
+        dialLbl.style.opacity = '';
+      }, 160);
     } else {
-      close();
+      dialLbl.textContent = '';
     }
-  }));
+  }
 
-  document.addEventListener('keydown', e => { if(e.key==='Escape') close(); });
+  var labelObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) updateLabel(e.target.id);
+    });
+  }, { threshold: 0.4 });
+
+  sectionMap.forEach(function(s) {
+    var el = document.getElementById(s.id);
+    if (el) labelObs.observe(el);
+  });
 })();
 
 /* ── CERTIFICATIONS ANIMATION ── */
