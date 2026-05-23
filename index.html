@@ -165,11 +165,12 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 
 /* CURSOR */
 @media(pointer:fine){
+  *{cursor:none!important}
   #cur{position:fixed;width:12px;height:12px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),background .3s;will-change:left,top}
   #cur2{display:none}
   body.hov #cur{width:17px;height:17px;background:var(--green2)}
 }
-@media(pointer:coarse){#cur,#cur2{display:none}body,a,.btn,.nav-cta,.svc-head,.fq{cursor:auto}.btn,.nav-cta,.svc-head,.fq,#mob-dial,.mob-item,.nav-link{cursor:pointer}}
+@media(pointer:coarse){#cur,#cur2{display:none}body,a,.btn,.nav-cta,.svc-head,.fq{cursor:auto!important}.btn,.nav-cta,.svc-head,.fq,#mob-dial,.mob-item,.nav-link{cursor:pointer!important}}
 
 /* PROGRESS */
 #pg{position:fixed;top:0;left:0;height:2px;width:0%;background:var(--green);z-index:999;will-change:width}
@@ -200,7 +201,7 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .hero-h1 .hl:nth-child(1) .hl-in{animation:slup .9s .2s var(--ease) forwards}
 .hero-h1 .hl:nth-child(2) .hl-in{animation:slup .9s .32s var(--ease) forwards}
 .hero-h1 .hl:nth-child(3) .hl-in{animation:slup .9s .44s var(--ease) forwards}
-.hero-h1 em{font-style:normal;font-weight:800;color:var(--green)}
+.hero-h1 em{font-style:italic;font-weight:300;color:var(--green)}
 .vh{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .hero-desc{font-family:var(--o);font-size:clamp(16px,1.8vw,18px);line-height:1.65;color:var(--ink3);max-width:480px;margin-bottom:32px;opacity:0;animation:fdup .9s .9s var(--ease) forwards}
 .hero-desc strong{color:#0E110D;font-weight:600}
@@ -725,7 +726,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 }
 .nav-inner{
   position:relative;z-index:1;
-  display:flex;align-items:center;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
   width:100%;max-width:1400px;margin:0 auto;
 }
 .nav-logo{
@@ -768,7 +769,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   0%{color:var(--green)}80%{color:var(--green)}100%{color:#0E110D}
 }
 .nav-link.nav-clicking{animation:nav-click-flash .5s var(--ease) forwards}
-.nav-cta-wrap{flex-shrink:0;margin-left:auto}
+.nav-cta-wrap{justify-self:end}
 .nav-cta{
   font-family:var(--u);font-weight:600;font-size:11px;
   letter-spacing:.12em;text-transform:uppercase;
@@ -800,12 +801,15 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   background:rgba(14,17,13,.48);
   pointer-events:auto;
 }
-/* Arc container anchored at dial center (bottom:24px+22px=46px) */
+/* Radial cluster container — 280×220 fixed at viewport bottom-centre */
 #mob-arc{
   position:absolute;
-  bottom:46px;left:50%;
-  width:0;height:0;
+  bottom:0;left:50%;
+  transform:translateX(-50%);
+  width:280px;height:250px;
+  pointer-events:none;
 }
+/* All items collapsed at their absolute position */
 .mob-item{
   position:absolute;
   font-family:var(--u);font-size:11px;font-weight:600;
@@ -815,23 +819,37 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   border:1px solid rgba(245,243,238,.18);
   padding:8px 14px;border-radius:24px;
   white-space:nowrap;
-  transform:translate(-50%,-50%);
-  opacity:0;pointer-events:none;
-  transition:opacity .3s ease,transform .52s var(--ease),background .22s,border-color .22s;
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.4);
+  pointer-events:none;
+  transition:opacity .32s ease,transform .48s var(--ease),background .22s,border-color .22s;
   will-change:transform,opacity;
 }
 .mob-item:hover,.mob-item:active{background:var(--green);border-color:var(--green)}
-#mob-nav.mob-open .mob-item{opacity:1;pointer-events:auto}
-#mob-nav.mob-open .mob-item:nth-child(1){transition-delay:.03s}
-#mob-nav.mob-open .mob-item:nth-child(2){transition-delay:.06s}
-#mob-nav.mob-open .mob-item:nth-child(3){transition-delay:.09s}
-#mob-nav.mob-open .mob-item:nth-child(4){transition-delay:.12s}
-#mob-nav.mob-open .mob-item:nth-child(5){transition-delay:.15s}
-#mob-nav.mob-open .mob-item:nth-child(6){transition-delay:.18s}
+/* 3-row cluster: row1=Services, row2=Process+About, row3=Who+Contact+FAQ */
+/* Static tilt + close-stagger delay (top-first) */
+#mob-arc .mob-item:nth-child(1){left:50%;top:42%;rotate:0deg;transition-delay:0ms}     /* Services  — row 1 centre */
+#mob-arc .mob-item:nth-child(2){left:10%;top:42%;rotate:-4deg;transition-delay:70ms}   /* Process   — row 1 left */
+#mob-arc .mob-item:nth-child(3){left:18%;top:65%;rotate:-3deg;transition-delay:175ms}  /* Who       — row 2 left */
+#mob-arc .mob-item:nth-child(4){left:88%;top:45%;rotate:5deg;transition-delay:35ms}    /* About     — row 1 right */
+#mob-arc .mob-item:nth-child(5){left:80%;top:67%;rotate:4deg;transition-delay:105ms}   /* FAQ       — row 3 right */
+#mob-arc .mob-item:nth-child(6){left:50%;top:65%;rotate:0deg;transition-delay:140ms}   /* Contact   — row 3 centre */
+/* Open: items fly to position at full size */
+#mob-nav.mob-open .mob-item{
+  opacity:1;pointer-events:auto;
+  transform:translate(-50%,-50%);
+}
+/* Open stagger: bottom row first → middle → top */
+#mob-nav.mob-open .mob-item:nth-child(3){transition-delay:0ms}    /* Who */
+#mob-nav.mob-open .mob-item:nth-child(6){transition-delay:35ms}   /* Contact */
+#mob-nav.mob-open .mob-item:nth-child(5){transition-delay:70ms}   /* FAQ */
+#mob-nav.mob-open .mob-item:nth-child(2){transition-delay:105ms}  /* Process */
+#mob-nav.mob-open .mob-item:nth-child(4){transition-delay:140ms}  /* About */
+#mob-nav.mob-open .mob-item:nth-child(1){transition-delay:175ms}  /* Services */
 /* Dial pill */
 #mob-dial{
-  position:absolute;bottom:24px;left:50%;
-  transform:translateX(-50%);
+  position:absolute;left:50%;top:85%;
+  transform:translate(-50%,-50%);
   pointer-events:auto;
   background:rgba(245,243,238,.94);
   border:1.5px solid rgba(14,17,13,.13);
@@ -845,7 +863,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   transition:background .35s,border-color .35s,box-shadow .35s,transform .4s var(--ease);
   white-space:nowrap;
 }
-#mob-dial:active{transform:translateX(-50%) scale(.93)}
+#mob-dial:active{transform:translate(-50%,-50%) scale(.93)}
 #mob-nav.mob-open #mob-dial{
   background:rgba(14,17,13,.9);
   border-color:rgba(245,243,238,.1);
@@ -928,9 +946,9 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
       <span class="nav-wordmark">Candor</span>
     </a>
     <nav class="nav-links" aria-label="Main">
-      <a href="#services"  class="nav-link" data-nav="services">Services</a>
-      <a href="#process"   class="nav-link" data-nav="process">Process</a>
       <a href="#who"       class="nav-link" data-nav="who">Who</a>
+      <a href="#process"   class="nav-link" data-nav="process">Process</a>
+      <a href="#services"  class="nav-link" data-nav="services">Services</a>
       <a href="#about"     class="nav-link" data-nav="about">About</a>
       <a href="#faq"       class="nav-link" data-nav="faq">FAQ</a>
     </nav>
@@ -950,16 +968,16 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
     <a href="#about"    class="mob-item">About</a>
     <a href="#faq"      class="mob-item">FAQ</a>
     <a href="#contact"  class="mob-item">Contact</a>
+    <button id="mob-dial" aria-label="Open navigation" aria-expanded="false">
+      <svg id="dial-clock-svg" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <circle cx="13" cy="13" r="12" stroke="#0E110D" stroke-width="1.5"/>
+        <circle cx="13" cy="13" r="6.5" stroke="#2D6B42" stroke-width="1.5"/>
+        <line x1="13" y1="13" x2="17.3" y2="15.5" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round" class="dial-hand"/>
+        <line x1="13" y1="13" x2="13" y2="7" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round" class="dial-hand"/>
+      </svg>
+      <span id="dial-lbl" aria-hidden="true"></span>
+    </button>
   </div>
-  <button id="mob-dial" aria-label="Open navigation" aria-expanded="false">
-    <svg id="dial-clock-svg" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-      <circle cx="13" cy="13" r="12" stroke="#0E110D" stroke-width="1.5"/>
-      <circle cx="13" cy="13" r="6.5" stroke="#2D6B42" stroke-width="1.5"/>
-      <line x1="13" y1="13" x2="17.3" y2="15.5" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round" class="dial-hand"/>
-      <line x1="13" y1="13" x2="13" y2="7" stroke="#0E110D" stroke-width="1.5" stroke-linecap="round" class="dial-hand"/>
-    </svg>
-    <span id="dial-lbl" aria-hidden="true"></span>
-  </button>
 </div>
 
 <!-- MODAL (shared) -->
@@ -2217,37 +2235,14 @@ document.querySelectorAll('.river-card-d').forEach(el => {
   var items = arc.querySelectorAll('.mob-item');
   var isOpen = false;
 
-  /* Arc positions: 6 items in 150° arc, opening upward
-     angle in degrees from +x axis, CCW = up
-     startAngle=30° (lower-right) → endAngle=150° (lower-left) */
-  var N = items.length;
-  var R = 105; /* radius px */
-  items.forEach(function(item, i) {
-    var deg = 30 + (150 - 30) * i / (N - 1);
-    var rad = deg * Math.PI / 180;
-    var x = R * Math.cos(rad);   /* right = positive */
-    var y = -R * Math.sin(rad);  /* up = negative in screen coords */
-    item._tx = x.toFixed(1);
-    item._ty = y.toFixed(1);
-    /* collapsed */
-    item.style.transform = 'translate(-50%,-50%)';
-  });
-
   function openDial() {
     isOpen = true;
     mobNav.classList.add('mob-open');
     dial.setAttribute('aria-expanded', 'true');
     mobNav.setAttribute('aria-hidden', 'false');
-    /* update SVG hand colors to white */
     dialSvg.querySelectorAll('.dial-hand').forEach(function(h) { h.setAttribute('stroke', 'var(--white)'); });
     dialSvg.querySelectorAll('circle').forEach(function(c, ci) {
       c.setAttribute('stroke', ci === 0 ? 'rgba(245,243,238,.55)' : '#2D6B42');
-    });
-    /* animate items outward */
-    items.forEach(function(item, i) {
-      setTimeout(function() {
-        item.style.transform = 'translate(calc(-50% + ' + item._tx + 'px), calc(-50% + ' + item._ty + 'px))';
-      }, i * 30);
     });
   }
 
@@ -2260,10 +2255,6 @@ document.querySelectorAll('.river-card-d').forEach(el => {
     dialSvg.querySelectorAll('.dial-hand').forEach(function(h) { h.setAttribute('stroke', '#0E110D'); });
     dialSvg.querySelectorAll('circle').forEach(function(c, ci) {
       c.setAttribute('stroke', ci === 0 ? '#0E110D' : '#2D6B42');
-    });
-    /* collapse items */
-    items.forEach(function(item) {
-      item.style.transform = 'translate(-50%,-50%)';
     });
   }
 
