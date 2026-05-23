@@ -149,7 +149,8 @@
 @media(prefers-color-scheme:dark){html,body{background:#ECEAE2!important;color:#0E110D!important}}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-html{background:#ECEAE2}
+html{background:#ECEAE2;scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans-serif;font-weight:400;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none;transition:background-color 1.2s ease}
 :root{
   --bg:#ECEAE2;--bg2:#E2DFD5;--bg3:#D6D3C6;
@@ -185,13 +186,16 @@ nav.on{background:rgba(236,234,226,.94);backdrop-filter:blur(20px) saturate(160%
 .nav-r{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .nav-cta{font-family:var(--u);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#0E110D;text-decoration:none;padding:8px 16px;border:1.5px solid #0E110D;border-radius:2px;transition:background .25s,color .25s;white-space:nowrap}
 .nav-cta:hover{background:#0E110D;color:var(--white)}
-/* Hamburger */
-.nav-burger{background:none;border:none;cursor:pointer;padding:8px;margin:-8px;display:flex;flex-direction:column;justify-content:center;gap:5px;position:relative;z-index:510;flex-shrink:0}
-.nav-burger span{display:block;width:22px;height:1.5px;background:#0E110D;border-radius:2px;transition:transform .35s ease,opacity .25s ease,background .3s}
+/* Hamburger — mountain cross-section icon */
+.nav-burger{background:none;border:none;cursor:pointer;padding:8px;margin:-8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative;z-index:510;flex-shrink:0}
+.nav-burger span{display:block;height:1.5px;background:#0E110D;border-radius:2px;transition:transform .45s var(--ease),opacity .3s ease,background .3s,width .45s var(--ease)}
+.nav-burger span:nth-child(1){width:22px}
+.nav-burger span:nth-child(2){width:14px}
+.nav-burger span:nth-child(3){width:6px}
 .nav-burger.open span,.menu-open .nav-burger span{background:var(--white)}
 .nav-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.nav-burger.open span:nth-child(3){width:22px;transform:translateY(-6.5px) rotate(-45deg)}
 /* Menu-open: logo text white */
 .menu-open .logo-name{color:var(--white)}
 .menu-open .nav-cta{color:var(--white);border-color:rgba(245,243,238,.35)}
@@ -725,6 +729,13 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   .cert-ring-n{font-size:22px}
   .cert-ring-lbl{font-size:8px}
 }
+/* ── Certifications scroll nudge ── */
+.cert-nudge{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 800ms var(--ease);pointer-events:none;z-index:2}
+.cert-nudge.show{opacity:1}
+.cert-nudge-lbl{font-family:var(--u);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(14,17,13,.38)}
+.cert-nudge-chev{width:12px;height:12px;border-right:1.5px solid rgba(14,17,13,.28);border-bottom:1.5px solid rgba(14,17,13,.28);transform:rotate(45deg);animation:nudge-bob 1.6s ease-in-out infinite}
+@keyframes nudge-bob{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
+@media(max-width:899px){.cert-nudge{display:none}}
 </style>
 <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png"/>
@@ -789,6 +800,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
     <a href="#problem" class="nav-l">The problem</a>
     <a href="#process" class="nav-l">How it works</a>
     <a href="#services" class="nav-l">Services</a>
+    <a href="#certifications" class="nav-l">Certifications</a>
     <a href="#about" class="nav-l">About</a>
     <a href="#faq" class="nav-l">FAQ</a>
   </div>
@@ -802,12 +814,13 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 
 <div class="nav-mob" id="nav-mob" aria-hidden="true">
   <ul class="nav-mob-list">
-    <li><a href="#problem" class="nav-mob-l">01 — The problem</a></li>
-    <li><a href="#who" class="nav-mob-l">02 — Who I work with</a></li>
-    <li><a href="#process" class="nav-mob-l">03 — How it works</a></li>
-    <li><a href="#services" class="nav-mob-l">04 — Pricing</a></li>
-    <li><a href="#about" class="nav-mob-l">06 — About</a></li>
-    <li><a href="#faq" class="nav-mob-l">08 — FAQ</a></li>
+    <li><a href="#problem" class="nav-mob-l">The problem</a></li>
+    <li><a href="#who" class="nav-mob-l">Who I work with</a></li>
+    <li><a href="#process" class="nav-mob-l">How it works</a></li>
+    <li><a href="#services" class="nav-mob-l">Services</a></li>
+    <li><a href="#certifications" class="nav-mob-l">Certifications</a></li>
+    <li><a href="#about" class="nav-mob-l">About</a></li>
+    <li><a href="#faq" class="nav-mob-l">FAQ</a></li>
   </ul>
   <a href="https://calendly.com/artemfurman/30min" class="nav-mob-cta" target="_blank" rel="noopener noreferrer">Book a free call <span class="ar">→</span></a>
 </div>
@@ -853,7 +866,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <!-- PROBLEM -->
 <section class="sec fu" id="problem">
   <div class="mw">
-    <div class="ey">01 — The problem</div>
+    <div class="ey">The problem</div>
     <h2 class="dh" style="max-width:720px">Good businesses get overlooked. <em>Here's why.</em></h2>
     <p class="body-p" style="max-width:580px;margin-bottom:0">Sustainability certification is one of the most powerful marketing assets a small business can earn. Most that deserve it never get there — not because they don't qualify, but because the system wasn't built for them.</p>
     <div class="prob-row stg">
@@ -874,8 +887,8 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 
   <!-- MOBILE -->
   <div class="who-mobile">
-    <div class="ey">02 — Who I work with</div>
-    <h2 class="dh" style="margin-bottom:6px">Not for everyone. <em>Built for these six.</em></h2>
+    <div class="ey">Who I work with</div>
+    <h2 class="dh" style="margin-bottom:6px">Not for everyone. <em>Great for these.</em></h2>
     <p class="body-p" style="font-size:14px;margin-bottom:0;color:var(--ink4)">Tap any card to learn more</p>
     <div class="swipe-arena" id="swipeArena"></div>
   </div>
@@ -888,8 +901,8 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   <div class="who-desktop">
     <div class="river-intro">
       <div class="mw">
-        <div class="ey">02 — Who I work with</div>
-        <h2 class="dh" style="max-width:700px;margin-bottom:6px">Not for everyone. <em>Built for these six.</em></h2>
+        <div class="ey">Who I work with</div>
+        <h2 class="dh" style="max-width:700px;margin-bottom:6px">Not for everyone. <em>Great for these.</em></h2>
         <p class="body-p" style="font-size:14px;color:var(--ink4)">Click any card to learn more</p>
       </div>
     </div>
@@ -911,7 +924,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <section class="sec fu" id="process">
   <div class="mw">
     <div style="max-width:800px;margin:0 auto">
-      <div class="ey">03 — How it works</div>
+      <div class="ey">How it works</div>
       <h2 class="dh" style="max-width:620px;margin-bottom:0">From first call to the <em>logo on your site.</em></h2>
       <p class="body-p" style="max-width:520px;margin-top:14px">Built to feel calm, not rushed. Most founders have too much on their plate already.</p>
     </div>
@@ -928,7 +941,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <!-- SERVICES -->
 <section class="sec sec-dk fu" id="services">
   <div class="mw">
-    <div class="ey ey-lt">04 — Pricing</div>
+    <div class="ey ey-lt">Pricing</div>
     <h2 class="dh dh-lt" style="max-width:680px">Three tiers.<br><em>Start where you are.</em></h2>
     <p class="body-p" style="max-width:540px">Most people begin with the audit. No pressure to commit to anything larger until you've seen the work.</p>
     <div class="svc-list">
@@ -965,7 +978,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 
     <!-- LEFT: B CORP DOMINANT -->
     <div class="cert-left">
-      <div class="cert-ey" id="certEy">05 — Certifications</div>
+      <div class="cert-ey" id="certEy">Certifications</div>
         <div class="cert-heading-row">
           <h2 class="cert-h" id="certH">B Corp.</h2>
           <svg class="cert-ring-svg" id="certRing" viewBox="0 0 72 72" fill="none" aria-label="Minimum B Corp score: 80">
@@ -1016,6 +1029,10 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
     </div>
 
   </div>
+  <div class="cert-nudge" id="certNudge" aria-hidden="true">
+    <span class="cert-nudge-lbl">Keep scrolling</span>
+    <span class="cert-nudge-chev"></span>
+  </div>
 </section>
 </div>
 
@@ -1034,7 +1051,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
       <img class="about-portrait" src="images/about-portrait.jpg" sizes="(max-width:639px) 260px, 460px" alt="Artem Furman, sustainability certification consultant, Vancouver BC" loading="lazy"/>
     </div>
     <div class="about-content">
-      <div class="ey ey-lt">06 — Who built this</div>
+      <div class="ey ey-lt">Who built this</div>
       <h2 class="dh dh-lt about-name" style="font-size:clamp(30px,4.5vw,58px)">Artem Furman.<br><em>No firm, no juniors.</em> Just direct work.</h2>
       <p class="body-p body-lt" style="margin-bottom:14px">I spent five years managing retail operations in BC before going back to study environmental economics at SFU.</p>
       <p class="body-p body-lt">I know what running a small business looks like. I won't pad timelines. I won't sell you a certification you don't need. Every engagement runs through me directly — start to finish.</p>
@@ -1050,7 +1067,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <!-- STATS -->
 <section class="sec sec-dk fu" id="stats">
   <div class="mw">
-    <div class="ey ey-lt">07 — The numbers</div>
+    <div class="ey ey-lt">The numbers</div>
     <h2 class="dh dh-lt">Why certified businesses outperform the ones that aren't.</h2>
     <div class="stats-g stg">
       <div class="stat-c"><div class="st-n"><span data-cnt="14">0</span><sub>%</sub></div><p class="st-l">Higher revenue growth for certified purpose-driven companies</p><span class="st-src">— Deloitte Global, 2023</span></div>
@@ -1067,7 +1084,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <section class="sec sec-alt fu" id="faq">
   <div class="mw">
     <div style="max-width:800px;margin:0 auto">
-      <div class="ey">08 — Honest answers</div>
+      <div class="ey">Honest answers</div>
       <h2 class="dh" style="max-width:600px;margin-bottom:0">The questions you <em>may have.</em></h2>
     </div>
     <div class="faq">
@@ -1962,18 +1979,6 @@ document.querySelectorAll('.hero,.mission,.sec,.who-section,.about-new,.sec-dk,.
   }, { passive: true });
 })();
 
-/* ── Smooth scroll ── */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    const top = target.getBoundingClientRect().top + window.scrollY
-      - parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'));
-    window.scrollTo({ top, behavior: 'smooth' });
-  });
-});
-
 /* ── Init ── */
 onScroll();
 if (_desktop) buildRiver();
@@ -2010,7 +2015,19 @@ document.querySelectorAll('.river-card-d').forEach(el => {
 
   burger.addEventListener('click', () => mob.classList.contains('open') ? close() : open());
 
-  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if(href && href.startsWith('#')){
+      e.preventDefault();
+      close();
+      setTimeout(() => {
+        const el = document.querySelector(href);
+        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+      }, 360);
+    } else {
+      close();
+    }
+  }));
 
   document.addEventListener('keydown', e => { if(e.key==='Escape') close(); });
 })();
@@ -2032,6 +2049,7 @@ document.querySelectorAll('.river-card-d').forEach(el => {
   var certCard1 = document.getElementById('certCard1');
   var certCard2 = document.getElementById('certCard2');
   var canvas    = document.getElementById('certCanvas');
+  var certNudge = document.getElementById('certNudge');
 
   var contentTriggered = false;
   var canvasInView = false;
@@ -2039,38 +2057,52 @@ document.querySelectorAll('.river-card-d').forEach(el => {
   var rings = [];
   var lastProgress = -1;
 
+  /* ── Nudge: "keep scrolling" after 5s of stillness in sticky zone ── */
+  var nudgeTimer = null;
+  var nudgeOn = false;
+
+  function showNudge(){ nudgeTimer=null; if(nudgeOn||window.innerWidth<900) return; nudgeOn=true; certNudge.classList.add('show'); }
+  function hideNudge(){ if(nudgeTimer){ clearTimeout(nudgeTimer); nudgeTimer=null; } if(!nudgeOn) return; nudgeOn=false; certNudge.classList.remove('show'); }
+  function armNudge(p){ if(window.innerWidth<900||nudgeTimer||nudgeOn) return; if(p>0.02&&p<0.96) nudgeTimer=setTimeout(showNudge,5000); }
+
+  window.addEventListener('scroll',function(){
+    var p=getProgress();
+    if(p>0.02&&p<0.96){ hideNudge(); armNudge(p); } else { hideNudge(); }
+  },{passive:true});
+
   /* ── Topographic contour map ── */
   function seededRand(s){ var x=Math.sin(s+1)*10000; return x-Math.floor(x); }
 
   function buildTopo(w,h){
     rings=[];
-    // Three elevation peaks: [cx_frac, cy_frac, max_r_frac, ring_count]
     var peaks=[
       {cx:0.28,cy:0.46,r:0.65,n:16},
       {cx:0.76,cy:0.22,r:0.30,n:8},
       {cx:0.60,cy:0.80,r:0.26,n:6}
     ];
     peaks.forEach(function(pk,pi){
+      // Spacing between consecutive rings — cap amplitude so rings never cross
+      var spacing=pk.r*Math.min(w,h)/pk.n;
       for(var i=0;i<pk.n;i++){
         var t=(i+1)/pk.n;
         var baseR=pk.r*Math.min(w,h)*t;
-        var nPts=96,nH=5,phases=[],amps=[];
+        var nPts=120,nH=5,phases=[],amps=[];
         for(var j=0;j<nH;j++){
           phases.push(seededRand(pi*200+i*20+j*3+1)*Math.PI*2);
-          amps.push(seededRand(pi*200+i*20+j*3+2)*baseR*0.14/(j+1));
+          // Cap at 42% of ring spacing so no ring can overtake its neighbour
+          amps.push(seededRand(pi*200+i*20+j*3+2)*Math.min(spacing*0.42,baseR*0.06)/(j+1));
         }
         var pts=[];
         for(var k=0;k<nPts;k++){
           var ang=(k/nPts)*Math.PI*2;
           var r=baseR;
           for(var j=0;j<nH;j++) r+=Math.sin(ang*(j+2)+phases[j])*amps[j];
-          r=Math.max(r,baseR*0.25);
-          pts.push([pk.cx*w+Math.cos(ang)*r, pk.cy*h+Math.sin(ang)*r]);
+          r=Math.max(r,baseR*0.3);
+          pts.push([pk.cx*w+Math.cos(ang)*r,pk.cy*h+Math.sin(ang)*r]);
         }
         rings.push({pts:pts,t:t,absR:baseR});
       }
     });
-    // Innermost rings across all peaks reveal first
     rings.sort(function(a,b){ return a.absR-b.absR; });
   }
 
@@ -2082,8 +2114,7 @@ document.querySelectorAll('.river-card-d').forEach(el => {
   }
 
   function getProgress(){
-    var isMob=window.innerWidth<900;
-    if(!isMob&&certWrap){
+    if(window.innerWidth>=900&&certWrap){
       var wr=certWrap.getBoundingClientRect();
       var sr=wr.height-window.innerHeight;
       if(sr<=0) return 0;
@@ -2095,32 +2126,49 @@ document.querySelectorAll('.river-card-d').forEach(el => {
 
   function drawTopo(){
     var progress=getProgress();
-    if(Math.abs(progress-lastProgress)<0.0008){ if(canvasInView) rafId=requestAnimationFrame(drawTopo); return; }
+    if(Math.abs(progress-lastProgress)<0.0005){ if(canvasInView) rafId=requestAnimationFrame(drawTopo); return; }
     lastProgress=progress;
     var ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
     ctx.clearRect(0,0,w,h);
     var n=rings.length;
+    // Rings reveal in overlapping waves: each starts at (i/n)*0.72 of scroll,
+    // fades fully in over the next 0.22 — simultaneous reveals = smooth outward wave
     for(var i=0;i<n;i++){
-      var revealAt=i/n;
-      var rp=(progress-revealAt)/(1/n);
+      var revealStart=(i/n)*0.72;
+      var rp=(progress-revealStart)/0.22;
       rp=Math.max(0,Math.min(1,rp));
       if(rp<=0) continue;
       var ss=rp*rp*(3-2*rp); // smoothstep
       var ring=rings[i];
-      var baseA=0.10-ring.t*0.05; // inner rings slightly more visible
+      var baseA=0.09-ring.t*0.04;
+      var pts=ring.pts,nP=pts.length;
+      // Elevation breaks: 3 small gaps evenly distributed (real topo maps show these at cliffs/edges)
+      var gapAt=[0,(nP/3)|0,(2*nP/3)|0];
+      var gapLen=2;
+      var skip=new Uint8Array(nP);
+      for(var g=0;g<gapAt.length;g++) for(var gk=0;gk<gapLen;gk++) skip[(gapAt[g]+gk)%nP]=1;
+      // Smooth curves through points using midpoint-quadratic method
       ctx.beginPath();
-      var pts=ring.pts;
-      ctx.moveTo(pts[0][0],pts[0][1]);
-      for(var k=1;k<pts.length;k++) ctx.lineTo(pts[k][0],pts[k][1]);
-      ctx.closePath();
-      ctx.strokeStyle='rgba(45,107,66,'+(baseA*ss)+')';
-      ctx.lineWidth=0.9;
+      for(var k=0;k<nP;k++){
+        if(skip[k]) continue;
+        var prev=(k-1+nP)%nP;
+        if(skip[prev]){
+          ctx.moveTo(pts[k][0],pts[k][1]);
+        } else {
+          var nx=(k+1)%nP;
+          var mx=(pts[k][0]+pts[nx][0])*0.5,my=(pts[k][1]+pts[nx][1])*0.5;
+          if(!skip[nx]) ctx.quadraticCurveTo(pts[k][0],pts[k][1],mx,my);
+          else ctx.lineTo(pts[k][0],pts[k][1]);
+        }
+      }
+      ctx.strokeStyle='rgba(45,107,66,'+Number(baseA*ss).toFixed(3)+')';
+      ctx.lineWidth=0.85;
       ctx.stroke();
     }
     if(canvasInView) rafId=requestAnimationFrame(drawTopo);
   }
 
-  /* ── Content: one-shot sequential animation ── */
+  /* ── Content: one-shot entrance animation ── */
   function countUp(el,target,dur){
     var s=performance.now();
     (function tick(now){
@@ -2135,33 +2183,30 @@ document.querySelectorAll('.river-card-d').forEach(el => {
       var tr='opacity '+(dur||600)+'ms cubic-bezier(.16,1,.3,1)';
       if(hasTransform) tr+=',transform '+(dur||600)+'ms cubic-bezier(.16,1,.3,1)';
       el.style.transition=tr;
-      requestAnimationFrame(function(){
-        el.style.opacity='1';
-        if(hasTransform) el.style.transform='none';
-      });
+      requestAnimationFrame(function(){ el.style.opacity='1'; if(hasTransform) el.style.transform='none'; });
     },delay);
   }
 
   function triggerContent(){
     if(contentTriggered) return;
     contentTriggered=true;
-    fadeIn(certEy,0,600,true);
-    fadeIn(certH,120,800,true);
+    fadeIn(certEy,0,700,true);
+    fadeIn(certH,160,900,true);
     setTimeout(function(){
       certRing.style.opacity='1';
-      certArc.style.transition='stroke-dashoffset 900ms cubic-bezier(.4,0,.2,1)';
+      certArc.style.transition='stroke-dashoffset 1000ms cubic-bezier(.4,0,.2,1)';
       certArc.style.strokeDashoffset=String(2*Math.PI*32*0.2);
-    },350);
-    setTimeout(function(){ countUp(certScore,80,900); },500);
-    fadeIn(certDesc,650,700,true);
-    fadeIn(certFee1,800,600,true);
-    fadeIn(certFee2,880,600,true);
+    },420);
+    setTimeout(function(){ countUp(certScore,80,1000); },580);
+    fadeIn(certDesc,740,750,true);
+    fadeIn(certFee1,920,650,true);
+    fadeIn(certFee2,1010,650,true);
     setTimeout(function(){
-      certTags.style.transition='opacity 600ms cubic-bezier(.16,1,.3,1)';
+      certTags.style.transition='opacity 700ms cubic-bezier(.16,1,.3,1)';
       certTags.style.opacity='1';
-    },950);
-    fadeIn(certCard1,1100,700,true);
-    fadeIn(certCard2,1220,700,true);
+    },1080);
+    fadeIn(certCard1,1260,750,true);
+    fadeIn(certCard2,1400,750,true);
   }
 
   /* ── Observers ── */
@@ -2172,8 +2217,10 @@ document.querySelectorAll('.river-card-d').forEach(el => {
         if(rafId) cancelAnimationFrame(rafId);
         resizeCanvas();
         rafId=requestAnimationFrame(drawTopo);
+        armNudge(getProgress());
       } else {
         canvasInView=false;
+        hideNudge();
         if(rafId){ cancelAnimationFrame(rafId); rafId=null; }
         var ctx=canvas.getContext('2d');
         ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -2187,7 +2234,7 @@ document.querySelectorAll('.river-card-d').forEach(el => {
   },{threshold:0.15});
   contentObs.observe(certSec);
 
-  window.addEventListener('resize',function(){ resizeCanvas(); },{passive:true});
+  window.addEventListener('resize',function(){ hideNudge(); resizeCanvas(); },{passive:true});
 })();
 
 </script>
