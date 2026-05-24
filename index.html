@@ -542,6 +542,9 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 }
 @media(min-width:1400px){.hero-h1{font-size:148px}}
 ::selection{background:var(--green);color:var(--white)}
+/* inline body-copy anchor links */
+.body-p a,.proc-txt a,.fq-ans a,.cert-desc a,.mission-txt a,.prob-txt a{color:var(--green);text-decoration:underline;text-decoration-color:rgba(45,107,66,.32);text-underline-offset:2px;transition:color .2s,text-decoration-color .2s}
+.body-p a:hover,.proc-txt a:hover,.fq-ans a:hover,.cert-desc a:hover,.mission-txt a:hover,.prob-txt a:hover{color:var(--green2);text-decoration-color:rgba(61,138,87,.6)}
 
 /* ── PAGE LOAD ANIMATION ── */
 #loader{
@@ -1006,7 +1009,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   <div class="mw">
     <div class="ey">The problem</div>
     <h2 class="dh" style="max-width:720px">Good businesses get overlooked. <em>Here's why.</em></h2>
-    <p class="body-p" style="max-width:580px;margin-bottom:0">Sustainability certification is one of the most powerful marketing assets a small business can earn. Most that deserve it never get there, not because they don't qualify, but because the system wasn't built for them.</p>
+    <p class="body-p" style="max-width:580px;margin-bottom:0"><a href="#certifications">Sustainability certification</a> is one of the most powerful marketing assets a small business can earn. Most that deserve it never get there, not because they don't qualify, but because the system wasn't built for them.</p>
     <div class="prob-row stg">
       <div class="prob-card"><div class="prob-n">01</div><div class="prob-title">Priced for someone else</div><p class="prob-txt">The big firms built their pricing for companies ten times your size. A $40,000 quote isn't a negotiation starting point. It's a signal that you're not their client. Most small businesses just walk away.</p></div>
       <div class="prob-card"><div class="prob-n">02</div><div class="prob-title">Genuinely confusing</div><p class="prob-txt">B Corp. Benefit Corporation. Climate Neutral. ISO 14001. They overlap, they contradict, and the internet makes it worse. Most owners spend hours researching and still aren't sure which one they actually need.</p></div>
@@ -1128,7 +1131,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
             <text class="cert-ring-lbl" x="36" y="47" text-anchor="middle" dominant-baseline="middle">min. score</text>
           </svg>
         </div>
-        <p class="cert-desc" id="certDesc">The most rigorous certification available to a small business. Five areas scored: governance, workers, community, environment, customers. Third-party verified. Renewed every three years. This is what Candor primarily prepares businesses for.</p>
+        <p class="cert-desc" id="certDesc">The most rigorous certification available to a small business. Five areas scored: governance, workers, community, environment, customers. Third-party verified. Renewed every three years. This is what Candor primarily <a href="#process">prepares businesses</a> for.</p>
         <div class="cert-fees">
           <div class="cert-fee-item" id="certFee1">
             <div class="cert-fee-label">Annual fee</div>
@@ -1192,7 +1195,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
       <div class="ey ey-lt">Who built this</div>
       <h2 class="dh dh-lt about-name" style="font-size:clamp(30px,4.5vw,58px)">Artem Furman.<br><em>No firm, no juniors.</em> Just direct work.</h2>
       <p class="body-p body-lt" style="margin-bottom:14px">I spent five years managing retail operations in BC before going back to study environmental economics at SFU.</p>
-      <p class="body-p body-lt">I know what running a small business looks like. I won't pad timelines or sell you a certification you don't need. Every engagement runs through me directly, start to finish.</p>
+      <p class="body-p body-lt">I know what running a small business looks like. I won't pad timelines or sell you a certification you don't need. Every engagement runs through me directly, <a href="#contact">start to finish</a>.</p>
       <div class="about-tags stg">
         <div class="atag">Vancouver, BC</div><div class="atag">B Leader Training</div>
         <div class="atag">B Corp Standards</div><div class="atag">SFU Env. Economics</div>
@@ -1226,7 +1229,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
       <h2 class="dh" style="max-width:600px;margin-bottom:0">The questions you <em>may have.</em></h2>
     </div>
     <div class="faq">
-      <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What if my business doesn't qualify?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">The audit will tell you. About half the businesses I assess are closer to certification than they expected. The other half need 6–12 months of foundational work first. Either way you'll know exactly where you stand. If you're not ready, I'll say so directly.</p></div></div></div>
+      <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What if my business doesn't qualify?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans"><a href="#services">The audit</a> will tell you. About half the businesses I assess are closer to certification than they expected. The other half need 6–12 months of foundational work first. Either way you'll know exactly where you stand. If you're not ready, I'll say so directly.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What does B Lab charge on top of your fees?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">For Canadian businesses under $5M revenue, B Corp's annual fee is roughly $2,100 USD. Climate Neutral scales with your footprint, typically $1,000–$5,000 annually. 1% for the Planet has no membership fee, just the commitment to donate 1% of revenue. I walk through all costs in the audit so nothing surprises you.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What's the difference between B Corp and Benefit Corporation?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">B Corp is a third-party certification from B Lab. Benefit Corporation is a legal entity structure in some jurisdictions that expands what directors can consider beyond shareholder profit. They're different things. You can have one without the other. Most businesses I work with want the B Corp certification because it's the certification consumers actually recognise.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">Is this just greenwashing with a nicer logo?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">Fair challenge. B Corp's credibility has taken hits as larger brands have joined. The honest answer: it's a real verification process, but only as meaningful as your actual practices. I won't help a business game the assessment. I help businesses that are genuinely doing the work get credit for it.</p></div></div></div>
