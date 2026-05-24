@@ -2,27 +2,8 @@
 
 > Flat-fee B Corp and sustainability certification consulting for small businesses in British Columbia, Canada.
 
-Candor is a one-person consultancy run by Artem Furman. It helps BC small businesses achieve B Corp certification and related sustainability credentials. Every engagement runs directly through Artem — no junior staff, no subcontractors.
+For a full list of our services and compliance summaries, please see our [Full Text Corpus](https://candorcertified.com/llms-full.txt).
 
-## Services
-
-- Readiness Audit ($1,800 CAD, 2 weeks): Gap analysis against B Corp standards. Delivered as a written report. Client keeps the report regardless of whether they continue.
-- Gap-Closing ($6,500 CAD, 3-4 months): Documentation, policy drafts, tracking systems, evidence compilation.
-- Full Path ($12,000+ CAD, 9-12 months): Complete certification support from first call to certified B Corp status.
-
-## Industries served
-
-Cannabis retail, outdoor and apparel, food and beverage, clean beauty, coffee and hospitality, yoga and fitness studios.
-
-## Certifications covered
-
-- B Corp (primary): Rigorous third-party verified certification across governance, workers, community, environment, and customers. Minimum score of 80 required. Annual fee ~$2,100 USD for companies under $5M revenue.
-- Climate Neutral: Carbon footprint measurement, reduction, and offset. Annual renewal.
-- 1% for the Planet: 1% of annual revenue donated to environmental nonprofits.
-
-## Contact
-
-- Website: https://candorcertified.com
-- Email: artem.dan1lov@proton.me
-- Book a call: https://calendly.com/artemfurman/30min
-- Location: Vancouver, BC, Canada
+## Main Pages
+- [Home Page](https://candorcertified.com/): An overview of Candor's consulting model run by Artem Furman.
+- [Contact & Booking](https://calendly.com/artemfurman/30min): Link to book a direct 30-minute consultation call.

@@ -1,16 +1,40 @@
+# ==========================================
+# Candor Sustainability Certification
+# Location: Vancouver, BC | Est. 2026
+# Security Baseline & Regional Crawl Lock
+# ==========================================
+
+User-agent: Yandex
+User-agent: YandexBot
+User-agent: Baiduspider
+User-agent: Baiduspider-render
+User-agent: HaoSouSpider
+User-agent: Sogou web spider
+User-agent: Sogou spider2
+User-agent: Shenma
+User-agent: Amazonbot
+User-agent: CCBot
+User-agent: Scrapy
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: AhrefsBot
+User-agent: MJ12bot
+User-agent: Rogerbot
+Disallow: /
+
 User-agent: *
-Allow: /
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /api/
+Disallow: /*?*
+Disallow: /vancouver-sustainability-consultant-draft*
 
 User-agent: Google-Extended
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: OAI-SearchBot
+Allow: /blog/
 Allow: /
+Crawl-delay: 2
 
 Sitemap: https://candorcertified.com/sitemap.xml
