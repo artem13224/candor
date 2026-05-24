@@ -1771,6 +1771,12 @@ document.querySelectorAll('.fq').forEach(item => {
   var loader    = document.getElementById('loader');
   if (!loader) return;
 
+  if (sessionStorage.getItem('loaderSeen')) {
+    loader.style.display = 'none';
+    return;
+  }
+  sessionStorage.setItem('loaderSeen', '1');
+
   document.body.style.overflow = 'hidden';
 
   var ring1    = document.getElementById('ld-ring1');
