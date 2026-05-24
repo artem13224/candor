@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B Corp Certification Changes in 2026 | Candor</title>
+  <meta name="description" content="B Lab replaced the 80-point system with mandatory requirements across 7 impact topics. Here's what changed, what it means for your timeline, and what to do now." />
+  <link rel="canonical" href="https://candorcertified.com/blog/b-corp-certification-changes-2026" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What Changed in B Corp Certification in 2026",
+    "description": "B Lab replaced the 80-point system with mandatory requirements across 7 impact topics. Here's what changed, what it means for your timeline, and what to do now.",
+    "datePublished": "2026-05-24",
+    "dateModified": "2026-05-24",
+    "url": "https://candorcertified.com/blog/b-corp-certification-changes-2026",
+    "author": {
+      "@type": "Person",
+      "name": "Artem Furman"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Candor",
+      "url": "https://candorcertified.com"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #0D1610;
+      --forest:     #2D6B42;
+      --field:      #3D8A57;
+      --oat:        #ECEAE2;
+      --paper:      #F5F3EE;
+      --body:       #4A5548;
+      --stone:      #C8C3B5;
+      --pebble:     #D8D3C3;
+      --light:      #E4E1D6;
+      --amber:      #B8651E;
+      --amber-bg:   #E8B888;
+      --green:      #2D6B42;
+      --green2:     #3D8A57;
+      --ink3:       #4A5548;
+      --u:          'Urbanist', sans-serif;
+      --ease:       cubic-bezier(.16,1,.3,1);
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    #site-nav {
+      display: flex;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 600;
+      height: 58px; padding: 0 40px;
+      align-items: center;
+    }
+    .nav-bg {
+      position: absolute; inset: 0;
+      background: rgba(236,234,226,0);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+      transition: background .5s ease, border-color .5s ease, backdrop-filter .5s ease;
+      z-index: 0;
+    }
+    #site-nav.nav-up .nav-bg {
+      background: rgba(236,234,226,.88);
+      border-bottom-color: rgba(14,17,13,.07);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    .nav-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      width: 100%; max-width: 1400px; margin: 0 auto;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; flex-shrink: 0;
+      transition: opacity .3s;
+    }
+    .nav-logo:hover { opacity: .6; }
+    .nav-logo-svg { width: 22px; height: 22px; flex-shrink: 0; transition: transform .7s var(--ease); }
+    .nav-logo:hover .nav-logo-svg { transform: rotate(14deg); }
+    .nav-wordmark {
+      font-family: var(--u); font-weight: 800; font-size: 14px;
+      letter-spacing: .22em; text-transform: uppercase; color: #0E110D;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 0;
+      margin-left: auto; margin-right: auto;
+      padding-left: 40px;
+    }
+    .nav-link {
+      font-family: var(--u); font-size: 11px; font-weight: 500;
+      letter-spacing: .13em; text-transform: uppercase;
+      color: var(--ink3); text-decoration: none;
+      padding: 6px 13px;
+      border-radius: 2px;
+      position: relative;
+      transition: color .3s;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: 1px; left: 13px; right: 13px;
+      height: 1.5px; background: var(--green);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .38s var(--ease);
+    }
+    .nav-link:hover { color: #0E110D; }
+    .nav-link:hover::after { transform: scaleX(.6); }
+    .nav-cta-wrap { justify-self: end; }
+    .nav-cta {
+      font-family: var(--u); font-weight: 600; font-size: 11px;
+      letter-spacing: .12em; text-transform: uppercase;
+      text-decoration: none; padding: 9px 18px;
+      background: #0E110D; color: #F5F3EE;
+      border-radius: 2px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background .28s, transform .35s var(--ease);
+    }
+    .nav-cta:hover { background: var(--green); transform: translateY(-1px); }
+    .nav-cta .nav-ar { display: inline-block; transition: transform .35s var(--ease); }
+    .nav-cta:hover .nav-ar { transform: translateX(4px); }
+
+    /* ── ARTICLE HEADER ── */
+    .article-header {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 96px 24px 40px;
+    }
+    .article-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--forest);
+      background: rgba(45,107,66,0.08);
+      padding: 4px 10px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    .article-header h1 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .article-lede {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: var(--body);
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6875rem;
+      color: var(--stone);
+      letter-spacing: 0.06em;
+    }
+    .article-meta .sep { color: var(--pebble); }
+    .article-divider {
+      max-width: 720px;
+      margin: 0 auto 0;
+      padding: 0 24px;
+      border: none;
+      border-top: 1px solid var(--light);
+    }
+
+    /* ── ARTICLE IMAGE ── */
+    .article-img {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .article-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+      margin-top: 32px;
+    }
+    .article-img figcaption {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.08em;
+      color: var(--stone);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* ── ARTICLE BODY ── */
+    article.article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+    article.article-body h2 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1.375rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 48px 0 16px;
+      line-height: 1.25;
+    }
+    article.article-body p {
+      color: var(--body);
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    article.article-body a {
+      color: var(--forest);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    article.article-body a:hover { color: var(--ink); }
+
+    .pull-quote {
+      border-left: 3px solid var(--forest);
+      padding: 20px 28px;
+      margin: 40px 0;
+      background: var(--oat);
+      border-radius: 0 6px 6px 0;
+    }
+    .pull-quote p {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 700;
+      font-size: 1.125rem;
+      line-height: 1.45;
+      color: var(--ink);
+      margin: 0;
+      font-style: italic;
+      letter-spacing: -0.01em;
+    }
+
+    .callout {
+      background: var(--oat);
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 32px 0;
+    }
+    .callout-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--forest);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .callout p {
+      font-size: 0.9375rem;
+      color: var(--body);
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--light);
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 36px 0;
+    }
+    .stat-cell {
+      background: var(--paper);
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--forest);
+      display: block;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--body);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 64px 24px;
+    }
+    .cta-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .cta-section p {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: rgba(245,243,238,0.75);
+      margin-bottom: 28px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--field);
+      color: var(--paper);
+      text-decoration: none;
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      padding: 13px 28px;
+      border-radius: 4px;
+      letter-spacing: -0.01em;
+      transition: background 0.15s;
+    }
+    .cta-btn:hover { background: var(--forest); }
+
+    /* ── MORE ARTICLES ── */
+    .more-articles {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    .more-articles h3 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1.125rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .article-card {
+      display: block;
+      background: var(--oat);
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      padding: 24px;
+      text-decoration: none;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .article-card:hover { border-color: var(--forest); transform: translateY(-2px); }
+    .card-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--forest);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .card-excerpt {
+      font-size: 0.875rem;
+      color: var(--body);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+      color: var(--stone);
+    }
+    .card-arrow { color: var(--forest); font-size: 0.875rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--light);
+      background: var(--paper);
+      padding: 32px 24px;
+    }
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-brand {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 0.9375rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .footer-brand .dot { color: var(--forest); }
+    footer p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.08em;
+      color: var(--stone);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .stat-row { grid-template-columns: 1fr; }
+      .article-header h1 { font-size: 1.75rem; }
+      #site-nav { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV — do not modify structure or classes -->
+<header id="site-nav" aria-label="Site navigation">
+  <div class="nav-bg"></div>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo logo" aria-label="Candor — home">
+      <svg class="nav-logo-svg" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="#0D1610"/>
+        <path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="216.48" cy="194.16" r="4.55" fill="#3D8A57"/>
+      </svg>
+      <span class="nav-wordmark">Candor</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/#who"      class="nav-link">Who</a>
+      <a href="/#process"  class="nav-link">Process</a>
+      <a href="/#services" class="nav-link">Services</a>
+      <a href="/#about"    class="nav-link">About</a>
+      <a href="/#faq"      class="nav-link">FAQ</a>
+      <a href="/blog"      class="nav-link nav-hide-mobile">Resources</a>
+    </nav>
+    <div class="nav-cta-wrap">
+      <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a call <span class="nav-ar">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ARTICLE HEADER -->
+<header class="article-header">
+  <span class="article-tag">B Corp Basics</span>
+  <h1>What Changed in B Corp Certification in 2026.</h1>
+  <p class="article-lede">B Lab just replaced the 80-point scoring system with mandatory requirements across seven impact topics. Every business pursuing certification in 2026 is working under new rules. Here is what actually changed and what it means for your timeline.</p>
+  <div class="article-meta">
+    <span>May 2026</span>
+    <span class="sep">·</span>
+    <span>5 min read</span>
+  </div>
+</header>
+<hr class="article-divider" />
+
+<!-- Unsplash: search "sustainability report office desk documents green plant" -->
+<figure class="article-img">
+  <img src="https://images.unsplash.com/photo-XXXXXXX?auto=format&fit=crop&w=1200&q=80"
+       alt="Business owner reviewing sustainability documentation at a desk with a green plant in the background"
+       width="1200" height="630" loading="lazy" />
+  <figcaption>The new B Corp standards require documentation that most small businesses have never had to produce before</figcaption>
+</figure>
+
+<!-- ARTICLE BODY -->
+<article class="article-body">
+
+  <h2>The points system is gone — this is what replaced it</h2>
+  <p>For over a decade, B Corp certification worked on a single threshold: score 80 points or more on the B Impact Assessment and you were in. The points came from five pillars. Governance. Workers. Community. Environment. Customers. You could be weak in one area and strong in another, and still certify. That flexibility is what made the old model popular. It is also what made it easy to game.</p>
+  <p>The new standards, which became mandatory for all new applicants on January 1, 2026, replace that menu approach with seven non-negotiable impact topics. Climate Action. Human Rights. Fair Work. Environmental Stewardship. Community Impact. Customer Impact. Governance. Reaching a high score in one area no longer compensates for a gap in another. You need to meet minimum thresholds across all seven. Full stop.</p>
+  <p>B Lab launched Version 2.0 of these standards in April 2025 and released Version 2.2 in March 2026 with additional clarity on compliance criteria. The direction is clear: harder to game, more demanding on documentation, and built around continuous improvement rather than a one-time snapshot.</p>
+
+  <div class="pull-quote">
+    <p>"A high score in one area no longer compensates for a gap in another. The old menu approach is gone. Every impact topic now has a floor."</p>
+  </div>
+
+  <h2>What B Corp certification changes in 2026 actually require</h2>
+  <p>The biggest practical shift for small businesses is in Climate Action. Carbon footprint measurement is now mandatory. That means Scope 1 and Scope 2 emissions at minimum. Larger companies are also required to measure Scope 3, set science-based targets aligned with a 1.5°C pathway, and publicly disclose a climate transition plan updated annually.</p>
+  <p>For a 10-person food brand or a 20-person professional services firm, this is new territory. Most small businesses have never calculated their emissions formally. Many have never heard of Scope 3. The requirement does not demand perfection. It demands that you measure, document, and show a credible plan to improve. The gap is documentation, not an overhaul.</p>
+  <p>Beyond climate, the Human Rights and Fair Work topics require written policies that many small businesses currently handle informally. Supplier relationships, employment agreements, grievance mechanisms. These are not complex to build. They are easy to overlook until a verification call reveals they are missing.</p>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <span class="stat-num">10,000+</span>
+      <span class="stat-label">Certified B Corps globally</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">7</span>
+      <span class="stat-label">Mandatory impact topics</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">0.5°C</span>
+      <span class="stat-label">Potential warming reduction by 2100</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="callout-label">Year 0 Requirement</span>
+    <p>All businesses beginning certification under the new standards must complete a Year 0 self-assessment through the B Impact Assessment portal before submitting. This is a baseline inventory of where you stand across all seven impact topics. It is not optional, and skipping it will stall your application. Start there first.</p>
+  </div>
+
+  <h2>What this means for your certification timeline</h2>
+  <p>The new standards add time to Phase 1 preparation for businesses starting from scratch on carbon measurement. A basic Scope 1 and Scope 2 footprint calculation for a small business typically takes four to eight weeks with the right support. Developing a credible climate transition plan adds more. Factor that in before you set a target certification date.</p>
+  <p>Businesses that already track energy use, have written HR policies, and maintain documented supplier relationships will find the transition manageable. The core preparation work is the same as before. The new standards add specificity to what that work needs to produce.</p>
+  <p>One practical note: existing certified B Corps due for recertification are working under a phased transition. If you submitted your recertification application before June 30, 2025, you could complete it on the old standards. Beyond that date, recertification falls under Version 2. If you are approaching your recertification window, check which version applies to your submission date before building your preparation roadmap.</p>
+
+  <h2>Should you start now or wait for the standards to settle?</h2>
+  <p>Start now. The new standards are not going to get easier. Version 2.2 released in March 2026 adds clarity, not new requirements. What further updates will do is the same: tighten the criteria, not loosen them. Waiting costs you preparation time that directly extends your total timeline.</p>
+  <p>The businesses that move fastest under the new standards are the ones that treat the Year 0 self-assessment as a genuine gap analysis, not a formality. Know where you stand on all seven topics before you start closing gaps. Sequence the work. Carbon measurement and HR documentation can run in parallel. Governance and supplier documentation usually need to come first because they unlock compliance across multiple topics.</p>
+  <p>If you want a clear read on where your business stands under the 2026 B Corp certification changes, <a href="https://candorcertified.com/#contact">that assessment is where Candor starts</a>. It is also worth reading how <a href="/blog/how-long-does-b-corp-certification-take">the new standards affect your overall certification timeline</a> before setting expectations internally.</p>
+
+</article>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Find out where you stand under the new standards.</h2>
+    <p>Candor's gap assessment maps your business against the 2026 B Corp requirements across all seven impact topics. You'll know exactly what needs to change before committing to anything.</p>
+    <a href="https://candorcertified.com/#contact" class="cta-btn">Book a call</a>
+  </div>
+</section>
+
+<!-- MORE ARTICLES -->
+<section class="more-articles">
+  <h3>More from the blog</h3>
+  <div class="cards-grid">
+    <a href="/blog/how-long-does-b-corp-certification-take" class="article-card">
+      <span class="card-tag">Process</span>
+      <h2 class="card-title">How Long B Corp Certification Takes in 2026</h2>
+      <p class="card-excerpt">The honest timeline breakdown — what controls it, what slows it down, and how to move faster.</p>
+      <div class="card-meta">
+        <span class="card-date">May 2026</span>
+        <span class="card-arrow">&#8594;</span>
+      </div>
+    </a>
+    <a href="/blog/b-corp-certification-cost-canada" class="article-card">
+      <span class="card-tag">Cost &amp; Fees</span>
+      <h2 class="card-title">What B Corp Certification Costs in Canada</h2>
+      <p class="card-excerpt">B Lab fees, verification costs, and what preparation actually runs for a small business.</p>
+      <div class="card-meta">
+        <span class="card-date">May 2026</span>
+        <span class="card-arrow">&#8594;</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="https://candorcertified.com" class="footer-brand">Candor<span class="dot">.</span></a>
+    <p>B Corp &amp; Climate Neutral certification consulting · Vancouver, BC</p>
+    <p>&copy; 2026 Candor Certification Consulting</p>
+  </div>
+</footer>
+
+<!-- NAV SCROLL EFFECT — do not remove -->
+<script>
+(function(){
+  var nav = document.getElementById('site-nav');
+  if (!nav) return;
+  function checkScroll() { nav.classList.toggle('nav-up', window.scrollY > 32); }
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
+})();
+</script>
+</body>
+</html>
