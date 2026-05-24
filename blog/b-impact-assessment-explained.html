@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What the B Impact Assessment Actually Scores | Candor</title>
+  <meta name="description" content="B Impact Assessment explained: the five pillars, how each is scored, and why most businesses lose points to documentation gaps, not operations." />
+  <link rel="canonical" href="https://candorcertified.com/blog/b-impact-assessment-explained" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "What the B Impact Assessment Actually Scores",
+    "description": "B Impact Assessment explained: the five pillars, how each is scored, and why most businesses lose points to documentation gaps, not operations.",
+    "datePublished": "2026-05-24",
+    "dateModified": "2026-05-24",
+    "url": "https://candorcertified.com/blog/b-impact-assessment-explained",
+    "author": {
+      "@type": "Person",
+      "name": "Artem Furman"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Candor",
+      "url": "https://candorcertified.com"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #0D1610;
+      --forest:     #2D6B42;
+      --field:      #3D8A57;
+      --oat:        #ECEAE2;
+      --paper:      #F5F3EE;
+      --body:       #4A5548;
+      --stone:      #C8C3B5;
+      --pebble:     #D8D3C3;
+      --light:      #E4E1D6;
+      --amber:      #B8651E;
+      --amber-bg:   #E8B888;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--paper);
+      border-bottom: 1px solid var(--light);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .nav-brand span {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1.125rem;
+      letter-spacing: -0.03em;
+    }
+    .nav-brand .dot { color: var(--forest); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--body);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--forest); }
+    .nav-cta {
+      background: var(--ink);
+      color: var(--paper) !important;
+      padding: 7px 16px;
+      border-radius: 4px;
+      font-size: 0.8125rem !important;
+      font-weight: 600 !important;
+      transition: background 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--forest) !important; color: var(--paper) !important; }
+
+    .article-header {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 24px 40px;
+    }
+    .article-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--forest);
+      background: rgba(45,107,66,0.08);
+      padding: 4px 10px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    .article-header h1 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .article-lede {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: var(--body);
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6875rem;
+      color: var(--stone);
+      letter-spacing: 0.06em;
+    }
+    .article-meta .sep { color: var(--pebble); }
+    .article-divider {
+      max-width: 720px;
+      margin: 0 auto 0;
+      padding: 0 24px;
+      border: none;
+      border-top: 1px solid var(--light);
+    }
+
+    article.article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+    article.article-body h2 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1.375rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 48px 0 16px;
+      line-height: 1.25;
+    }
+    article.article-body p {
+      color: var(--body);
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    article.article-body a {
+      color: var(--forest);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    article.article-body a:hover { color: var(--ink); }
+
+    .pull-quote {
+      border-left: 3px solid var(--forest);
+      padding: 20px 28px;
+      margin: 40px 0;
+      background: var(--oat);
+      border-radius: 0 6px 6px 0;
+    }
+    .pull-quote p {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 700;
+      font-size: 1.125rem;
+      line-height: 1.45;
+      color: var(--ink);
+      margin: 0;
+      font-style: italic;
+      letter-spacing: -0.01em;
+    }
+
+    .callout {
+      background: var(--oat);
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 32px 0;
+    }
+    .callout-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--forest);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .callout p {
+      font-size: 0.9375rem;
+      color: var(--body);
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    /* Pillar cards */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .pillar-card {
+      background: var(--oat);
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      padding: 18px 18px 16px;
+    }
+    .pillar-name {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 0.9375rem;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .pillar-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--forest);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .pillar-desc {
+      font-size: 0.8125rem;
+      color: var(--body);
+      line-height: 1.55;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--light);
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 36px 0;
+    }
+    .stat-cell {
+      background: var(--paper);
+      padding: 20px 20px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--forest);
+      display: block;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--body);
+    }
+
+    .cta-section {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 64px 24px;
+    }
+    .cta-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .cta-section p {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: rgba(245,243,238,0.75);
+      margin-bottom: 28px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--field);
+      color: var(--paper);
+      text-decoration: none;
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      padding: 13px 28px;
+      border-radius: 4px;
+      letter-spacing: -0.01em;
+      transition: background 0.15s;
+    }
+    .cta-btn:hover { background: var(--forest); }
+
+    .more-articles {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    .more-articles h3 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1.125rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .article-card {
+      display: block;
+      background: var(--oat);
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      padding: 24px;
+      text-decoration: none;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .article-card:hover { border-color: var(--forest); transform: translateY(-2px); }
+    .card-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--forest);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .card-excerpt {
+      font-size: 0.875rem;
+      color: var(--body);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+      color: var(--stone);
+    }
+    .card-arrow { color: var(--forest); font-size: 0.875rem; }
+
+    footer {
+      border-top: 1px solid var(--light);
+      background: var(--paper);
+      padding: 32px 24px;
+    }
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-brand {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 0.9375rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .footer-brand .dot { color: var(--forest); }
+    footer p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.08em;
+      color: var(--stone);
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .stat-row { grid-template-columns: 1fr; }
+      .article-header h1 { font-size: 1.75rem; }
+      .pillar-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="site-nav" aria-label="Site navigation">
+  <div class="nav-bg"></div>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo logo" aria-label="Candor — home">
+      <svg class="nav-logo-svg" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="#0D1610"/>
+        <path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="216.48" cy="194.16" r="4.55" fill="#3D8A57"/>
+      </svg>
+      <span class="nav-wordmark">Candor</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#who"       class="nav-link" data-nav="who">Who</a>
+      <a href="#process"   class="nav-link" data-nav="process">Process</a>
+      <a href="#services"  class="nav-link" data-nav="services">Services</a>
+      <a href="#about"     class="nav-link" data-nav="about">About</a>
+      <a href="#faq"       class="nav-link" data-nav="faq">FAQ</a>
+      <a href="/blog"      class="nav-link nav-hide-mobile">Resources</a>
+    </nav>
+    <div class="nav-cta-wrap">
+      <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a call <span class="nav-ar">→</span></a>
+    </div>
+  </div>
+</header>
+
+<header class="article-header">
+  <span class="article-tag">B Corp Basics</span>
+  <h1>What the B Impact Assessment Actually Scores.</h1>
+  <p class="article-lede">Before a business can become B Corp certified, it has to pass the B Impact Assessment. Most owners have heard of it. Few understand what it's measuring — or where they're actually losing points.</p>
+  <div class="article-meta">
+    <span>May 2026</span>
+    <span class="sep">·</span>
+    <span>6 min read</span>
+  </div>
+</header>
+<hr class="article-divider" />
+
+<article class="article-body">
+
+  <h2>What the B Impact Assessment is</h2>
+  <p>The B Impact Assessment is a free scoring tool developed and maintained by B Lab, the nonprofit that administers B Corp certification globally. It scores a business across five pillars: Governance, Workers, Community, Environment, and Customers. The maximum possible score is 200. The minimum to qualify for certification is 80.</p>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <span class="stat-num">200</span>
+      <span class="stat-label">Maximum score</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">80</span>
+      <span class="stat-label">Points needed to certify</span>
+    </div>
+    <div class="stat-cell">
+      <span class="stat-num">~50</span>
+      <span class="stat-label">Average unaided score</span>
+    </div>
+  </div>
+
+  <p>The average score for businesses that complete the full B Impact Assessment without preparation is around 50. Reaching 80 puts a business in the top performance tier globally among businesses that have attempted it. A score above 100 is considered exceptional.</p>
+  <p>The assessment lives at bimpactassessment.net. It's accessible to any business at no cost. You can begin scoring today without engaging B Lab or paying anything.</p>
+
+  <h2>How the five pillars break down</h2>
+  <p>Each pillar covers a different dimension of how a business operates and what it affects.</p>
+
+  <div class="pillar-grid">
+    <div class="pillar-card">
+      <span class="pillar-tag">Pillar 01</span>
+      <div class="pillar-name">Governance</div>
+      <p class="pillar-desc">How the business is structured to consider all stakeholders. Mission lock provisions, transparency, board diversity.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="pillar-tag">Pillar 02</span>
+      <div class="pillar-name">Workers</div>
+      <p class="pillar-desc">Compensation, benefits, flexibility, health and safety practices, and employee feedback systems. Often the highest-weighted pillar.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="pillar-tag">Pillar 03</span>
+      <div class="pillar-name">Community</div>
+      <p class="pillar-desc">Supplier diversity, local economic impact, charitable giving, and civic engagement. Supplier data gaps hit here hardest.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="pillar-tag">Pillar 04</span>
+      <div class="pillar-name">Environment</div>
+      <p class="pillar-desc">Energy use, emissions, waste, water, and supply chain environmental practices — relative to your industry benchmark.</p>
+    </div>
+    <div class="pillar-card">
+      <span class="pillar-tag">Pillar 05</span>
+      <div class="pillar-name">Customers</div>
+      <p class="pillar-desc">Whether products or services directly benefit underserved populations or address a documented social or environmental problem.</p>
+    </div>
+  </div>
+
+  <p>Not every pillar applies equally to every business type. B Lab adjusts questions based on your industry, company size, and geography. A manufacturing company faces different environmental questions than a professional services firm. A 12-person craft brewery isn't assessed the same way as a global supply chain business. The tool adapts to your context.</p>
+
+  <h2>What actually determines your score</h2>
+  <p>Most businesses are surprised to find that the biggest gap between their current score and 80 points isn't operational. It's documentation.</p>
+  <p>A business might already pay living wages, run flexible work arrangements, track its energy use, and source from local suppliers. If none of that is formally documented, the assessment can't score it. The BIA is evidence-based. What you do matters. What you can prove matters equally.</p>
+
+  <div class="pull-quote">
+    <p>"The gap is documentation, not an overhaul. Most businesses already operate more responsibly than their unaided B Impact Assessment score reflects."</p>
+  </div>
+
+  <p>This is the core insight that changes how you approach certification. You're not rebuilding your business. You're making your existing practices legible. Policy drafts. Tracking systems. Evidence compilation. That's the work.</p>
+
+  <h2>How B Lab verifies your score</h2>
+  <p>Completing the self-assessment is the first step. Reaching 80 points on paper is the second. The third is verification — and this is where underprepared businesses stall.</p>
+  <p>Once a business submits for certification, B Lab assigns a verification analyst who reviews the submission and schedules a call. On that call, the analyst requests supporting documentation: HR policy documents, governance records, financial data, supplier information. The analyst uses this to validate the scores claimed in the self-assessment. Scores without documentation get adjusted downward.</p>
+
+  <div class="callout">
+    <span class="callout-label">Worth knowing</span>
+    <p>Roughly a third of businesses that submit for B Corp certification don't pass on their first attempt. The most common reason isn't that they scored below 80 on paper — it's that their documentation didn't support the score when the analyst reviewed it. Submitting before you're ready adds two to four months to your total timeline.</p>
+  </div>
+
+  <p>The audit will tell you what actually needs to change. Some businesses discover their score is higher than expected. Some find a specific pillar with a concentrated gap that's straightforward to close. Either way, you're working from fact, not assumption.</p>
+  <p>Candor scores your business on the B Impact Assessment as the first step of every engagement, identifies the specific documentation gaps, and maps out what preparation work actually looks like. If you want to know where your business stands before deciding anything, <a href="https://candorcertified.com/#contact">that's the right starting point</a>. It's also worth reviewing <a href="/blog/b-corp-certification-cost-canada">what the full process costs</a> and <a href="/blog/how-long-does-b-corp-certification-take">how long it realistically takes</a> alongside this.</p>
+
+</article>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>See where your business actually scores.</h2>
+    <p>Candor runs a full B Impact Assessment for your business, identifies your specific gaps, and tells you exactly what preparation would involve. No vague estimates.</p>
+    <a href="https://candorcertified.com/#contact" class="cta-btn">Book a call</a>
+  </div>
+</section>
+
+<section class="more-articles">
+  <h3>More from the blog</h3>
+  <div class="cards-grid">
+    <a href="/blog/b-corp-certification-cost-canada" class="article-card">
+      <span class="card-tag">Cost &amp; Fees</span>
+      <h2 class="card-title">What B Corp Certification Costs in Canada</h2>
+      <p class="card-excerpt">B Lab fees, verification costs, and what preparation actually runs for a small business.</p>
+      <div class="card-meta">
+        <span class="card-date">May 2026</span>
+        <span class="card-arrow">&#8594;</span>
+      </div>
+    </a>
+    <a href="/blog/how-long-does-b-corp-certification-take" class="article-card">
+      <span class="card-tag">Process</span>
+      <h2 class="card-title">How Long B Corp Certification Takes in 2026</h2>
+      <p class="card-excerpt">What actually determines your timeline — and how to move through it faster.</p>
+      <div class="card-meta">
+        <span class="card-date">May 2026</span>
+        <span class="card-arrow">&#8594;</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="https://candorcertified.com" class="footer-brand">Candor<span class="dot">.</span></a>
+    <p>B Corp &amp; Climate Neutral certification consulting · Vancouver, BC</p>
+    <p>&copy; 2026 Candor Certification Consulting</p>
+  </div>
+</footer>
+
+</body>
+</html>
