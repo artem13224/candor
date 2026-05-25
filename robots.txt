@@ -4,6 +4,7 @@
 # Security Baseline & Regional Crawl Lock
 # ==========================================
 
+# Blocked crawlers
 User-agent: Yandex
 User-agent: YandexBot
 User-agent: Baiduspider
@@ -22,6 +23,7 @@ User-agent: MJ12bot
 User-agent: Rogerbot
 Disallow: /
 
+# General crawler rules
 User-agent: *
 Disallow: /admin/
 Disallow: /wp-admin/
@@ -29,12 +31,31 @@ Disallow: /api/
 Disallow: /*?*
 Disallow: /vancouver-sustainability-consultant-draft*
 
-User-agent: Google-Extended
-User-agent: ChatGPT-User
-User-agent: PerplexityBot
-User-agent: OAI-SearchBot
-Allow: /blog/
+# Explicitly allowed search and AI crawlers
+User-agent: Googlebot
 Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
 Crawl-delay: 2
 
 Sitemap: https://candorcertified.com/sitemap.xml
