@@ -916,20 +916,18 @@ function submitEmail() {
   wrap.style.borderColor = '';
   state.email = email;
 
-  const formData = new URLSearchParams();
-  formData.append('email', email);
-  formData.append('size', state.size);
-  formData.append('industry', state.industry);
-  formData.append('practices', state.practices.map(p => p ? 'yes' : 'no').join(','));
-  formData.append('timestamp', new Date().toISOString());
+  const params = new URLSearchParams({
+    email:     email,
+    size:      state.size,
+    industry:  state.industry,
+    practices: state.practices.map(p => p ? 'yes' : 'no').join(','),
+    timestamp: new Date().toISOString()
+  });
 
   if (SHEETS_URL) {
-    fetch(SHEETS_URL, {
-      method: 'POST',
-      body: formData
-    })
-    .then(() => console.log('Data dispatched to Google Script.'))
-    .catch(e => console.error('Error sending data:', e));
+    fetch(SHEETS_URL + '?' + params.toString(), { method: 'GET' })
+      .then(() => console.log('Data dispatched to Google Script.'))
+      .catch(e => console.error('Error sending data:', e));
   }
 
   goTo('results');
