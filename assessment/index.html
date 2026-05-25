@@ -809,7 +809,7 @@
       - Who has access: Anyone
    4. Copy the deployment URL and paste below
    ───────────────────────────────────────────── */
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwDuU60LHO7TfmYxFrHB3NQ9Kg8Kmc5Dt_Y63vMtULEvr_8D-LIM6Aknro2jU3JJrmp/exec';
+
 
 /* ─── State ─────────────────────────────────── */
 let assessmentStarted = false;
@@ -893,36 +893,45 @@ function togglePractice(idx) {
 }
 
 /* ─── Email ──────────────────────────────────── */
+// 1. PASTE YOUR APPS SCRIPT WEB APP URL INSIDE THESE QUOTES:
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwDuU60LHO7TfmYxFrHB3NQ9Kg8Kmc5Dt_Y63vMtULEvr_8D-LIM6Aknro2jU3JJrmp/exec';
+
+// This function gathers your form answers and sends them away
 function submitEmail() {
   const input = document.getElementById('email-input');
   const email = input.value.trim();
+  
+  // If the user didn't type a proper email, stop here and highlight it red
   if (!email || !email.includes('@')) {
     input.style.borderBottom = '1px solid #c0392b';
-    input.focus(); return;
+    input.focus(); 
+    return;
   }
+  
   state.email = email;
 
-  // Prepared data payload
+  // Package up all your answers neatly
   const payload = {
-    email,
+    email: email,
     size: state.size,
     industry: state.industry,
     practices: state.practices.map(p => p ? 'yes' : 'no').join(','),
     timestamp: new Date().toISOString()
   };
 
-  // POST to Google Sheets
+  // If you provided a URL, send the packaged answers to your Apps Script mail carrier
   if (SHEETS_URL) {
     fetch(SHEETS_URL, {
       method: 'POST',
-      mode: 'no-cors', // Bypasses browser strict CORS blocks for Google Apps Script
+      mode: 'no-cors', // Bypasses browser security blocks smoothly
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
-    .then(() => console.log('Data transmitted to sheet endpoint.'))
-    .catch(e => console.error('Sheet transmission error:', e));
+    .then(() => console.log('Data successfully dispatched to Google Script.'))
+    .catch(e => console.error('Error sending data:', e));
   }
 
+  // Instantly take the user to the results screen without making them wait
   goTo('results');
 }
 
