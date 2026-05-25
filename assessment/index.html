@@ -902,23 +902,25 @@ function submitEmail() {
   }
   state.email = email;
 
-  // POST to Google Sheets (non-blocking)
-  if (SHEETS_URL && SHEETS_URL !== 'https://script.google.com/macros/s/AKfycbwDuU60LHO7TfmYxFrHB3NQ9Kg8Kmc5Dt_Y63vMtULEvr_8D-LIM6Aknro2jU3JJrmp/exec') {
-    const payload = {
-      email,
-      size: state.size,
-      industry: state.industry,
-      practices: state.practices.map(p => p ? 'yes' : 'no').join(','),
-      timestamp: new Date().toISOString()
-    };
+  // Prepared data payload
+  const payload = {
+    email,
+    size: state.size,
+    industry: state.industry,
+    practices: state.practices.map(p => p ? 'yes' : 'no').join(','),
+    timestamp: new Date().toISOString()
+  };
+
+  // POST to Google Sheets
+  if (SHEETS_URL) {
     fetch(SHEETS_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
+      mode: 'no-cors', // Bypasses browser strict CORS blocks for Google Apps Script
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
-    .then(r => r.text())
-    .then(t => console.log('Sheet response:', t))
-    .catch(e => console.error('Sheet error:', e));
+    .then(() => console.log('Data transmitted to sheet endpoint.'))
+    .catch(e => console.error('Sheet transmission error:', e));
   }
 
   goTo('results');
