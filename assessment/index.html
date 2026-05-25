@@ -926,9 +926,7 @@ function submitEmail() {
   });
 
   if (SHEETS_URL) {
-    fetch(SHEETS_URL + '?' + params.toString(), { method: 'GET' })
-      .then(() => console.log('Data dispatched to Google Script.'))
-      .catch(e => console.error('Error sending data:', e));
+    new Image().src = SHEETS_URL + '?' + params.toString();
   }
 
   goTo('results');
