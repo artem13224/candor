@@ -896,20 +896,26 @@ function togglePractice(idx) {
 // 1. PASTE YOUR APPS SCRIPT WEB APP URL INSIDE THESE QUOTES:
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwDuU60LHO7TfmYxFrHB3NQ9Kg8Kmc5Dt_Y63vMtULEvr_8D-LIM6Aknro2jU3JJrmp/exec';
 
-// This function gathers your form answers and sends them away
 function submitEmail() {
   const input = document.getElementById('email-input');
+  const wrap  = input.closest('.email-field-wrap');
   const email = input.value.trim();
-  
-  if (!email || !email.includes('@')) {
-    input.style.borderBottom = '1px solid #c0392b';
-    input.focus(); 
+
+  // Requires a real local part, domain with at least one label, and an alphabetical TLD (2+ chars)
+  const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+  if (!email || !emailRegex.test(email)) {
+    wrap.style.borderColor = '#c0392b';
+    input.addEventListener('input', function reset() {
+      wrap.style.borderColor = '';
+      input.removeEventListener('input', reset);
+    });
+    input.focus();
     return;
   }
-  
+
+  wrap.style.borderColor = '';
   state.email = email;
 
-  // This reformats your data so the live website can send it safely without security blocks
   const formData = new URLSearchParams();
   formData.append('email', email);
   formData.append('size', state.size);
@@ -922,7 +928,7 @@ function submitEmail() {
       method: 'POST',
       body: formData
     })
-    .then(() => console.log('Data successfully dispatched to Google Script.'))
+    .then(() => console.log('Data dispatched to Google Script.'))
     .catch(e => console.error('Error sending data:', e));
   }
 
