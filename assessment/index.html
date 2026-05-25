@@ -903,7 +903,7 @@ function submitEmail() {
   state.email = email;
 
   // POST to Google Sheets (non-blocking)
-  if (SHEETS_URL && SHEETS_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') {
+  if (SHEETS_URL && SHEETS_URL !== 'https://script.google.com/macros/s/AKfycbwDuU60LHO7TfmYxFrHB3NQ9Kg8Kmc5Dt_Y63vMtULEvr_8D-LIM6Aknro2jU3JJrmp/exec') {
     const payload = {
       email,
       size: state.size,
