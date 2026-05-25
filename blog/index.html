@@ -25,6 +25,7 @@
       --ink3: #4A5548;
       --u: 'Urbanist', sans-serif;
       --ease: cubic-bezier(.16,1,.3,1);
+      --px: clamp(20px,5vw,80px);
     }
 
     html { background: var(--dark); }
@@ -277,7 +278,7 @@
     .empty p { font-size: 15px; }
 
     /* FOOTER */
-    footer{background:#080B08;padding:28px 40px;border-top:1px solid rgba(245,243,238,.07)}
+    footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,243,238,.07)}
     .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
     .foot-row+.foot-row{margin-top:18px;padding-top:18px;border-top:1px solid rgba(245,243,238,.06)}
     .foot-l{display:flex;align-items:center;gap:8px}
@@ -290,15 +291,86 @@
     .foot-links a:hover{color:rgba(245,243,238,.7);text-decoration:underline}
     .foot-copy{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.2)}
 
+    /* FILTER BAR */
+    .filter-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 40px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-btn {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--ink3);
+      border: 1.5px solid rgba(13,22,16,0.18);
+      border-radius: 2px;
+      padding: 7px 14px;
+      cursor: pointer;
+      line-height: 1;
+      transition: background 0.22s, color 0.22s, border-color 0.22s;
+    }
+    .filter-btn:hover { border-color: rgba(13,22,16,0.45); color: var(--dark); }
+    .filter-btn.active { background: var(--dark); color: #F5F3EE; border-color: var(--dark); }
+    .sort-btn {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--ink3);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 0;
+      white-space: nowrap;
+      transition: color 0.22s;
+    }
+    .sort-btn:hover { color: var(--dark); }
+    .sort-icon { color: var(--green); font-size: 13px; display: inline-block; transition: transform 0.3s var(--ease); }
+    .sort-btn.asc .sort-icon { transform: rotate(180deg); }
+
+    /* Normalized card state when filter or sort is active */
+    .articles.filter-active .article-card.featured {
+      grid-column: auto;
+      flex-direction: column;
+      padding: 40px;
+      background: var(--white);
+      color: var(--dark);
+      border-color: rgba(13,22,16,0.07);
+      gap: 16px;
+    }
+    .articles.filter-active .article-card.featured:hover { background: var(--bg); transform: translateY(-2px); }
+    .articles.filter-active .article-card.featured::after { background: var(--green); }
+    .articles.filter-active .featured-left,
+    .articles.filter-active .featured-right { display: contents; }
+    .articles.filter-active .article-card.featured .card-tag { color: var(--green); }
+    .articles.filter-active .article-card.featured .card-title { font-size: 22px; color: var(--dark); flex: none; }
+    .articles.filter-active .article-card.featured .card-excerpt { color: rgba(13,22,16,0.62); max-width: none; }
+    .articles.filter-active .article-card.featured .card-date { opacity: 0.4; color: var(--dark); }
+    .articles.filter-active .article-card.featured .card-arrow { color: var(--green); font-size: 16px; }
+    .article-card.hidden { display: none; }
+
     /* RESPONSIVE */
     @media (max-width: 768px) {
       #site-nav { padding: 0 20px; }
       .nav-links { display: none; }
       .blog-hero { padding: 110px 20px 60px; }
       .divider { width: calc(100% - 40px); }
+      .filter-bar { padding: 20px 20px 0; }
       .articles { padding: 40px 20px 80px; grid-template-columns: 1fr; }
       .article-card.featured { flex-direction: column; padding: 36px 28px; }
-      footer { padding: 36px 20px; }
     }
   </style>
 </head>
@@ -340,16 +412,23 @@
 
   <div class="divider"></div>
 
+  <div class="filter-bar">
+    <div class="filter-tags" id="filterTags"></div>
+    <button class="sort-btn" id="sortBtn">
+      <span class="sort-label">Newest</span>
+      <span class="sort-icon">↓</span>
+    </button>
+  </div>
+
   <section class="articles">
 
-    <!-- FEATURED POST — duplicate and fill in when you have a first article -->
-    <a href="/blog/how-to-get-b-corp-certified-bc" class="article-card featured">
+    <a href="/blog/b-corp-vs-1-percent-for-the-planet" class="article-card featured" data-tag="Certifications" data-date="2026-05-25">
       <div class="featured-left">
-        <span class="card-tag">B Corp</span>
-        <h2 class="card-title">How to get B Corp certified in BC: what it actually takes.</h2>
+        <span class="card-tag">Certifications</span>
+        <h2 class="card-title">B Corp vs 1% for the Planet: The Real Difference</h2>
       </div>
       <div class="featured-right">
-        <p class="card-excerpt">The process is documented. The gap is usually documentation, not practice. Here is what small businesses in BC need to know before they start.</p>
+        <p class="card-excerpt">B Corp and 1% for the Planet are not the same thing. Here's how they differ, what each actually requires, and which makes sense for your business.</p>
         <div class="card-meta">
           <span class="card-date">May 2026</span>
           <span class="card-arrow">&#8594;</span>
@@ -357,62 +436,40 @@
       </div>
     </a>
 
-    <a href="/blog/b-corp-certification-cost-canada" class="article-card">
-      <span class="card-tag">Cost &amp; Fees</span>
-      <h2 class="card-title">What B Corp Certification Costs in Canada</h2>
-      <p class="card-excerpt">B Lab fees, verification costs, and what preparation actually runs for a small business.</p>
+    <a href="/blog/b-corp-certification-changes-2026" class="article-card" data-tag="B Corp Basics" data-date="2026-05-24">
+      <span class="card-tag">B Corp Basics</span>
+      <h2 class="card-title">B Corp Certification Changes in 2026</h2>
+      <p class="card-excerpt">B Lab replaced the 80-point system with 7 mandatory impact topics. What changed in 2026, what it means for your timeline, and what to do now.</p>
       <div class="card-meta">
         <span class="card-date">May 2026</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
 
-    <a href="/blog/how-long-does-b-corp-certification-take" class="article-card">
-      <span class="card-tag">Process</span>
-      <h2 class="card-title">How Long B Corp Certification Takes in 2026</h2>
-      <p class="card-excerpt">What actually determines your timeline — and how to move through it faster.</p>
-      <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
-      </div>
-    </a>
-
-    <a href="/blog/b-impact-assessment-explained" class="article-card">
+    <a href="/blog/b-impact-assessment-explained" class="article-card" data-tag="B Corp Basics" data-date="2026-05-24">
       <span class="card-tag">B Corp Basics</span>
       <h2 class="card-title">What the B Impact Assessment Actually Scores</h2>
-      <p class="card-excerpt">The five pillars explained — and why documentation gaps cost more points than operations do.</p>
+      <p class="card-excerpt">B Impact Assessment explained: the five pillars, how each is scored, and why most businesses lose points to documentation gaps, not operations.</p>
       <div class="card-meta">
         <span class="card-date">May 2026</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
 
-    <!-- STANDARD CARD — duplicate for each new post -->
-    <a href="/blog/b-corp-certification-cost-canada" class="article-card">
-      <span class="card-tag">Cost</span>
-      <h2 class="card-title">What B Corp certification actually costs in Canada.</h2>
-      <p class="card-excerpt">Submission fees, annual fees, verification costs. The full breakdown without the vague ranges most sites give you.</p>
+    <a href="/blog/how-long-does-b-corp-certification-take" class="article-card" data-tag="Process" data-date="2026-05-24">
+      <span class="card-tag">Process</span>
+      <h2 class="card-title">How Long B Corp Certification Takes in 2026</h2>
+      <p class="card-excerpt">How long does B Corp certification take? The honest timeline breakdown — what controls it, what slows it down, and how to move faster.</p>
       <div class="card-meta">
         <span class="card-date">May 2026</span>
         <span class="card-arrow">&#8594;</span>
       </div>
     </a>
 
-    <a href="/blog/b-corp-vs-climate-neutral" class="article-card">
-      <span class="card-tag">Certifications</span>
-      <h2 class="card-title">B Corp vs Climate Neutral: they are different things.</h2>
-      <p class="card-excerpt">Most owners cannot tell them apart. Here is what each one measures, what it costs, and when one makes more sense than the other.</p>
-      <div class="card-meta">
-        <span class="card-date">Coming soon</span>
-        <span class="card-arrow">&#8594;</span>
-      </div>
-    </a>
-
-  
-    <a href="/blog/b-corp-certification-changes-2026" class="article-card">
-      <span class="card-tag">B Corp Basics</span>
-      <h2 class="card-title">What Changed in B Corp Certification in 2026</h2>
-      <p class="card-excerpt">B Lab just replaced the 80-point scoring system with mandatory requirements across seven impact topics. Every busines...</p>
+    <a href="/blog/how-to-get-b-corp-certified-bc" class="article-card" data-tag="B Corp" data-date="2026-05-24">
+      <span class="card-tag">B Corp</span>
+      <h2 class="card-title">How to Get B Corp Certified in BC: What It Actually Takes</h2>
+      <p class="card-excerpt">The practical breakdown of what B Corp certification requires for BC small businesses — documentation, timelines, and costs.</p>
       <div class="card-meta">
         <span class="card-date">May 2026</span>
         <span class="card-arrow">&#8594;</span>
@@ -428,10 +485,10 @@
         <span class="foot-name">Candor</span>
       </div>
       <nav class="foot-nav" aria-label="Footer navigation">
-        <a href="#services">Services</a>
-        <a href="#process">How It Works</a>
-        <a href="#about">About</a>
-        <a href="#faq">FAQ</a>
+        <a href="/#services">Services</a>
+        <a href="/#process">How It Works</a>
+        <a href="/#about">About</a>
+        <a href="/#faq">FAQ</a>
         <a href="/blog">Resources</a>
         <a href="/assessment/">Assessment</a>
       </nav>
@@ -494,6 +551,69 @@
         target.classList.remove('sec-nav-flash');
       }, { once: true });
     });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const articles = document.querySelector('.articles');
+  const filterTagsEl = document.getElementById('filterTags');
+  const sortBtn = document.getElementById('sortBtn');
+  if (!articles || !filterTagsEl || !sortBtn) return;
+
+  const cards = Array.from(articles.querySelectorAll('.article-card'));
+
+  // Build category list from card data attributes
+  const cats = ['All', ...new Set(
+    cards.map(c => c.dataset.tag).filter(Boolean)
+  )];
+
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
+    btn.dataset.cat = cat;
+    btn.textContent = cat;
+    filterTagsEl.appendChild(btn);
+  });
+
+  let activeFilter = 'All';
+  let sortNewest = true;
+
+  function isDefault() { return activeFilter === 'All' && sortNewest; }
+
+  function apply() {
+    articles.classList.toggle('filter-active', !isDefault());
+
+    // Reorder cards in the DOM by date
+    const sorted = [...cards].sort((a, b) => {
+      const da = a.dataset.date ? new Date(a.dataset.date) : new Date(0);
+      const db = b.dataset.date ? new Date(b.dataset.date) : new Date(0);
+      return sortNewest ? db - da : da - db;
+    });
+    sorted.forEach(c => articles.appendChild(c));
+
+    // Show / hide by category
+    cards.forEach(card => {
+      const match = activeFilter === 'All' || card.dataset.tag === activeFilter;
+      card.classList.toggle('hidden', !match);
+    });
+  }
+
+  filterTagsEl.addEventListener('click', function (e) {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    filterTagsEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.cat;
+    apply();
+  });
+
+  sortBtn.addEventListener('click', function () {
+    sortNewest = !sortNewest;
+    this.classList.toggle('asc', !sortNewest);
+    this.querySelector('.sort-label').textContent = sortNewest ? 'Newest' : 'Oldest';
+    apply();
   });
 })();
 </script>

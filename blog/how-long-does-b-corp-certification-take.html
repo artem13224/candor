@@ -6,6 +6,7 @@
   <title>How Long B Corp Certification Takes in 2026 | Candor</title>
   <meta name="description" content="How long does B Corp certification take? The honest timeline breakdown — what controls it, what slows it down, and how to move faster." />
   <link rel="canonical" href="https://candorcertified.com/blog/how-long-does-b-corp-certification-take" />
+  <meta name="article:section" content="Process" />
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -131,6 +132,7 @@
       --ink3:       #4A5548;
       --u:          'Urbanist', sans-serif;
       --ease:       cubic-bezier(.16,1,.3,1);
+      --px:         clamp(20px,5vw,80px);
     }
 
     html { font-size: 16px; scroll-behavior: smooth; }
@@ -514,35 +516,19 @@
     }
     .card-arrow { color: var(--forest); font-size: 0.875rem; }
 
-    footer {
-      border-top: 1px solid var(--light);
-      background: var(--paper);
-      padding: 32px 24px;
-    }
-    .footer-inner {
-      max-width: 1080px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-brand {
-      font-family: 'Urbanist', sans-serif;
-      font-weight: 800;
-      font-size: 0.9375rem;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      text-decoration: none;
-    }
-    .footer-brand .dot { color: var(--forest); }
-    footer p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.625rem;
-      letter-spacing: 0.08em;
-      color: var(--stone);
-    }
+    /* FOOTER */
+    footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,243,238,.07)}
+    .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+    .foot-row+.foot-row{margin-top:18px;padding-top:18px;border-top:1px solid rgba(245,243,238,.06)}
+    .foot-l{display:flex;align-items:center;gap:8px}
+    .foot-name{font-family:var(--u);font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,243,238,.4)}
+    .foot-nav{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+    .foot-nav a{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.3);text-decoration:none}
+    .foot-nav a:hover{color:rgba(245,243,238,.7)}
+    .foot-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+    .foot-links a{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,243,238,.35);text-decoration:none}
+    .foot-links a:hover{color:rgba(245,243,238,.7);text-decoration:underline}
+    .foot-copy{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.2)}
 
     @media (max-width: 680px) {
       .nav-links { display: none; }
@@ -650,7 +636,7 @@
   <p>The fastest path through B Corp certification starts with knowing exactly where you stand before you begin. That means a scored B Impact Assessment with specific gap analysis, not a rough estimate based on assumptions.</p>
   <p>From there, sequencing matters. Closing governance gaps first tends to unlock points across multiple pillars. HR documentation comes next. Supply chain data collection can often run in parallel once you know which questions require it.</p>
   <p>You do not need a perfect score. You do not need to restructure your business. The goal is reaching 80 points with clean, verifiable documentation ready for the call. The audit will tell you what actually needs to change. Everything else is scope creep.</p>
-  <p>Candor runs that initial assessment and structures the preparation roadmap as the first step of every engagement. If you want to know how long your specific business would take, <a href="https://candorcertified.com/#contact">start there</a>. Also worth reading: <a href="/blog/b-corp-certification-cost-canada">what the process costs</a>, which most owners research alongside the timeline.</p>
+  <p>Candor runs that initial assessment and structures the preparation roadmap as the first step of every engagement. If you want to know how long your specific business would take, <a href="https://candorcertified.com/#contact">start there</a>.</p>
 
 </article>
 
@@ -674,15 +660,6 @@
 <section class="more-articles">
   <h3>More from the blog</h3>
   <div class="cards-grid">
-    <a href="/blog/b-corp-certification-cost-canada" class="article-card">
-      <span class="card-tag">Cost &amp; Fees</span>
-      <h2 class="card-title">What B Corp Certification Costs in Canada</h2>
-      <p class="card-excerpt">B Lab fees, verification costs, and what preparation actually runs for a small business.</p>
-      <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
-      </div>
-    </a>
     <a href="/blog/b-impact-assessment-explained" class="article-card">
       <span class="card-tag">B Corp Basics</span>
       <h2 class="card-title">What the B Impact Assessment Actually Scores</h2>
@@ -696,11 +673,26 @@
 </section>
 
 <footer>
-  <div class="footer-inner">
-    <a href="https://candorcertified.com" class="footer-brand">Candor<span class="dot">.</span></a>
-    <a href="/assessment/" class="footer-brand" style="font-size:0.75rem;opacity:.6">Impact Assessment →</a>
-    <p>B Corp &amp; Climate Neutral certification consulting · Vancouver, BC</p>
-    <p>&copy; 2026 Candor Certification Consulting</p>
+  <div class="foot-row">
+    <div class="foot-l">
+      <svg width="22" height="22" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="rgba(61,138,87,.55)"/></svg>
+      <span class="foot-name">Candor</span>
+    </div>
+    <nav class="foot-nav" aria-label="Footer navigation">
+      <a href="/#services">Services</a>
+      <a href="/#process">How It Works</a>
+      <a href="/#about">About</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/blog">Resources</a>
+      <a href="/assessment/">Assessment</a>
+    </nav>
+  </div>
+  <div class="foot-row">
+    <div class="foot-links">
+      <a href="mailto:artem.dan1lov@proton.me">artem.dan1lov@proton.me</a>
+      <a href="https://linkedin.com/in/artem-furman" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+    <div class="foot-copy">Artem Furman · Vancouver, BC · © 2026</div>
   </div>
 </footer>
 
