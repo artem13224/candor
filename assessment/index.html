@@ -901,7 +901,6 @@ function submitEmail() {
   const input = document.getElementById('email-input');
   const email = input.value.trim();
   
-  // If the user didn't type a proper email, stop here and highlight it red
   if (!email || !email.includes('@')) {
     input.style.borderBottom = '1px solid #c0392b';
     input.focus(); 
@@ -910,30 +909,27 @@ function submitEmail() {
   
   state.email = email;
 
-  // Package up all your answers neatly
-  const payload = {
-    email: email,
-    size: state.size,
-    industry: state.industry,
-    practices: state.practices.map(p => p ? 'yes' : 'no').join(','),
-    timestamp: new Date().toISOString()
-  };
+  // This reformats your data so the live website can send it safely without security blocks
+  const formData = new URLSearchParams();
+  formData.append('email', email);
+  formData.append('size', state.size);
+  formData.append('industry', state.industry);
+  formData.append('practices', state.practices.map(p => p ? 'yes' : 'no').join(','));
+  formData.append('timestamp', new Date().toISOString());
 
-  // If you provided a URL, send the packaged answers to your Apps Script mail carrier
   if (SHEETS_URL) {
     fetch(SHEETS_URL, {
       method: 'POST',
-      mode: 'no-cors', // Bypasses browser security blocks smoothly
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: formData
     })
     .then(() => console.log('Data successfully dispatched to Google Script.'))
     .catch(e => console.error('Error sending data:', e));
   }
 
-  // Instantly take the user to the results screen without making them wait
   goTo('results');
 }
+
+  // Instantly take the user to the results screen without making them wait
 
 /* ─── Impact Calculation ─────────────────────── */
 function calculate() {
