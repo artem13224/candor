@@ -903,7 +903,7 @@ function submitEmail() {
   state.email = email;
 
   // POST to Google Sheets (non-blocking)
-  if (SHEETS_URL && SHEETS_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') {
+  if (SHEETS_URL && SHEETS_URL !== 'https://docs.google.com/spreadsheets/d/10kNc5rVOD005yfB2TQIXEPcwVJ5RctOHzXdNaecYqpQ/edit?gid=0#gid=0') {
     const payload = {
       email,
       size: state.size,
