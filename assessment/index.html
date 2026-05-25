@@ -903,20 +903,22 @@ function submitEmail() {
   state.email = email;
 
   // POST to Google Sheets (non-blocking)
-  if (SHEETS_URL && SHEETS_URL !== 'https://docs.google.com/spreadsheets/d/10kNc5rVOD005yfB2TQIXEPcwVJ5RctOHzXdNaecYqpQ/edit?gid=0#gid=0') {
+  if (SHEETS_URL && SHEETS_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') {
     const payload = {
       email,
       size: state.size,
       industry: state.industry,
-      practices: state.practices.map((p,i) => p ? 'yes' : 'no').join(','),
+      practices: state.practices.map(p => p ? 'yes' : 'no').join(','),
       timestamp: new Date().toISOString()
     };
     fetch(SHEETS_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(payload)
-    }).catch(() => {}); // silent fail — don't block results
+    })
+    .then(r => r.text())
+    .then(t => console.log('Sheet response:', t))
+    .catch(e => console.error('Sheet error:', e));
   }
 
   goTo('results');
