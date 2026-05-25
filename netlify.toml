@@ -12,7 +12,7 @@
     Strict-Transport-Security  = "max-age=31536000; includeSubDomains; preload"
     # Inline <style> and <script> blocks require 'unsafe-inline'.
     # If you later extract them to external files you can tighten this CSP.
-    Content-Security-Policy    = "default-src 'self'; script-src 'self' 'unsafe-inline' https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; font-src https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; frame-src https://calendly.com; connect-src 'self' https://api.calendly.com https://calendly.com; worker-src blob:"
+    Content-Security-Policy    = "default-src 'self'; script-src 'self' 'unsafe-inline' https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; font-src https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com https://script.google.com https://script.googleusercontent.com data:; frame-src https://calendly.com; connect-src 'self' https://api.calendly.com https://calendly.com https://script.google.com https://script.googleusercontent.com; worker-src blob:"
 
 # ── HTML: never cache (content changes on deploy) ──────────────────────────
 [[headers]]
