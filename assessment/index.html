@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Impact Assessment | Candor</title>
+  <title>Impact Assessment | Candor</title>
   <meta name="description" content="See the environmental and social impact your business could unlock through B Corp certification. Takes 2 minutes." />
   <link rel="canonical" href="https://candorcertified.com/assessment" />
 
@@ -29,10 +29,10 @@
       --mono:    'Space Mono', monospace;
       --ease:    cubic-bezier(.16,1,.3,1);
       --ease2:   cubic-bezier(.4,0,.2,1);
+      --px:      clamp(20px, 5vw, 80px);
     }
 
     html { font-size: 16px; scroll-behavior: smooth; height: 100%; }
-
     body {
       background: var(--ink);
       color: var(--paper);
@@ -103,14 +103,8 @@
     .nav-cta:hover .nav-ar { transform: translateX(4px); }
 
     /* ── TOPO BACKGROUND ── */
-    #topo-bg {
-      position: fixed; inset: 0; z-index: 0;
-      pointer-events: none;
-    }
-    #topo-bg-canvas {
-      width: 100%; height: 100%;
-      display: block;
-    }
+    #topo-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    #topo-bg-canvas { width: 100%; height: 100%; display: block; }
 
     /* ── PROGRESS BAR ── */
     #progress-wrap {
@@ -119,42 +113,32 @@
       opacity: 0; transition: opacity .4s;
     }
     #progress-wrap.visible { opacity: 1; }
-    #progress-bar {
-      height: 100%; background: var(--field);
-      width: 0%; transition: width .6s var(--ease);
-    }
+    #progress-bar { height: 100%; background: var(--field); width: 0%; transition: width .6s var(--ease); }
 
     /* ── SCREENS ── */
     .screen {
       position: relative; z-index: 10;
       min-height: 100vh;
-      display: flex; flex-direction: column;
+      display: none; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 80px 24px 60px;
+      padding: 80px 24px calc(60px + env(safe-area-inset-bottom));
+      padding-left: max(24px, env(safe-area-inset-left));
+      padding-right: max(24px, env(safe-area-inset-right));
       opacity: 0; pointer-events: none;
       transform: translateY(24px);
       transition: opacity .5s var(--ease), transform .5s var(--ease);
-      display: none;
     }
-    .screen.active {
-      display: flex;
-      opacity: 1; pointer-events: all;
-      transform: translateY(0);
-    }
-    .screen.exit {
-      opacity: 0; transform: translateY(-20px);
-    }
+    .screen.active { display: flex; opacity: 1; pointer-events: all; transform: translateY(0); }
+    .screen.exit   { opacity: 0; transform: translateY(-20px); }
 
-    /* ── INTRO SCREEN ── */
+    /* ── INTRO ── */
     .intro-eyebrow {
       font-family: var(--mono); font-size: 0.625rem;
       letter-spacing: .18em; text-transform: uppercase;
       color: var(--field); margin-bottom: 28px;
       display: flex; align-items: center; gap: 10px;
     }
-    .intro-eyebrow::before {
-      content: ''; width: 24px; height: 1px; background: var(--field);
-    }
+    .intro-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--field); }
     .intro-headline {
       font-family: var(--u); font-weight: 900;
       font-size: clamp(2.5rem, 6vw, 4.5rem);
@@ -162,19 +146,13 @@
       color: var(--paper); max-width: 700px;
       text-align: center; margin-bottom: 28px;
     }
-    .intro-headline em {
-      font-style: normal; color: var(--field);
-    }
+    .intro-headline em { font-style: normal; color: var(--field); }
     .intro-sub {
       font-size: 1.0625rem; line-height: 1.65;
       color: rgba(245,243,238,.55);
-      max-width: 460px; text-align: center;
-      margin-bottom: 48px;
+      max-width: 460px; text-align: center; margin-bottom: 48px;
     }
-    .intro-meta {
-      display: flex; align-items: center; gap: 20px;
-      margin-bottom: 48px;
-    }
+    .intro-meta { display: flex; align-items: center; gap: 20px; margin-bottom: 48px; }
     .intro-meta span {
       font-family: var(--mono); font-size: 0.625rem;
       letter-spacing: .1em; text-transform: uppercase;
@@ -194,8 +172,21 @@
     .btn-primary .arr { transition: transform .35s var(--ease); }
     .btn-primary:hover .arr { transform: translateX(5px); }
 
-    /* ── QUESTION SCREENS ── */
+    /* ── QUESTION WRAP ── */
     .q-wrap { width: 100%; max-width: 680px; }
+
+    .q-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: none; border: none; cursor: pointer;
+      font-family: var(--mono); font-size: 0.625rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(245,243,238,.3);
+      margin-bottom: 20px; padding: 0;
+      transition: color .2s;
+    }
+    .q-back:hover { color: rgba(245,243,238,.55); }
+    .q-back-icon { width: 10px; height: 10px; }
+
     .q-number {
       font-family: var(--mono); font-size: 0.625rem;
       letter-spacing: .16em; text-transform: uppercase;
@@ -212,19 +203,20 @@
       margin-bottom: 40px; line-height: 1.6;
     }
 
-    /* Option grid */
+    /* ── OPT GRID (Q1, Q2) ── */
     .opt-grid {
       display: grid; gap: 10px;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
     .opt-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .opt-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
 
     .opt-card {
       background: rgba(255,255,255,.04);
       border: 1px solid rgba(255,255,255,.08);
-      border-radius: 4px; padding: 20px 22px;
+      border-radius: 4px; padding: 20px 18px;
       cursor: pointer; text-align: left;
-      transition: background .2s, border-color .2s, transform .25s var(--ease);
+      transition: background .2s, border-color .2s;
       position: relative; overflow: hidden;
     }
     .opt-card::after {
@@ -233,10 +225,19 @@
       background: var(--field);
       transition: width .3s var(--ease);
     }
-    .opt-card:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); transform: translateY(-2px); }
+    .opt-card:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); }
     .opt-card:hover::after { width: 100%; }
     .opt-card.selected { background: rgba(61,138,87,.15); border-color: var(--field); }
     .opt-card.selected::after { width: 100%; }
+    .opt-card.settle { animation: settle .18s var(--ease2) forwards; }
+    @keyframes settle { 0%{transform:scale(1)} 50%{transform:scale(.98)} 100%{transform:scale(1)} }
+
+    .opt-ripple {
+      position: absolute; inset: 0; pointer-events: none; border-radius: 4px;
+      background: radial-gradient(circle at var(--rx,50%) var(--ry,50%), rgba(61,138,87,.12) 0%, transparent 65%);
+      opacity: 0; transition: opacity .35s;
+    }
+    .opt-card.ripple-show .opt-ripple { opacity: 1; }
 
     .opt-label {
       font-family: var(--u); font-weight: 700; font-size: 1rem;
@@ -248,36 +249,90 @@
       font-family: var(--mono); letter-spacing: .04em;
     }
 
-    /* Toggle (yes/no) */
-    .toggle-list { display: flex; flex-direction: column; gap: 12px; }
-    .toggle-item {
-      display: flex; align-items: center; justify-content: space-between;
+    /* ── Q3 JOURNEY CARDS (vertical stack) ── */
+    .journey-list { display: flex; flex-direction: column; gap: 10px; }
+    .journey-card {
       background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 4px; padding: 18px 22px;
-      cursor: pointer;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px; padding: 24px 24px 24px 20px;
+      cursor: pointer; position: relative; overflow: hidden;
+      display: flex; align-items: flex-start; gap: 16px;
+      transition: background .2s, border-color .2s;
+      width: 100%; text-align: left;
+    }
+    .journey-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--field); transition: width .3s var(--ease);
+    }
+    .journey-card:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); }
+    .journey-card:hover::after { width: 100%; }
+    .journey-card.selected { background: rgba(61,138,87,.15); border-color: var(--field); }
+    .journey-card.selected::after { width: 100%; }
+    .journey-marker {
+      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+      border: 1.5px solid rgba(255,255,255,.2); margin-top: 3px;
+      transition: border-color .2s, background .2s; position: relative;
+    }
+    .journey-card.selected .journey-marker { border-color: var(--field); background: var(--field); }
+    .journey-card.selected .journey-marker::after {
+      content: ''; position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 6px; height: 6px; border-radius: 50%; background: var(--paper);
+    }
+    .journey-text { flex: 1; }
+    .journey-label {
+      font-family: var(--u); font-weight: 700; font-size: 1rem;
+      color: var(--paper); letter-spacing: -.01em; display: block; margin-bottom: 4px;
+    }
+    .journey-sub {
+      font-size: 0.8125rem; color: rgba(245,243,238,.4);
+      font-family: var(--mono); letter-spacing: .04em; line-height: 1.5;
+    }
+
+    /* ── Q4 CHECKLIST CARDS ── */
+    .check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .check-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px; padding: 18px 20px;
+      cursor: pointer; position: relative; overflow: hidden;
+      text-align: left; width: 100%;
       transition: background .2s, border-color .2s;
     }
-    .toggle-item:hover { background: rgba(255,255,255,.07); }
-    .toggle-item.yes { border-color: rgba(61,138,87,.5); background: rgba(61,138,87,.1); }
-    .toggle-label {
-      font-size: 0.9375rem; color: rgba(245,243,238,.8); line-height: 1.5;
-      flex: 1; padding-right: 20px;
+    .check-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--field); transition: width .3s var(--ease);
     }
-    .toggle-pill {
-      display: flex; border-radius: 3px; overflow: hidden;
-      border: 1px solid rgba(255,255,255,.12); flex-shrink: 0;
-    }
-    .toggle-btn {
-      font-family: var(--mono); font-size: 0.625rem; letter-spacing: .1em;
-      text-transform: uppercase; padding: 6px 12px;
-      background: transparent; color: rgba(245,243,238,.3);
-      border: none; cursor: pointer;
-      transition: background .2s, color .2s;
-    }
-    .toggle-item.yes .toggle-btn.yes-btn { background: var(--field); color: var(--paper); }
-    .toggle-item.no  .toggle-btn.no-btn  { background: rgba(255,255,255,.1); color: var(--paper); }
+    .check-card:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); }
+    .check-card:hover::after { width: 100%; }
+    .check-card.checked { background: rgba(61,138,87,.13); border-color: rgba(61,138,87,.5); }
+    .check-card.checked::after { width: 100%; }
+    .check-card.toggling { animation: checkToggle .2s var(--ease2) forwards; }
+    @keyframes checkToggle { 0%{transform:scale(1)} 50%{transform:scale(1.02)} 100%{transform:scale(1)} }
 
+    .check-badge {
+      position: absolute; top: 10px; right: 10px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--field);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: scale(0);
+      transition: opacity .22s, transform .22s var(--ease);
+      font-size: 9px; color: var(--paper); font-weight: 700; line-height: 1;
+    }
+    .check-card.checked .check-badge { opacity: 1; transform: scale(1); }
+    .check-label {
+      font-family: var(--u); font-weight: 700; font-size: 0.9375rem;
+      color: var(--paper); letter-spacing: -.01em;
+      display: block; margin-bottom: 4px; padding-right: 24px;
+    }
+    .check-sub {
+      font-size: 0.6875rem; color: rgba(245,243,238,.38);
+      font-family: var(--mono); letter-spacing: .04em; line-height: 1.5;
+    }
+
+    /* ── CONTINUE BUTTON ── */
     .q-next {
       margin-top: 36px;
       font-family: var(--u); font-weight: 600; font-size: 0.875rem;
@@ -287,12 +342,22 @@
       display: inline-flex; align-items: center; gap: 8px;
       transition: background .2s, transform .3s var(--ease), opacity .3s;
       opacity: 0; pointer-events: none;
+      position: relative; overflow: hidden;
     }
     .q-next.ready { opacity: 1; pointer-events: all; }
+    .q-next.ready.shimmer-once::before {
+      content: '';
+      position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.09), transparent);
+      animation: shimmer .8s var(--ease2) .05s forwards;
+    }
+    @keyframes shimmer { 0%{left:-100%} 100%{left:160%} }
     .q-next:hover { background: var(--field); transform: translateY(-1px); }
+    .q-next.always-ready { opacity: 1; pointer-events: all; }
 
-    /* ── EMAIL SCREEN ── */
+    /* ── EMAIL ── */
     .email-wrap { width: 100%; max-width: 500px; text-align: center; }
+    .email-back-row { display: flex; justify-content: center; margin-bottom: 24px; }
     .email-icon {
       width: 56px; height: 56px; border-radius: 50%;
       background: rgba(61,138,87,.15); border: 1px solid rgba(61,138,87,.3);
@@ -310,7 +375,7 @@
       margin-bottom: 36px; line-height: 1.65;
     }
     .email-field-wrap {
-      display: flex; gap: 0;
+      display: flex;
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.12);
       border-radius: 4px; overflow: hidden;
@@ -328,8 +393,7 @@
       letter-spacing: -.01em; padding: 16px 24px;
       background: var(--field); color: var(--paper);
       border: none; cursor: pointer;
-      transition: background .2s;
-      white-space: nowrap;
+      transition: background .2s; white-space: nowrap;
     }
     #email-submit:hover { background: var(--sage); }
     .email-note {
@@ -338,72 +402,94 @@
       color: rgba(245,243,238,.2); text-transform: uppercase;
     }
 
-    /* ── RESULTS SCREEN ── */
+    /* ── RESULTS ── */
     .results-wrap { width: 100%; max-width: 900px; }
-    .results-top {
-      text-align: center; margin-bottom: 56px;
-    }
-    .results-eyebrow {
-      font-family: var(--mono); font-size: 0.625rem;
-      letter-spacing: .18em; text-transform: uppercase;
-      color: var(--field); margin-bottom: 16px;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-    }
-    .results-eyebrow::before,.results-eyebrow::after {
-      content: ''; width: 20px; height: 1px; background: var(--field);
-    }
-    .results-title {
-      font-family: var(--u); font-weight: 900;
-      font-size: clamp(1.75rem, 4vw, 3rem);
-      letter-spacing: -0.04em; color: var(--paper);
-      line-height: 1.1; margin-bottom: 12px;
-    }
-    .results-sub {
-      font-size: 0.9375rem; color: rgba(245,243,238,.4);
-    }
 
-    /* Topo canvas */
-    .topo-canvas-wrap {
-      display: flex; justify-content: center; margin-bottom: 52px;
-      position: relative;
+    .dual-gauge {
+      display: flex; align-items: flex-start; justify-content: center;
+      margin-bottom: 40px;
     }
-    #topo-canvas {
-      border-radius: 50%;
-      box-shadow: 0 0 80px rgba(61,138,87,.18), 0 0 0 1px rgba(61,138,87,.1);
+    .gauge-item {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 14px; flex: 1; max-width: 280px;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease);
     }
-    .topo-score-label {
+    .gauge-item.visible { opacity: 1; transform: translateY(0); }
+    .gauge-canvas-wrap { position: relative; flex-shrink: 0; }
+    .gauge-canvas {
+      display: block; border-radius: 50%;
+      box-shadow: 0 0 50px rgba(61,138,87,.12), 0 0 0 1px rgba(61,138,87,.08);
+      transition: box-shadow 1s var(--ease);
+    }
+    .gauge-canvas.glow { box-shadow: 0 0 60px rgba(61,138,87,.28), 0 0 0 1px rgba(61,138,87,.18); }
+    .gauge-score-label {
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%,-50%);
       text-align: center; pointer-events: none;
     }
-    .topo-score-num {
+    .gauge-score-num {
       font-family: var(--u); font-weight: 900;
-      font-size: 3rem; letter-spacing: -0.04em;
-      color: var(--paper); display: block;
-      line-height: 1;
+      font-size: 2.25rem; letter-spacing: -0.04em;
+      color: var(--paper); display: block; line-height: 1;
+      transition: text-shadow .6s;
     }
-    .topo-score-label-text {
-      font-family: var(--mono); font-size: 0.5625rem;
+    .gauge-score-num.pulse { text-shadow: 0 0 22px rgba(90,166,114,.55); }
+    .gauge-label-text {
+      font-family: var(--mono); font-size: 0.5rem;
       letter-spacing: .14em; text-transform: uppercase;
-      color: rgba(245,243,238,.35); display: block;
-      margin-top: 4px;
+      color: rgba(245,243,238,.3); display: block; margin-top: 4px;
+    }
+    .gauge-meta { text-align: center; }
+    .gauge-title {
+      font-family: var(--u); font-weight: 700; font-size: 0.875rem;
+      color: var(--paper); letter-spacing: -.01em; margin-bottom: 3px;
+    }
+    .gauge-subtitle {
+      font-family: var(--mono); font-size: 0.5625rem;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(245,243,238,.3);
+    }
+    .gauge-divider {
+      width: 1px; background: rgba(255,255,255,.08);
+      align-self: stretch; margin: 0 20px; flex-shrink: 0;
     }
 
-    /* Metric cards */
+    /* Verdict */
+    .verdict-banner {
+      background: rgba(45,107,66,.15);
+      border: 1px solid rgba(45,107,66,.3);
+      border-radius: 6px; padding: 28px 36px;
+      margin-bottom: 28px; text-align: center;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease);
+    }
+    .verdict-banner.visible { opacity: 1; transform: translateY(0); }
+    .verdict-eyebrow {
+      font-family: var(--mono); font-size: 0.5625rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--field); margin-bottom: 10px; display: block;
+    }
+    .verdict-text {
+      font-family: var(--u); font-weight: 900;
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      letter-spacing: -0.03em; color: var(--paper); line-height: 1.15;
+    }
+
+    /* Metrics grid */
     .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,.06);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.06);
-      border-radius: 6px; overflow: hidden;
-      margin-bottom: 40px;
+      border-radius: 6px; overflow: hidden; margin-bottom: 32px;
     }
     .metric-cell {
-      background: rgba(13,22,16,.8);
-      padding: 28px 24px;
+      background: rgba(13,22,16,.8); padding: 28px 24px;
       backdrop-filter: blur(12px);
+      opacity: 0; transform: translateY(12px);
+      transition: opacity .5s var(--ease), transform .5s var(--ease);
     }
+    .metric-cell.visible { opacity: 1; transform: translateY(0); }
     .metric-icon {
       font-family: var(--mono); font-size: 0.5625rem;
       letter-spacing: .14em; text-transform: uppercase;
@@ -415,58 +501,66 @@
       letter-spacing: -0.04em; color: var(--paper);
       display: block; line-height: 1; margin-bottom: 8px;
     }
-    .metric-label {
-      font-size: 0.8125rem; color: rgba(245,243,238,.4);
-      line-height: 1.5;
+    .metric-label { font-size: 0.8125rem; color: rgba(245,243,238,.4); line-height: 1.5; }
+
+    /* Gap section */
+    .gap-section {
+      margin-bottom: 28px;
+      opacity: 0; transform: translateY(12px);
+      transition: opacity .5s var(--ease), transform .5s var(--ease);
+    }
+    .gap-section.visible { opacity: 1; transform: translateY(0); }
+    .gap-heading {
+      font-family: var(--mono); font-size: 0.5625rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(245,243,238,.3); margin-bottom: 14px; display: block;
+    }
+    .gap-list { display: flex; flex-direction: column; gap: 10px; }
+    .gap-item {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-left: 2px solid rgba(61,138,87,.4);
+      border-radius: 0 4px 4px 0;
+      padding: 14px 18px;
+      font-size: 0.8125rem; color: rgba(245,243,238,.55); line-height: 1.55;
     }
 
     /* Results CTA */
     .results-cta-block {
-      background: rgba(45,107,66,.12);
-      border: 1px solid rgba(45,107,66,.25);
+      background: rgba(45,107,66,.12); border: 1px solid rgba(45,107,66,.25);
       border-radius: 6px; padding: 32px 36px;
-      display: flex; align-items: center;
-      justify-content: space-between; gap: 24px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity .5s var(--ease), transform .5s var(--ease);
     }
+    .results-cta-block.visible { opacity: 1; transform: translateY(0); }
     .results-cta-text h3 {
       font-family: var(--u); font-weight: 800;
       font-size: 1.125rem; letter-spacing: -0.02em;
       color: var(--paper); margin-bottom: 6px;
     }
-    .results-cta-text p {
-      font-size: 0.875rem; color: rgba(245,243,238,.45); line-height: 1.55;
-    }
-
-    /* Counter animation */
-    .counting { transition: none; }
+    .results-cta-text p { font-size: 0.875rem; color: rgba(245,243,238,.45); line-height: 1.55; }
 
     /* ── FOOTER ── */
-    .assess-footer {
-      position: relative; z-index: 10;
-      border-top: 1px solid rgba(255,255,255,.05);
-      padding: 24px 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px;
-    }
-    .assess-footer a {
-      font-family: var(--mono); font-size: 0.5625rem;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(245,243,238,.2); text-decoration: none;
-    }
-    .assess-footer a:hover { color: rgba(245,243,238,.5); }
-    .assess-footer-brand {
-      font-family: var(--u); font-weight: 800; font-size: 0.875rem;
-      letter-spacing: -0.01em; color: rgba(245,243,238,.25);
-    }
-    .assess-footer-brand span { color: var(--forest); }
+    footer { background:#080B08; padding:28px var(--px); border-top:1px solid rgba(245,243,238,.07); padding-bottom:max(28px,env(safe-area-inset-bottom)); }
+    .foot-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .foot-row+.foot-row { margin-top:18px; padding-top:18px; border-top:1px solid rgba(245,243,238,.06); }
+    .foot-l { display:flex; align-items:center; gap:8px; }
+    .foot-name { font-family:var(--u); font-weight:800; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,243,238,.4); }
+    .foot-nav { display:flex; gap:22px; flex-wrap:wrap; align-items:center; }
+    .foot-nav a { font-family:var(--u); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:rgba(245,243,238,.3); text-decoration:none; }
+    .foot-nav a:hover { color:rgba(245,243,238,.7); }
+    .foot-links { display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+    .foot-links a { font-family:var(--u); font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:rgba(245,243,238,.35); text-decoration:none; }
+    .foot-links a:hover { color:rgba(245,243,238,.7); text-decoration:underline; }
+    .foot-copy { font-family:var(--u); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:rgba(245,243,238,.2); }
 
     /* ── HAMBURGER ── */
     .nav-hamburger {
-      display: none;
-      flex-direction: column; justify-content: center; align-items: center;
-      gap: 5px; background: transparent; border: none; cursor: pointer;
-      padding: 8px; margin-left: 8px; flex-shrink: 0;
+      display: none; flex-direction: column; justify-content: center;
+      align-items: center; gap: 5px; background: transparent; border: none;
+      cursor: pointer; padding: 8px; margin-left: 8px; flex-shrink: 0;
     }
     .nav-hamburger span {
       display: block; width: 22px; height: 1.5px;
@@ -477,7 +571,7 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-    /* ── MOBILE DROPDOWN MENU ── */
+    /* ── MOBILE MENU ── */
     .nav-mobile-menu {
       display: none; position: fixed; top: 58px; left: 0; right: 0;
       background: rgba(13,22,16,.97); border-bottom: 1px solid rgba(255,255,255,.08);
@@ -495,19 +589,7 @@
     }
     .nav-mobile-menu .nav-link:last-child { border-bottom: none; }
     .nav-mobile-menu .nav-link:hover { color: var(--paper); }
-    .nav-mobile-menu .nav-link-assessment {
-      color: var(--field); margin-top: 6px;
-    }
-
-    /* ── SAFE AREA ── */
-    .screen {
-      padding-bottom: calc(60px + env(safe-area-inset-bottom));
-      padding-left: max(24px, env(safe-area-inset-left));
-      padding-right: max(24px, env(safe-area-inset-right));
-    }
-    .assess-footer {
-      padding-bottom: max(24px, env(safe-area-inset-bottom));
-    }
+    .nav-mobile-menu .nav-link-assessment { color: var(--field); margin-top: 6px; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 680px) {
@@ -517,18 +599,118 @@
       #site-nav { padding: 0 20px; }
       .metrics-grid { grid-template-columns: repeat(2, 1fr); }
       .opt-grid.cols-2 { grid-template-columns: 1fr; }
+      .opt-grid.cols-5 { grid-template-columns: repeat(2, 1fr); }
       .results-cta-block { flex-direction: column; align-items: flex-start; }
       .results-cta-block .btn-primary { width: 100%; justify-content: center; }
-      #topo-canvas { width: 240px !important; height: 240px !important; }
-      .topo-score-num { font-size: 2.25rem; }
+      .dual-gauge { flex-direction: column; align-items: center; gap: 32px; }
+      .gauge-divider { display: none; }
+      .gauge-item { max-width: 100%; }
     }
-
     @media (max-width: 480px) {
       .opt-grid { grid-template-columns: 1fr !important; }
+      .check-grid { grid-template-columns: 1fr !important; }
       .email-field-wrap { flex-direction: column; border-radius: 4px; }
       #email-input { border-radius: 4px 4px 0 0; }
-      #email-submit { width: 100%; border-radius: 0 0 4px 4px; text-align: center; justify-content: center; }
+      #email-submit { width: 100%; border-radius: 0 0 4px 4px; text-align: center; }
     }
+
+    /* ═══════════════════════ ANIMATION ADDITIONS ═══════════════════════ */
+
+    /* 1. Progress terrain canvas */
+    #progress-canvas { display: block; width: 100%; height: 100%; }
+
+    /* 2. Word reveal */
+    .word-reveal-wrap  { display: inline-block; overflow: hidden; vertical-align: bottom; margin-right: 0.25em; }
+    .word-reveal-inner { display: inline-block;
+      transition: transform 420ms cubic-bezier(.16,1,.3,1), opacity 420ms ease;
+      transform: translateY(110%); opacity: 0; }
+    .word-reveal-inner.landed { transform: translateY(0); opacity: 1; }
+
+    /* 4. Checklist badge animations */
+    .check-badge { display: flex; align-items: center; justify-content: center; }
+    @keyframes badge-in {
+      0%   { transform: scale(0);    opacity: 0; }
+      65%  { transform: scale(1.25); opacity: 1; }
+      100% { transform: scale(1);    opacity: 1; }
+    }
+    @keyframes badge-out {
+      from { transform: scale(1); opacity: 1; }
+      to   { transform: scale(0); opacity: 0; }
+    }
+    @keyframes card-pop    { 0%{transform:scale(1)} 50%{transform:scale(1.03)} 100%{transform:scale(1)} }
+    @keyframes card-shrink { 0%{transform:scale(1)} 50%{transform:scale(0.98)} 100%{transform:scale(1)} }
+    .check-badge.badge-in  { animation: badge-in  260ms cubic-bezier(.34,1.56,.64,1) forwards; transition: none; }
+    .check-badge.badge-out { animation: badge-out 180ms ease-in forwards; transition: none; }
+    .check-card.card-pop    { animation: card-pop    180ms var(--ease2) forwards; }
+    .check-card.card-shrink { animation: card-shrink 180ms var(--ease2) forwards; }
+
+    /* 6. Typewriter peak cursor */
+    .peak-cursor { display: inline-block; margin-left: 4px; vertical-align: middle; }
+    .peak-cursor svg { display: block; }
+    @keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .peak-cursor.blinking { animation: cursor-blink 300ms ease 3; }
+
+    /* 8. Metric cell fault-line reveal – override cell-level opacity animation */
+    .metric-cell {
+      position: relative; overflow: hidden;
+      opacity: 1 !important; transform: none !important; transition: none !important;
+    }
+    .metric-cell::before {
+      content: ''; position: absolute;
+      left: 50%; top: 50%; height: 1px;
+      background: rgba(90,166,114,.5);
+      width: 0; transform: translateX(-50%);
+      transition: none; pointer-events: none; z-index: 1;
+    }
+    .metric-cell.visible::before { animation: fault-crack 500ms ease forwards; }
+    .metric-cell .metric-content {
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 280ms ease 180ms, transform 280ms var(--ease) 180ms;
+    }
+    .metric-cell.visible .metric-content { opacity: 1; transform: translateY(0); }
+    @keyframes fault-crack {
+      0%   { width: 0;    opacity: 1; }
+      55%  { width: 100%; opacity: 1; }
+      100% { width: 100%; opacity: 0; }
+    }
+
+    /* 9. Journey card terrain hover – override existing ::after bottom-bar */
+    .journey-card::after {
+      position: absolute; inset: 0;
+      width: auto; height: auto; bottom: auto; left: auto;
+      background:
+        radial-gradient(ellipse at 20% 60%, rgba(45,107,66,.0) 0%, transparent 70%),
+        radial-gradient(ellipse at 60% 30%, rgba(45,107,66,.0) 0%, transparent 60%);
+      opacity: 0; transition: opacity .3s ease; z-index: 0;
+    }
+    .journey-card:hover::after {
+      opacity: 1;
+      background:
+        radial-gradient(ellipse at 20% 60%, rgba(45,107,66,.06) 0%, transparent 70%),
+        radial-gradient(ellipse at 60% 30%, rgba(45,107,66,.04) 0%, transparent 60%);
+    }
+    .journey-card.selected::after {
+      opacity: 1;
+      background:
+        radial-gradient(ellipse at 20% 60%, rgba(45,107,66,.10) 0%, transparent 70%),
+        radial-gradient(ellipse at 60% 30%, rgba(45,107,66,.07) 0%, transparent 60%);
+    }
+    .journey-card::before {
+      content: ''; position: absolute;
+      left: 0; bottom: 0; width: 2px; height: 0%;
+      background: var(--field); transition: height .22s var(--ease); z-index: 1;
+    }
+    .journey-card:hover::before,
+    .journey-card.selected::before { height: 100%; }
+
+    /* 10. Score altitude shimmer */
+    @keyframes altitude-shimmer {
+      0%   { text-shadow: none; color: var(--paper); }
+      30%  { text-shadow: 0 0 20px rgba(90,166,114,.7); color: #fff; }
+      70%  { text-shadow: 0 0 12px rgba(90,166,114,.4); color: #fff; }
+      100% { text-shadow: none; color: var(--paper); }
+    }
+    .altitude-shimmer { animation: altitude-shimmer 580ms cubic-bezier(.16,1,.3,1) forwards; }
   </style>
 </head>
 <body>
@@ -548,11 +730,11 @@
       <span class="nav-wordmark">Candor</span>
     </a>
     <nav class="nav-links" aria-label="Main">
-      <a href="/#who"      class="nav-link">Who</a>
-      <a href="/#process"  class="nav-link">Process</a>
-      <a href="/#services" class="nav-link">Services</a>
-      <a href="/#about"    class="nav-link">About</a>
-      <a href="/blog"      class="nav-link">Resources</a>
+      <a href="/#who"       class="nav-link">Who</a>
+      <a href="/#process"   class="nav-link">Process</a>
+      <a href="/#services"  class="nav-link">Services</a>
+      <a href="/#about"     class="nav-link">About</a>
+      <a href="/blog"       class="nav-link">Resources</a>
       <a href="/assessment/" class="nav-link">Assessment</a>
     </nav>
     <div class="nav-cta-wrap">
@@ -565,33 +747,29 @@
 </header>
 
 <div class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
-  <a href="/#who"      class="nav-link" onclick="closeMobileNav()">Who</a>
-  <a href="/#process"  class="nav-link" onclick="closeMobileNav()">Process</a>
-  <a href="/#services" class="nav-link" onclick="closeMobileNav()">Services</a>
-  <a href="/#about"    class="nav-link" onclick="closeMobileNav()">About</a>
-  <a href="/blog"      class="nav-link" onclick="closeMobileNav()">Resources</a>
+  <a href="/#who"       class="nav-link" onclick="closeMobileNav()">Who</a>
+  <a href="/#process"   class="nav-link" onclick="closeMobileNav()">Process</a>
+  <a href="/#services"  class="nav-link" onclick="closeMobileNav()">Services</a>
+  <a href="/#about"     class="nav-link" onclick="closeMobileNav()">About</a>
+  <a href="/blog"       class="nav-link" onclick="closeMobileNav()">Resources</a>
   <a href="/assessment/" class="nav-link nav-link-assessment" onclick="closeMobileNav()">Assessment</a>
 </div>
 
 <!-- PROGRESS BAR -->
-<div id="progress-wrap"><div id="progress-bar"></div></div>
+<div id="progress-wrap"><canvas id="progress-canvas"></canvas></div>
 
-<!-- TOPOGRAPHIC BACKGROUND — canvas rendered, marching squares -->
-<div id="topo-bg" aria-hidden="true">
-  <canvas id="topo-bg-canvas"></canvas>
-</div>
+<!-- TOPO BACKGROUND -->
+<div id="topo-bg" aria-hidden="true"><canvas id="topo-bg-canvas"></canvas></div>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!-- SCREEN 0: INTRO -->
-<!-- ════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════ INTRO -->
 <section class="screen active" id="screen-intro">
   <p class="intro-eyebrow">Impact Assessment</p>
   <h1 class="intro-headline">See the terrain of your<br><em>certification impact.</em></h1>
-  <p class="intro-sub">Answer 5 questions. We'll map what B Corp certification could mean for your business, your supply chain, and the climate.</p>
+  <p class="intro-sub">Answer 4 questions. We'll map what B Corp certification could mean for your business, your team, and the planet.</p>
   <div class="intro-meta">
-    <span>2 minutes</span>
+    <span>4 questions</span>
     <div class="dot"></div>
-    <span>No account needed</span>
+    <span>2 minutes</span>
     <div class="dot"></div>
     <span>Free</span>
   </div>
@@ -600,125 +778,212 @@
   </button>
 </section>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!-- SCREEN 1: SIZE -->
-<!-- ════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════ Q1: REVENUE -->
 <section class="screen" id="screen-q1">
   <div class="q-wrap">
+    <button class="q-back" onclick="goBack()">
+      <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
+      Back
+    </button>
     <p class="q-number">Question 01 / 04</p>
-    <h2 class="q-title">How many people work at your business?</h2>
-    <p class="q-sub">Include part-time and contractors.</p>
-    <div class="opt-grid">
-      <button class="opt-card" onclick="selectSize(this,'1-5')">
-        <span class="opt-label">1 — 5</span>
-        <span class="opt-sub">Micro</span>
+    <h2 class="q-title">What's your annual revenue?</h2>
+    <p class="q-sub">An estimate is fine. This shapes your impact potential and certification timeline.</p>
+    <div class="opt-grid cols-5">
+      <button class="opt-card" onclick="selectOpt(this,'revenue','under-500k','next-q1')">
+        <div class="opt-ripple"></div>
+        <span class="opt-label">Under $500K</span>
+        <span class="opt-sub">Early stage</span>
       </button>
-      <button class="opt-card" onclick="selectSize(this,'6-20')">
-        <span class="opt-label">6 — 20</span>
-        <span class="opt-sub">Small</span>
-      </button>
-      <button class="opt-card" onclick="selectSize(this,'21-50')">
-        <span class="opt-label">21 — 50</span>
+      <button class="opt-card" onclick="selectOpt(this,'revenue','500k-2m','next-q1')">
+        <div class="opt-ripple"></div>
+        <span class="opt-label">$500K – $2M</span>
         <span class="opt-sub">Growing</span>
       </button>
-      <button class="opt-card" onclick="selectSize(this,'51-200')">
-        <span class="opt-label">51 — 200</span>
-        <span class="opt-sub">Mid-size</span>
+      <button class="opt-card" onclick="selectOpt(this,'revenue','2m-10m','next-q1')">
+        <div class="opt-ripple"></div>
+        <span class="opt-label">$2M – $10M</span>
+        <span class="opt-sub">Established</span>
       </button>
-      <button class="opt-card" onclick="selectSize(this,'200+')">
-        <span class="opt-label">200+</span>
-        <span class="opt-sub">Large</span>
+      <button class="opt-card" onclick="selectOpt(this,'revenue','10m-50m','next-q1')">
+        <div class="opt-ripple"></div>
+        <span class="opt-label">$10M – $50M</span>
+        <span class="opt-sub">Scaling</span>
+      </button>
+      <button class="opt-card" onclick="selectOpt(this,'revenue','50m-plus','next-q1')">
+        <div class="opt-ripple"></div>
+        <span class="opt-label">$50M+</span>
+        <span class="opt-sub">Enterprise</span>
       </button>
     </div>
     <button class="q-next" id="next-q1" onclick="goTo('q2')">Continue <span>→</span></button>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!-- SCREEN 2: INDUSTRY -->
-<!-- ════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════ Q2: INDUSTRY -->
 <section class="screen" id="screen-q2">
   <div class="q-wrap">
+    <button class="q-back" onclick="goBack()">
+      <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
+      Back
+    </button>
     <p class="q-number">Question 02 / 04</p>
     <h2 class="q-title">What sector does your business operate in?</h2>
     <p class="q-sub">Pick the closest match.</p>
     <div class="opt-grid cols-2">
-      <button class="opt-card" onclick="selectIndustry(this,'food-bev')">
+      <button class="opt-card" onclick="selectOpt(this,'industry','food-bev','next-q2')">
+        <div class="opt-ripple"></div>
         <span class="opt-label">Food & Beverage</span>
         <span class="opt-sub">Restaurants, CPG, brewing</span>
       </button>
-      <button class="opt-card" onclick="selectIndustry(this,'retail')">
-        <span class="opt-label">Retail</span>
-        <span class="opt-sub">Apparel, home goods, e-commerce</span>
+      <button class="opt-card" onclick="selectOpt(this,'industry','retail','next-q2')">
+        <div class="opt-ripple"></div>
+        <span class="opt-label">Retail & E-commerce</span>
+        <span class="opt-sub">Apparel, home goods, DTC</span>
       </button>
-      <button class="opt-card" onclick="selectIndustry(this,'services')">
+      <button class="opt-card" onclick="selectOpt(this,'industry','services','next-q2')">
+        <div class="opt-ripple"></div>
         <span class="opt-label">Professional Services</span>
         <span class="opt-sub">Consulting, legal, marketing</span>
       </button>
-      <button class="opt-card" onclick="selectIndustry(this,'manufacturing')">
+      <button class="opt-card" onclick="selectOpt(this,'industry','manufacturing','next-q2')">
+        <div class="opt-ripple"></div>
         <span class="opt-label">Manufacturing</span>
         <span class="opt-sub">Production, fabrication</span>
       </button>
-      <button class="opt-card" onclick="selectIndustry(this,'tech')">
+      <button class="opt-card" onclick="selectOpt(this,'industry','tech','next-q2')">
+        <div class="opt-ripple"></div>
         <span class="opt-label">Tech & Software</span>
         <span class="opt-sub">SaaS, digital products</span>
       </button>
-      <button class="opt-card" onclick="selectIndustry(this,'other')">
+      <button class="opt-card" onclick="selectOpt(this,'industry','health-edu','next-q2')">
+        <div class="opt-ripple"></div>
+        <span class="opt-label">Health, Education & Nonprofit</span>
+        <span class="opt-sub">Care, learning, mission-driven</span>
+      </button>
+      <button class="opt-card" onclick="selectOpt(this,'industry','creative','next-q2')">
+        <div class="opt-ripple"></div>
+        <span class="opt-label">Creative & Media</span>
+        <span class="opt-sub">Design, content, film, PR</span>
+      </button>
+      <button class="opt-card" onclick="selectOpt(this,'industry','other','next-q2')">
+        <div class="opt-ripple"></div>
         <span class="opt-label">Other</span>
-        <span class="opt-sub">Health, education, creative</span>
+        <span class="opt-sub">Agriculture, construction, logistics, or mixed</span>
       </button>
     </div>
     <button class="q-next" id="next-q2" onclick="goTo('q3')">Continue <span>→</span></button>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!-- SCREEN 3: PRACTICES -->
-<!-- ════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════ Q3: JOURNEY -->
 <section class="screen" id="screen-q3">
   <div class="q-wrap">
-    <p class="q-number">Question 03 — 04 / 04</p>
-    <h2 class="q-title">A few quick questions about your current practices.</h2>
-    <p class="q-sub">Answer honestly — this shapes your impact estimate.</p>
-    <div class="toggle-list">
-      <div class="toggle-item" id="t0" onclick="togglePractice(0)">
-        <span class="toggle-label">Your business tracks energy consumption or has taken steps to reduce it.</span>
-        <div class="toggle-pill">
-          <button class="toggle-btn yes-btn" onclick="event.stopPropagation();setPractice(0,true)">Yes</button>
-          <button class="toggle-btn no-btn"  onclick="event.stopPropagation();setPractice(0,false)">No</button>
+    <button class="q-back" onclick="goBack()">
+      <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
+      Back
+    </button>
+    <p class="q-number">Question 03 / 04</p>
+    <h2 class="q-title">Where are you in the B Corp journey?</h2>
+    <p class="q-sub">Be honest — it directly shapes your readiness estimate.</p>
+    <div class="journey-list">
+      <button class="journey-card" onclick="selectJourney(this,'exploring')">
+        <div class="journey-marker"></div>
+        <div class="journey-text">
+          <span class="journey-label">Just heard about it</span>
+          <span class="journey-sub">Exploring what B Corp certification means</span>
         </div>
-      </div>
-      <div class="toggle-item" id="t1" onclick="togglePractice(1)">
-        <span class="toggle-label">You have written HR policies covering hiring, pay equity, and conduct.</span>
-        <div class="toggle-pill">
-          <button class="toggle-btn yes-btn" onclick="event.stopPropagation();setPractice(1,true)">Yes</button>
-          <button class="toggle-btn no-btn"  onclick="event.stopPropagation();setPractice(1,false)">No</button>
+      </button>
+      <button class="journey-card" onclick="selectJourney(this,'researching')">
+        <div class="journey-marker"></div>
+        <div class="journey-text">
+          <span class="journey-label">Actively researching</span>
+          <span class="journey-sub">Read the BIA, comparing options, doing due diligence</span>
         </div>
-      </div>
-      <div class="toggle-item" id="t2" onclick="togglePractice(2)">
-        <span class="toggle-label">You know where your top 3 suppliers source their materials or labour from.</span>
-        <div class="toggle-pill">
-          <button class="toggle-btn yes-btn" onclick="event.stopPropagation();setPractice(2,true)">Yes</button>
-          <button class="toggle-btn no-btn"  onclick="event.stopPropagation();setPractice(2,false)">No</button>
+      </button>
+      <button class="journey-card" onclick="selectJourney(this,'in-progress')">
+        <div class="journey-marker"></div>
+        <div class="journey-text">
+          <span class="journey-label">Started the process</span>
+          <span class="journey-sub">Completed the BIA or working with a consultant</span>
         </div>
-      </div>
-      <div class="toggle-item" id="t3" onclick="togglePractice(3)">
-        <span class="toggle-label">Your governance structure includes a formal mission or stakeholder commitment.</span>
-        <div class="toggle-pill">
-          <button class="toggle-btn yes-btn" onclick="event.stopPropagation();setPractice(3,true)">Yes</button>
-          <button class="toggle-btn no-btn"  onclick="event.stopPropagation();setPractice(3,false)">No</button>
+      </button>
+      <button class="journey-card" onclick="selectJourney(this,'certified')">
+        <div class="journey-marker"></div>
+        <div class="journey-text">
+          <span class="journey-label">Already certified</span>
+          <span class="journey-sub">Certified or in recertification</span>
         </div>
-      </div>
+      </button>
     </div>
-    <button class="q-next" id="next-q3" onclick="goTo('email')">See my impact <span>→</span></button>
+    <button class="q-next" id="next-q3" onclick="goTo('q4')">Continue <span>→</span></button>
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!-- SCREEN 4: EMAIL GATE -->
-<!-- ════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════ Q4: PRACTICES -->
+<section class="screen" id="screen-q4">
+  <div class="q-wrap">
+    <button class="q-back" onclick="goBack()">
+      <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
+      Back
+    </button>
+    <p class="q-number">Question 04 / 04</p>
+    <h2 class="q-title">Which of these does your business currently have?</h2>
+    <p class="q-sub">Select everything that applies. No minimum required.</p>
+    <div class="check-grid">
+      <button class="check-card" data-id="hr-policies" onclick="toggleCheck(this)">
+        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
+        <span class="check-label">Written HR policies</span>
+        <span class="check-sub">Hiring, conduct, pay equity</span>
+      </button>
+      <button class="check-card" data-id="energy-tracking" onclick="toggleCheck(this)">
+        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
+        <span class="check-label">Energy tracking or reduction</span>
+        <span class="check-sub">Monitoring, offsets, or efficiency programs</span>
+      </button>
+      <button class="check-card" data-id="supplier-vetting" onclick="toggleCheck(this)">
+        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
+        <span class="check-label">Supplier vetting process</span>
+        <span class="check-sub">Know where your top suppliers source from</span>
+      </button>
+      <button class="check-card" data-id="mission-statement" onclick="toggleCheck(this)">
+        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
+        <span class="check-label">Formal mission or values</span>
+        <span class="check-sub">Documented stakeholder or impact commitment</span>
+      </button>
+      <button class="check-card" data-id="employee-benefits" onclick="toggleCheck(this)">
+        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
+        <span class="check-label">Enhanced employee benefits</span>
+        <span class="check-sub">Profit share, extended leave, wellness</span>
+      </button>
+      <button class="check-card" data-id="community-giving" onclick="toggleCheck(this)">
+        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
+        <span class="check-label">Community or local sourcing</span>
+        <span class="check-sub">Giving programs or local supplier priority</span>
+      </button>
+      <button class="check-card" data-id="env-certification" onclick="toggleCheck(this)">
+        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
+        <span class="check-label">Environmental certification</span>
+        <span class="check-sub">ISO 14001, Green certification, or audit</span>
+      </button>
+      <button class="check-card" data-id="dei-initiatives" onclick="toggleCheck(this)">
+        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
+        <span class="check-label">DEI initiatives</span>
+        <span class="check-sub">Formal diversity, equity &amp; inclusion programs</span>
+      </button>
+    </div>
+    <button class="q-next always-ready" id="next-q4" onclick="goTo('email')">Continue <span>→</span></button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ EMAIL -->
 <section class="screen" id="screen-email">
   <div class="email-wrap">
+    <div class="email-back-row">
+      <button class="q-back" onclick="goBack()">
+        <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
+        Back
+      </button>
+    </div>
     <div class="email-icon">
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#3D8A57" stroke-width="1.8">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -734,49 +999,84 @@
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════ -->
-<!-- SCREEN 5: RESULTS -->
-<!-- ════════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════ RESULTS -->
 <section class="screen" id="screen-results">
   <div class="results-wrap">
-    <div class="results-top">
-      <p class="results-eyebrow">Your Impact Estimate</p>
-      <h2 class="results-title">This is your certification terrain.</h2>
-      <p class="results-sub">Based on your business size, sector, and current practices.</p>
+
+    <div class="dual-gauge" id="dual-gauge">
+      <div class="gauge-item" id="gauge-impact">
+        <div class="gauge-canvas-wrap">
+          <canvas class="gauge-canvas" id="canvas-impact" width="200" height="200"></canvas>
+          <div class="gauge-score-label">
+            <span class="gauge-score-num" id="num-impact">0</span>
+            <span class="gauge-label-text">/ 100</span>
+          </div>
+        </div>
+        <div class="gauge-meta">
+          <div class="gauge-title">Impact Potential</div>
+          <div class="gauge-subtitle">Scale of your opportunity</div>
+        </div>
+      </div>
+
+      <div class="gauge-divider"></div>
+
+      <div class="gauge-item" id="gauge-readiness">
+        <div class="gauge-canvas-wrap">
+          <canvas class="gauge-canvas" id="canvas-readiness" width="200" height="200"></canvas>
+          <div class="gauge-score-label">
+            <span class="gauge-score-num" id="num-readiness">0</span>
+            <span class="gauge-label-text">/ 100</span>
+          </div>
+        </div>
+        <div class="gauge-meta">
+          <div class="gauge-title">Readiness</div>
+          <div class="gauge-subtitle">How prepared you are now</div>
+        </div>
+      </div>
     </div>
 
-    <div class="topo-canvas-wrap">
-      <canvas id="topo-canvas" width="300" height="300"></canvas>
-      <div class="topo-score-label">
-        <span class="topo-score-num" id="score-num">0</span>
-        <span class="topo-score-label-text">Impact score</span>
-      </div>
+    <div class="verdict-banner" id="verdict-banner">
+      <span class="verdict-eyebrow">Your Verdict</span>
+      <div class="verdict-text" id="verdict-text">—</div>
     </div>
 
     <div class="metrics-grid">
-      <div class="metric-cell">
-        <span class="metric-icon">CO₂ reduction</span>
-        <span class="metric-num" id="m-co2">—</span>
-        <span class="metric-label">Tonnes CO₂ equivalent per year your certified practices could eliminate</span>
+      <div class="metric-cell" id="mc-co2">
+        <div class="metric-content">
+          <span class="metric-icon">CO₂ reduction</span>
+          <span class="metric-num" id="m-co2">—</span>
+          <span class="metric-label">Tonnes CO₂ equivalent per year your certified practices could address</span>
+        </div>
       </div>
-      <div class="metric-cell">
-        <span class="metric-icon">Workers impacted</span>
-        <span class="metric-num" id="m-workers">—</span>
-        <span class="metric-label">People across your supply chain and team covered by stronger standards</span>
+      <div class="metric-cell" id="mc-workers">
+        <div class="metric-content">
+          <span class="metric-icon">Workers impacted</span>
+          <span class="metric-num" id="m-workers">—</span>
+          <span class="metric-label">People across your supply chain covered by stronger standards</span>
+        </div>
       </div>
-      <div class="metric-cell">
-        <span class="metric-icon">Consumer trust</span>
-        <span class="metric-num" id="m-trust">—</span>
-        <span class="metric-label">Of consumers prefer to buy from certified B Corps when price is equal</span>
+      <div class="metric-cell" id="mc-trust">
+        <div class="metric-content">
+          <span class="metric-icon">Brand trust lift</span>
+          <span class="metric-num" id="m-trust">—</span>
+          <span class="metric-label">Of consumers prefer certified B Corps when price is equal</span>
+        </div>
       </div>
-      <div class="metric-cell">
-        <span class="metric-icon">Est. timeline</span>
-        <span class="metric-num" id="m-timeline">—</span>
-        <span class="metric-label">Estimated time to certification based on your current readiness</span>
+      <div class="metric-cell" id="mc-timeline">
+        <div class="metric-content">
+          <span class="metric-icon">Est. timeline</span>
+          <span class="metric-num" id="m-timeline">—</span>
+          <span class="metric-label">Estimated time to certification based on your readiness</span>
+        </div>
       </div>
     </div>
 
-    <div class="results-cta-block">
+    <div class="gap-section" id="gap-section">
+      <span class="gap-heading">Your strongest gaps</span>
+      <div class="gap-list" id="gap-list"></div>
+    </div>
+
+    <div class="results-cta-block" id="results-cta">
       <div class="results-cta-text">
         <h3>Want a real gap assessment?</h3>
         <p>Candor scores your business against the full B Impact Assessment and maps exactly what needs to change. You keep the report either way.</p>
@@ -785,53 +1085,63 @@
         Book a call <span class="arr">→</span>
       </a>
     </div>
+
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="assess-footer">
-  <div class="assess-footer-brand">Candor<span>.</span></div>
-  <a href="/blog">Resources</a>
-  <a href="/assessment/">Assessment</a>
-  <a href="https://candorcertified.com/#contact">Contact</a>
-  <a href="/">Home</a>
+<footer>
+  <div class="foot-row">
+    <div class="foot-l">
+      <svg width="22" height="22" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="rgba(61,138,87,.55)"/></svg>
+      <span class="foot-name">Candor</span>
+    </div>
+    <nav class="foot-nav" aria-label="Footer navigation">
+      <a href="/#services">Services</a>
+      <a href="/#process">How It Works</a>
+      <a href="/#about">About</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/blog">Resources</a>
+      <a href="/assessment/">Assessment</a>
+    </nav>
+  </div>
+  <div class="foot-row">
+    <div class="foot-links">
+      <a href="mailto:artem.dan1lov@proton.me">artem.dan1lov@proton.me</a>
+      <a href="https://linkedin.com/in/artem-furman" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+    <div class="foot-copy">Artem Furman · Vancouver, BC · © 2026</div>
+  </div>
 </footer>
 
 <script>
-/* ─────────────────────────────────────────────
-   GOOGLE SHEETS INTEGRATION
-   
-   Setup (takes ~10 min):
-   1. Go to script.google.com → New project
-   2. Paste the Apps Script code from the README
-   3. Deploy → New deployment → Web app
-      - Execute as: Me
-      - Who has access: Anyone
-   4. Copy the deployment URL and paste below
-   ───────────────────────────────────────────── */
-
-
 /* ─── State ─────────────────────────────────── */
 let assessmentStarted = false;
 
 const state = {
-  size: null,
-  industry: null,
-  practices: [null, null, null, null],
-  email: '',
-  impact: null
+  revenue:   null,
+  industry:  null,
+  journey:   null,
+  practices: [],
+  email:     '',
+  impact:    null
 };
 
-const SCREENS = ['intro','q1','q2','q3','email','results'];
-const PROGRESS = { intro:0, q1:20, q2:40, q3:65, email:82, results:100 };
+const screenHistory = [];
+
+const PROGRESS = { intro:0, q1:17, q2:34, q3:52, q4:70, email:85, results:100 };
+
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwDuU60LHO7TfmYxFrHB3NQ9Kg8Kmc5Dt_Y63vMtULEvr_8D-LIM6Aknro2jU3JJrmp/exec';
 
 /* ─── Navigation ─────────────────────────────── */
 function goTo(id) {
   const current = document.querySelector('.screen.active');
   if (current) {
+    const fromId = current.id.replace('screen-', '');
+    screenHistory.push(fromId);
     current.classList.add('exit');
     setTimeout(() => {
-      current.classList.remove('active','exit');
+      current.classList.remove('active', 'exit');
       current.style.display = 'none';
       showScreen(id);
     }, 300);
@@ -840,68 +1150,126 @@ function goTo(id) {
   }
 }
 
+function goBack() {
+  if (!screenHistory.length) return;
+  const prevId = screenHistory.pop();
+  const current = document.querySelector('.screen.active');
+  if (current) {
+    current.classList.add('exit');
+    setTimeout(() => {
+      current.classList.remove('active', 'exit');
+      current.style.display = 'none';
+      showScreen(prevId);
+    }, 300);
+  }
+}
+
 function showScreen(id) {
   const el = document.getElementById('screen-' + id);
   if (!el) return;
   el.style.display = 'flex';
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => { el.classList.add('active'); });
-  });
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    el.classList.add('active');
+    if (id !== 'intro') {
+      setTimeout(() => {
+        const titleEl = el.querySelector('.q-title');
+        if (titleEl) revealWords(titleEl, 80);
+      }, 80);
+    }
+  }));
 
-  // Progress
-  const prog = document.getElementById('progress-bar');
   const wrap = document.getElementById('progress-wrap');
-  wrap.classList.toggle('visible', id !== 'intro');
-  prog.style.width = (PROGRESS[id] || 0) + '%';
+  const isVisible = id !== 'intro';
+  wrap.classList.toggle('visible', isVisible);
+  progressVisible = isVisible;
+  setProgressPct(PROGRESS[id] || 0);
+  if (isVisible) startProgressRaf();
 
-  // Nav scroll
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
   if (id === 'results') initResults();
 }
 
-/* ─── Q1: Size ───────────────────────────────── */
-function selectSize(el, val) {
-  document.querySelectorAll('#screen-q1 .opt-card').forEach(c => c.classList.remove('selected'));
+/* ─── Q1/Q2 generic single-select ─────────────── */
+function selectOpt(el, stateKey, val, nextId) {
+  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected', 'settle', 'ripple-show'));
   el.classList.add('selected');
-  state.size = val;
-  document.getElementById('next-q1').classList.add('ready');
-}
 
-/* ─── Q2: Industry ───────────────────────────── */
-function selectIndustry(el, val) {
-  document.querySelectorAll('#screen-q2 .opt-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  state.industry = val;
-  document.getElementById('next-q2').classList.add('ready');
-}
+  // settle animation
+  el.classList.add('settle');
+  setTimeout(() => el.classList.remove('settle'), 200);
 
-/* ─── Q3: Practices ──────────────────────────── */
-function setPractice(idx, val) {
-  state.practices[idx] = val;
-  const item = document.getElementById('t' + idx);
-  item.classList.remove('yes','no');
-  item.classList.add(val ? 'yes' : 'no');
-  // Check if all answered
-  if (state.practices.every(p => p !== null)) {
-    document.getElementById('next-q3').classList.add('ready');
+  // ripple from click center
+  const rect = el.getBoundingClientRect();
+  const rx = ((event.clientX - rect.left) / rect.width * 100).toFixed(1) + '%';
+  const ry = ((event.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+  el.style.setProperty('--rx', rx);
+  el.style.setProperty('--ry', ry);
+  el.classList.add('ripple-show');
+  setTimeout(() => el.classList.remove('ripple-show'), 380);
+
+  topoRingBurst(el);
+
+  state[stateKey] = val;
+
+  const btn = document.getElementById(nextId);
+  if (!btn.classList.contains('ready')) {
+    btn.classList.add('ready', 'shimmer-once');
+    setTimeout(() => btn.classList.remove('shimmer-once'), 1000);
   }
 }
-function togglePractice(idx) {
-  const current = state.practices[idx];
-  setPractice(idx, current === true ? false : true);
+
+/* ─── Q3: Journey ────────────────────────────── */
+function selectJourney(el, val) {
+  document.querySelectorAll('#screen-q3 .journey-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  topoRingBurst(el);
+  state.journey = val;
+  const btn = document.getElementById('next-q3');
+  if (!btn.classList.contains('ready')) {
+    btn.classList.add('ready', 'shimmer-once');
+    setTimeout(() => btn.classList.remove('shimmer-once'), 1000);
+  }
+}
+
+/* ─── Q4: Practices (multi-select) ──────────── */
+function toggleCheck(el) {
+  const badge = el.querySelector('.check-badge');
+  const id = el.dataset.id;
+  if (el.classList.contains('checked')) {
+    el.classList.remove('checked');
+    state.practices = state.practices.filter(p => p !== id);
+    if (badge) {
+      badge.classList.remove('badge-in');
+      void badge.offsetWidth;
+      badge.classList.add('badge-out');
+      setTimeout(() => badge.classList.remove('badge-out'), 200);
+    }
+    el.classList.remove('card-pop');
+    void el.offsetWidth;
+    el.classList.add('card-shrink');
+    setTimeout(() => el.classList.remove('card-shrink'), 200);
+  } else {
+    el.classList.add('checked');
+    if (!state.practices.includes(id)) state.practices.push(id);
+    if (badge) {
+      badge.classList.remove('badge-out');
+      void badge.offsetWidth;
+      badge.classList.add('badge-in');
+      setTimeout(() => badge.classList.remove('badge-in'), 300);
+    }
+    el.classList.remove('card-shrink');
+    void el.offsetWidth;
+    el.classList.add('card-pop');
+    setTimeout(() => el.classList.remove('card-pop'), 200);
+  }
 }
 
 /* ─── Email ──────────────────────────────────── */
-// 1. PASTE YOUR APPS SCRIPT WEB APP URL INSIDE THESE QUOTES:
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwDuU60LHO7TfmYxFrHB3NQ9Kg8Kmc5Dt_Y63vMtULEvr_8D-LIM6Aknro2jU3JJrmp/exec';
-
 function submitEmail() {
   const input = document.getElementById('email-input');
   const wrap  = input.closest('.email-field-wrap');
   const email = input.value.trim();
 
-  // Requires a real local part, domain with at least one label, and an alphabetical TLD (2+ chars)
   const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
   if (!email || !emailRegex.test(email)) {
     wrap.style.borderColor = '#c0392b';
@@ -916,64 +1284,140 @@ function submitEmail() {
   wrap.style.borderColor = '';
   state.email = email;
 
+  const impact = calculate();
+  state.impact = impact;
+
   const params = new URLSearchParams({
-    email:     email,
-    size:      state.size,
-    industry:  state.industry,
-    practices: state.practices.map(p => p ? 'yes' : 'no').join(','),
-    timestamp: new Date().toISOString()
+    email:           email,
+    revenue:         state.revenue  || '',
+    industry:        state.industry || '',
+    journey:         state.journey  || '',
+    practices:       state.practices.length ? state.practices.join(',') : 'none',
+    impact_score:    impact.impactScore,
+    readiness_score: impact.readinessScore,
+    verdict:         impact.verdict,
+    timeline:        impact.timeline,
+    co2:             impact.co2,
+    workers:         impact.workers,
+    timestamp:       new Date().toISOString()
   });
 
-  if (SHEETS_URL) {
-    new Image().src = SHEETS_URL + '?' + params.toString();
-  }
+  if (SHEETS_URL) fetch(SHEETS_URL + '?' + params.toString(), { mode: 'no-cors' });
 
   goTo('results');
 }
 
-  // Instantly take the user to the results screen without making them wait
-
-/* ─── Impact Calculation ─────────────────────── */
+/* ─── Scoring ─────────────────────────────────── */
 function calculate() {
-  const employees = { '1-5':3, '6-20':13, '21-50':35, '51-200':100, '200+':300 }[state.size] || 13;
+  const revenueBase = {
+    'under-500k': 12, '500k-2m': 28, '2m-10m': 50,
+    '10m-50m': 72, '50m-plus': 90
+  }[state.revenue] || 28;
+
+  const industryMult = {
+    'food-bev': 1.15, 'manufacturing': 1.20, 'retail': 1.10,
+    'health-edu': 0.95, 'services': 0.85, 'tech': 0.80, 'creative': 0.75
+  }[state.industry] || 0.90;
+
+  const impactScore = Math.min(Math.round(revenueBase * industryMult), 100);
+
+  const journeyBase = {
+    'exploring': 10, 'researching': 35, 'in-progress': 65, 'certified': 90
+  }[state.journey] || 10;
+
+  const practiceBonus = Math.min(state.practices.length * 4, 28);
+  const readinessScore = Math.min(Math.round(journeyBase + practiceBonus), 100);
+
+  const revenueEmployees = {
+    'under-500k': 4, '500k-2m': 14, '2m-10m': 40,
+    '10m-50m': 120, '50m-plus': 350
+  }[state.revenue] || 14;
 
   const industryFactor = {
-    'food-bev': 5.1, 'retail': 3.6, 'services': 1.8,
-    'manufacturing': 8.4, 'tech': 2.1, 'other': 3.2
-  }[state.industry] || 3.2;
+    'food-bev': 5.1, 'manufacturing': 8.4, 'retail': 3.6,
+    'health-edu': 2.8, 'services': 1.8, 'tech': 2.1, 'creative': 1.6
+  }[state.industry] || 2.5;
 
-  const yesCount = state.practices.filter(p => p === true).length;
-  const practiceScore = yesCount / 4; // 0–1
-  // More gaps = more improvement potential
-  const gapMultiplier = 1 + (1 - practiceScore) * 0.6;
+  const co2 = Math.round(revenueEmployees * industryFactor * 1.1);
 
-  const co2 = Math.round(employees * industryFactor * gapMultiplier * 1.1);
-  const workers = Math.round(employees * 7.3);
-  const trust = 73; // B Lab research: 73% of consumers prefer B Corps
-  const timeline = practiceScore >= 0.75 ? '4–6 mo'
-                 : practiceScore >= 0.5  ? '6–9 mo'
-                 : practiceScore >= 0.25 ? '9–12 mo'
-                 :                         '12–18 mo';
+  const supplyMult = {
+    'manufacturing': 14, 'food-bev': 11, 'retail': 9,
+    'health-edu': 6, 'services': 4, 'tech': 3, 'creative': 3
+  }[state.industry] || 5;
 
-  // Score 0–100 for the topo map
-  const score = Math.round(
-    (Math.min(employees, 200) / 200 * 40) +
-    (industryFactor / 8.4 * 30) +
-    (gapMultiplier * 15) +
-    (practiceScore * 15)
-  );
+  const workers = Math.round(revenueEmployees * supplyMult);
 
-  return { co2, workers, trust, timeline, score: Math.min(score, 99) };
+  let timeline;
+  if (state.journey === 'certified') {
+    timeline = 'Recertification';
+  } else if (readinessScore >= 70 && impactScore < 50) {
+    timeline = '3–5 mo';
+  } else if (readinessScore >= 70) {
+    timeline = '5–7 mo';
+  } else if (readinessScore >= 45 && impactScore < 50) {
+    timeline = '6–9 mo';
+  } else if (readinessScore >= 45) {
+    timeline = '8–12 mo';
+  } else if (readinessScore >= 20) {
+    timeline = '10–15 mo';
+  } else {
+    timeline = '12–18 mo';
+  }
+
+  let verdict;
+  if (state.journey === 'certified') {
+    verdict = "Time to recertify. Let's see where you stand.";
+  } else if (readinessScore >= 55 && impactScore >= 55) {
+    verdict = "Ready to certify.";
+  } else if (readinessScore >= 55) {
+    verdict = "You're prepared. Let's make it official.";
+  } else if (impactScore >= 55) {
+    verdict = "The opportunity is significant. Time to utilize it.";
+  } else {
+    verdict = "A strong foundation to build from.";
+  }
+
+  return { impactScore, readinessScore, co2, workers, timeline, verdict };
 }
 
-/* ─── Topo Canvas ────────────────────────────── */
+/* ─── Gap analysis ─────────────────────────────── */
+const GAP_COPY = {
+  'hr-policies':       'Written HR policies — the Workers pillar scores heavily on documented pay equity and conduct standards.',
+  'energy-tracking':   'Energy tracking — the Environment pillar starts with measurement. Even basic monitoring adds points.',
+  'supplier-vetting':  'Supply chain visibility — knowing where your suppliers source earns points across Community and Environment.',
+  'mission-statement': 'Formal mission or values — Governance scoring requires documented stakeholder commitment.',
+  'employee-benefits': 'Enhanced benefits — profit sharing or extended leave are among the highest-weighted Worker pillar items.',
+  'community-giving':  'Community programs — local sourcing or giving initiatives contribute to the Community pillar score.',
+  'env-certification': 'Environmental certification — existing credentials (ISO, etc.) can carry directly into your BIA score.',
+  'dei-initiatives':   'DEI programs — formal diversity initiatives are increasingly required for full Worker pillar points.'
+};
+
+const INDUSTRY_PRIORITY = {
+  'manufacturing': ['supplier-vetting','energy-tracking','env-certification','hr-policies','employee-benefits','dei-initiatives','mission-statement','community-giving'],
+  'food-bev':      ['supplier-vetting','energy-tracking','community-giving','env-certification','hr-policies','dei-initiatives','mission-statement','employee-benefits'],
+  'retail':        ['supplier-vetting','energy-tracking','community-giving','hr-policies','dei-initiatives','mission-statement','env-certification','employee-benefits'],
+  'health-edu':    ['hr-policies','dei-initiatives','mission-statement','employee-benefits','community-giving','energy-tracking','supplier-vetting','env-certification'],
+  'services':      ['mission-statement','hr-policies','dei-initiatives','employee-benefits','community-giving','energy-tracking','supplier-vetting','env-certification'],
+  'tech':          ['mission-statement','hr-policies','dei-initiatives','energy-tracking','employee-benefits','community-giving','supplier-vetting','env-certification'],
+  'creative':      ['mission-statement','dei-initiatives','hr-policies','community-giving','employee-benefits','energy-tracking','supplier-vetting','env-certification'],
+  'other':         ['mission-statement','hr-policies','energy-tracking','dei-initiatives','employee-benefits','supplier-vetting','community-giving','env-certification']
+};
+
+function getTopGaps() {
+  const missing = Object.keys(GAP_COPY).filter(id => !state.practices.includes(id));
+  if (!missing.length) return [];
+  const priority = INDUSTRY_PRIORITY[state.industry] || Object.keys(GAP_COPY);
+  const sorted = priority.filter(id => missing.includes(id));
+  const rest   = missing.filter(id => !sorted.includes(id));
+  return [...sorted, ...rest].slice(0, 2);
+}
+
+/* ─── Topo canvas (shared) ───────────────────── */
 function drawTopoMap(canvas, score) {
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
   const cx = W / 2, cy = H / 2;
   ctx.clearRect(0, 0, W, H);
-
-  // Background
   ctx.fillStyle = '#0D1610';
   ctx.fillRect(0, 0, W, H);
 
@@ -983,40 +1427,27 @@ function drawTopoMap(canvas, score) {
   for (let i = levels; i >= 1; i--) {
     const t = i / levels;
     const r = maxR * t;
-
-    // Opacity and color based on score and level
     const activated = (1 - t) <= (score / 100);
-    const alpha = activated
-      ? 0.08 + (1 - t) * 0.22
-      : 0.03 + (1 - t) * 0.04;
-
+    const alpha = activated ? 0.08 + (1 - t) * 0.22 : 0.03 + (1 - t) * 0.04;
     const green = activated ? '#3D8A57' : '#2D6B42';
 
     ctx.beginPath();
-
-    // Make each contour slightly organic using sin offsets
     const pts = 120;
     for (let j = 0; j <= pts; j++) {
       const angle = (j / pts) * Math.PI * 2;
-      // Add organic wobble — different per level
       const wobble = 1 +
         Math.sin(angle * 3 + i * 0.7) * 0.04 * (1 - t) +
         Math.sin(angle * 5 + i * 1.2) * 0.025 * (1 - t) +
         Math.cos(angle * 7 + i * 0.4) * 0.015;
-
       const rx = cx + Math.cos(angle) * r * wobble;
-      const ry = cy + Math.sin(angle) * r * wobble * 0.85; // slight vertical squeeze
-
+      const ry = cy + Math.sin(angle) * r * wobble * 0.85;
       j === 0 ? ctx.moveTo(rx, ry) : ctx.lineTo(rx, ry);
     }
     ctx.closePath();
-
     if (activated) {
-      // Subtle fill for activated levels
       ctx.fillStyle = `rgba(45,107,66,${alpha * 0.4})`;
       ctx.fill();
     }
-
     ctx.strokeStyle = green;
     ctx.globalAlpha = alpha;
     ctx.lineWidth = activated ? 1.2 : 0.8;
@@ -1024,61 +1455,126 @@ function drawTopoMap(canvas, score) {
     ctx.globalAlpha = 1;
   }
 
-  // Center dot
-  ctx.beginPath();
-  ctx.arc(cx, cy, 4, 0, Math.PI * 2);
-  ctx.fillStyle = '#3D8A57';
-  ctx.fill();
 }
 
 /* ─── Animated counter ───────────────────────── */
 function animateCount(el, target, suffix, duration) {
+  if (typeof target !== 'number') { el.textContent = target; return; }
   const start = performance.now();
-  const isNum = typeof target === 'number';
-  if (!isNum) { el.textContent = target; return; }
-
   function tick(now) {
     const t = Math.min((now - start) / duration, 1);
     const ease = 1 - Math.pow(1 - t, 3);
-    const val = Math.round(target * ease);
-    el.textContent = val.toLocaleString() + (suffix || '');
+    el.textContent = Math.round(target * ease).toLocaleString() + (suffix || '');
     if (t < 1) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 }
 
-/* ─── Results ────────────────────────────────── */
+/* ─── Results init ───────────────────────────── */
 function initResults() {
-  const impact = calculate();
+  const impact = state.impact || calculate();
   state.impact = impact;
 
-  // Draw topo map with animated score
-  const canvas = document.getElementById('topo-canvas');
-  const scoreEl = document.getElementById('score-num');
-  let currentScore = 0;
-  const targetScore = impact.score;
-  const duration = 1800;
-  const startTime = performance.now();
+  // Reset animated elements for clean re-entry
+  ['gauge-impact','gauge-readiness'].forEach(id => document.getElementById(id).classList.remove('visible'));
+  document.getElementById('verdict-banner').classList.remove('visible');
+  document.querySelectorAll('.metric-cell').forEach(c => c.classList.remove('visible'));
+  document.getElementById('gap-section').classList.remove('visible');
+  document.getElementById('results-cta').classList.remove('visible');
 
-  function animateMap(now) {
-    const t = Math.min((now - startTime) / duration, 1);
-    const ease = 1 - Math.pow(1 - t, 3);
-    currentScore = Math.round(targetScore * ease);
-    drawTopoMap(canvas, currentScore);
-    scoreEl.textContent = currentScore;
-    if (t < 1) requestAnimationFrame(animateMap);
+  document.getElementById('verdict-text').textContent = '';
+
+  fireContourConfetti();
+
+  // Build gap list
+  const gapSection = document.getElementById('gap-section');
+  const gapList    = document.getElementById('gap-list');
+  gapList.innerHTML = '';
+
+  const showGaps = impact.readinessScore < 80 && state.journey !== 'certified';
+  if (showGaps) {
+    const gaps = getTopGaps();
+    if (gaps.length) {
+      gaps.forEach(id => {
+        const div = document.createElement('div');
+        div.className = 'gap-item';
+        div.textContent = GAP_COPY[id];
+        gapList.appendChild(div);
+      });
+      gapSection.style.display = '';
+    } else {
+      gapSection.style.display = 'none';
+    }
+  } else {
+    gapSection.style.display = 'none';
   }
-  requestAnimationFrame(animateMap);
 
-  // Animate metrics with staggered delay
-  setTimeout(() => animateCount(document.getElementById('m-co2'),     impact.co2,     ' t',  1200), 400);
-  setTimeout(() => animateCount(document.getElementById('m-workers'), impact.workers,  '',    1200), 600);
-  setTimeout(() => animateCount(document.getElementById('m-trust'),   impact.trust,   '%',   900),  800);
-  setTimeout(() => { document.getElementById('m-timeline').textContent = impact.timeline; }, 1000);
+  // t=0: both gauges animate simultaneously
+  const cImpact    = document.getElementById('canvas-impact');
+  const cReadiness = document.getElementById('canvas-readiness');
+  const nImpact    = document.getElementById('num-impact');
+  const nReadiness = document.getElementById('num-readiness');
+  const ANIM_DUR   = 2000;
+
+  document.getElementById('gauge-impact').classList.add('visible');
+  document.getElementById('gauge-readiness').classList.add('visible');
+
+  function animateGauge(canvas, numEl, target, onDone) {
+    const t0 = performance.now();
+    function frame(now) {
+      const t = Math.min((now - t0) / ANIM_DUR, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      const cur = Math.round(target * ease);
+      drawTopoMap(canvas, cur);
+      numEl.textContent = cur;
+      if (t < 1) {
+        requestAnimationFrame(frame);
+      } else if (onDone) {
+        onDone(canvas, numEl);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function onGaugeDone(canvas, numEl) {
+    particleBurst(canvas);
+    numEl.classList.add('pulse');
+    setTimeout(() => numEl.classList.remove('pulse'), 1200);
+    numEl.classList.add('altitude-shimmer');
+    setTimeout(() => numEl.classList.remove('altitude-shimmer'), 600);
+  }
+
+  animateGauge(cImpact,    nImpact,    impact.impactScore,    onGaugeDone);
+  animateGauge(cReadiness, nReadiness, impact.readinessScore, onGaugeDone);
+
+  // t=200: verdict banner visible; t=400: typewriter starts
+  setTimeout(() => document.getElementById('verdict-banner').classList.add('visible'), 200);
+  setTimeout(() => typewriterReveal(document.getElementById('verdict-text'), impact.verdict), 400);
+
+  // t=600: metric cells stagger
+  ['mc-co2','mc-workers','mc-trust','mc-timeline'].forEach((id, i) => {
+    setTimeout(() => document.getElementById(id).classList.add('visible'), 600 + i * 120);
+  });
+
+  // t=900: counters
+  setTimeout(() => {
+    animateCount(document.getElementById('m-co2'),     impact.co2,   ' t',  1200);
+    animateCount(document.getElementById('m-workers'), impact.workers, '',  1200);
+    animateCount(document.getElementById('m-trust'),   73,           '%',   900);
+    document.getElementById('m-timeline').textContent = impact.timeline;
+  }, 900);
+
+  // t=1400: gap section
+  setTimeout(() => {
+    if (gapSection.style.display !== 'none') gapSection.classList.add('visible');
+  }, 1400);
+
+  // t=1600: CTA
+  setTimeout(() => document.getElementById('results-cta').classList.add('visible'), 1600);
 }
 
-/* ─── Nav scroll effect ──────────────────────── */
-(function(){
+/* ─── Nav scroll ─────────────────────────────── */
+(function () {
   var nav = document.getElementById('site-nav');
   function checkScroll() { nav.classList.toggle('nav-up', window.scrollY > 32); }
   window.addEventListener('scroll', checkScroll, { passive: true });
@@ -1087,43 +1583,28 @@ function initResults() {
 
 /* ════════════════════════════════════════════════════════
    TOPOGRAPHIC BACKGROUND — Marching Squares + Multi-octave noise
-   Mouse interaction: creates a real-time mountain peak
    ════════════════════════════════════════════════════════ */
-(function() {
+(function () {
   const canvas = document.getElementById('topo-bg-canvas');
   const ctx = canvas.getContext('2d');
 
-  // Grid resolution (samples, not pixels)
-  const COLS = 90;
-  const ROWS = 56;
-
-  // Contour thresholds — 14 levels from valley to peak
-  const LEVELS = 14;
+  const COLS = 90, ROWS = 56, LEVELS = 14;
   const THRESHOLDS = [];
-  for (let i = 0; i < LEVELS; i++) {
-    THRESHOLDS.push(-0.9 + (i / (LEVELS - 1)) * 1.8);
-  }
+  for (let i = 0; i < LEVELS; i++) THRESHOLDS.push(-0.9 + (i / (LEVELS - 1)) * 1.8);
 
-  // Pre-allocated height grid
   const H = new Float32Array((COLS + 1) * (ROWS + 1));
-
-  // Mouse state — normalized 0-1
   const mouse = { nx: -1, ny: -1, strength: 0, targetStrength: 0 };
 
-  // Track mouse in normalized coordinates
-  window.addEventListener('mousemove', function(e) {
+  window.addEventListener('mousemove', function (e) {
     if (assessmentStarted) return;
     mouse.nx = e.clientX / window.innerWidth;
     mouse.ny = e.clientY / window.innerHeight;
     mouse.targetStrength = 0.72;
   }, { passive: true });
 
-  window.addEventListener('mouseleave', function() {
-    mouse.targetStrength = 0;
-  });
+  window.addEventListener('mouseleave', function () { mouse.targetStrength = 0; });
 
-  // Touch support
-  window.addEventListener('touchmove', function(e) {
+  window.addEventListener('touchmove', function (e) {
     if (assessmentStarted) return;
     const t = e.touches[0];
     mouse.nx = t.clientX / window.innerWidth;
@@ -1131,126 +1612,72 @@ function initResults() {
     mouse.targetStrength = 0.72;
   }, { passive: true });
 
-  // Resize
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
   window.addEventListener('resize', resize, { passive: true });
-  window.addEventListener('orientationchange', function() { setTimeout(resize, 120); }, { passive: true });
+  window.addEventListener('orientationchange', function () { setTimeout(resize, 120); }, { passive: true });
   resize();
 
-  // Height field: multi-octave sine waves + mouse Gaussian bump
   function sampleH(nx, ny, t) {
-    // Three octaves — broad landscape, mid detail, fine texture
-    let h =        Math.sin(nx * 3.8 + t * 0.09)  * Math.cos(ny * 2.6 - t * 0.06)
-          + 0.50 * Math.sin(nx * 8.4 - t * 0.16 + 1.91) * Math.cos(ny * 5.9 + t * 0.12)
-          + 0.25 * Math.sin(nx * 16.1 + t * 0.26) * Math.cos(ny * 12.3 - t * 0.22 + 3.14);
-    h /= 1.75; // normalize to ≈ -1..1
-
-    // Mouse peak: Gaussian hill centred on cursor
+    let h =       Math.sin(nx * 3.8 + t * 0.09)  * Math.cos(ny * 2.6 - t * 0.06)
+         + 0.50 * Math.sin(nx * 8.4 - t * 0.16 + 1.91) * Math.cos(ny * 5.9 + t * 0.12)
+         + 0.25 * Math.sin(nx * 16.1 + t * 0.26) * Math.cos(ny * 12.3 - t * 0.22 + 3.14);
+    h /= 1.75;
     if (mouse.strength > 0.001) {
-      const dx = nx - mouse.nx;
-      const dy = ny - mouse.ny;
+      const dx = nx - mouse.nx, dy = ny - mouse.ny;
       h += mouse.strength * Math.exp(-(dx * dx + dy * dy) / 0.016);
     }
     return h;
   }
 
-  // Marching squares edge table
-  // Edges: 0=top(TL→TR), 1=right(TR→BR), 2=bottom(BR→BL), 3=left(BL→TL)
-  // Index: bit3=TL, bit2=TR, bit1=BR, bit0=BL (1 = above threshold)
   const SEG_TABLE = [
-    [],            // 0  0000
-    [[2,3]],       // 1  0001  BL
-    [[1,2]],       // 2  0010  BR
-    [[1,3]],       // 3  0011  BR+BL
-    [[0,1]],       // 4  0100  TR
-    [[0,1],[2,3]], // 5  0101  TR+BL (saddle)
-    [[0,2]],       // 6  0110  TR+BR
-    [[0,3]],       // 7  0111
-    [[0,3]],       // 8  1000  TL
-    [[0,2]],       // 9  1001  TL+BL
-    [[0,3],[1,2]], // 10 1010  TL+BR (saddle)
-    [[0,1]],       // 11 1011
-    [[1,3]],       // 12 1100  TL+TR
-    [[1,2]],       // 13 1101
-    [[2,3]],       // 14 1110
-    [],            // 15 1111
+    [], [[2,3]], [[1,2]], [[1,3]], [[0,1]], [[0,1],[2,3]], [[0,2]], [[0,3]],
+    [[0,3]], [[0,2]], [[0,3],[1,2]], [[0,1]], [[1,3]], [[1,2]], [[2,3]], []
   ];
 
-  // Interpolate position on an edge given two corner heights and threshold
   function edgePt(edge, x0, y0, cw, ch, vTL, vTR, vBR, vBL, thresh) {
-    let t, px, py;
-    switch(edge) {
-      case 0: // top: TL → TR
-        t = (thresh - vTL) / (vTR - vTL);
-        return [x0 + t * cw, y0];
-      case 1: // right: TR → BR
-        t = (thresh - vTR) / (vBR - vTR);
-        return [x0 + cw, y0 + t * ch];
-      case 2: // bottom: BR → BL (RTL)
-        t = (thresh - vBR) / (vBL - vBR);
-        return [x0 + (1 - t) * cw, y0 + ch];
-      case 3: // left: BL → TL (BTT)
-        t = (thresh - vBL) / (vTL - vBL);
-        return [x0, y0 + (1 - t) * ch];
+    let t;
+    switch (edge) {
+      case 0: t = (thresh - vTL) / (vTR - vTL); return [x0 + t * cw, y0];
+      case 1: t = (thresh - vTR) / (vBR - vTR); return [x0 + cw, y0 + t * ch];
+      case 2: t = (thresh - vBR) / (vBL - vBR); return [x0 + (1 - t) * cw, y0 + ch];
+      case 3: t = (thresh - vBL) / (vTL - vBL); return [x0, y0 + (1 - t) * ch];
     }
   }
 
-  // Colour per contour level (valley=dim, peak=bright sage)
-  function levelColor(li, numLevels) {
-    const t = li / (numLevels - 1); // 0=valley, 1=peak
-    // Opacity ramp
-    const alpha = 0.035 + t * 0.22;
-    // Green ramp: forest → field → sage
-    const r = Math.round(45  + t * 45);
-    const g = Math.round(107 + t * 59);
-    const b = Math.round(66  + t * 48);
-    return `rgba(${r},${g},${b},${alpha})`;
+  function levelColor(li, n) {
+    const t = li / (n - 1);
+    const a = 0.035 + t * 0.22;
+    return `rgba(${Math.round(45 + t * 45)},${Math.round(107 + t * 59)},${Math.round(66 + t * 48)},${a})`;
+  }
+  function mouseColor(li, n) {
+    const t = li / (n - 1);
+    return `rgba(90,166,114,${(0.08 + t * 0.32) * mouse.strength})`;
   }
 
-  // Mouse peak highlight colour
-  function mouseColor(li, numLevels) {
-    const t = li / (numLevels - 1);
-    const alpha = (0.08 + t * 0.32) * mouse.strength;
-    return `rgba(90,166,114,${alpha})`;
-  }
-
-  let time = 0;
-  let lastFrame = 0;
+  let time = 0, lastFrame = 0;
 
   function render(ts) {
     const dt = Math.min((ts - lastFrame) / 1000, 0.05);
     lastFrame = ts;
     time += dt;
 
-    // Ease mouse strength (fade out after assessment starts)
     if (assessmentStarted) mouse.targetStrength = 0;
     mouse.strength += (mouse.targetStrength - mouse.strength) * 0.06;
 
-    const W = canvas.width;
-    const Ht = canvas.height;
-    const cw = W / COLS;
-    const ch = Ht / ROWS;
-
+    const W = canvas.width, Ht = canvas.height;
+    const cw = W / COLS, ch = Ht / ROWS;
     ctx.clearRect(0, 0, W, Ht);
 
-    // Fill height grid
     for (let row = 0; row <= ROWS; row++) {
       const ny = row / ROWS;
-      for (let col = 0; col <= COLS; col++) {
-        const nx = col / COLS;
-        H[row * (COLS + 1) + col] = sampleH(nx, ny, time);
-      }
+      for (let col = 0; col <= COLS; col++)
+        H[row * (COLS + 1) + col] = sampleH(col / COLS, ny, time);
     }
 
-    // Draw each contour level
     for (let li = 0; li < LEVELS; li++) {
       const thresh = THRESHOLDS[li];
-      const baseColor  = levelColor(li, LEVELS);
-      const mColor     = mouseColor(li, LEVELS);
-
+      const baseColor = levelColor(li, LEVELS);
+      const mColor    = mouseColor(li, LEVELS);
       ctx.lineWidth = li > LEVELS * 0.75 ? 1.1 : 0.7;
 
       for (let row = 0; row < ROWS; row++) {
@@ -1259,23 +1686,14 @@ function initResults() {
           const vTR = H[ row      * (COLS+1) + col + 1];
           const vBR = H[(row + 1) * (COLS+1) + col + 1];
           const vBL = H[(row + 1) * (COLS+1) + col    ];
-
-          const idx = (vTL > thresh ? 8 : 0)
-                    | (vTR > thresh ? 4 : 0)
-                    | (vBR > thresh ? 2 : 0)
-                    | (vBL > thresh ? 1 : 0);
-
+          const idx = (vTL > thresh ? 8 : 0) | (vTR > thresh ? 4 : 0) |
+                      (vBR > thresh ? 2 : 0) | (vBL > thresh ? 1 : 0);
           const segs = SEG_TABLE[idx];
           if (!segs.length) continue;
 
-          const x0 = col * cw;
-          const y0 = row * ch;
-
-          // Is this cell near the mouse peak?
-          const cdx = (col / COLS) - mouse.nx;
-          const cdy = (row / ROWS) - mouse.ny;
-          const nearMouse = mouse.strength > 0.01 && (cdx*cdx + cdy*cdy) < 0.06;
-
+          const x0 = col * cw, y0 = row * ch;
+          const cdx = col / COLS - mouse.nx, cdy = row / ROWS - mouse.ny;
+          const nearMouse = mouse.strength > 0.01 && (cdx * cdx + cdy * cdy) < 0.06;
           ctx.strokeStyle = nearMouse ? mColor : baseColor;
 
           for (let s = 0; s < segs.length; s++) {
@@ -1292,10 +1710,8 @@ function initResults() {
       }
     }
 
-    // Subtle glow at mouse position
     if (mouse.strength > 0.01) {
-      const gx = mouse.nx * W;
-      const gy = mouse.ny * Ht;
+      const gx = mouse.nx * W, gy = mouse.ny * Ht;
       const gr = ctx.createRadialGradient(gx, gy, 0, gx, gy, Math.min(W, Ht) * 0.22);
       gr.addColorStop(0,   `rgba(61,138,87,${0.07 * mouse.strength})`);
       gr.addColorStop(0.4, `rgba(45,107,66,${0.03 * mouse.strength})`);
@@ -1321,12 +1737,12 @@ function closeMobileNav() {
   menu.setAttribute('aria-hidden', 'true');
 }
 
-(function() {
+(function () {
   var btn = document.getElementById('nav-hamburger');
   var menu = document.getElementById('nav-mobile-menu');
   if (!btn || !menu) return;
 
-  btn.addEventListener('click', function(e) {
+  btn.addEventListener('click', function (e) {
     e.stopPropagation();
     var open = menu.classList.toggle('open');
     btn.classList.toggle('open', open);
@@ -1334,17 +1750,318 @@ function closeMobileNav() {
     menu.setAttribute('aria-hidden', String(!open));
   });
 
-  document.addEventListener('click', function(e) {
-    if (!document.getElementById('site-nav').contains(e.target) && !menu.contains(e.target)) {
+  document.addEventListener('click', function (e) {
+    if (!document.getElementById('site-nav').contains(e.target) && !menu.contains(e.target))
       closeMobileNav();
-    }
   });
-})();
+}());
 
 /* ─── Enter key on email ─────────────────────── */
-document.getElementById('email-input').addEventListener('keydown', function(e) {
+document.getElementById('email-input').addEventListener('keydown', function (e) {
   if (e.key === 'Enter') submitEmail();
 });
+
+/* ════════════════════════════════════════════════════════
+   ANIMATION FUNCTIONS
+   ════════════════════════════════════════════════════════ */
+
+/* ─── 1. Terrain Progress Bar ────────────────── */
+let progressPct = 0;
+let progressTargetPct = 0;
+let progressAnimFrom = 0;
+let progressAnimStart = null;
+let progressPhase = 0;
+let progressRafId = null;
+let progressVisible = false;
+
+function startProgressRaf() {
+  if (progressRafId) return;
+  function loop() {
+    if (!progressVisible) { progressRafId = null; return; }
+    progressPhase += 0.012;
+    if (progressAnimStart !== null) {
+      const elapsed = performance.now() - progressAnimStart;
+      const t = Math.min(elapsed / 600, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      progressPct = progressAnimFrom + (progressTargetPct - progressAnimFrom) * ease;
+      if (t >= 1) { progressAnimStart = null; progressPct = progressTargetPct; }
+    }
+    drawProgressTerrain(progressPct);
+    progressRafId = requestAnimationFrame(loop);
+  }
+  progressRafId = requestAnimationFrame(loop);
+}
+
+function setProgressPct(newPct) {
+  progressAnimFrom = progressPct;
+  progressTargetPct = newPct;
+  progressAnimStart = performance.now();
+}
+
+function drawProgressTerrain(pct) {
+  const canvas = document.getElementById('progress-canvas');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const logW = window.innerWidth;
+  const logH = 2;
+  const physW = Math.round(logW * dpr);
+  const physH = Math.round(logH * dpr);
+  if (canvas.width !== physW || canvas.height !== physH) {
+    canvas.width = physW; canvas.height = physH;
+    canvas.style.width = logW + 'px'; canvas.style.height = logH + 'px';
+  }
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, logW, logH);
+  const fillW = logW * pct / 100;
+
+  function terrainY(x) {
+    return 1.0 + Math.sin(x * 0.04 + progressPhase) * 0.5 + Math.sin(x * 0.09 + progressPhase * 1.3) * 0.3;
+  }
+
+  if (fillW > 0) {
+    ctx.beginPath();
+    ctx.moveTo(0, logH);
+    for (let x = 0; x <= fillW; x += 1) {
+      const y = Math.min(Math.max(terrainY(x), 0.1), logH - 0.1);
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.lineTo(fillW, logH); ctx.lineTo(0, logH); ctx.closePath();
+    ctx.fillStyle = '#3D8A57'; ctx.fill();
+  }
+
+  if (fillW < logW) {
+    ctx.beginPath();
+    const startX = Math.floor(fillW);
+    for (let x = startX; x <= logW; x += 1) {
+      const y = Math.min(Math.max(terrainY(x), 0.1), logH - 0.1);
+      x === startX ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.lineTo(logW, logH); ctx.lineTo(startX, logH); ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,.04)'; ctx.fill();
+  }
+
+  if (fillW > 0 && fillW < logW) {
+    const pulseAlpha = (Math.sin(Date.now() * 0.006) * 0.3 + 0.7) * 0.6;
+    ctx.strokeStyle = `rgba(90,166,114,${pulseAlpha.toFixed(2)})`;
+    ctx.lineWidth = 2; ctx.beginPath();
+    ctx.moveTo(fillW, 0); ctx.lineTo(fillW, logH); ctx.stroke();
+  }
+}
+
+window.addEventListener('resize', function () {
+  const canvas = document.getElementById('progress-canvas');
+  if (canvas) { canvas.width = 0; canvas.height = 0; }
+}, { passive: true });
+
+/* ─── 2. Staggered Word Reveal ───────────────── */
+function revealWords(el, delayStart) {
+  const text = el.textContent.trim();
+  if (!text) return;
+  const words = text.split(/\s+/);
+  el.textContent = '';
+  const inners = [];
+  words.forEach(function (word) {
+    const wrap = document.createElement('span');
+    wrap.className = 'word-reveal-wrap';
+    const inner = document.createElement('span');
+    inner.className = 'word-reveal-inner';
+    inner.textContent = word;
+    wrap.appendChild(inner);
+    el.appendChild(wrap);
+    inners.push(inner);
+  });
+  inners.forEach(function (inner, i) {
+    setTimeout(function () { inner.classList.add('landed'); }, delayStart + i * 38);
+  });
+  const totalMs = delayStart + (words.length - 1) * 38 + 480;
+  setTimeout(function () { el.textContent = text; }, totalMs);
+}
+
+/* ─── 3. Topo Ring Burst ─────────────────────── */
+function topoRingBurst(originEl) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const rect = originEl.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const dpr = window.devicePixelRatio || 1;
+  const W = window.innerWidth, H = window.innerHeight;
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:50;';
+  canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const maxRadii = [40, 70, 100, 130];
+  const colors = ['#3D8A57', '#5aA672', '#3D8A57', '#5aA672'];
+  const t0 = performance.now();
+  const dur = 600;
+  let rafId;
+  function draw(now) {
+    const t = Math.min((now - t0) / dur, 1);
+    ctx.clearRect(0, 0, W, H);
+    maxRadii.forEach(function (maxR, ri) {
+      const r = maxR * t;
+      const alpha = 0.5 * (1 - t);
+      const pts = 80;
+      ctx.beginPath();
+      for (let j = 0; j <= pts; j++) {
+        const angle = (j / pts) * Math.PI * 2;
+        const wobble = 1 + Math.sin(angle * 3 + ri * 0.7) * 0.05 + Math.sin(angle * 5) * 0.025;
+        const rx = cx + Math.cos(angle) * r * wobble;
+        const ry = cy + Math.sin(angle) * r * wobble;
+        j === 0 ? ctx.moveTo(rx, ry) : ctx.lineTo(rx, ry);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = colors[ri];
+      ctx.globalAlpha = alpha;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+    if (t < 1) rafId = requestAnimationFrame(draw);
+  }
+  rafId = requestAnimationFrame(draw);
+  setTimeout(function () { canvas.remove(); if (rafId) cancelAnimationFrame(rafId); }, 620);
+}
+
+/* ─── 5. Contour Line Confetti ───────────────── */
+function fireContourConfetti() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = window.innerWidth, H = window.innerHeight;
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:200;';
+  canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const colors = ['#2D6B42', '#3D8A57', '#5aA672', '#C8C3B5'];
+  const particles = [];
+  for (let i = 0; i < 30; i++) {
+    particles.push({
+      x: Math.random() * W, y: -20,
+      vy: 2.5 + Math.random() * 3,
+      vx: (Math.random() - 0.5) * 1.6,
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 3 * Math.PI / 180,
+      length: 22 + Math.random() * 36,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      alpha: 0.5 + Math.random() * 0.4,
+      fadeStart: 0.55 + Math.random() * 0.25,
+      seed: Math.random() * Math.PI * 2,
+      frame: 0, dead: false
+    });
+  }
+  let rafId;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    let allDead = true;
+    particles.forEach(function (p) {
+      if (p.dead) return;
+      p.frame++; p.x += p.vx + Math.sin(p.frame * 0.04 + p.seed) * 1.2;
+      p.y += p.vy; p.rotation += p.rotSpeed;
+      if (p.y > H + 20) { p.dead = true; return; }
+      allDead = false;
+      let a = p.alpha;
+      const yf = p.y / H;
+      if (yf > p.fadeStart) a *= 1 - (yf - p.fadeStart) / (1 - p.fadeStart);
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.length / 2, p.rotation, p.rotation + Math.PI * 0.6);
+      ctx.strokeStyle = p.color; ctx.globalAlpha = Math.max(a, 0);
+      ctx.lineWidth = 1.2; ctx.stroke();
+      ctx.restore();
+    });
+    if (!allDead) rafId = requestAnimationFrame(draw);
+    else canvas.remove();
+  }
+  rafId = requestAnimationFrame(draw);
+  setTimeout(function () { canvas.remove(); if (rafId) cancelAnimationFrame(rafId); }, 2400);
+}
+
+/* ─── 6. Verdict Typewriter ──────────────────── */
+function typewriterReveal(el, text, onDone) {
+  el.textContent = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'peak-cursor';
+  cursor.innerHTML = '<svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#5aA672"/></svg>';
+  el.appendChild(cursor);
+  let i = 0;
+  function tick() {
+    if (i < text.length) {
+      el.insertBefore(document.createTextNode(text[i]), cursor);
+      i++;
+      setTimeout(tick, 28);
+    } else {
+      cursor.classList.add('blinking');
+      setTimeout(function () {
+        cursor.style.transition = 'opacity 200ms ease';
+        cursor.style.opacity = '0';
+        setTimeout(function () {
+          cursor.remove();
+          if (onDone) onDone();
+        }, 220);
+      }, 900);
+    }
+  }
+  tick();
+}
+
+/* ─── 7. Particle Tick Burst ─────────────────── */
+function particleBurst(gaugeCanvas) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const rect = gaugeCanvas.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const dpr = window.devicePixelRatio || 1;
+  const W = window.innerWidth, H = window.innerHeight;
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:100;';
+  canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const colors = ['#3D8A57', '#5aA672', '#2D6B42', '#C8C3B5'];
+  const particles = [];
+  for (let i = 0; i < 45; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 1.8 + Math.random() * 3.4;
+    particles.push({
+      x: cx, y: cy,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      length: 3 + Math.random() * 5,
+      rotation: angle,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      life: 0, maxLife: 35 + Math.floor(Math.random() * 30)
+    });
+  }
+  let rafId;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    let allDead = true;
+    particles.forEach(function (p) {
+      if (p.life >= p.maxLife) return;
+      allDead = false;
+      p.vx *= 0.94; p.vy *= 0.94; p.vy += 0.08;
+      p.x += p.vx; p.y += p.vy; p.life++;
+      const a = 0.9 * (1 - p.life / p.maxLife);
+      ctx.save();
+      ctx.translate(p.x, p.y); ctx.rotate(p.rotation);
+      ctx.globalAlpha = a; ctx.strokeStyle = p.color; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(p.length, 0); ctx.stroke();
+      ctx.restore();
+    });
+    if (!allDead) rafId = requestAnimationFrame(draw);
+    else canvas.remove();
+  }
+  rafId = requestAnimationFrame(draw);
+  setTimeout(function () { canvas.remove(); if (rafId) cancelAnimationFrame(rafId); }, 4000);
+}
 </script>
 </body>
 </html>
