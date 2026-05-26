@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DE7YHS643Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DE7YHS643Z');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resources — B Corp Certification Guides | Candor</title>
@@ -28,9 +37,9 @@
       --px: clamp(20px,5vw,80px);
     }
 
-    html { background: var(--dark); }
+    html { background: var(--bg); }
     body {
-      background: var(--bg);
+      background: transparent;
       color: var(--dark);
       font-family: 'Open Sans', sans-serif;
       font-weight: 300;
@@ -615,6 +624,114 @@
     this.querySelector('.sort-label').textContent = sortNewest ? 'Newest' : 'Oldest';
     apply();
   });
+})();
+
+/* TOPOGRAPHIC CONTOURS — full page background */
+(function(){
+  const cvs = document.createElement('canvas');
+  cvs.setAttribute('aria-hidden','true');
+  cvs.style.cssText='position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1';
+  document.body.insertBefore(cvs, document.body.firstChild);
+  const ctx = cvs.getContext('2d');
+
+  const GRID=14, RADIUS=180, MAX_REP=28;
+  const THRESH=[-0.58,-0.36,-0.14,0.08,0.28,0.48,0.66];
+  const LC='rgba(30,80,45,0.05)';
+  const MS=[
+    [],[[3,0]],[[0,1]],[[3,1]],[[1,2]],
+    [[3,0],[1,2]],[[0,2]],[[2,3]],
+    [[2,3]],[[0,2]],[[0,3],[2,1]],[[1,2]],
+    [[3,1]],[[0,1]],[[0,3]],[]
+  ];
+
+  let W=0,H=0,cols=0,rows=0,t=0;
+  let rafId=null,running=false;
+  let mouse={x:0,y:0},lerped={x:0,y:0};
+  let repFade=0,mouseIn=false;
+  let grid=new Float32Array(0);
+
+  function resize(){
+    W=cvs.width=window.innerWidth;
+    H=cvs.height=window.innerHeight;
+    cols=Math.ceil(W/GRID)+2;
+    rows=Math.ceil(H/GRID)+2;
+    grid=new Float32Array(cols*rows);
+  }
+
+  function buildGrid(){
+    for(let gy=0;gy<rows;gy++){
+      for(let gx=0;gx<cols;gx++){
+        let px=gx*GRID,py=gy*GRID;
+        if(repFade>0.001){
+          const dx=px-lerped.x,dy=py-lerped.y,d2=dx*dx+dy*dy;
+          if(d2<RADIUS*RADIUS&&d2>0){
+            const d=Math.sqrt(d2),s=(1-d/RADIUS)*(1-d/RADIUS)*MAX_REP*repFade;
+            px+=dx/d*s; py+=dy/d*s;
+          }
+        }
+        grid[gy*cols+gx]=(
+          Math.sin(px*.007+t*.50)*Math.cos(py*.009-t*.35)*.45+
+          Math.cos(px*.013+py*.008-t*.28)*.30+
+          Math.sin(px*.019-py*.015+t*.42)*.15+
+          Math.cos(px*.005+py*.012+t*.20)*.10
+        );
+      }
+    }
+  }
+
+  function ep(gx,gy,e,a,b,c,d,th){
+    const x0=gx*GRID,y0=gy*GRID,G=GRID,eps=1e-9;
+    let r;
+    switch(e){
+      case 0:r=(th-a)/(b-a+eps);return[x0+r*G,y0];
+      case 1:r=(th-b)/(d-b+eps);return[x0+G,y0+r*G];
+      case 2:r=(th-c)/(d-c+eps);return[x0+r*G,y0+G];
+      case 3:r=(th-a)/(c-a+eps);return[x0,y0+r*G];
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle=LC; ctx.lineWidth=1;
+    for(const th of THRESH){
+      ctx.beginPath();
+      for(let gy=0;gy<rows-1;gy++){
+        for(let gx=0;gx<cols-1;gx++){
+          const a=grid[gy*cols+gx],     b=grid[gy*cols+gx+1];
+          const c=grid[(gy+1)*cols+gx], d=grid[(gy+1)*cols+gx+1];
+          let idx=0;
+          if(a>th)idx|=1; if(b>th)idx|=2; if(d>th)idx|=4; if(c>th)idx|=8;
+          for(const[ea,eb]of MS[idx]){
+            const pa=ep(gx,gy,ea,a,b,c,d,th);
+            const pb=ep(gx,gy,eb,a,b,c,d,th);
+            if(pa&&pb){ctx.moveTo(pa[0],pa[1]);ctx.lineTo(pb[0],pb[1]);}
+          }
+        }
+      }
+      ctx.stroke();
+    }
+  }
+
+  function tick(){
+    if(!running){rafId=null;return;}
+    t+=1/1500;
+    lerped.x+=(mouse.x-lerped.x)*.06;
+    lerped.y+=(mouse.y-lerped.y)*.06;
+    repFade=mouseIn?Math.min(1,repFade+.05):Math.max(0,repFade-1/90);
+    buildGrid(); draw();
+    rafId=requestAnimationFrame(tick);
+  }
+
+  function start(){if(running)return;running=true;tick();}
+
+  document.addEventListener('mousemove',e=>{
+    mouse.x=e.clientX; mouse.y=e.clientY;
+    mouseIn=true;
+  },{passive:true});
+  document.addEventListener('mouseleave',()=>{mouseIn=false;},{passive:true});
+
+  window.addEventListener('resize',()=>{resize();},{passive:true});
+  resize(); start();
 })();
 </script>
 </body>
