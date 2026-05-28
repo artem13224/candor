@@ -106,6 +106,7 @@
       background: var(--forest); color: var(--paper);
       border-radius: 2px; display: inline-flex; align-items: center; gap: 8px;
       transition: background .28s, transform .35s var(--ease);
+      position: relative; overflow: hidden;
     }
     .nav-cta:hover { background: var(--field); transform: translateY(-1px); }
     .nav-ar { display: inline-block; transition: transform .35s var(--ease); }
@@ -176,6 +177,7 @@
       border: none; cursor: pointer;
       display: inline-flex; align-items: center; gap: 10px;
       transition: background .2s, transform .35s var(--ease);
+      position: relative; overflow: hidden;
     }
     .btn-primary:hover { background: var(--sage); transform: translateY(-2px); }
     .btn-primary .arr { transition: transform .35s var(--ease); }
@@ -403,6 +405,7 @@
       background: var(--field); color: var(--paper);
       border: none; cursor: pointer;
       transition: background .2s; white-space: nowrap;
+      position: relative; overflow: hidden;
     }
     #email-submit:hover { background: var(--sage); }
     .email-note {
@@ -410,6 +413,13 @@
       font-size: 0.5625rem; letter-spacing: .08em;
       color: rgba(245,243,238,.2); text-transform: uppercase;
     }
+    .email-privacy {
+      margin-top: 10px; font-family: var(--mono);
+      font-size: 0.5rem; letter-spacing: .08em;
+      color: rgba(245,243,238,.15); text-transform: uppercase;
+    }
+    .email-privacy a { color: rgba(245,243,238,.28); text-decoration: underline; text-underline-offset: 3px; }
+    .email-privacy a:hover { color: rgba(245,243,238,.5); }
 
     /* ── RESULTS ── */
     .results-wrap { width: 100%; max-width: 900px; }
@@ -1000,6 +1010,7 @@
       <button id="email-submit" onclick="submitEmail()">View report →</button>
     </div>
     <p class="email-note">No spam. You control what comes next.</p>
+    <p class="email-privacy"><a href="/privacy-policy/">Privacy Policy</a></p>
   </div>
 </section>
 
@@ -1112,7 +1123,8 @@
   <div class="foot-row">
     <div class="foot-links">
       <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a>
-      <a href="https://linkedin.com/in/artem-furman" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="/privacy-policy/">Privacy Policy</a>
     </div>
     <div class="foot-copy">© 2026 Candor</div>
   </div>
@@ -1214,7 +1226,7 @@ function selectOpt(el, stateKey, val, nextId) {
   el.classList.add('ripple-show');
   setTimeout(() => el.classList.remove('ripple-show'), 380);
 
-  topoRingBurst(el);
+  topoRingBurst(el, event.clientX - rect.left, event.clientY - rect.top);
 
   state[stateKey] = val;
 
@@ -1229,7 +1241,8 @@ function selectOpt(el, stateKey, val, nextId) {
 function selectJourney(el, val) {
   document.querySelectorAll('#screen-q3 .journey-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
-  topoRingBurst(el);
+  var jRect = el.getBoundingClientRect();
+  topoRingBurst(el, event.clientX - jRect.left, event.clientY - jRect.top);
   state.journey = val;
   const btn = document.getElementById('next-q3');
   if (!btn.classList.contains('ready')) {
@@ -1883,74 +1896,62 @@ function revealWords(el, delayStart) {
 }
 
 /* ─── 3. Topo Ring Burst (card-contained) ────── */
-function topoRingBurst(originEl) {
+function topoRingBurst(originEl, clickX, clickY) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const dpr = window.devicePixelRatio || 1;
-  const W = originEl.offsetWidth, H = originEl.offsetHeight;
-  const cx = W / 2, cy = H / 2;
-  const canvas = document.createElement('canvas');
+  var dpr = window.devicePixelRatio || 1;
+  var W = originEl.offsetWidth, H = originEl.offsetHeight;
+  var cx = (clickX !== undefined) ? clickX : W / 2;
+  var cy = (clickY !== undefined) ? clickY : H / 2;
+  var ringCount = 3 + Math.floor(Math.random() * 4);
+  var rotOffset = Math.random() * Math.PI * 2;
+  var canvas = document.createElement('canvas');
   canvas.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:10;border-radius:inherit;';
   canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
   canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
   originEl.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
+  var ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
-
-  const colors = ['#5aA672', '#3D8A57', '#5aA672', '#2D6B42', '#3D8A57'];
-  const maxR = Math.max(W, H) * 1.1;
-  const ringCount = 5;
-  const dur = 520;
-  const t0 = performance.now();
-  let rafId;
-
+  var colors = ['#5aA672','#3D8A57','#5aA672','#2D6B42','#3D8A57','#5aA672'];
+  var maxR = Math.max(W, H) * 1.1;
+  var dur = 520;
+  var t0 = performance.now();
+  var rafId;
   function draw(now) {
-    const t = Math.min((now - t0) / dur, 1);
+    var t = Math.min((now - t0) / dur, 1);
     ctx.clearRect(0, 0, W, H);
-
-    // Central glow flash
-    const flashA = Math.max(0, 0.25 * (1 - t * 2.5));
+    var flashA = Math.max(0, 0.19 * (1 - t * 2.5));
     if (flashA > 0) {
-      const gr = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.5);
-      gr.addColorStop(0, `rgba(90,166,114,${flashA.toFixed(3)})`);
+      var gr = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.5);
+      gr.addColorStop(0, 'rgba(90,166,114,' + flashA.toFixed(3) + ')');
       gr.addColorStop(1, 'rgba(90,166,114,0)');
-      ctx.fillStyle = gr;
-      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H);
     }
-
-    for (let ri = 0; ri < ringCount; ri++) {
-      const delay = ri * 0.1;
-      const rt = Math.max(0, Math.min((t - delay) / (1 - delay * 0.6), 1));
+    for (var ri = 0; ri < ringCount; ri++) {
+      var delay = ri * 0.1;
+      var rt = Math.max(0, Math.min((t - delay) / (1 - delay * 0.6), 1));
       if (rt <= 0) continue;
-      const r = maxR * (0.15 + ri * 0.18) * rt;
-      const alpha = 0.55 * (1 - rt) * (ri === 0 ? 1.4 : 1);
-      const pts = 64;
+      var r = maxR * (0.15 + ri * 0.18) * rt;
+      var alpha = 0.40 * (1 - rt) * (ri === 0 ? 1.4 : 1);
       ctx.beginPath();
-      for (let j = 0; j <= pts; j++) {
-        const angle = (j / pts) * Math.PI * 2;
-        const wobble = 1
-          + Math.sin(angle * 3 + ri * 0.9 + t * 6) * 0.07
-          + Math.sin(angle * 7 + ri * 1.4 + t * 4) * 0.03;
-        const rx = cx + Math.cos(angle) * r * wobble;
-        const ry = cy + Math.sin(angle) * r * wobble;
+      for (var j = 0; j <= 64; j++) {
+        var angle = (j / 64) * Math.PI * 2 + rotOffset;
+        var wobble = 1 + Math.sin(angle * 3 + ri * 0.9 + t * 6) * 0.07
+                       + Math.sin(angle * 7 + ri * 1.4 + t * 4) * 0.03;
+        var rx = cx + Math.cos(angle) * r * wobble;
+        var ry = cy + Math.sin(angle) * r * wobble;
         j === 0 ? ctx.moveTo(rx, ry) : ctx.lineTo(rx, ry);
       }
       ctx.closePath();
-      ctx.strokeStyle = colors[ri];
+      ctx.strokeStyle = colors[ri % colors.length];
       ctx.globalAlpha = Math.max(alpha, 0);
       ctx.lineWidth = 1.8 - ri * 0.25;
       ctx.stroke();
       ctx.globalAlpha = 1;
     }
-
-    if (t < 1) {
-      rafId = requestAnimationFrame(draw);
-    } else {
-      canvas.remove();
-    }
+    if (t < 1) { rafId = requestAnimationFrame(draw); } else { canvas.remove(); }
   }
-
   rafId = requestAnimationFrame(draw);
-  setTimeout(function () { canvas.remove(); if (rafId) cancelAnimationFrame(rafId); }, 580);
+  setTimeout(function() { canvas.remove(); if (rafId) cancelAnimationFrame(rafId); }, 580);
 }
 
 /* ─── 7. Particle Tick Burst ─────────────────── */
@@ -2005,6 +2006,14 @@ function particleBurst(gaugeCanvas) {
   rafId = requestAnimationFrame(draw);
   setTimeout(function () { canvas.remove(); if (rafId) cancelAnimationFrame(rafId); }, 4000);
 }
+
+/* ─── Topo burst on primary CTAs ─────────────── */
+document.querySelectorAll('.btn-primary, .q-next, #email-submit, .nav-cta').forEach(function(el) {
+  el.addEventListener('click', function(e) {
+    var r = el.getBoundingClientRect();
+    topoRingBurst(el, e.clientX - r.left, e.clientY - r.top);
+  });
+});
 </script>
 </body>
 </html>

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DE7YHS643Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DE7YHS643Z');
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | Candor</title>
+  <meta name="description" content="How Candor collects, uses, and protects your personal information under PIPEDA and BC PIPA — in plain language." />
+  <link rel="canonical" href="https://candorcertified.com/privacy-policy/" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Privacy Policy",
+    "description": "How Candor collects, uses, and protects your personal information under PIPEDA and BC PIPA.",
+    "url": "https://candorcertified.com/privacy-policy/",
+    "datePublished": "2026-05-28",
+    "dateModified": "2026-05-28",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Candor",
+      "url": "https://candorcertified.com"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://candorcertified.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Privacy Policy",
+        "item": "https://candorcertified.com/privacy-policy/"
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #0D1610;
+      --forest:     #2D6B42;
+      --field:      #3D8A57;
+      --oat:        #ECEAE2;
+      --paper:      #F5F3EE;
+      --body:       #4A5548;
+      --stone:      #C8C3B5;
+      --pebble:     #D8D3C3;
+      --light:      #E4E1D6;
+      --green:      #2D6B42;
+      --green2:     #3D8A57;
+      --ink3:       #4A5548;
+      --u:          'Urbanist', sans-serif;
+      --ease:       cubic-bezier(.16,1,.3,1);
+      --px:         clamp(20px,5vw,80px);
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    #site-nav {
+      display: flex;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 600;
+      height: 58px; padding: 0 40px;
+      align-items: center;
+    }
+    .nav-bg {
+      position: absolute; inset: 0;
+      background: rgba(236,234,226,0);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px);
+      transition: background .5s ease, border-color .5s ease, backdrop-filter .5s ease;
+      z-index: 0;
+    }
+    #site-nav.nav-up .nav-bg {
+      background: rgba(236,234,226,.88);
+      border-bottom-color: rgba(14,17,13,.07);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    .nav-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      width: 100%; max-width: 1400px; margin: 0 auto;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 9px;
+      text-decoration: none; flex-shrink: 0;
+      transition: opacity .3s;
+    }
+    .nav-logo:hover { opacity: .6; }
+    .nav-logo-svg { width: 22px; height: 22px; flex-shrink: 0; transition: transform .7s var(--ease); }
+    .nav-logo:hover .nav-logo-svg { transform: rotate(14deg); }
+    .nav-wordmark {
+      font-family: var(--u); font-weight: 800; font-size: 14px;
+      letter-spacing: .22em; text-transform: uppercase; color: #0E110D;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 0;
+      margin-left: auto; margin-right: auto;
+      padding-left: 40px;
+    }
+    .nav-link {
+      font-family: var(--u); font-size: 11px; font-weight: 500;
+      letter-spacing: .13em; text-transform: uppercase;
+      color: var(--ink3); text-decoration: none;
+      padding: 6px 13px;
+      border-radius: 2px;
+      position: relative;
+      transition: color .3s;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: 1px; left: 13px; right: 13px;
+      height: 1.5px; background: var(--green);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .38s var(--ease);
+    }
+    .nav-link:hover { color: #0E110D; }
+    .nav-link:hover::after { transform: scaleX(.6); }
+    .nav-cta-wrap { justify-self: end; }
+    .nav-cta {
+      font-family: var(--u); font-weight: 600; font-size: 11px;
+      letter-spacing: .12em; text-transform: uppercase;
+      text-decoration: none; padding: 9px 18px;
+      background: #0E110D; color: #F5F3EE;
+      border-radius: 2px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background .28s, transform .35s var(--ease);
+      position: relative; overflow: hidden;
+    }
+    .nav-cta:hover { background: var(--green); transform: translateY(-1px); }
+    .nav-cta .nav-ar { display: inline-block; transition: transform .35s var(--ease); }
+    .nav-cta:hover .nav-ar { transform: translateX(4px); }
+
+    /* ── PAGE HEADER ── */
+    .article-header {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 96px 24px 40px;
+    }
+    .article-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--forest);
+      background: rgba(45,107,66,0.08);
+      padding: 4px 10px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    .article-header h1 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+    .article-lede {
+      font-size: 1.125rem;
+      line-height: 1.65;
+      color: var(--body);
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6875rem;
+      color: var(--stone);
+      letter-spacing: 0.06em;
+    }
+    .article-meta .sep { color: var(--pebble); }
+    .article-divider {
+      max-width: 720px;
+      margin: 0 auto 0;
+      padding: 0 24px;
+      border: none;
+      border-top: 1px solid var(--light);
+    }
+
+    /* ── ARTICLE BODY ── */
+    article.article-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    article.article-body h2 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 52px 0 14px;
+      line-height: 1.25;
+    }
+    article.article-body h2:first-child { margin-top: 0; }
+    article.article-body h3 {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 32px 0 12px;
+      line-height: 1.3;
+    }
+    article.article-body p {
+      color: var(--body);
+      margin-bottom: 18px;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+    article.article-body p:last-child { margin-bottom: 0; }
+    article.article-body a {
+      color: var(--forest);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    article.article-body a:hover { color: var(--ink); }
+    article.article-body strong { color: var(--ink); font-weight: 600; }
+    article.article-body ul,
+    article.article-body ol {
+      padding-left: 1.375rem;
+      margin-bottom: 18px;
+      color: var(--body);
+    }
+    article.article-body li {
+      margin-bottom: 7px;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+    article.article-body code {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8125rem;
+      background: var(--oat);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--forest);
+    }
+
+    /* ── POLICY TABLE ── */
+    .policy-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 28px;
+      font-size: 0.9rem;
+    }
+    .policy-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--body);
+      background: var(--oat);
+      padding: 10px 14px;
+      text-align: left;
+      border: 1px solid var(--light);
+      font-weight: 400;
+    }
+    .policy-table td {
+      padding: 11px 14px;
+      border: 1px solid var(--light);
+      color: var(--body);
+      line-height: 1.6;
+      background: var(--paper);
+      vertical-align: top;
+      font-size: 0.9375rem;
+    }
+
+    /* ── POLICY CONTACT BLOCK ── */
+    .policy-contact {
+      background: var(--oat);
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin: 20px 0 24px;
+    }
+    .policy-contact p {
+      margin-bottom: 0 !important;
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      color: var(--body);
+    }
+
+    /* ── POLICY FOOTNOTE ── */
+    .policy-note {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.03em;
+      color: var(--stone);
+      line-height: 1.65;
+      border-top: 1px solid var(--light);
+      padding-top: 32px;
+      margin-top: 56px;
+    }
+
+    /* ── FOOTER ── */
+    footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,243,238,.07)}
+    .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+    .foot-row+.foot-row{margin-top:18px;padding-top:18px;border-top:1px solid rgba(245,243,238,.06)}
+    .foot-l{display:flex;align-items:center;gap:8px}
+    .foot-name{font-family:var(--u);font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,243,238,.4)}
+    .foot-nav{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+    .foot-nav a{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.3);text-decoration:none}
+    .foot-nav a:hover{color:rgba(245,243,238,.7)}
+    .foot-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+    .foot-links a{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,243,238,.35);text-decoration:none}
+    .foot-links a:hover{color:rgba(245,243,238,.7);text-decoration:underline}
+    .foot-copy{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.2)}
+    .foot-disclaimer{font-family:var(--u);font-size:10px;font-weight:400;color:rgba(245,243,238,.18);line-height:1.55}
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .article-header h1 { font-size: 1.75rem; }
+      #site-nav { padding: 0 20px; }
+      .policy-table { font-size: 0.8125rem; }
+      .policy-table th, .policy-table td { padding: 9px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header id="site-nav" aria-label="Site navigation">
+  <div class="nav-bg"></div>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Candor — home">
+      <svg class="nav-logo-svg" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="#0D1610"/>
+        <path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="216.48" cy="194.16" r="4.55" fill="#3D8A57"/>
+      </svg>
+      <span class="nav-wordmark">Candor</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/#who"       class="nav-link">Who</a>
+      <a href="/#process"   class="nav-link">Process</a>
+      <a href="/#services"  class="nav-link">Services</a>
+      <a href="/#about"     class="nav-link">About</a>
+      <a href="/#faq"       class="nav-link">FAQ</a>
+      <a href="/blog"       class="nav-link">Resources</a>
+      <a href="/assessment/" class="nav-link">Assessment</a>
+    </nav>
+    <div class="nav-cta-wrap">
+      <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a free call <span class="nav-ar">→</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE HEADER -->
+<header class="article-header">
+  <span class="article-tag">Legal</span>
+  <h1>Privacy Policy</h1>
+  <p class="article-lede">How Candor collects, uses, and protects your personal information — in plain language.</p>
+  <div class="article-meta">
+    <span>Effective May 28, 2026</span>
+    <span class="sep">·</span>
+    <span>Last updated May 28, 2026</span>
+  </div>
+</header>
+<hr class="article-divider" />
+
+<!-- POLICY CONTENT -->
+<article class="article-body">
+
+  <p><strong>Candor</strong> ("Candor," "we," "us," or "our") is operated by Artem Furman, Vancouver, British Columbia, Canada.</p>
+
+  <h2>1. About this policy</h2>
+
+  <p>Candor provides B Corp and Climate Neutral certification consulting to small businesses. Trust is the product we sell, so the way we handle your personal information matters to us as much as the work we do.</p>
+
+  <p>This policy explains, in plain language, what personal information we collect through <a href="https://candorcertified.com">candorcertified.com</a> (the "Site") and through our consulting services, why we collect it, how we use and share it, how long we keep it, and the rights you have.</p>
+
+  <p>We follow Canada's <strong>Personal Information Protection and Electronic Documents Act (PIPEDA)</strong> and British Columbia's <strong>Personal Information Protection Act (PIPA)</strong>. Where those laws apply, they govern.</p>
+
+  <h2>2. Who is responsible for your information</h2>
+
+  <p>Candor is a small, owner-operated business. The person accountable for your personal information is:</p>
+
+  <div class="policy-contact">
+    <p><strong>Artem Furman — Candor</strong><br>
+    Vancouver, British Columbia, Canada<br>
+    Email: <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a></p>
+  </div>
+
+  <p>Direct any privacy question or request to that email.</p>
+
+  <h2>3. Scope</h2>
+
+  <p>This policy applies to personal information we collect:</p>
+  <ul>
+    <li>Through the Site, including the free <strong>certification self-assessment tool</strong>;</li>
+    <li>When you contact us by email or contact form;</li>
+    <li>When you subscribe to our newsletter; and</li>
+    <li>In the course of providing consulting services to clients.</li>
+  </ul>
+  <p>It does <strong>not</strong> apply to third-party websites we link to, which have their own privacy policies.</p>
+
+  <h2>4. What personal information we collect</h2>
+
+  <p>We collect only what we need.</p>
+
+  <h3>4.1 Information you give us</h3>
+
+  <table class="policy-table">
+    <thead>
+      <tr><th>What</th><th>Where</th><th>Examples</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Assessment responses</strong></td>
+        <td>The free self-assessment tool</td>
+        <td>Your answers, business name, and the email address you provide so we can return your results</td>
+      </tr>
+      <tr>
+        <td><strong>Contact information</strong></td>
+        <td>Contact form and email</td>
+        <td>Your name, email, business name, and the contents of your message</td>
+      </tr>
+      <tr>
+        <td><strong>Newsletter data</strong></td>
+        <td>Newsletter signup</td>
+        <td>Your email address and any name you provide</td>
+      </tr>
+      <tr>
+        <td><strong>Client engagement information</strong></td>
+        <td>The consulting relationship</td>
+        <td>Documents, policies, and operational data you share so we can do the work</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Please don't send us sensitive information (government IDs, financial account numbers, health data) unless it's genuinely necessary for an engagement and we've agreed how to handle it.</p>
+
+  <h3>4.2 Information collected automatically</h3>
+
+  <p>When you visit the Site:</p>
+
+  <table class="policy-table">
+    <thead>
+      <tr><th>What</th><th>Tool</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Usage data — pages viewed, time on page, referring site, approximate location, device/browser</td>
+        <td><strong>Google Analytics</strong> (configured without tracking cookies)</td>
+        <td>To understand and improve the Site</td>
+      </tr>
+      <tr>
+        <td>Standard server logs, including IP address</td>
+        <td><strong>Netlify</strong> (our host)</td>
+        <td>To deliver and secure the Site</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>See <strong>Section 7</strong> for cookies and your choices.</p>
+
+  <h2>5. Why we use your information</h2>
+
+  <p>We collect, use, and disclose personal information only for purposes a reasonable person would consider appropriate, namely to:</p>
+  <ul>
+    <li>Score your assessment and send you your results;</li>
+    <li>Respond to your enquiries;</li>
+    <li>Provide consulting services you've engaged us for;</li>
+    <li>Send newsletters to subscribers who've opted in;</li>
+    <li>Understand how the Site is used and improve it;</li>
+    <li>Keep the Site and your information secure; and</li>
+    <li>Meet our legal, tax, and accounting obligations.</li>
+  </ul>
+
+  <p>Our basis for processing is your <strong>consent</strong> — express or implied depending on the sensitivity of the information and the circumstances — together with the limited exceptions PIPEDA and BC PIPA permit. We won't use your information for a materially new purpose without telling you and, where required, getting your consent.</p>
+
+  <p>The assessment tool gives you an informational readiness score. Any actual recommendation involves a human (Artem) reviewing your situation — it is not an automated decision made about you.</p>
+
+  <h2>6. How and with whom we share your information</h2>
+
+  <p>We share personal information only:</p>
+  <ul>
+    <li><strong>With the service providers</strong> listed in Section 8, who process it on our behalf under contract;</li>
+    <li><strong>For legal reasons</strong> — where required by law or a lawful request, or to protect our or others' rights and safety;</li>
+    <li><strong>In a business transfer</strong> — if Candor is sold or merged, subject to this policy; and</li>
+    <li><strong>With your consent or at your direction.</strong></li>
+  </ul>
+
+  <p>We do <strong>not</strong> sell your personal information, and we do not disclose it to advertisers or data brokers.</p>
+
+  <h2>7. Cookies and analytics</h2>
+
+  <p>We keep cookies to a minimum.</p>
+
+  <p><strong>Cookies we set.</strong> The Site sets a single cookie:</p>
+
+  <table class="policy-table">
+    <thead>
+      <tr><th>Cookie</th><th>Type</th><th>Purpose</th><th>Duration</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>loaderSeen</code></td>
+        <td>Strictly necessary / functional</td>
+        <td>Remembers that your browser has already shown the Site's intro animation, so it doesn't replay on every visit</td>
+        <td>1 year</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>This cookie is first-party, contains no personal identifier, and is necessary for the Site to behave as intended, so it does not require your consent.</p>
+
+  <p><strong>Analytics without cookies.</strong> We use <strong>Google Analytics</strong> to understand how the Site is used, but it is configured <strong>not to store cookies or other tracking identifiers on your device</strong>. Analytics still processes some information when you visit — including your IP address, approximate location, and device and browser type — to produce aggregate usage statistics. We do not use it to identify you individually or to track you across other websites.</p>
+
+  <p><strong>Your choices.</strong> You can:</p>
+  <ul>
+    <li><strong>Opt out of Google Analytics</strong> across all sites using Google's browser add-on: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>;</li>
+    <li><strong>Block or clear cookies</strong> in your browser settings (blocking <code>loaderSeen</code> may cause the intro animation to replay); and</li>
+    <li>We honour a valid <strong>Global Privacy Control (GPC)</strong> signal from your browser where required by law.</li>
+  </ul>
+
+  <h2>8. Service providers</h2>
+
+  <p>We use these third parties to run our business. Each processes personal information only as needed to provide its service, and each has its own privacy policy.</p>
+
+  <table class="policy-table">
+    <thead>
+      <tr><th>Provider</th><th>Service</th><th>What it processes</th><th>Location</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Google LLC</strong> (Analytics)</td>
+        <td>Website analytics</td>
+        <td>Usage data, IP address</td>
+        <td>United States</td>
+      </tr>
+      <tr>
+        <td><strong>Google LLC</strong> (Sheets / Apps Script)</td>
+        <td>Storage of assessment and form submissions</td>
+        <td>Assessment responses, contact details</td>
+        <td>United States</td>
+      </tr>
+      <tr>
+        <td><strong>Google LLC</strong> (Gmail)</td>
+        <td>Business email</td>
+        <td>Email correspondence</td>
+        <td>United States</td>
+      </tr>
+      <tr>
+        <td><strong>Netlify, Inc.</strong></td>
+        <td>Website hosting</td>
+        <td>Server logs, IP address</td>
+        <td>United States</td>
+      </tr>
+      <tr>
+        <td><strong>Intuit Mailchimp</strong></td>
+        <td>Newsletter delivery</td>
+        <td>Email address, engagement data</td>
+        <td>United States</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>9. Information stored outside Canada</h2>
+
+  <p>Several of our service providers are located in the <strong>United States</strong>, which means your personal information may be stored and processed there and could be subject to the laws of that country, including lawful access by U.S. authorities. We remain accountable for your information under Canadian law and rely on our providers' contractual and security commitments to protect it. If you have questions about where your information is held, contact us using the details in <strong>Section 16</strong>.</p>
+
+  <h2>10. How long we keep your information</h2>
+
+  <p>We keep personal information only as long as necessary for the purposes above, or as required by law.</p>
+
+  <table class="policy-table">
+    <thead>
+      <tr><th>Type</th><th>Retention</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Assessment responses</td>
+        <td>Up to 12 months from submission, then deleted or anonymized</td>
+      </tr>
+      <tr>
+        <td>Contact enquiries</td>
+        <td>Up to 12 months after last contact, then deleted</td>
+      </tr>
+      <tr>
+        <td>Newsletter data</td>
+        <td>Until you unsubscribe, then promptly removed</td>
+      </tr>
+      <tr>
+        <td>Client engagement records</td>
+        <td>7 years, to meet tax and legal obligations, then deleted</td>
+      </tr>
+      <tr>
+        <td>Analytics data</td>
+        <td>Up to 14 months, as configured in Google Analytics</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>When we no longer need information, we securely delete or anonymize it.</p>
+
+  <h2>11. How we protect your information</h2>
+
+  <p>We use reasonable safeguards appropriate to the sensitivity of the information, including:</p>
+  <ul>
+    <li>Access controls and strong authentication on accounts that store personal information;</li>
+    <li>Encryption in transit (HTTPS across the Site);</li>
+    <li>Limiting access to those who need it; and</li>
+    <li>Relying on reputable providers with their own security programs.</li>
+  </ul>
+
+  <p>No system is perfectly secure, so we can't guarantee absolute security. If a breach occurs that creates a real risk of significant harm, we will notify affected individuals and the Office of the Privacy Commissioner of Canada, as PIPEDA requires.</p>
+
+  <h2>12. Your privacy rights</h2>
+
+  <p>Under PIPEDA and BC PIPA, you have the right to:</p>
+  <ul>
+    <li><strong>Access</strong> the personal information we hold about you and learn how it's been used and disclosed;</li>
+    <li><strong>Correct</strong> information that is inaccurate or incomplete;</li>
+    <li><strong>Withdraw your consent</strong> at any time, subject to legal or contractual limits and reasonable notice; and</li>
+    <li><strong>Make a complaint</strong> about how we handle your information.</li>
+  </ul>
+
+  <p>To make a request, email <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a> with the subject "Privacy Request." We'll verify your identity to protect your information, respond within <strong>30 days</strong> (and tell you if we need more time), and won't charge you except where a request is excessive, as the law permits.</p>
+
+  <p>If you're not satisfied with our response, you can contact:</p>
+  <ul>
+    <li>The <strong>Office of the Privacy Commissioner of Canada</strong> — <a href="https://www.priv.gc.ca" target="_blank" rel="noopener noreferrer">priv.gc.ca</a>; or</li>
+    <li>The <strong>Office of the Information and Privacy Commissioner for British Columbia</strong> — <a href="https://www.oipc.bc.ca" target="_blank" rel="noopener noreferrer">oipc.bc.ca</a>.</li>
+  </ul>
+
+  <h2>13. Children's privacy</h2>
+
+  <p>The Site and our services are intended for businesses and adults. We don't knowingly collect personal information from children. If you believe a child has given us information, contact us and we'll delete it.</p>
+
+  <h2>14. Third-party links</h2>
+
+  <p>The Site may link to other websites (for example, B Lab or Climate Neutral). We're not responsible for their privacy practices — please review their policies before sharing information with them.</p>
+
+  <h2>15. Changes to this policy</h2>
+
+  <p>We may update this policy from time to time. When we do, we'll revise the "Last updated" date above, and we'll give more prominent notice if the changes are significant.</p>
+
+  <h2>16. Contact us</h2>
+
+  <div class="policy-contact">
+    <p><strong>Artem Furman — Candor</strong><br>
+    Email: <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a><br>
+    Vancouver, British Columbia, Canada</p>
+  </div>
+
+  <p>We take privacy seriously and will work with you to resolve any concern.</p>
+
+  <p class="policy-note">This policy reflects Candor's actual data practices and is provided for transparency. It is not legal advice.</p>
+
+</article>
+
+<footer>
+  <div class="foot-row">
+    <div class="foot-l">
+      <svg width="22" height="22" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="rgba(61,138,87,.55)"/></svg>
+      <span class="foot-name">Candor</span>
+    </div>
+    <nav class="foot-nav" aria-label="Footer navigation">
+      <a href="/#services">Services</a>
+      <a href="/#process">How It Works</a>
+      <a href="/#about">About</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/blog">Resources</a>
+      <a href="/assessment/">Assessment</a>
+    </nav>
+  </div>
+  <div class="foot-row">
+    <div class="foot-links">
+      <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a>
+      <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="/privacy-policy/" aria-current="page">Privacy Policy</a>
+    </div>
+    <div class="foot-copy">© 2026 Candor</div>
+  </div>
+  <div class="foot-row">
+    <p class="foot-disclaimer">Candor – B Corp &amp; Sustainability Certification Consultant provides independent advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
+  </div>
+</footer>
+
+<!-- NAV SCROLL EFFECT -->
+<script>
+(function(){
+  var nav = document.getElementById('site-nav');
+  if (!nav) return;
+  function checkScroll() { nav.classList.toggle('nav-up', window.scrollY > 32); }
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
+})();
+</script>
+
+</body>
+</html>
