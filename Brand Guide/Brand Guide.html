@@ -3,11 +3,343 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Candor — Brand Guide v1.0</title>
+<title>Candor — Brand Guide v1.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="brand-guide.css" />
+<style>
+/* ============================================================
+   CANDOR BRAND GUIDE — stylesheet
+   Reconstructed from the documented tokens in Sections 05 & 06.
+   ============================================================ */
+
+:root{
+  /* Color — Section 05 */
+  --oat:#ECEAE2;        /* 01 Ground */
+  --ink:#0D1610;        /* 02 Ink */
+  --forest:#2D6B42;     /* 03 Primary */
+  --field:#3D8A57;      /* 04 Mid */
+  --paper:#F5F3EE;      /* 05 Paper */
+  --slate:#4A5548;      /* 06 Body */
+  --stone:#C8C3B5;      /* 07 Rule */
+  --deep:#235437;       /* 08 Hover */
+  --amber:#B8651E;      /* 09 Signal */
+  --amber-soft:#E8B888; /* 10 Signal soft */
+  --oat-deep:#E4E1D6;   /* 11 Tint */
+  --linen:#D8D3C3;      /* 12 Disabled */
+
+  /* Type — Section 06 */
+  --sans:'Open Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --display:'Urbanist',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'Space Mono','SF Mono',ui-monospace,monospace;
+
+  --pad:clamp(24px,6vw,120px);
+  --maxw:1180px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;}
+body{
+  background:var(--oat);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:17px;
+  line-height:1.65;
+}
+::selection{background:var(--forest);color:var(--paper);}
+
+/* ---------- Mono label ---------- */
+.mono{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color:var(--slate);
+}
+.mono-dim{color:var(--stone);}
+
+/* ---------- Top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(236,234,226,.82);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--stone);
+}
+.topbar-inner{
+  max-width:var(--maxw);margin:0 auto;
+  padding:14px var(--pad);
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.brand-mini{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;letter-spacing:-.04em;font-size:18px;color:var(--ink);}
+.toc{display:flex;gap:22px;flex-wrap:wrap;}
+.toc a{color:var(--slate);text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:color .15s;}
+.toc a:hover{color:var(--forest);}
+
+/* ---------- Section scaffold ---------- */
+.section{max-width:var(--maxw);margin:0 auto;padding:clamp(72px,11vw,150px) var(--pad);border-top:1px solid var(--stone);}
+.section:first-of-type{border-top:0;}
+
+.tag-row{display:flex;align-items:center;gap:18px;margin-bottom:54px;}
+.tag-line{height:1px;width:48px;background:var(--ink);display:inline-block;}
+
+.hgroup-head{display:flex;align-items:flex-end;justify-content:space-between;gap:48px;flex-wrap:wrap;}
+.hgroup-head>div:first-child{flex:0 1 auto;}
+
+.h-section{font-family:var(--display);font-weight:800;font-size:clamp(44px,8vw,80px);line-height:.96;letter-spacing:-.035em;color:var(--ink);}
+.h-sub{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.4vw,32px);line-height:1.15;letter-spacing:-.015em;color:var(--ink);}
+.lede{font-size:clamp(18px,2.1vw,21px);line-height:1.55;color:var(--slate);font-weight:300;}
+
+p{margin-top:0;}
+.small{font-size:13px;line-height:1.5;color:var(--slate);}
+.xs{font-size:11px;color:var(--slate);}
+
+/* ---------- Cover ---------- */
+.cover{padding-top:clamp(60px,12vw,140px);}
+.cover .display-stack,.display-stack{margin:40px 0 28px;}
+.display{font-family:var(--display);font-weight:800;font-size:clamp(64px,15vw,168px);line-height:.9;letter-spacing:-.045em;color:var(--ink);}
+.display .green,.green{color:var(--forest);}
+.cover .lede{max-width:54ch;margin-top:24px;}
+.cover-footer{margin-top:clamp(48px,9vw,96px);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px;border-top:1px solid var(--stone);padding-top:32px;}
+.cover-footer .item,.item{display:flex;flex-direction:column;gap:6px;}
+.cover-footer .val,.val{font-size:15px;color:var(--ink);font-weight:400;}
+
+/* ---------- Callout ---------- */
+.callout{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(22px,3.2vw,30px);line-height:1.25;letter-spacing:-.015em;
+  color:var(--ink);
+  border-left:3px solid var(--forest);
+  padding:6px 0 6px 28px;
+  margin-top:40px;max-width:30ch;
+}
+
+/* ---------- Voice rules ---------- */
+.voice-list{display:flex;flex-direction:column;gap:0;}
+.voice-rule{
+  display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1.1fr);
+  gap:32px;align-items:start;
+  padding:34px 0;border-top:1px solid var(--stone);
+}
+.voice-rule:first-child{border-top:0;}
+.voice-rule .num{font-family:var(--mono);font-size:13px;color:var(--forest);letter-spacing:.04em;padding-top:2px;}
+.voice-rule .head{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.2;letter-spacing:-.01em;color:var(--ink);}
+.voice-rule .body{font-size:15.5px;line-height:1.6;color:var(--slate);}
+
+.examples{display:flex;flex-direction:column;gap:10px;}
+.ex{display:flex;gap:12px;align-items:baseline;font-size:14.5px;line-height:1.5;padding:12px 14px;border-radius:2px;}
+.ex .icon{font-family:var(--mono);font-size:10px;letter-spacing:.08em;flex:0 0 auto;padding-top:1px;}
+.ex .txt{color:var(--ink);}
+.ex.yes{background:rgba(45,107,66,.09);}
+.ex.yes .icon{color:var(--forest);}
+.ex.no{background:rgba(184,101,30,.10);}
+.ex.no .icon{color:var(--amber);}
+.ex.no .txt{color:var(--slate);}
+
+/* ---------- Banned list ---------- */
+.banned-list{display:flex;flex-direction:column;gap:0;grid-column:2 / -1;}
+.banned-list .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;padding:11px 0;border-top:1px solid var(--stone);align-items:baseline;}
+.banned-list .row:first-child{border-top:0;}
+.banned-list .term{color:var(--ink);font-size:15px;}
+.banned-list .term s{text-decoration-color:var(--amber);text-decoration-thickness:1.5px;}
+.banned-list .why{color:var(--slate);font-size:13.5px;line-height:1.45;}
+
+/* ---------- Approved quotes ---------- */
+.approved-list{display:flex;flex-direction:column;gap:14px;}
+.approved-quote{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(16px,1.9vw,19px);line-height:1.35;letter-spacing:-.01em;
+  color:var(--ink);
+  padding-left:20px;border-left:2px solid var(--field);
+}
+
+/* ---------- Swatches ---------- */
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:22px;margin-top:56px;}
+.swatch{background:var(--paper);border:1px solid var(--stone);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;}
+.chip{height:128px;position:relative;display:flex;align-items:flex-start;padding:12px;}
+.ratio-pill{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:rgba(13,22,16,.10);color:var(--ink);padding:4px 8px;border-radius:2px;}
+.chip.dark .ratio-pill{background:rgba(245,243,238,.18);color:var(--paper);}
+.swatch .meta{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;}
+.swatch .hex{font-family:var(--mono);font-size:13px;color:var(--ink);letter-spacing:.02em;}
+.swatch .nm{font-family:var(--display);font-weight:700;font-size:16px;margin-top:2px;color:var(--ink);}
+.swatch .use{font-size:13px;line-height:1.5;color:var(--slate);}
+
+/* ---------- Contrast table ---------- */
+.contrast-table{border:1px solid var(--stone);border-radius:3px;overflow:hidden;}
+.contrast-table .row{display:grid;grid-template-columns:48px 2fr 2fr 90px 110px;border-top:1px solid var(--stone);}
+.contrast-table .row:first-child{border-top:0;}
+.contrast-table .row.head{background:var(--oat-deep);}
+.contrast-table .row.head .cell{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);}
+.contrast-table .cell{padding:13px 14px;font-size:13.5px;display:flex;align-items:center;color:var(--slate);}
+.contrast-table .cell.num{justify-content:flex-start;font-family:var(--mono);font-size:12px;color:var(--slate);}
+.preview{font-weight:400;}
+.pass{font-family:var(--mono);font-size:10px;letter-spacing:.05em;padding:3px 8px;border-radius:2px;text-transform:uppercase;}
+.pass.aaa{background:rgba(45,107,66,.14);color:var(--deep);}
+.pass.aa{background:rgba(45,107,66,.10);color:var(--forest);}
+.pass.large{background:rgba(184,101,30,.12);color:var(--amber);}
+
+/* ---------- Type rows ---------- */
+.type-row{display:grid;grid-template-columns:160px minmax(0,1fr) 220px;gap:36px;align-items:start;padding:34px 0;border-top:1px solid var(--stone);}
+.type-row:first-child{border-top:0;}
+.type-row .label{display:flex;flex-direction:column;gap:6px;}
+.type-row .label .nm{font-size:13px;color:var(--slate);}
+.type-spec{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;align-self:start;}
+.type-spec .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--stone);}
+.type-spec .v{font-size:13px;color:var(--slate);}
+
+.spec-display{font-family:var(--display);font-weight:800;font-size:clamp(40px,6vw,72px);line-height:.92;letter-spacing:-.045em;color:var(--ink);}
+.spec-section{font-family:var(--display);font-weight:800;font-size:clamp(32px,4.6vw,52px);line-height:.96;letter-spacing:-.035em;color:var(--ink);}
+.spec-subhead{font-family:var(--display);font-weight:700;font-size:clamp(22px,2.6vw,30px);line-height:1.15;letter-spacing:-.015em;color:var(--ink);}
+.spec-body{font-family:var(--sans);font-weight:300;font-size:17px;line-height:1.65;color:var(--slate);max-width:60ch;}
+.spec-label{font-family:var(--sans);font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);}
+.spec-mono{font-family:var(--mono);font-weight:400;font-size:13px;letter-spacing:.10em;text-transform:uppercase;color:var(--ink);}
+
+/* ---------- Logo / identity ---------- */
+.logo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:56px;}
+.logo-card{border:1px solid var(--stone);border-radius:3px;overflow:hidden;background:var(--paper);display:flex;flex-direction:column;}
+.label-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--stone);background:var(--oat-deep);}
+.label-bar .name{font-family:var(--display);font-weight:700;font-size:14px;color:var(--ink);}
+.logo-stage-light{background:var(--paper);padding:38px 24px;display:flex;align-items:center;justify-content:center;min-height:150px;}
+.logo-stage-dark{background:var(--ink);padding:38px 24px;display:flex;align-items:center;justify-content:center;min-height:120px;}
+.logo-stage-small{background:var(--oat);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--stone);}
+.logo-stage-small .left,.logo-stage-small .right{display:flex;align-items:center;gap:10px;}
+.logo-spec{display:grid;grid-template-columns:max-content 1fr;gap:14px;padding:16px;border-top:1px solid var(--stone);align-items:start;}
+
+.reco-strip{margin-top:40px;background:var(--ink);color:var(--paper);border-radius:3px;padding:32px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.reco-strip .mono{color:var(--field);}
+.reco-copy{font-size:16px;line-height:1.6;color:var(--paper);}
+.reco-side{color:rgba(245,243,238,.5)!important;}
+
+/* ---------- Applications ---------- */
+.app-row{display:grid;grid-template-columns:160px 1fr;gap:36px;align-items:start;padding:40px 0;border-top:1px solid var(--stone);}
+.app-row:first-of-type{border-top:0;}
+.app-row .desc{font-size:14px;line-height:1.55;color:var(--slate);}
+.card-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
+
+/* business card */
+.biz-card{aspect-ratio:1.75/1;border-radius:4px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--stone);}
+.biz-card.oat{background:var(--paper);color:var(--ink);}
+.biz-card.dark{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.biz-card-headline{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.03em;}
+.biz-card .role{font-size:12px;letter-spacing:.12em;text-transform:uppercase;}
+.biz-card .meta-rail{display:flex;flex-direction:column;gap:3px;}
+
+/* signature / email */
+.sig-frame{border:1px solid var(--stone);border-radius:4px;overflow:hidden;background:var(--paper);}
+.sig-chrome{background:var(--oat-deep);padding:12px 16px;border-bottom:1px solid var(--stone);display:flex;gap:8px;}
+.sig-chrome .dot{width:11px;height:11px;border-radius:50%;background:var(--linen);}
+.sig-body{padding:24px;}
+.sig-block{border-left:2px solid var(--forest);padding-left:16px;margin-top:18px;}
+.sig-name{font-family:var(--display);font-weight:800;font-size:18px;color:var(--ink);letter-spacing:-.02em;}
+.sig-role{font-size:13px;color:var(--slate);}
+.sig-meta{font-family:var(--mono);font-size:11px;color:var(--slate);letter-spacing:.04em;margin-top:6px;line-height:1.6;}
+.sig-rule{height:1px;background:var(--stone);margin:16px 0;border:0;}
+
+/* document mock */
+.doc{border:1px solid var(--stone);border-radius:4px;overflow:hidden;background:var(--paper);}
+.doc-band{height:8px;background:var(--forest);}
+.doc-header{padding:24px 28px;border-bottom:1px solid var(--stone);display:flex;align-items:flex-start;justify-content:space-between;gap:20px;}
+.doctype{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.025em;color:var(--ink);}
+.docid{font-family:var(--mono);font-size:11px;color:var(--slate);letter-spacing:.06em;text-align:right;line-height:1.7;}
+.doc-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 24px;padding:18px 28px;border-bottom:1px solid var(--stone);}
+.doc-meta>div{display:flex;gap:10px;align-items:baseline;}
+.doc-meta .k{color:var(--stone);min-width:46px;}
+.doc-meta .v{color:var(--ink);}
+.doc-body{padding:24px 28px;}
+.doc-body .lines{display:flex;flex-direction:column;gap:9px;}
+.doc-body .lines span{height:8px;background:var(--oat-deep);border-radius:2px;display:block;}
+
+/* avatar stack */
+.avatar-row{display:flex;flex-direction:column;gap:18px;}
+.avatar-stack{display:flex;align-items:center;}
+.avatar-stack .avatar{width:44px;height:44px;border-radius:50%;border:2px solid var(--paper);margin-left:-10px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:15px;}
+.avatar-stack .avatar:first-child{margin-left:0;}
+.avatar-meta{display:flex;flex-direction:column;gap:2px;}
+.avatar-meta .person{font-weight:400;color:var(--ink);font-size:14px;}
+.avatar-meta .role{font-size:12px;color:var(--slate);}
+
+/* closing / colophon */
+.closing{margin-top:0;}
+.colophon{max-width:var(--maxw);margin:0 auto;padding:48px var(--pad) 80px;border-top:1px solid var(--stone);}
+.colophon h4{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.02em;color:var(--ink);margin-bottom:10px;}
+.colophon p{font-size:13.5px;line-height:1.6;color:var(--slate);max-width:70ch;}
+
+/* topo decoration (kept minimal) */
+.topo{position:absolute;inset:0;pointer-events:none;opacity:.05;}
+
+/* ---------- Responsive ---------- */
+@media (max-width:880px){
+  .voice-rule{grid-template-columns:48px 1fr;gap:18px;}
+  .voice-rule .examples{grid-column:1 / -1;margin-top:6px;}
+  .banned-list{grid-column:1 / -1;}
+  .type-row{grid-template-columns:1fr;gap:16px;}
+  .type-spec{grid-template-columns:max-content 1fr max-content 1fr;}
+  .app-row{grid-template-columns:1fr;gap:16px;}
+  .contrast-table .row{grid-template-columns:38px 1.4fr 1.4fr 70px 84px;}
+  .contrast-table .cell{padding:10px;font-size:12px;}
+  .toc{display:none;}
+}
+@media (max-width:560px){
+  .type-spec{grid-template-columns:max-content 1fr;}
+  .contrast-table .cell:nth-child(3){display:none;}
+  .contrast-table .row{grid-template-columns:34px 1.6fr 64px 72px;}
+}
+
+/* ===== Applications — corrected to match real DOM ===== */
+.legend{display:flex;flex-direction:column;gap:6px;}
+.legend .nm{font-family:var(--display);font-weight:700;font-size:15px;color:var(--ink);}
+.legend .desc{font-size:13.5px;line-height:1.55;color:var(--slate);}
+
+.biz-card{position:relative;aspect-ratio:1.75/1;border-radius:6px;padding:22px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;border:1px solid var(--stone);}
+.biz-card.light{background:var(--paper);color:var(--ink);}
+.biz-card.dark{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.biz-card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative;z-index:1;}
+.biz-card .bot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;position:relative;z-index:1;}
+.biz-card .person{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:-.01em;}
+.biz-card .role{font-size:11px;opacity:.7;margin-top:2px;}
+.biz-card .lines{font-family:var(--mono);font-size:10px;line-height:1.6;text-align:right;opacity:.85;}
+.biz-card-headline{font-family:var(--display);font-weight:800;font-size:24px;line-height:1.02;letter-spacing:-.03em;position:relative;z-index:1;}
+.biz-card .topo{opacity:.06;}
+
+.avatar-row{display:flex;flex-direction:row;flex-wrap:wrap;gap:26px;align-items:flex-start;}
+.avatar-stack{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.avatar{width:72px;height:72px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0;border:0;}
+.avatar.dark{background:var(--ink);}
+.avatar.green{background:var(--forest);}
+.avatar.oat{background:var(--paper);border:1px solid var(--stone);}
+.avatar.sm{width:52px;height:52px;border-radius:11px;}
+.avatar.xs{width:36px;height:36px;border-radius:8px;}
+.avatar-meta{display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center;}
+.avatar-meta .person{font-size:13px;color:var(--ink);}
+
+.sig-chrome{align-items:center;}
+.sig-chrome .label{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--slate);margin-left:6px;text-transform:none;}
+.sig-body p{font-size:14.5px;line-height:1.6;color:var(--ink);}
+.sig-body .closing{margin-top:12px;}
+.sig-block{display:flex;gap:14px;align-items:flex-start;}
+.sig-block .sig-meta a{color:var(--forest);text-decoration:none;}
+
+.doc-band{height:auto;background:var(--oat-deep);padding:22px 28px;border-bottom:1px solid var(--stone);}
+.doc-band h1{font-family:var(--display);font-weight:800;font-size:clamp(22px,3vw,30px);line-height:1.05;letter-spacing:-.025em;color:var(--ink);}
+.doc-band .summary{font-size:14px;line-height:1.55;color:var(--slate);margin-top:8px;max-width:62ch;}
+.doc-body{display:grid;grid-template-columns:200px 1fr;gap:32px;padding:24px 28px;}
+.toc .item{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--slate);padding:6px 0;border-bottom:1px solid var(--stone);}
+.toc .item span:first-child{color:var(--ink);}
+.copy h3{font-family:var(--display);font-weight:700;font-size:18px;color:var(--ink);margin-bottom:10px;letter-spacing:-.01em;}
+.copy p{font-size:14.5px;line-height:1.6;color:var(--slate);margin-top:12px;}
+.copy .callout{font-size:18px;margin:18px 0;padding-left:18px;max-width:none;}
+
+.colophon{display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px;}
+.row-mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--stone);display:block;margin-bottom:8px;}
+
+@media (max-width:880px){
+  .doc-body{grid-template-columns:1fr;}
+  .colophon{grid-template-columns:1fr;gap:24px;}
+  .card-pair{grid-template-columns:1fr;}
+  .avatar-row{gap:18px;}
+}
+</style>
 </head>
 <body>
 
@@ -186,14 +518,14 @@
       <svg width="20" height="20" viewBox="0 0 100 100" style="color:#0D1610; --island-cut:#ECEAE2; --island-peak:#2D6B42;" aria-hidden="true"><use href="#island-mark"/></svg>
       <span>Candor<span style="color:var(--forest)">.</span></span>
     </div>
-    <nav>
-      <a href="#identity">01 · Identity</a>
-      <a href="#color">02 · Color</a>
-      <a href="#type">03 · Type</a>
-      <a href="#voice">04 · Voice</a>
-      <a href="#applications">05 · Applications</a>
+    <nav class="toc">
+      <a href="#positioning">01 · Positioning</a>
+      <a href="#messaging">02 · Messaging</a>
+      <a href="#strategy">03 · Strategy</a>
+      <a href="#voice">07 · Voice</a>
+      <a href="#applications">08 · Applications</a>
     </nav>
-    <div class="mono mono-dim">v1.0 — 2026</div>
+    <div class="mono mono-dim">v1.1 — 2026</div>
   </div>
 </header>
 
@@ -210,14 +542,15 @@
   <p class="lede" style="max-width:62ch; margin-bottom: 40px;">
     Candor is a sustainability certification practice for small businesses
     that want the credential and aren&rsquo;t interested in the theatre. This
-    guide is how the brand looks, reads, and behaves &mdash; on a business
-    card, in an inbox, and at the bottom of a 40&#8209;page audit report.
+    guide opens with what Candor sells and stands for, then how the brand
+    looks, reads, and behaves &mdash; on a business card, in an inbox, and at
+    the bottom of a 40&#8209;page audit report.
   </p>
 
   <div class="cover-footer">
     <div class="stat">
       <span class="mono">What this covers</span>
-      <span class="val">Logo · Color · Type · Voice · Applications</span>
+      <span class="val">Positioning · Messaging · Strategy · Identity · Color · Type · Voice · Applications</span>
     </div>
     <div class="stat">
       <span class="mono">Author</span>
@@ -225,15 +558,248 @@
     </div>
     <div class="stat">
       <span class="mono">Status</span>
-      <span class="val">v1.0 &mdash; Approved</span>
+      <span class="val">v1.1 &mdash; Approved</span>
     </div>
   </div>
+</section>
+
+<section id="positioning" class="page section">
+  <div class="tag-row">
+    <span class="tag-line"></span>
+    <span class="mono">Section 01 — Positioning</span>
+  </div>
+
+  <div class="hgroup-head">
+    <div>
+      <h2 class="h-section">We sell<br/>judgment.</h2>
+    </div>
+    <p class="lede" style="max-width: 48ch;">
+      The documents are the end product. What a client actually pays for is knowing which credential fits, what B Lab accepts, and what would sink their submission. Get that wrong and you lose a year and around $14K. That is what Candor is really selling, and the pricing should reflect it.
+    </p>
+  </div>
+
+  <div class="callout">"Honestly, the documents are the easy part. You're paying me to know what belongs in them."</div>
+
+  <div style="margin-top: 64px;">
+    <div class="hgroup-head">
+      <h3 class="h-sub">Positioning at a glance</h3>
+      <span class="mono mono-dim">The short answer to &ldquo;what is this?&rdquo;</span>
+    </div>
+    <div style="margin-top: 28px; display:grid; grid-template-columns: max-content 1fr; gap: 16px 32px; max-width: 74ch;">
+      <span class="mono mono-dim">Sells</span><span>Judgment, and the certainty that comes with getting it right the first time.</span>
+      <span class="mono mono-dim">Ships</span><span>Audit-ready documentation, plus a plan the client can actually run.</span>
+      <span class="mono mono-dim">Removes</span><span>The risk of a wasted year on the wrong credential or a rejected package.</span>
+      <span class="mono mono-dim">For</span><span>Small consumer brands already most of the way there without realising it.</span>
+      <span class="mono mono-dim">Against</span><span>Six-figure quotes and certification for the sake of a logo.</span>
+      <span class="mono mono-dim">Promise</span><span>Every engagement runs through me, so the person you talk to is the person doing the work.</span>
+    </div>
+  </div>
+
+  <div class="voice-list" style="margin-top: 72px;">
+    <article class="voice-rule">
+      <div class="num">1.01</div>
+      <div>
+        <div class="head">Lead with the risk<br/>you remove.</div>
+        <p class="body" style="margin-top: 14px;">
+          The valuable thing is knowing which certification fits and what B Lab will reject before you submit. Price that, since anyone can fill in the forms once they know what goes in them.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"You're paying me so you don't spend a year getting certified for the wrong thing."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"I'll handle all the paperwork and documentation for you."</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">1.02</div>
+      <div>
+        <div class="head">&ldquo;You&rsquo;re closer than you think&rdquo;<br/>lowers the barrier. Use it carefully.</div>
+        <p class="body" style="margin-top: 14px;">
+          Telling an owner they&rsquo;re most of the way there makes starting feel manageable, which is true and worth saying. On its own though it makes the work sound free, so always follow it with the part that gets expensive when it goes wrong.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"You're closer than you'd think. The last stretch is just where the costly mistakes tend to hide, and that's the part I focus on."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"Honestly you're basically already there, it's mostly just filling in forms."</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">1.03</div>
+      <div>
+        <div class="head">Only claim the expertise<br/>you actually have.</div>
+        <p class="body" style="margin-top: 14px;">
+          The whole positioning rests on the judgment being good, and Candor is newly credentialed, so don&rsquo;t oversell it. The honest version is still strong: deep on the standards and the submission process, and upfront when something falls outside that.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"I've gone deep on the standards and the submission process. If something's outside my depth I'll tell you, rather than wing it."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"I'm an expert in every sustainability framework out there."</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="messaging" class="page section">
+  <div class="tag-row">
+    <span class="tag-line"></span>
+    <span class="mono">Section 02 — Messaging</span>
+  </div>
+
+  <div class="hgroup-head">
+    <div>
+      <h2 class="h-section">What we<br/>say first.</h2>
+    </div>
+    <p class="lede" style="max-width: 48ch;">
+      Positioning is what&rsquo;s true. Messaging is what we actually say, and in what order, on a cold homepage or a first call. The free assessment is the front door, because it turns a vague question into a real one before anyone books a call.
+    </p>
+  </div>
+
+  <div style="margin-top: 56px;">
+    <div class="hgroup-head">
+      <h3 class="h-sub">The message stack</h3>
+      <span class="mono mono-dim">Each line earns the next.</span>
+    </div>
+    <div style="margin-top: 28px; display:grid; grid-template-columns: max-content 1fr; gap: 16px 32px; max-width: 78ch;">
+      <span class="mono mono-dim">One line</span><span>Get certified without losing a year to the wrong process.</span>
+      <span class="mono mono-dim">Value</span><span>I work out which certification actually fits you and what B Lab will accept, then I do the documentation to match. The thinking comes first, the paperwork follows.</span>
+      <span class="mono mono-dim">Entry</span><span>A free two-minute readiness score that tells you where you actually stand.</span>
+      <span class="mono mono-dim">Proof</span><span>A founder rate for the first few clients in exchange for a real case study. An honest trade, and I say so out loud.</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 72px;">
+    <div class="hgroup-head">
+      <h3 class="h-sub">Why now, honestly</h3>
+      <span class="mono mono-dim">The real competitor is doing nothing, forever.</span>
+    </div>
+    <div class="voice-list" style="margin-top: 28px;">
+      <article class="voice-rule">
+        <div class="num">2.01</div>
+        <div>
+          <div class="head">The bar is going up.</div>
+          <p class="body" style="margin-top: 14px;">
+            B Lab&rsquo;s standards are tightening as they phase in their update, so preparing under the current framework is genuinely easier than waiting. Verify the exact timeline before you build a line on it, because once it&rsquo;s confirmed this is the most honest urgency Candor has.
+          </p>
+        </div>
+        <div class="examples">
+          <div class="ex yes"><span class="icon">DO</span><span class="txt">"The standards are getting stricter as they update, so starting now is easier than starting after the changes land."</span></div>
+          <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"Only 3 assessment spots left this month!"</span></div>
+        </div>
+      </article>
+
+      <article class="voice-rule">
+        <div class="num">2.02</div>
+        <div>
+          <div class="head">Someone in your category<br/>goes first.</div>
+          <p class="body" style="margin-top: 14px;">
+            Certification gets most of its attention from being early, so whoever certifies first in a crowded niche tends to own that position in customers&rsquo; minds. That&rsquo;s a real edge in spaces like cannabis, apparel, and clean beauty.
+          </p>
+        </div>
+        <div class="examples">
+          <div class="ex yes"><span class="icon">DO</span><span class="txt">"Whoever gets there first usually owns 'most sustainable in the category', and that's hard to take back once it's claimed."</span></div>
+          <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"Get ahead of your competitors with our certification solutions."</span></div>
+        </div>
+      </article>
+
+      <article class="voice-rule">
+        <div class="num">2.03</div>
+        <div>
+          <div class="head">Waiting gets<br/>more expensive.</div>
+          <p class="body" style="margin-top: 14px;">
+            The longer a growing company waits, the more operational mess piles up, and the harder the eventual cleanup gets. It&rsquo;s simply easier to certify at twelve people than at forty.
+          </p>
+        </div>
+        <div class="examples">
+          <div class="ex yes"><span class="icon">DO</span><span class="txt">"It's easier to certify at twelve people than at forty, because the cleanup only grows from here."</span></div>
+          <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"There's never been a better time than now to act!"</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div style="margin-top: 72px;">
+    <div class="hgroup-head">
+      <h3 class="h-sub">Lines you can use</h3>
+      <span class="mono mono-dim">Drop in where they fit. Never forced.</span>
+    </div>
+    <div class="approved-list" style="margin-top: 24px;">
+      <blockquote class="approved-quote">&ldquo;You&rsquo;re not really paying me to fill out forms. You&rsquo;re paying me so you don&rsquo;t lose a year on the wrong credential.&rdquo;</blockquote>
+      <blockquote class="approved-quote">&ldquo;The documents are the easy part. Knowing what belongs in them is the actual work.&rdquo;</blockquote>
+      <blockquote class="approved-quote">&ldquo;You&rsquo;re probably closer than you think, and the last stretch is where the costly mistakes hide.&rdquo;</blockquote>
+      <blockquote class="approved-quote">&ldquo;I&rsquo;ve already made these mistakes, so your business doesn&rsquo;t have to.&rdquo;</blockquote>
+      <blockquote class="approved-quote">&ldquo;Start with the free score. Two minutes, and you&rsquo;ll know where you actually stand.&rdquo;</blockquote>
+      <blockquote class="approved-quote">&ldquo;A founder rate for the first few clients, in exchange for a case study. Fair trade, and I&rsquo;ll say so plainly.&rdquo;</blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="strategy" class="page section">
+  <div class="tag-row">
+    <span class="tag-line"></span>
+    <span class="mono">Section 03 — Strategy</span>
+  </div>
+
+  <div class="hgroup-head">
+    <div>
+      <h2 class="h-section">The stance,<br/>not the plan.</h2>
+    </div>
+    <p class="lede" style="max-width: 50ch;">
+      A brand guide should hold what stays true. The month-to-month plan, the founding cohort, the outreach, the metrics, all of that lives in the strategy doc and changes often. What&rsquo;s below is just the part that doesn&rsquo;t.
+    </p>
+  </div>
+
+  <div class="voice-list" style="margin-top: 56px;">
+    <article class="voice-rule">
+      <div class="num">3.01</div>
+      <div>
+        <div class="head">The assessment<br/>is the front door.</div>
+        <p class="body" style="margin-top: 14px;">
+          The free readiness score is the main thing we point people to, ahead of booking a call, because it turns a vague interest into a real answer and tells me who&rsquo;s actually a fit before they reach my calendar. Score first, then a call, then the work if it makes sense.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">Make the free score the most obvious next step on the page.</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">Bury it in the nav and lead with a cold calendar link.</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">3.02</div>
+      <div>
+        <div class="head">One person doing<br/>the work is the point.</div>
+        <p class="body" style="margin-top: 14px;">
+          For a nervous first-time buyer, the fact that one person handles the whole thing is reassuring, not limiting. The person you talk to is the person doing the work. Whether to ever grow past that gets decided later by real client data, not guessed at now.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"Every part of this runs through me, start to finish."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">Imply a team or juniors that don't exist.</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">3.03</div>
+      <div>
+        <div class="head">The name sets<br/>the floor.</div>
+        <p class="body" style="margin-top: 14px;">
+          Candor can&rsquo;t fake scarcity, fake a team, or oversell expertise that&rsquo;s still being built. A sharp buyer sees through it, and when your name is Candor that lands worse than it would for anyone else. Every reason we give has to be one we&rsquo;d stand behind.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">Use the real reasons: the standards are tightening, the cleanup grows, and being early matters.</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"Limited spots." "Trusted by hundreds." "Award-winning."</span></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="callout" style="margin-top: 48px;">"Build the business you actually have, not the one you picture. The plan's job is just to get you to the data that answers the rest."</div>
 </section>
 
 <section id="identity" class="page section">
   <div class="tag-row">
     <span class="tag-line"></span>
-    <span class="mono">Section 01 — Identity</span>
+    <span class="mono">Section 04 — Identity</span>
   </div>
 
   <div class="hgroup-head">
@@ -371,7 +937,7 @@
 <section id="color" class="page section">
   <div class="tag-row">
     <span class="tag-line"></span>
-    <span class="mono">Section 02 — Color</span>
+    <span class="mono">Section 05 — Color</span>
   </div>
 
   <div class="hgroup-head">
@@ -634,7 +1200,7 @@
 <section id="type" class="page section">
   <div class="tag-row">
     <span class="tag-line"></span>
-    <span class="mono">Section 03 — Typography</span>
+    <span class="mono">Section 06 — Typography</span>
   </div>
 
   <div class="hgroup-head">
@@ -771,7 +1337,7 @@
 <section id="voice" class="page section">
   <div class="tag-row">
     <span class="tag-line"></span>
-    <span class="mono">Section 04 — Voice</span>
+    <span class="mono">Section 07 — Voice</span>
   </div>
 
   <div class="hgroup-head">
@@ -779,123 +1345,149 @@
       <h2 class="h-section">How Candor<br/>writes.</h2>
     </div>
     <p class="lede" style="max-width: 46ch;">
-      Direct, human, specific. The voice doesn&rsquo;t perform professionalism &mdash; it demonstrates it. Short sentences earn long ones. Every rule below has a live example.
+      The voice sounds like a smart person explaining this across a table from you, not a consultancy performing expertise. Direct, grounded, and never making you feel behind. Every rule has a real example.
     </p>
   </div>
 
   <div class="voice-list">
 
     <article class="voice-rule">
-      <div class="num">4.01</div>
+      <div class="num">7.01</div>
       <div>
-        <div class="head">Sentence rhythm.</div>
+        <div class="head">Sound like a person,<br/>not a brochure.</div>
         <p class="body" style="margin-top: 14px;">
-          Vary length deliberately. A long sentence earns a short one after it. Fragment lists are allowed and often better than full sentences for itemizing.
+          Write the way you&rsquo;d explain it to a smart friend who happens to own a business. Let sentences run on a bit where that&rsquo;s how the thought moves, then land on something shorter. Clear beats clever.
         </p>
       </div>
       <div class="examples">
-        <div class="ex yes"><span class="icon">DO</span><span class="txt">"Policy drafts. Tracking systems. Evidence compilation. I do the work and bring you in for decisions only you can make."</span></div>
-        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"I will create policy drafts, build out tracking systems, compile evidence packages, and manage the project end-to-end."</span></div>
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"Most people who come to me are already doing the work, they just haven't written it down the way the assessment wants. That's the gap."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"We deliver comprehensive, end-to-end certification solutions tailored to your sustainability journey."</span></div>
       </div>
     </article>
 
     <article class="voice-rule">
-      <div class="num">4.02</div>
+      <div class="num">7.02</div>
       <div>
-        <div class="head">Voice and person.</div>
+        <div class="head">Confident on what you know.<br/>Honest about the rest.</div>
         <p class="body" style="margin-top: 14px;">
-          First person, present tense, active voice. Always. Passive voice on anything involving Candor&rsquo;s services is not permitted.
+          First person, present tense, and direct. Don&rsquo;t pile on &ldquo;I think&rdquo; and &ldquo;probably&rdquo;, just say the thing. The only time to soften is when an answer genuinely depends on details you don&rsquo;t have yet.
         </p>
       </div>
       <div class="examples">
-        <div class="ex yes"><span class="icon">DO</span><span class="txt">"I run the assessment. You send the docs."</span></div>
-        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"The assessment will be run and documentation will be requested."</span></div>
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"I'm confident on the standards and the submission. On your supply chain specifically, I'd want to see the numbers before I promise anything."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"We guarantee a smooth, hassle-free certification experience you can count on."</span></div>
       </div>
     </article>
 
     <article class="voice-rule">
-      <div class="num">4.03</div>
+      <div class="num">7.03</div>
       <div>
-        <div class="head">Specificity.</div>
+        <div class="head">Explain it without<br/>talking down.</div>
         <p class="body" style="margin-top: 14px;">
-          Specific numbers and timeframes over vague ones. Approximate if needed, but commit to a range.
+          A lot of owners already feel behind on this, and the writing should never confirm that. Assume they&rsquo;re smart, and put the confusion on the topic, not on them.
         </p>
       </div>
       <div class="examples">
-        <div class="ex yes"><span class="icon">DO</span><span class="txt">"About a third of the time I point people toward a different credential."</span></div>
-        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"Often, a different certification turns out to be the better fit."</span></div>
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"B Corp and benefit corporation get used like the same thing, and the names honestly don't help. One's a certification, the other's a legal structure, so it's an easy mix-up."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"As any business owner should already know, these are obviously two different things."</span></div>
       </div>
     </article>
 
     <article class="voice-rule">
-      <div class="num">4.04</div>
+      <div class="num">7.04</div>
       <div>
-        <div class="head">Section endings.</div>
+        <div class="head">Give the easy answer its due,<br/>then go past it.</div>
         <p class="body" style="margin-top: 14px;">
-          End every section on a short, confident sentence. Not a summary. A close.
+          When something sounds simple or scary, say so first, then explain what&rsquo;s really going on. It reads as fair instead of salesy, and it&rsquo;s usually closer to the truth.
         </p>
       </div>
       <div class="examples">
-        <div class="ex yes"><span class="icon">DO</span><span class="txt">"It&rsquo;s worth marking properly." / "The audit will tell you." / "I&rsquo;ll say so directly."</span></div>
-        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">End on a long qualifying sentence that trails off.</span></div>
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"Getting certified sounds like a year buried in paperwork. For most small businesses it isn't, it really comes down to how much you've already got documented."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"Certification is fast and easy with our proven step-by-step system."</span></div>
       </div>
     </article>
 
     <article class="voice-rule">
-      <div class="num">4.05</div>
+      <div class="num">7.05</div>
       <div>
-        <div class="head">Honest concessions.</div>
+        <div class="head">Real detail beats<br/>round numbers.</div>
         <p class="body" style="margin-top: 14px;">
-          When something has a real limitation, say it plainly. Candor&rsquo;s credibility depends on not overselling.
+          Use the real figure when you have one, since specifics build trust. Just don&rsquo;t invent precision you can&rsquo;t back up.
         </p>
       </div>
       <div class="examples">
-        <div class="ex yes"><span class="icon">DO</span><span class="txt">"B Corp&rsquo;s credibility has taken hits as larger brands have joined. The honest answer: it&rsquo;s a real verification process, but only as meaningful as your actual practices."</span></div>
-        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">Bury the caveat or skip it.</span></div>
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"A good number of the people who book a call actually need a different certification than the one they came in for, and I'd rather say that upfront than after you've paid."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"Studies show 73% of certified businesses see a 2.4x return within 18 months."</span></div>
       </div>
     </article>
 
     <article class="voice-rule">
-      <div class="num">4.06</div>
+      <div class="num">7.06</div>
       <div>
-        <div class="head">Banned terms<br/>&amp; patterns.</div>
+        <div class="head">The value isn&rsquo;t<br/>the forms.</div>
         <p class="body" style="margin-top: 14px;">
-          Words and structures that smell like AI, agency&#8209;speak, or filler. If you catch yourself reaching for one, the sentence is doing too little work.
+          Never make the work sound clerical. Anyone can fill in a workbook. The reason to hire me is that I know which answers hold up under review and which ones quietly sink a submission.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"The forms are the easy part. The real work is knowing which answers hold up and which ones quietly sink the whole thing."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">"I'll take all that tedious paperwork off your plate."</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">7.07</div>
+      <div>
+        <div class="head">Say the downside<br/>out loud.</div>
+        <p class="body" style="margin-top: 14px;">
+          Name the limitation before the client runs into it. It costs a little in the moment and earns most of your credibility. This is the most Candor thing the voice does.
+        </p>
+      </div>
+      <div class="examples">
+        <div class="ex yes"><span class="icon">DO</span><span class="txt">"Unfortunately B Corp has taken some fair criticism as bigger companies have joined. It's still a real verification, it just only carries as much weight as the practices behind it. The same logo goes to a company that games the assessment and one that genuinely earns it."</span></div>
+        <div class="ex no"><span class="icon">DON&rsquo;T</span><span class="txt">Bury the caveat, or skip it and hope nobody asks.</span></div>
+      </div>
+    </article>
+
+    <article class="voice-rule">
+      <div class="num">7.08</div>
+      <div>
+        <div class="head">What never<br/>to write.</div>
+        <p class="body" style="margin-top: 14px;">
+          Structures and words that read as AI, agency&#8209;speak, or filler. If you reach for one, the sentence is doing too little work.
         </p>
       </div>
       <div class="banned-list">
-        <div class="row"><div class="term"><s>Em dashes</s></div><div class="why">Use a period or comma instead.</div></div>
-        <div class="row"><div class="term"><s>&ldquo;No X, no Y, no Z&rdquo; triples</s></div><div class="why">Pick the one that matters, say it once.</div></div>
-        <div class="row"><div class="term"><s>&ldquo;End-to-end&rdquo;</s></div><div class="why">Vague jargon. Says nothing.</div></div>
-        <div class="row"><div class="term"><s>&ldquo;Heavy lifting&rdquo;</s></div><div class="why">Performative. AI-adjacent.</div></div>
-        <div class="row"><div class="term"><s>&ldquo;Holistic&rdquo; / &ldquo;Seamless&rdquo; / &ldquo;Robust&rdquo;</s></div><div class="why">Filler adjectives with no content.</div></div>
-        <div class="row"><div class="term"><s>&ldquo;Consumer-facing signal&rdquo;</s></div><div class="why">Jargon for &ldquo;what customers recognise.&rdquo;</div></div>
-        <div class="row"><div class="term"><s>&ldquo;Overlap in spirit&rdquo;</s></div><div class="why">Soft clich&eacute;.</div></div>
-        <div class="row"><div class="term"><s>Two sentences with identical openings</s></div><div class="why">Breaks rhythm. Vary the structure.</div></div>
-        <div class="row"><div class="term"><s>Preamble before a list</s></div><div class="why">Cut everything before the first item.</div></div>
+        <div class="row"><div class="term"><s>Em dashes</s></div><div class="why">Use a comma, period, or colon.</div></div>
+        <div class="row"><div class="term"><s>Anything in threes</s></div><div class="why">Triples, and clipped &ldquo;Noun. Noun. Noun.&rdquo; fragment lists. Make one real point instead.</div></div>
+        <div class="row"><div class="term"><s>Stacked one&#8209;word closers</s></div><div class="why">&ldquo;The audit will tell you.&rdquo; piled up for effect reads as performance, not a person.</div></div>
+        <div class="row"><div class="term"><s>&ldquo;End&#8209;to&#8209;end,&rdquo; &ldquo;holistic,&rdquo; &ldquo;seamless,&rdquo; &ldquo;robust,&rdquo; &ldquo;leverage,&rdquo; &ldquo;solutions&rdquo;</s></div><div class="why">Filler. Says nothing a plain sentence couldn&rsquo;t say better.</div></div>
         <div class="row"><div class="term"><s>&ldquo;Whether you&rsquo;re a&hellip;&rdquo; openers</s></div><div class="why">AI giveaway.</div></div>
-        <div class="row"><div class="term"><s>&ldquo;One of the most [adj] [noun] a [noun] can [verb]&rdquo;</s></div><div class="why">Superlative bloat.</div></div>
         <div class="row"><div class="term"><s>&ldquo;Not because X, but because Y&rdquo;</s></div><div class="why">Overused contrast structure.</div></div>
+        <div class="row"><div class="term"><s>&ldquo;Just documentation&rdquo; / &ldquo;basically already there&rdquo;</s></div><div class="why">Argues your own fee to zero. Pair the gap with what&rsquo;s costly to get wrong.</div></div>
+        <div class="row"><div class="term"><s>Invented scarcity</s></div><div class="why">The brand is Candor. Faking it backfires hardest here.</div></div>
+        <div class="row"><div class="term"><s>Two sentences that open the same way</s></div><div class="why">Vary the structure.</div></div>
+        <div class="row"><div class="term"><s>Talking down: &ldquo;as you know,&rdquo; &ldquo;obviously,&rdquo; &ldquo;simply&rdquo;</s></div><div class="why">Never make the reader feel behind.</div></div>
       </div>
     </article>
 
     <article class="voice-rule">
-      <div class="num">4.07</div>
+      <div class="num">7.09</div>
       <div>
-        <div class="head">Lines approved<br/>for permanent use.</div>
+        <div class="head">Lines you can<br/>actually use.</div>
         <p class="body" style="margin-top: 14px;">
-          Sentences earned in client work and audit reports. Drop them in verbatim. They carry the voice without effort.
+          Earned in real client conversations. Drop them in where they fit, never forced.
         </p>
       </div>
       <div class="approved-list">
-        <blockquote class="approved-quote">&ldquo;The gap is documentation, not an overhaul.&rdquo;</blockquote>
-        <blockquote class="approved-quote">&ldquo;They&rsquo;re different things. Most owners can&rsquo;t tell them apart.&rdquo;</blockquote>
-        <blockquote class="approved-quote">&ldquo;You keep the report whether or not we continue.&rdquo;</blockquote>
-        <blockquote class="approved-quote">&ldquo;Every engagement runs through me directly, start to finish.&rdquo;</blockquote>
-        <blockquote class="approved-quote">&ldquo;Fair challenge.&rdquo;</blockquote>
-        <blockquote class="approved-quote">&ldquo;The audit will tell you.&rdquo;</blockquote>
-        <blockquote class="approved-quote">&ldquo;I&rsquo;ll say so directly.&rdquo;</blockquote>
-        <blockquote class="approved-quote">&ldquo;A 12-person craft brewery isn&rsquo;t their client. And they know it.&rdquo;</blockquote>
+        <blockquote class="approved-quote">&ldquo;Most of the work is already done, it just isn&rsquo;t written down yet. That&rsquo;s the part I handle.&rdquo;</blockquote>
+        <blockquote class="approved-quote">&ldquo;The documentation is the output. What you&rsquo;re paying for is knowing what belongs in it.&rdquo;</blockquote>
+        <blockquote class="approved-quote">&ldquo;You&rsquo;re probably closer than you think, and the last stretch is where the costly mistakes hide. That&rsquo;s where I focus.&rdquo;</blockquote>
+        <blockquote class="approved-quote">&ldquo;If another certification fits you better, I&rsquo;ll tell you on the first call, not after you&rsquo;ve paid.&rdquo;</blockquote>
+        <blockquote class="approved-quote">&ldquo;You keep the report either way, whether or not we keep working together.&rdquo;</blockquote>
+        <blockquote class="approved-quote">&ldquo;Every part of this runs through me, so the person you talk to is the person doing the work.&rdquo;</blockquote>
+        <blockquote class="approved-quote">&ldquo;I&rsquo;ve already made these mistakes so your business doesn&rsquo;t have to.&rdquo;</blockquote>
+        <blockquote class="approved-quote">&ldquo;Start with the free score. Two minutes, and you&rsquo;ll know where you actually stand.&rdquo;</blockquote>
       </div>
     </article>
 
@@ -905,7 +1497,7 @@
 <section id="applications" class="page section">
   <div class="tag-row">
     <span class="tag-line"></span>
-    <span class="mono">Section 05 — Applications</span>
+    <span class="mono">Section 08 — Applications</span>
   </div>
 
   <div class="hgroup-head">
@@ -938,7 +1530,7 @@
             <div class="role">Founder &middot; Certification lead</div>
           </div>
           <div class="lines">
-            <div>candorcertified@gmail.com</div>
+            <div>artem.dan1lov@proton.me</div>
             <div>Vancouver, BC</div>
           </div>
         </div>
@@ -950,8 +1542,8 @@
           <svg width="32" height="32" viewBox="0 0 100 100" style="color:#F5F3EE; --island-cut:#0D1610; --island-peak:#3D8A57;" aria-hidden="true"><use href="#island-mark"/></svg>
         </div>
         <div class="biz-card-headline">
-          Tell the truth.<br/>
-          <span style="color:#3D8A57;">Get certified.</span>
+          Get recognized.<br/>
+          <span style="color:#3D8A57;">for the way you already do business.</span>
         </div>
         <div class="bot">
           <span class="mono" style="color:#3D8A57; font-size:9px;">candorcertified.com</span>
@@ -1033,7 +1625,7 @@
             <div class="sig-name">Artem Furman</div>
             <div class="sig-role">Founder &middot; Candor Certification</div>
             <div class="sig-meta">
-              candorcertified@gmail.com &nbsp;&middot;&nbsp; <a href="#">candorcertified.com</a><br/>
+              artem.dan1lov@proton.me &nbsp;&middot;&nbsp; <a href="#">candorcertified.com</a><br/>
               <span style="color:var(--forest);">Flat&#8209;fee B Corp &amp; Climate Neutral certification, Vancouver.</span>
             </div>
           </div>
@@ -1101,12 +1693,12 @@
   <div class="colophon">
     <div>
       <span class="row-mono">End of document</span>
-      <h4>Candor Brand Guide v1.0</h4>
-      <p>Prepared in&#8209;house, May 2026, Vancouver, BC. This document is the working source of truth for the visual identity of Candor Certification Consulting. Revisions live with the founder.</p>
+      <h4>Candor Brand Guide v1.1</h4>
+      <p>Prepared in&#8209;house, May 2026, Vancouver, BC. v1.1 adds the verbal system &mdash; Positioning, Messaging, and Strategy &mdash; ahead of the visual identity. This document is the working source of truth for the brand of Candor Certification Consulting. Revisions live with the founder.</p>
     </div>
     <div>
       <span class="row-mono">Contact</span>
-      <p>candorcertified@gmail.com<br/>candorcertified.com</p>
+      <p>artem.dan1lov@proton.me<br/>candorcertified.com</p>
     </div>
     <div>
       <span class="row-mono">Type credits</span>

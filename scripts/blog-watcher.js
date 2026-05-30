@@ -17,7 +17,7 @@
 const fs   = require('fs');
 const path = require('path');
 
-const BLOG_DIR = path.join(__dirname, 'blog');
+const BLOG_DIR = path.join(__dirname, '..', 'blog');
 const INDEX    = path.join(BLOG_DIR, 'index.html');
 const MONTHS   = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 

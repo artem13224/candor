@@ -10,7 +10,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 // ── Config ────────────────────────────────────────────────────────────────────
-const REPO_ROOT   = path.resolve(__dirname);
+const REPO_ROOT   = path.resolve(__dirname, '..');
 const BLOG_DIR    = path.join(REPO_ROOT, 'blog');
 const INDEX_FILE  = path.join(BLOG_DIR, 'index.html');
 const SITEMAP     = path.join(REPO_ROOT, 'sitemap.xml');

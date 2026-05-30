@@ -1,0 +1,8 @@
+{
+  "name": "candor-website",
+  "private": true,
+  "scripts": {
+    "publish": "node scripts/publish.js",
+    "watch": "node scripts/blog-watcher.js"
+  }
+}

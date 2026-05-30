@@ -14,14 +14,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
 <title>B Corp Certification Consultant Vancouver BC | Candor</title>
-<meta name="description" content="Flat-fee B Corp certification consulting for BC small businesses. Readiness audits, gap analysis, and full certification support. Based in Vancouver."/>
+<meta name="description" content="Flat-fee B Corp certification consulting for small businesses across Canada, based in Vancouver. Gap analysis, policy work, and full certification support. Direct access to the person doing the work."/>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="B Corp Certification Consultant Vancouver BC | Candor"/>
-<meta property="og:description" content="Flat-fee B Corp certification consulting for BC small businesses. Readiness audits, gap analysis, and full certification support. Based in Vancouver."/>
+<meta property="og:description" content="Flat-fee B Corp certification consulting for small businesses across Canada, based in Vancouver. Gap analysis, policy work, and full certification support. Direct access to the person doing the work."/>
 <meta property="og:url" content="https://candorcertified.com/"/>
-<meta property="og:image" content="https://candorcertified.com/images/webshare.jpg"/>
+<meta property="og:image" content="https://candorcertified.com/images/heroes/webshare.jpg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://candorcertified.com/images/webshare.jpg"/>
+<meta name="twitter:image" content="https://candorcertified.com/images/heroes/webshare.jpg"/>
 <link rel="canonical" href="https://candorcertified.com/"/>
 <script type="application/ld+json">
 {
@@ -92,7 +92,7 @@
       "@type": "Offer",
       "position": 3,
       "name": "Full Path to Certification",
-      "description": "End-to-end B Corp certification over 9–12 months. Includes submission management, B Lab correspondence, revision round, and post-certification launch plan.",
+      "description": "Complete B Corp certification support over 9–12 months. Includes everything in Tier 02, plus B Lab submission management, correspondence, and a revision round if the first attempt needs adjustment.",
       "price": "12000",
       "priceCurrency": "CAD",
       "seller": { "@type": "Organization", "name": "Candor" }
@@ -204,13 +204,12 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .hero-kicker-in{display:inline-block;transform:translateY(120%);animation:slup .7s .1s var(--ease) forwards}
 .hero-kicker::before{content:'';width:18px;height:1.5px;background:var(--green);flex-shrink:0;transform:scaleX(0);transform-origin:left;animation:scx .45s .05s var(--ease) forwards}
 .sep{margin:0 4px;opacity:.4}
-.hero-h1{font-family:var(--u);font-weight:800;font-size:clamp(52px,11.5vw,136px);line-height:.9;letter-spacing:-.03em;color:#0E110D;margin-bottom:28px}
-.hero-h1 .hl{display:block;overflow:hidden}
+.hero-h1{font-family:var(--u);font-weight:800;font-size:clamp(44px,7.5vw,92px);line-height:1.05;letter-spacing:-.03em;color:#0E110D;margin-bottom:32px}
+.hero-h1 .hl{display:block;overflow:hidden;padding-bottom:.12em}
 .hero-h1 .hl-in{display:block;transform:translateY(110%)}
-.hero-h1 .hl:nth-child(1) .hl-in{animation:slup .9s .2s var(--ease) forwards}
-.hero-h1 .hl:nth-child(2) .hl-in{animation:slup .9s .32s var(--ease) forwards}
-.hero-h1 .hl:nth-child(3) .hl-in{animation:slup .9s .44s var(--ease) forwards}
 .hero-h1 em{font-style:italic;font-weight:300;color:var(--green)}
+.hero-h1 .hl:nth-child(1) .hl-in{animation:slup .9s .2s var(--ease) forwards}
+.hero-h1 .hl:nth-child(2) .hl-in{animation:slup .9s .38s var(--ease) forwards}
 .vh{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .hero-desc{font-family:var(--o);font-size:clamp(16px,1.8vw,18px);line-height:1.65;color:var(--ink3);max-width:480px;margin-bottom:32px;opacity:0;animation:fdup .9s .9s var(--ease) forwards}
 .hero-desc strong{color:#0E110D;font-weight:600}
@@ -259,6 +258,37 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .prob-card:hover .prob-n{color:rgba(45,107,66,.1)}
 .prob-title{font-family:var(--u);font-weight:700;font-size:20px;letter-spacing:-.01em;color:#0E110D;margin-bottom:10px;line-height:1.2}
 .prob-txt{font-family:var(--o);font-size:15px;line-height:1.65;color:var(--ink3);font-weight:300}
+
+/* WHY NOW — sticky 3-act scroll */
+#why-now{min-height:450vh;position:relative;background:#0E110D}
+.why-header{padding:90px var(--px) clamp(40px,6vh,72px);position:relative;z-index:3}
+.why-header .dh{margin-bottom:0}
+.why-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;z-index:2}
+.why-dotsbar{flex:0 0 auto;padding:20px var(--px) 0;display:flex;gap:10px}
+.why-dot{width:32px;height:2px;border:none;padding:0;cursor:default;background:rgba(245,243,238,.18);transition:background .4s,width .4s cubic-bezier(.22,1,.36,1)}
+.why-dot.d-on{background:var(--sage);width:52px}
+.why-stage{flex:1;position:relative;overflow:hidden;min-height:0}
+.why-act{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;transform:translateY(32px) scale(.985);transition:opacity .6s var(--ease),transform .65s var(--ease);pointer-events:none}
+.why-act.a-in{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.why-act.a-out{opacity:0;transform:translateY(-32px) scale(.985);transition:opacity .45s ease,transform .5s ease}
+.why-tx{flex:0 0 auto;padding:clamp(12px,calc(30vh - 22px),300px) var(--px) clamp(40px,5vh,60px);text-align:center}
+.why-vis{flex:1;padding:0 var(--px) 24px;display:flex;align-items:stretch;min-height:0;overflow:hidden}
+.why-vis svg{width:100%;height:100%;overflow:visible;display:block}
+.why-h{font-family:var(--u);font-weight:800;font-size:clamp(22px,3.2vw,48px);line-height:1.05;letter-spacing:-.03em;color:var(--white);margin:0 0 8px}
+.why-b{font-family:var(--o);font-size:15px;line-height:1.65;color:rgba(245,243,238,.55);font-weight:300;margin:0 auto;max-width:680px;text-align:center}
+#why-now .why-act[data-act="0"] .why-tx,
+#why-now .why-act[data-act="0"] .why-vis{opacity:0;transform:translateY(20px)}
+#why-now.entered .why-act[data-act="0"] .why-tx{animation:wyIn .8s var(--ease) forwards}
+#why-now.entered .why-act[data-act="0"] .why-vis{animation:wyIn .8s .45s var(--ease) forwards}
+@keyframes wyIn{to{opacity:1;transform:translateY(0)}}
+@media(max-width:860px){
+  .why-header{padding:90px var(--px) 32px}
+  .why-dotsbar{padding:16px var(--px) 0}
+  .why-h{font-size:clamp(18px,5vw,30px)}
+  .why-b{font-size:14px}
+  .why-tx{padding:clamp(12px,calc(18vh - 22px),140px) var(--px) clamp(24px,3vh,40px)}
+  .why-vis{padding:0 var(--px) 16px}
+}
 
 /* SERVICES ACCORDION */
 .svc-list{margin-top:44px;border-top:1px solid rgba(14,17,13,.12)}
@@ -550,7 +580,6 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   .swipe-footer{display:none}
   .who-desktop{display:block}
 }
-@media(min-width:1400px){.hero-h1{font-size:148px}}
 ::selection{background:var(--green);color:var(--white)}
 /* inline body-copy anchor links */
 .body-p a,.proc-txt a,.fq-ans a,.cert-desc a,.mission-txt a,.prob-txt a{color:var(--green);text-decoration:underline;text-decoration-color:rgba(45,107,66,.32);text-underline-offset:2px;transition:color .2s,text-decoration-color .2s}
@@ -880,10 +909,10 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   100%{transform:scaleX(1);opacity:0}
 }
 </style>
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/x-icon" href="/images/favicons/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
 </head>
 <body>
 <!-- PAGE LOAD ANIMATION -->
@@ -988,17 +1017,17 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <section class="hero" id="top">
   <div class="hero-body">
     <div class="hero-l">
-      <div class="hero-kicker"><span class="hero-kicker-in">B Corp <span class="sep">|</span> Climate Neutral <span class="sep">|</span> Vancouver, BC</span></div>
+      <div class="hero-kicker"><span class="hero-kicker-in">B Corp <span class="sep">|</span> Climate Neutral <span class="sep">|</span> Vancouver-based · Canada-wide</span></div>
       <h1 class="hero-h1">
-        <span class="hl"><span class="hl-in">Tell the truth.</span></span>
-        <span class="hl"><span class="hl-in"><em>Get certified.</em></span></span>
+        <span class="hl"><span class="hl-in">Get recognized.</span></span>
+        <span class="hl"><span class="hl-in">For how you <em>already</em> do business.</span></span>
         <span class="vh" aria-hidden="true">B Corp sustainability certification consultant Vancouver BC</span>
       </h1>
       <span class="vh" aria-hidden="true">B Corp certification consultant Vancouver BC — sustainability certification for small businesses</span>
-      <p class="hero-desc">Flat-fee sustainability certification for BC small businesses. No Big Four pricing. Direct access to the person doing the work.</p>
+      <p class="hero-desc">Flat-fee certification consulting for small businesses across Canada. You're paying me so you don't lose a year on the wrong credential or a rejected submission. Every engagement runs through me.</p>
       <div class="hero-btns">
-        <a href="https://calendly.com/artemfurman/30min" class="btn btn-d" data-mag target="_blank" rel="noopener noreferrer">Book a free call <span class="ar">→</span></a>
-        <a href="#process" class="btn btn-g" data-mag>How it works</a>
+        <a href="/assessment/" class="btn btn-d" data-mag>Get your free readiness score <span class="ar">→</span></a>
+        <a href="https://calendly.com/artemfurman/30min" class="btn btn-g" data-mag target="_blank" rel="noopener noreferrer">or book a call</a>
       </div>
     </div>
   </div>
@@ -1015,7 +1044,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <!-- MISSION -->
 <div class="mission fu">
   <div class="mission-inner">
-    <p class="mission-txt">"Most businesses I meet are already doing <em>70% of what certification requires.</em> They just don't have the documentation to prove it."</p>
+    <p class="mission-txt">"Most of the work is already done. It just isn't written down the way B Lab wants, and <em>the last stretch is where the costly mistakes tend to hide.</em>"</p>
   </div>
 </div>
 
@@ -1029,14 +1058,154 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
     <div class="prob-row stg">
       <div class="prob-card"><div class="prob-n">01</div><div class="prob-title">Priced for someone else</div><p class="prob-txt">The big firms built their pricing for companies ten times your size. A $40,000 quote isn't a negotiation starting point. It's a signal that you're not their client. Most small businesses just walk away.</p></div>
       <div class="prob-card"><div class="prob-n">02</div><div class="prob-title">Genuinely confusing</div><p class="prob-txt">B Corp. Benefit Corporation. Climate Neutral. ISO 14001. They overlap, they contradict, and the internet makes it worse. Most owners spend hours researching and still aren't sure which one they actually need.</p></div>
-      <div class="prob-card"><div class="prob-n">03</div><div class="prob-title">Feels like a year</div><p class="prob-txt">It's closer to twelve weeks. Most businesses that qualify never start. The main reason: they think it takes a year. It doesn't. Most are already doing 70–80% of what's required. The remaining work is documentation.</p></div>
+      <div class="prob-card"><div class="prob-n">03</div><div class="prob-title">Feels like a year</div><p class="prob-txt">For most small businesses, certification takes closer to twelve weeks than a year. The challenge isn't the clock. It's knowing which answers hold up under review and which ones quietly sink a submission before it gets flagged. Most owners are already doing the practices.</p></div>
     </div>
   </div>
 </section>
 
+<!-- WHY NOW -->
+<section class="sec-dk" id="why-now">
+
+  <div class="why-header">
+    <div class="mw">
+      <div class="ey ey-lt">Timing</div>
+      <h2 class="dh dh-lt">The case for <em>starting now.</em></h2>
+    </div>
+  </div>
+
+  <div class="why-sticky">
+    <div class="why-dotsbar" aria-hidden="true">
+      <span class="why-dot d-on"></span>
+      <span class="why-dot"></span>
+      <span class="why-dot"></span>
+    </div>
+
+    <!-- Act stage — fills remaining height -->
+    <div class="why-stage">
+
+      <!-- ACT 1 — The bar is moving -->
+      <div class="why-act a-in" data-act="0">
+        <div class="why-tx">
+          <h3 class="why-h">The bar is moving. Starting later costs more.</h3>
+          <p class="why-b">B Lab is phasing in an update to its certification standards. Preparing under the current framework is genuinely easier than starting after the changes land — the bar only gets harder to clear.</p>
+        </div>
+        <div class="why-vis">
+          <svg viewBox="0 0 1000 180" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <marker id="arw1" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L7,3.5 L0,7 Z" fill="rgba(90,166,114,.6)"/>
+              </marker>
+            </defs>
+            <text x="500" y="168" text-anchor="middle" font-family="Urbanist,sans-serif"
+                  font-size="220" font-weight="800" fill="rgba(245,243,238,.022)" letter-spacing="-.04em">/200</text>
+            <rect x="0" y="80" width="1000" height="16" rx="8" fill="rgba(245,243,238,.07)"/>
+            <rect class="svg1-fill" x="0" y="80" width="1000" height="16" rx="8"
+                  fill="rgba(90,166,114,.8)"
+                  style="transform-box:fill-box;transform-origin:left center;transform:scaleX(0)"/>
+            <rect class="svg1-glow" x="-2" y="76" width="1004" height="24" rx="12"
+                  fill="none" stroke="rgba(90,166,114,.2)" stroke-width="6"
+                  style="transform-box:fill-box;transform-origin:left center;transform:scaleX(0)"/>
+            <line x1="400" y1="54" x2="400" y2="112" stroke="rgba(245,243,238,.45)" stroke-width="2"/>
+            <text x="400" y="44" text-anchor="middle" font-family="Space Mono,monospace"
+                  font-size="12" fill="rgba(245,243,238,.4)" letter-spacing=".1em">TODAY — 80 PTS</text>
+            <g class="svg1-newbar" opacity="0">
+              <line x1="580" y1="46" x2="580" y2="120" stroke="#5AA672" stroke-width="2"/>
+              <text x="580" y="36" text-anchor="middle" font-family="Space Mono,monospace"
+                    font-size="12" fill="#5AA672" letter-spacing=".08em">2026 ↑ RISING</text>
+              <path d="M 409 88 L 571 88" stroke="rgba(90,166,114,.5)" stroke-width="1.5"
+                    stroke-dasharray="6 4" marker-end="url(#arw1)"/>
+            </g>
+            <text x="0" y="168" font-family="Space Mono,monospace" font-size="11"
+                  fill="rgba(245,243,238,.2)" letter-spacing=".1em">0 ────────────────────── 200 POINTS</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ACT 2 — First to certify -->
+      <div class="why-act" data-act="1">
+        <div class="why-tx">
+          <h3 class="why-h">First to certify owns the label.</h3>
+          <p class="why-b">Whoever certifies first in a crowded niche tends to own the most-sustainable label in customers' minds — and that position is difficult to take back once it's claimed.</p>
+        </div>
+        <div class="why-vis">
+          <svg viewBox="0 0 1000 200" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <line x1="870" y1="0" x2="870" y2="200" stroke="rgba(245,243,238,.14)" stroke-width="1.5" stroke-dasharray="8 5"/>
+            <text x="876" y="82" font-family="Space Mono,monospace" font-size="11"
+                  fill="rgba(245,243,238,.28)" letter-spacing=".1em">CERTIFIED</text>
+            <text x="0" y="45" font-family="Space Mono,monospace" font-size="11"
+                  fill="rgba(245,243,238,.65)" letter-spacing=".15em">YOU</text>
+            <rect x="90" y="28" width="910" height="30" rx="15" fill="rgba(245,243,238,.04)"/>
+            <rect class="svg2-bar1" x="90" y="28" width="910" height="30" rx="15"
+                  fill="rgba(90,166,114,.75)"
+                  style="transform-box:fill-box;transform-origin:left center;transform:scaleX(0)"/>
+            <circle class="svg2-badge" cx="940" cy="43" r="30"
+                    stroke="#5AA672" stroke-width="3" fill="rgba(90,166,114,.1)"
+                    stroke-dasharray="188" stroke-dashoffset="188"/>
+            <text class="svg2-check" x="940" y="54" text-anchor="middle"
+                  font-family="Urbanist,sans-serif" font-size="24" font-weight="700"
+                  fill="#5AA672" opacity="0">✓</text>
+            <text x="0" y="113" font-family="Space Mono,monospace" font-size="11"
+                  fill="rgba(245,243,238,.3)" letter-spacing=".15em">PEER A</text>
+            <rect x="90" y="96" width="910" height="30" rx="15" fill="rgba(245,243,238,.04)"/>
+            <rect class="svg2-bar2" x="90" y="96" width="910" height="30" rx="15"
+                  fill="rgba(245,243,238,.18)"
+                  style="transform-box:fill-box;transform-origin:left center;transform:scaleX(0)"/>
+            <text x="0" y="181" font-family="Space Mono,monospace" font-size="11"
+                  fill="rgba(245,243,238,.2)" letter-spacing=".15em">PEER B</text>
+            <rect x="90" y="164" width="910" height="30" rx="15" fill="rgba(245,243,238,.04)"/>
+            <rect class="svg2-bar3" x="90" y="164" width="910" height="30" rx="15"
+                  fill="rgba(245,243,238,.1)"
+                  style="transform-box:fill-box;transform-origin:left center;transform:scaleX(0)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ACT 3 — Complexity grows -->
+      <div class="why-act" data-act="2">
+        <div class="why-tx">
+          <h3 class="why-h">The complexity only grows.</h3>
+          <p class="why-b">It's easier to certify at twelve people than at forty. The operational complexity that accumulates in a growing business makes the eventual audit longer and more expensive.</p>
+        </div>
+        <div class="why-vis">
+          <svg viewBox="0 0 1000 200" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <line x1="60" y1="0" x2="60" y2="170" stroke="rgba(245,243,238,.12)" stroke-width="1"/>
+            <line x1="60" y1="170" x2="1000" y2="170" stroke="rgba(245,243,238,.15)" stroke-width="1"/>
+            <line x1="60" y1="113" x2="1000" y2="113" stroke="rgba(245,243,238,.05)" stroke-width="1"/>
+            <line x1="60" y1="57" x2="1000" y2="57" stroke="rgba(245,243,238,.04)" stroke-width="1"/>
+            <text x="64" y="14" font-family="Space Mono,monospace" font-size="10"
+                  fill="rgba(245,243,238,.3)" letter-spacing=".06em">AUDIT COST ↑</text>
+            <path class="svg3-area"
+                  d="M 60,170 C 200,168 380,158 540,126 C 700,92 820,42 960,8 L 960,170 Z"
+                  fill="rgba(90,166,114,.09)" opacity="0"/>
+            <path class="svg3-curve"
+                  d="M 60,170 C 200,168 380,158 540,126 C 700,92 820,42 960,8"
+                  stroke="#5AA672" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-dasharray="1100" stroke-dashoffset="1100"/>
+            <circle class="svg3-dot1" cx="60" cy="170" r="7" fill="#5AA672" opacity="0"/>
+            <circle class="svg3-dot2" cx="960" cy="8" r="7" fill="#5AA672" opacity="0"/>
+            <text x="60" y="190" text-anchor="middle" font-family="Space Mono,monospace"
+                  font-size="14" fill="rgba(245,243,238,.55)" letter-spacing=".04em">12</text>
+            <text x="60" y="204" text-anchor="middle" font-family="Space Mono,monospace"
+                  font-size="11" fill="rgba(245,243,238,.3)">people</text>
+            <text x="960" y="190" text-anchor="middle" font-family="Space Mono,monospace"
+                  font-size="14" fill="rgba(245,243,238,.55)" letter-spacing=".04em">40+</text>
+            <text x="960" y="204" text-anchor="middle" font-family="Space Mono,monospace"
+                  font-size="11" fill="rgba(245,243,238,.3)">people</text>
+            <g class="svg3-label" opacity="0">
+              <text x="720" y="40" text-anchor="middle" font-family="Space Mono,monospace"
+                    font-size="10" fill="rgba(90,166,114,.65)" letter-spacing=".05em">Cost grows exponentially →</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+    </div><!-- .why-stage -->
+  </div><!-- .why-sticky -->
+</section>
+
 <!-- IMAGE BREAK 1 -->
 <div class="brk fu">
-  <img src="images/break-1.jpg" sizes="100vw" alt="Mountain mist over British Columbia" loading="lazy"/>
+  <img src="images/heroes/break-1.jpg" sizes="100vw" alt="Mountain mist over British Columbia" loading="lazy"/>
 </div>
 
 <!-- WHO I WORK WITH -->
@@ -1143,7 +1312,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
             <circle class="cert-ring-arc" cx="36" cy="36" r="32" stroke="var(--green)" stroke-width="2"
               stroke-linecap="round" transform="rotate(-90 36 36)"
               stroke-dasharray="201" stroke-dashoffset="201"/>
-            <text class="cert-ring-n" id="certScore" x="36" y="33" text-anchor="middle" dominant-baseline="middle">0</text>
+            <text class="cert-ring-n" id="certScore" x="36" y="33" text-anchor="middle" dominant-baseline="middle">80</text>
             <text class="cert-ring-lbl" x="36" y="47" text-anchor="middle" dominant-baseline="middle">min. score</text>
           </svg>
         </div>
@@ -1195,7 +1364,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 
 <!-- IMAGE BREAK 2 -->
 <div class="brk fu">
-  <img src="images/break-2.jpg" sizes="100vw" alt="Forest canopy in British Columbia" loading="lazy"/>
+  <img src="images/heroes/break-2.jpg" sizes="100vw" alt="Forest canopy in British Columbia" loading="lazy"/>
   <div class="brk-over"><div class="brk-inner"><div class="brk-label">Candor · Note 02</div><div class="brk-q">Enterprise consultancies aren't built to serve <em>a 12-person business.</em> That's exactly where Candor operates.</div></div></div>
 </div>
 
@@ -1228,10 +1397,10 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
     <div class="ey ey-lt">The numbers</div>
     <h2 class="dh dh-lt">Why certified businesses outperform the ones that aren't.</h2>
     <div class="stats-g stg">
-      <div class="stat-c"><div class="st-n"><span data-cnt="14">0</span><sub>%</sub></div><p class="st-l">Higher revenue growth for certified purpose-driven companies</p><span class="st-src">— Deloitte Global, 2023</span></div>
-      <div class="stat-c"><div class="st-n"><span data-cnt="50">0</span><sub>%</sub></div><p class="st-l">Lower staff turnover in certified high-trust workplaces</p><span class="st-src">— Great Place to Work, 2023</span></div>
-      <div class="stat-c"><div class="st-n"><span data-cnt="9000">0</span><sub>+</sub></div><p class="st-l">Certified B Corps globally, growing every quarter</p><span class="st-src">— B Lab, 2025</span></div>
-      <div class="stat-c"><div class="st-n"><span data-cnt="2024">0</span></div><p class="st-l">Year B Lab began rolling out its updated global standards</p><span class="st-src">— B Lab Global</span></div>
+      <div class="stat-c"><div class="st-n"><span data-cnt="14">14</span><sub>%</sub></div><p class="st-l">Higher revenue growth for certified purpose-driven companies</p><span class="st-src">— Deloitte Global, 2023</span></div>
+      <div class="stat-c"><div class="st-n"><span data-cnt="50">50</span><sub>%</sub></div><p class="st-l">Lower staff turnover in certified high-trust workplaces</p><span class="st-src">— Great Place to Work, 2023</span></div>
+      <div class="stat-c"><div class="st-n"><span data-cnt="9000">9,000</span><sub>+</sub></div><p class="st-l">Certified B Corps globally, growing every quarter</p><span class="st-src">— B Lab, 2025</span></div>
+      <div class="stat-c"><div class="st-n"><span data-cnt="102">102</span><sub>+</sub></div><p class="st-l">Countries where certified B Corps now operate</p><span class="st-src">— B Lab, 2025</span></div>
     </div>
   </div>
 </section>
@@ -1255,26 +1424,16 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   </div>
 </section>
 
-<!-- ASSESSMENT BANNER -->
-<section class="sec fu" id="assessment-banner">
-  <div class="mw">
-    <div class="ey">Free tool</div>
-    <h2 class="dh">See your certification impact<br><em>in 2 minutes.</em></h2>
-    <p class="body-p" style="max-width:460px;margin-bottom:36px">Answer 5 questions. We'll map what B Corp certification could mean for your business — CO₂ impact, supply chain reach, and a realistic timeline.</p>
-    <a href="/assessment/" class="btn btn-d">Take the assessment <span class="ar">→</span></a>
-  </div>
-</section>
-
 <!-- CTA -->
 <section class="cta fu" id="contact">
-  <div class="cta-bg"><img src="images/cta-bg.jpg" sizes="100vw" alt="Forest landscape, Vancouver BC" loading="lazy"/></div>
+  <div class="cta-bg"><img src="images/heroes/cta-bg.jpg" sizes="100vw" alt="Forest landscape, Vancouver BC" loading="lazy"/></div>
   <div class="cta-in">
     <div class="ey ey-lt">Start here</div>
-    <h2 class="cta-h">The first step is a <em>free call.</em></h2>
-    <p class="cta-sub">No pitch. No pressure. If it's not the right fit, I'll say so. If it is, we'll figure out where to start.</p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap"><a href="https://calendly.com/artemfurman/30min" class="btn btn-d" data-mag target="_blank" rel="noopener noreferrer">Book the call <span class="ar">→</span></a></div>
-    <p style="font-family:var(--u);font-size:13px;font-weight:500;letter-spacing:.08em;color:rgba(245,243,238,.65);border-top:1px solid rgba(245,243,238,.12);padding-top:20px;margin-top:24px;max-width:480px">Gap analysis delivered within 14 business days. If it takes longer, you don't pay.</p>
-    <div class="cta-mail">Or write directly: <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a></div>
+    <h2 class="cta-h">Start with the <em>free score.</em></h2>
+    <p class="cta-sub">Two minutes. You'll know where you actually stand before anyone asks you to commit to anything.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><a href="/assessment/" class="btn btn-d" data-mag>Get your free readiness score <span class="ar">→</span></a></div>
+    <p style="font-family:var(--u);font-size:13px;font-weight:500;letter-spacing:.08em;color:rgba(245,243,238,.65);border-top:1px solid rgba(245,243,238,.12);padding-top:20px;margin-top:24px;max-width:480px">For the first engagement each quarter, the gap analysis is delivered within 14 business days. If it takes longer, you don't pay.</p>
+    <div class="cta-mail">Or <a href="https://calendly.com/artemfurman/30min" target="_blank" rel="noopener noreferrer">book a call</a>. Write directly: <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a></div>
   </div>
 </section>
 
@@ -1319,42 +1478,42 @@ const CARDS = [
     name:'Cannabis Brands',
     text:'Craft producers and retailers trying to differentiate in a stigmatised market.',
     detail:'Your pricing, supply chain, and worker practices are already held to a higher standard by the market. Certification makes that visible — and takes the "but they\'re just a weed company" objection off the table entirely. Cannabis B Corps get significantly higher consumer trust scores.',
-    img:'images/who-cannabis.jpg'
+    img:'images/industry/who-cannabis.jpg'
   },
   {
     cat:'Outdoor & Apparel', side:'left', rot:1.5,
     name:'Outdoor & Apparel',
     text:'Small BC gear brands chasing MEC, REI, or Patagonia-adjacent retail.',
     detail:'MEC and REI are actively requiring sustainability disclosures from new supplier conversations. Patagonia-adjacent retailers won\'t even open the conversation without it. The Outdoor Retailer network increasingly gates shelf access behind certification. Your product could be perfect and still lose the listing.',
-    img:'images/who-outdoor.jpg'
+    img:'images/industry/who-outdoor.jpg'
   },
   {
     cat:'Food & Beverage', side:'right', rot:-2,
     name:'Food & Beverage',
     text:'Local food brands making sustainability claims on packaging.',
     detail:'Canada\'s amended Competition Act (Bill C-59, 2024) now penalises vague environmental claims without substantiation. "Sustainably sourced," "eco-friendly," "carbon-conscious" — all of these are now legally exposed without a third party to back them. Certification converts that liability into an asset.',
-    img:'images/who-food.jpg'
+    img:'images/industry/who-food.jpg'
   },
   {
     cat:'Clean Beauty', side:'left', rot:1,
     name:'Clean Beauty',
     text:'Indie brands chasing Sephora Clean+ or Credo\'s mandate.',
     detail:'Sephora\'s "Clean + Planet Positive" badge requires disclosure across packaging, ingredient sourcing, and environmental impact. Credo\'s supplier standards are even stricter. Both increasingly want a certified third party, not a brand self-assessment. Supply chain documentation is the part most brands stumble on — and it\'s most of the work.',
-    img:'images/who-beauty.jpg'
+    img:'images/industry/who-beauty.jpg'
   },
   {
     cat:'Hospitality', side:'right', rot:-1.5,
     name:'Coffee & Hospitality',
     text:'Boutique roasters and 2–6 location restaurant groups.',
     detail:'Certification gives you a press hook that generates coverage you can\'t buy. "First certified B Corp café group in East Vancouver" is a story. "We care about sustainability" is noise. The certification also tends to anchor staff retention — people want to work for businesses that have put the work in.',
-    img:'images/who-coffee.jpg'
+    img:'images/industry/who-coffee.jpg'
   },
   {
     cat:'Studios & Agencies', side:'left', rot:2,
     name:'Studios & Agencies',
     text:'Architecture firms and design agencies under 50 people pitching ESG-conscious clients.',
     detail:'Government and institutional clients increasingly require sustainability credentials in RFP scoring. ESG-led private clients (who are often B Corps themselves) weight it highly. Being certified means you show up in searches and shortlists that non-certified firms don\'t. Often urgent — the deadline is the RFP.',
-    img:'images/who-studio.jpg'
+    img:'images/industry/who-studio.jpg'
   }
 ];
 
@@ -1678,6 +1837,47 @@ const procSteps     = document.querySelectorAll('.proc-step');
 const riverFillEl   = document.getElementById('riverFill');
 const riverCont     = document.getElementById('riverContainer');
 const brkImgs       = document.querySelectorAll('.brk img');
+const _whyNow       = document.getElementById('why-now');
+const _whyHeader    = document.querySelector('#why-now .why-header');
+const _whyActs      = document.querySelectorAll('.why-act');
+const _whyDots      = document.querySelectorAll('.why-dot');
+let   _whyActIdx    = 0;
+let   _whyEntered   = false;
+
+function scrubActSvg(act, lp) {
+  const eo  = t => 1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 3);
+  const idx = +act.dataset.act;
+  if (idx === 0) {
+    const fill = act.querySelector('.svg1-fill');
+    const glow = act.querySelector('.svg1-glow');
+    const nb   = act.querySelector('.svg1-newbar');
+    if (fill) fill.style.transform = `scaleX(${eo(lp) * 0.65})`;
+    if (glow) glow.style.transform = `scaleX(${eo(lp) * 0.65})`;
+    if (nb)   nb.style.opacity     = String(eo(Math.max(0, (lp - 0.65) / 0.35)));
+  } else if (idx === 1) {
+    const b1 = act.querySelector('.svg2-bar1');
+    const b2 = act.querySelector('.svg2-bar2');
+    const b3 = act.querySelector('.svg2-bar3');
+    const bd = act.querySelector('.svg2-badge');
+    const ck = act.querySelector('.svg2-check');
+    if (b1) b1.style.transform        = `scaleX(${eo(Math.min(1, lp * 1.4)) * 0.86})`;
+    if (b2) b2.style.transform        = `scaleX(${eo(Math.min(1, Math.max(0, (lp - 0.1) * 1.4))) * 0.53})`;
+    if (b3) b3.style.transform        = `scaleX(${eo(Math.min(1, Math.max(0, (lp - 0.2) * 1.4))) * 0.32})`;
+    if (bd) bd.style.strokeDashoffset  = String(188 * (1 - eo(Math.max(0, (lp - 0.6) / 0.4))));
+    if (ck) ck.style.opacity           = String(Math.max(0, Math.min(1, (lp - 0.9) / 0.1)));
+  } else {
+    const cv = act.querySelector('.svg3-curve');
+    const ar = act.querySelector('.svg3-area');
+    const d1 = act.querySelector('.svg3-dot1');
+    const d2 = act.querySelector('.svg3-dot2');
+    const lb = act.querySelector('.svg3-label');
+    if (cv) cv.style.strokeDashoffset = String(1100 * (1 - eo(lp)));
+    if (ar) ar.style.opacity           = String(eo(Math.max(0, (lp - 0.35) / 0.65)));
+    if (d1) d1.style.opacity           = String(Math.min(1, lp / 0.15));
+    if (d2) d2.style.opacity           = String(Math.max(0, Math.min(1, (lp - 0.8) / 0.2)));
+    if (lb) lb.style.opacity           = String(Math.max(0, Math.min(1, (lp - 0.85) / 0.15)));
+  }
+}
 
 function onScroll() {
   const s = window.scrollY;
@@ -1708,6 +1908,30 @@ function onScroll() {
     if (r.bottom < 0 || r.top > window.innerHeight) return;
     img.style.transform = `translateY(${(r.top / window.innerHeight) * 18}px) scale(1.08)`;
   });
+
+  /* Why-now sticky acts + scroll-scrubbed SVGs */
+  if (_whyNow && _whyActs.length) {
+    if (!_whyEntered) {
+      const rt = _whyNow.getBoundingClientRect();
+      if (rt.top < window.innerHeight) { _whyNow.classList.add('entered'); _whyEntered = true; }
+    }
+    const r2 = _whyNow.getBoundingClientRect();
+    const scrollable = _whyNow.offsetHeight - window.innerHeight;
+    const rawWp = Math.max(0, Math.min(1, -r2.top / scrollable));
+    const headerH = _whyHeader ? _whyHeader.offsetHeight : 0;
+    const stickyStart = scrollable > 0 ? headerH / scrollable : 0;
+    const wp = Math.max(0, Math.min(1, (rawWp - stickyStart) / Math.max(0.01, 1 - stickyStart)));
+    const idx = wp >= 0.99 ? 2 : Math.floor(wp * 3);
+    if (idx !== _whyActIdx) {
+      _whyActIdx = idx;
+      _whyActs.forEach((act, i) => {
+        act.classList.toggle('a-in', i === idx);
+        act.classList.toggle('a-out', i < idx);
+      });
+      _whyDots.forEach((dot, i) => dot.classList.toggle('d-on', i === idx));
+    }
+    _whyActs.forEach((act, i) => scrubActSvg(act, Math.max(0, Math.min(1, (wp - i / 3) * 3))));
+  }
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
@@ -2033,6 +2257,75 @@ document.querySelectorAll('.hero,.mission,.sec,.who-section,.about-new,.sec-dk,.
   resize();
   new ResizeObserver(resize).observe(section);
   for(let i=0;i<8;i++) leaves.push(makeLeaf(true));
+  new IntersectionObserver(ee=>ee.forEach(e=>e.isIntersecting?start():stop()),{threshold:0}).observe(section);
+})();
+
+/* 6b. FALLING LEAVES — why-now section */
+(function(){
+  const section = document.getElementById('why-now');
+  const sticky  = section && section.querySelector('.why-sticky');
+  if(!sticky) return;
+
+  const cvs = document.createElement('canvas');
+  cvs.setAttribute('aria-hidden','true');
+  cvs.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1';
+  sticky.insertBefore(cvs, sticky.firstChild);
+
+  const ctx = cvs.getContext('2d');
+  let W=0, H=0, leaves=[], raf=null, running=false, last=0;
+
+  function resize(){ W=cvs.width=sticky.offsetWidth; H=cvs.height=sticky.offsetHeight; }
+
+  function makeLeaf(randomY){
+    return {
+      x: Math.random()*W,
+      y: randomY ? Math.random()*H : -30,
+      sz: 14+Math.random()*12,
+      spd: 60+Math.random()*40,
+      sAmp: 28+Math.random()*36,
+      sFreq: 0.35+Math.random()*0.45,
+      sPh: Math.random()*Math.PI*2,
+      rot: Math.random()*Math.PI*2,
+      rSpd: (Math.random()-.5)*.9
+    };
+  }
+
+  function drawLeaf(sz){
+    const w=sz*.52, h=sz;
+    ctx.beginPath();
+    ctx.moveTo(0,-h/2);
+    ctx.bezierCurveTo(w,-h/2,w,h/4,0,h/2);
+    ctx.bezierCurveTo(-w,h/4,-w,-h/2,0,-h/2);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function tick(now){
+    if(!running){ raf=null; return; }
+    const dt=Math.min((now-last)/1000,.08);
+    last=now;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='rgba(45,107,66,0.13)';
+    leaves.forEach((l,i)=>{
+      l.y+=l.spd*dt;
+      l.x+=Math.sin(l.sPh+now/1000*l.sFreq*Math.PI*2)*l.sAmp*dt;
+      l.rot+=l.rSpd*dt;
+      if(l.y-l.sz*.5>H){ leaves[i]=makeLeaf(false); return; }
+      ctx.save();
+      ctx.translate(l.x,l.y);
+      ctx.rotate(l.rot);
+      drawLeaf(l.sz);
+      ctx.restore();
+    });
+    raf=requestAnimationFrame(tick);
+  }
+
+  function start(){ if(running)return; running=true; last=performance.now(); raf=requestAnimationFrame(tick); }
+  function stop(){ running=false; if(raf){ cancelAnimationFrame(raf); raf=null; } }
+
+  resize();
+  new ResizeObserver(resize).observe(sticky);
+  for(let i=0;i<5;i++) leaves.push(makeLeaf(true));
   new IntersectionObserver(ee=>ee.forEach(e=>e.isIntersecting?start():stop()),{threshold:0}).observe(section);
 })();
 
