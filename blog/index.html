@@ -383,6 +383,7 @@
       .article-card.featured { flex-direction: column; padding: 36px 28px; }
     }
   </style>
+  <style>@media(pointer:fine){*{cursor:none!important}#cur{position:fixed;width:12px;height:12px;background:#2D6B42;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background .3s;will-change:left,top}body.hov #cur{width:15px;height:15px;background:#3D8A57}}@media(pointer:coarse){#cur{display:none}}</style>
 </head>
 <body>
 
@@ -823,6 +824,8 @@ document.querySelectorAll('.nav-cta').forEach(function(el) {
     topoRingBurst(el, e.clientX - r.left, e.clientY - r.top);
   });
 });
+(function(){var dot=document.getElementById('cur');if(!dot)return;document.addEventListener('mousemove',function(e){dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'},{passive:true});document.querySelectorAll('a,button,[role="button"]').forEach(function(el){el.addEventListener('mouseenter',function(){document.body.classList.add('hov')});el.addEventListener('mouseleave',function(){document.body.classList.remove('hov')});});})();
 </script>
+<div id="cur"></div>
 </body>
 </html>

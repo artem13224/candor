@@ -177,7 +177,7 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
   *{cursor:none!important}
   #cur{position:fixed;width:12px;height:12px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s var(--ease),height .3s var(--ease),background .3s;will-change:left,top}
   #cur2{display:none}
-  body.hov #cur{width:17px;height:17px;background:var(--green2)}
+  body.hov #cur{width:15px;height:15px;background:var(--green2)}
 }
 @media(pointer:coarse){#cur,#cur2{display:none}body,a,.btn,.nav-cta,.svc-head,.fq{cursor:auto!important}.btn,.nav-cta,.svc-head,.fq,#mob-dial,.mob-item,.nav-link{cursor:pointer!important}}
 
@@ -287,7 +287,8 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
   .why-h{font-size:clamp(18px,5vw,30px)}
   .why-b{font-size:14px}
   .why-tx{padding:clamp(12px,calc(18vh - 22px),140px) var(--px) clamp(24px,3vh,40px)}
-  .why-vis{padding:0 var(--px) 16px}
+  .why-vis{padding:0 var(--px) 16px;flex:0 0 auto}
+  .why-vis svg{height:auto}
 }
 
 /* SERVICES ACCORDION */
@@ -1848,6 +1849,17 @@ function scrubActSvg(act, lp) {
   const eo  = t => 1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 3);
   const idx = +act.dataset.act;
   if (idx === 0) {
+    const today = act.querySelector('.s0-today');
+    if (today) {
+      const newb  = act.querySelector('.s0-new');
+      const line  = act.querySelector('.s0-line');
+      const label = act.querySelector('.s0-label');
+      today.style.transform = `scaleY(${eo(Math.min(1, lp * 1.6))})`;
+      if (newb)  newb.style.transform = `scaleY(${eo(Math.min(1, Math.max(0, (lp - 0.15) * 1.5)))})`;
+      if (line)  line.style.opacity   = String(Math.max(0, Math.min(1, (lp - 0.65) / 0.2)));
+      if (label) label.style.opacity  = String(Math.max(0, Math.min(1, (lp - 0.75) / 0.2)));
+      return;
+    }
     const fill = act.querySelector('.svg1-fill');
     const glow = act.querySelector('.svg1-glow');
     const nb   = act.querySelector('.svg1-newbar');
@@ -1855,6 +1867,25 @@ function scrubActSvg(act, lp) {
     if (glow) glow.style.transform = `scaleX(${eo(lp) * 0.65})`;
     if (nb)   nb.style.opacity     = String(eo(Math.max(0, (lp - 0.65) / 0.35)));
   } else if (idx === 1) {
+    const p1 = act.querySelector('.s1-p1');
+    if (p1) {
+      const p2    = act.querySelector('.s1-p2');
+      const p3    = act.querySelector('.s1-p3');
+      const n1    = act.querySelector('.s1-n1');
+      const n2    = act.querySelector('.s1-n2');
+      const n3    = act.querySelector('.s1-n3');
+      const badge = act.querySelector('.s1-badge');
+      const check = act.querySelector('.s1-check');
+      if (p3) p3.style.transform = `scaleY(${eo(Math.min(1, lp * 1.8))})`;
+      if (p2) p2.style.transform = `scaleY(${eo(Math.min(1, Math.max(0, lp * 1.6)))})`;
+      p1.style.transform         = `scaleY(${eo(Math.min(1, Math.max(0, (lp - 0.1) * 1.4)))})`;
+      if (n3) n3.style.opacity   = String(Math.max(0, Math.min(1, (lp - 0.3) / 0.15)));
+      if (n2) n2.style.opacity   = String(Math.max(0, Math.min(1, (lp - 0.35) / 0.15)));
+      if (n1) n1.style.opacity   = String(Math.max(0, Math.min(1, (lp - 0.45) / 0.15)));
+      if (badge) badge.style.strokeDashoffset = String(188 * (1 - eo(Math.max(0, (lp - 0.65) / 0.35))));
+      if (check) check.style.opacity = String(Math.max(0, Math.min(1, (lp - 0.93) / 0.07)));
+      return;
+    }
     const b1 = act.querySelector('.svg2-bar1');
     const b2 = act.querySelector('.svg2-bar2');
     const b3 = act.querySelector('.svg2-bar3');
@@ -1866,16 +1897,29 @@ function scrubActSvg(act, lp) {
     if (bd) bd.style.strokeDashoffset  = String(188 * (1 - eo(Math.max(0, (lp - 0.6) / 0.4))));
     if (ck) ck.style.opacity           = String(Math.max(0, Math.min(1, (lp - 0.9) / 0.1)));
   } else {
-    const cv = act.querySelector('.svg3-curve');
-    const ar = act.querySelector('.svg3-area');
-    const d1 = act.querySelector('.svg3-dot1');
-    const d2 = act.querySelector('.svg3-dot2');
-    const lb = act.querySelector('.svg3-label');
-    if (cv) cv.style.strokeDashoffset = String(1100 * (1 - eo(lp)));
-    if (ar) ar.style.opacity           = String(eo(Math.max(0, (lp - 0.35) / 0.65)));
-    if (d1) d1.style.opacity           = String(Math.min(1, lp / 0.15));
-    if (d2) d2.style.opacity           = String(Math.max(0, Math.min(1, (lp - 0.8) / 0.2)));
-    if (lb) lb.style.opacity           = String(Math.max(0, Math.min(1, (lp - 0.85) / 0.15)));
+    const cv = act.querySelector('.s2-curve');
+    if (cv) {
+      const ar = act.querySelector('.s2-area');
+      const d1 = act.querySelector('.s2-d1');
+      const d2 = act.querySelector('.s2-d2');
+      const lb = act.querySelector('.s2-label');
+      cv.style.strokeDashoffset = String(780 * (1 - eo(lp)));
+      if (ar) ar.style.opacity  = String(eo(Math.max(0, (lp - 0.35) / 0.65)));
+      if (d1) d1.style.opacity  = String(Math.min(1, lp / 0.15));
+      if (d2) d2.style.opacity  = String(Math.max(0, Math.min(1, (lp - 0.8) / 0.2)));
+      if (lb) lb.style.opacity  = String(Math.max(0, Math.min(1, (lp - 0.85) / 0.15)));
+      return;
+    }
+    const cv2 = act.querySelector('.svg3-curve');
+    const ar2 = act.querySelector('.svg3-area');
+    const d1b = act.querySelector('.svg3-dot1');
+    const d2b = act.querySelector('.svg3-dot2');
+    const lbb = act.querySelector('.svg3-label');
+    if (cv2) cv2.style.strokeDashoffset = String(1100 * (1 - eo(lp)));
+    if (ar2) ar2.style.opacity           = String(eo(Math.max(0, (lp - 0.35) / 0.65)));
+    if (d1b) d1b.style.opacity           = String(Math.min(1, lp / 0.15));
+    if (d2b) d2b.style.opacity           = String(Math.max(0, Math.min(1, (lp - 0.8) / 0.2)));
+    if (lbb) lbb.style.opacity           = String(Math.max(0, Math.min(1, (lp - 0.85) / 0.15)));
   }
 }
 
@@ -1935,6 +1979,59 @@ function onScroll() {
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
+
+/* ── Mobile SVG swap — portrait redesign for acts 0, 1, 2 ── */
+(function(){
+  if (window.innerWidth > 860) return;
+  var msvg = [
+    '<svg viewBox="0 0 600 480" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
+    '<line x1="60" y1="400" x2="540" y2="400" stroke="rgba(245,243,238,.15)" stroke-width="1.5"/>' +
+    '<rect x="155" y="40" width="110" height="360" rx="6" fill="rgba(245,243,238,.04)"/>' +
+    '<rect x="335" y="40" width="110" height="360" rx="6" fill="rgba(245,243,238,.04)"/>' +
+    '<rect class="s0-today" x="155" y="256" width="110" height="144" rx="6" fill="rgba(90,166,114,.75)" style="transform-box:fill-box;transform-origin:center bottom;transform:scaleY(0)"/>' +
+    '<rect class="s0-new" x="335" y="184" width="110" height="216" rx="6" fill="rgba(90,166,114,.45)" style="transform-box:fill-box;transform-origin:center bottom;transform:scaleY(0)"/>' +
+    '<line class="s0-line" x1="140" y1="256" x2="460" y2="256" stroke="rgba(245,243,238,.3)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0"/>' +
+    '<g class="s0-label" opacity="0"><text x="470" y="260" font-family="Space Mono,monospace" font-size="11" fill="rgba(245,243,238,.45)" letter-spacing=".06em">← 80 PTS</text></g>' +
+    '<text x="210" y="425" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="rgba(245,243,238,.5)" letter-spacing=".08em">TODAY</text>' +
+    '<text x="390" y="425" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="rgba(90,166,114,.8)" letter-spacing=".08em">2026 ↑</text>' +
+    '<text x="300" y="470" text-anchor="middle" font-family="Urbanist,sans-serif" font-size="160" font-weight="800" fill="rgba(245,243,238,.018)" letter-spacing="-.04em">/200</text>' +
+    '</svg>',
+    '<svg viewBox="0 0 600 480" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
+    '<line x1="40" y1="390" x2="560" y2="390" stroke="rgba(245,243,238,.2)" stroke-width="1.5"/>' +
+    '<rect class="s1-p2" x="80" y="200" width="140" height="190" rx="6" fill="rgba(245,243,238,.12)" style="transform-box:fill-box;transform-origin:center bottom;transform:scaleY(0)"/>' +
+    '<text class="s1-n2" x="150" y="310" text-anchor="middle" font-family="Urbanist,sans-serif" font-size="52" font-weight="800" fill="rgba(245,243,238,.22)" opacity="0">2</text>' +
+    '<rect class="s1-p1" x="230" y="120" width="140" height="270" rx="6" fill="rgba(90,166,114,.75)" style="transform-box:fill-box;transform-origin:center bottom;transform:scaleY(0)"/>' +
+    '<text class="s1-n1" x="300" y="278" text-anchor="middle" font-family="Urbanist,sans-serif" font-size="52" font-weight="800" fill="rgba(245,243,238,.25)" opacity="0">1</text>' +
+    '<rect class="s1-p3" x="380" y="260" width="140" height="130" rx="6" fill="rgba(245,243,238,.08)" style="transform-box:fill-box;transform-origin:center bottom;transform:scaleY(0)"/>' +
+    '<text class="s1-n3" x="450" y="338" text-anchor="middle" font-family="Urbanist,sans-serif" font-size="52" font-weight="800" fill="rgba(245,243,238,.16)" opacity="0">3</text>' +
+    '<circle class="s1-badge" cx="300" cy="96" r="30" stroke="#5AA672" stroke-width="3" fill="rgba(90,166,114,.15)" stroke-dasharray="188" stroke-dashoffset="188"/>' +
+    '<text class="s1-check" x="300" y="106" text-anchor="middle" font-family="Urbanist,sans-serif" font-size="22" font-weight="700" fill="#5AA672" opacity="0">✓</text>' +
+    '<text x="150" y="414" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(245,243,238,.3)" letter-spacing=".1em">PEER</text>' +
+    '<text x="300" y="414" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="rgba(90,166,114,.8)" letter-spacing=".12em">YOU</text>' +
+    '<text x="450" y="414" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(245,243,238,.3)" letter-spacing=".1em">PEER</text>' +
+    '</svg>',
+    '<svg viewBox="0 0 600 480" fill="none" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
+    '<line x1="70" y1="30" x2="70" y2="400" stroke="rgba(245,243,238,.12)" stroke-width="1"/>' +
+    '<line x1="70" y1="400" x2="580" y2="400" stroke="rgba(245,243,238,.15)" stroke-width="1"/>' +
+    '<line x1="70" y1="280" x2="580" y2="280" stroke="rgba(245,243,238,.05)" stroke-width="1"/>' +
+    '<line x1="70" y1="160" x2="580" y2="160" stroke="rgba(245,243,238,.04)" stroke-width="1"/>' +
+    '<text x="76" y="22" font-family="Space Mono,monospace" font-size="10" fill="rgba(245,243,238,.3)" letter-spacing=".06em">AUDIT COST ↑</text>' +
+    '<path class="s2-area" d="M 70,400 C 200,398 360,340 480,220 C 540,150 565,90 575,50 L 575,400 Z" fill="rgba(90,166,114,.09)" opacity="0"/>' +
+    '<path class="s2-curve" d="M 70,400 C 200,398 360,340 480,220 C 540,150 565,90 575,50" stroke="#5AA672" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="780" stroke-dashoffset="780"/>' +
+    '<circle class="s2-d1" cx="70" cy="400" r="7" fill="#5AA672" opacity="0"/>' +
+    '<circle class="s2-d2" cx="575" cy="50" r="7" fill="#5AA672" opacity="0"/>' +
+    '<text x="70" y="425" text-anchor="middle" font-family="Space Mono,monospace" font-size="12" fill="rgba(245,243,238,.55)" letter-spacing=".04em">12</text>' +
+    '<text x="70" y="442" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(245,243,238,.3)">people</text>' +
+    '<text x="575" y="425" text-anchor="middle" font-family="Space Mono,monospace" font-size="12" fill="rgba(245,243,238,.55)" letter-spacing=".04em">40+</text>' +
+    '<text x="575" y="442" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(245,243,238,.3)">people</text>' +
+    '<g class="s2-label" opacity="0"><text x="420" y="100" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(90,166,114,.65)" letter-spacing=".05em">Cost grows exponentially →</text></g>' +
+    '</svg>'
+  ];
+  msvg.forEach(function(html, i) {
+    var act = document.querySelector('.why-act[data-act="' + i + '"] .why-vis');
+    if (act) act.innerHTML = html;
+  });
+}());
 
 /* ── Intersection reveals ── */
 const io = new IntersectionObserver(entries => {
