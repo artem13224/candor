@@ -770,7 +770,7 @@ document.querySelectorAll('.nav-cta').forEach(function(el) {
     topoRingBurst(el, e.clientX - r.left, e.clientY - r.top);
   });
 });
-(function(){var dot=document.getElementById('cur');if(!dot)return;document.addEventListener('mousemove',function(e){dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'},{passive:true});document.querySelectorAll('a,button,[role="button"]').forEach(function(el){el.addEventListener('mouseenter',function(){document.body.classList.add('hov')});el.addEventListener('mouseleave',function(){document.body.classList.remove('hov')});});})();
+document.addEventListener('DOMContentLoaded',function(){var dot=document.getElementById('cur');if(!dot)return;document.addEventListener('mousemove',function(e){dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'},{passive:true});document.querySelectorAll('a,button,[role="button"]').forEach(function(el){el.addEventListener('mouseenter',function(){document.body.classList.add('hov')});el.addEventListener('mouseleave',function(){document.body.classList.remove('hov')});});});
 </script>
 <div id="cur"></div>
 </body>
