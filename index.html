@@ -1,6 +1,25 @@
 ﻿<!DOCTYPE html>
 <html lang="en" style="background:#0D1610">
 <head>
+<!-- candor-consent-default:start -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){ dataLayer.push(arguments); }
+gtag('consent', 'default', {
+  ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+  analytics_storage: 'denied', functionality_storage: 'granted', security_storage: 'granted'
+});
+try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent', 'update', { analytics_storage: 'granted' }); } } catch (e) {}
+</script>
+<!-- candor-consent-default:end -->
+<!-- candor-a11y:start -->
+<style>
+  :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid #3D8A57;outline-offset:3px}
+  .skip-link{position:absolute;left:16px;top:-80px;z-index:1000;padding:10px 16px;background:#0D1610;color:#F5F3EE;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;text-decoration:none;transition:top .2s}
+  .skip-link:focus{top:12px;outline-color:#F5F3EE}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+<!-- candor-a11y:end -->
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -117,7 +136,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "What if my business doesn't qualify?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The audit will tell you. About half the businesses I assess are closer to certification than they expected. The other half need 6–12 months of foundational work first. Either way you'll know exactly where you stand. If you're not ready, I'll say so directly."
+        "text": "The audit will tell you. Most small businesses land in one of two camps: closer to certification than they expected, or in need of 6–12 months of foundational work first. Either way you'll know exactly where you stand. If you're not ready, I'll say so directly."
       }
     },
     {
@@ -500,7 +519,7 @@ h2.about-name::after{content:'';display:block;height:2px;background:var(--green2
 .st-n{font-family:var(--u);font-weight:800;font-size:clamp(48px,6.5vw,84px);line-height:.9;letter-spacing:-.03em;color:var(--white);margin-bottom:10px}
 .st-n sub{font-size:.5em;vertical-align:super;color:var(--green2);font-weight:700}
 .st-l{font-family:var(--o);font-size:14px;line-height:1.55;color:rgba(245,243,238,.55);font-weight:300;max-width:160px}
-.st-src{font-family:var(--u);font-size:10px;font-weight:500;letter-spacing:.1em;color:rgba(245,243,238,.28);margin-top:6px;display:block}
+.st-src{font-family:var(--u);font-size:10px;font-weight:500;letter-spacing:.1em;color:rgba(245,243,238,.55);margin-top:6px;display:block}
 
 /* FAQ */
 .faq{margin-top:44px;max-width:800px;margin-left:auto;margin-right:auto}
@@ -537,15 +556,15 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .foot-row+.foot-row{margin-top:18px;padding-top:18px;border-top:1px solid rgba(245,243,238,.06)}
 .foot-l{display:flex;align-items:center;gap:8px}
-.foot-name{font-family:var(--u);font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,243,238,.4)}
+.foot-name{font-family:var(--u);font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,243,238,.7)}
 .foot-nav{display:flex;gap:22px;flex-wrap:wrap;align-items:center}
-.foot-nav a{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.3);text-decoration:none}
+.foot-nav a{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.6);text-decoration:none}
 .foot-nav a:hover{color:rgba(245,243,238,.7)}
 @media(max-width:768px){.nav-hide-mobile{display:none}}
 .foot-links{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
-.foot-links a{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,243,238,.35);text-decoration:none}
+.foot-links a{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,243,238,.65);text-decoration:none}
 .foot-links a:hover{color:rgba(245,243,238,.7);text-decoration:underline}
-.foot-copy{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.2)}.foot-disclaimer{font-family:var(--u);font-size:10px;font-weight:400;color:rgba(245,243,238,.18);line-height:1.55}
+.foot-copy{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.5)}.foot-disclaimer{font-family:var(--u);font-size:10px;font-weight:400;color:rgba(245,243,238,.45);line-height:1.55}
 
 
 /* SCROLL ANIMATIONS */
@@ -923,6 +942,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKSHZN82"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -1023,7 +1043,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-<main>
+<main id="main-content" tabindex="-1">
 
 <!-- HERO -->
 <section class="hero" id="top">
@@ -1217,7 +1237,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- IMAGE BREAK 1 -->
 <div class="brk fu">
-  <img src="images/heroes/break-1.jpg" sizes="100vw" alt="Mountain mist over British Columbia" loading="lazy"/>
+  <img src="images/heroes/break-1.jpg" width="1920" height="1080" sizes="100vw" alt="Mountain mist over British Columbia" loading="lazy" decoding="async"/>
 </div>
 
 <!-- WHO I WORK WITH -->
@@ -1305,6 +1325,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div></div></div>
       </div>
     </div>
+    <p class="body-p svc-note" style="max-width:640px;margin-top:28px;font-size:13px;line-height:1.65;opacity:.9">All prices are in Canadian dollars and exclude applicable taxes (GST/PST). The "+" on Tier 03 covers scope that is quoted in writing before work starts — multiple entities, more than one certification, or a second submission round. B Lab, Climate Neutral, and 1% for the Planet charge their own fees separately; see the FAQ for current figures. Cancellation and refund terms are in our <a href="/terms/" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Terms</a>.</p>
   </div>
 </section>
 
@@ -1376,7 +1397,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- IMAGE BREAK 2 -->
 <div class="brk fu">
-  <img src="images/heroes/break-2.jpg" sizes="100vw" alt="Forest canopy in British Columbia" loading="lazy"/>
+  <img src="images/heroes/break-2.jpg" width="1920" height="1080" sizes="100vw" alt="Forest canopy in British Columbia" loading="lazy" decoding="async"/>
   <div class="brk-over"><div class="brk-inner"><div class="brk-label">Candor · Note 02</div><div class="brk-q">Enterprise consultancies aren't built to serve <em>a 12-person business.</em> That's exactly where Candor operates.</div></div></div>
 </div>
 
@@ -1386,7 +1407,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section id="about" class="about-new fu">
   <div class="about-inner">
     <div class="about-portrait-wrap">
-      <img class="about-portrait" src="images/about-portrait.jpg" sizes="(max-width:639px) 260px, 460px" alt="Artem Furman, sustainability certification consultant, Vancouver BC" loading="lazy"/>
+      <img class="about-portrait" src="images/about-portrait.jpg" width="1200" height="1200" sizes="(max-width:639px) 260px, 460px" alt="Artem Furman, sustainability certification consultant, Vancouver BC" loading="lazy" decoding="async"/>
     </div>
     <div class="about-content">
       <div class="ey ey-lt">Who built this</div>
@@ -1427,7 +1448,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="dh" style="max-width:600px;margin-bottom:0">The questions you <em>may have.</em></h2>
     </div>
     <div class="faq">
-      <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What if my business doesn't qualify?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans"><a href="#services">The audit</a> will tell you. About half the businesses I assess are closer to certification than they expected. The other half need 6–12 months of foundational work first. Either way you'll know exactly where you stand. If you're not ready, I'll say so directly.</p></div></div></div>
+      <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What if my business doesn't qualify?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans"><a href="#services">The audit</a> will tell you. Most small businesses land in one of two camps: closer to certification than they expected, or in need of 6–12 months of foundational work first. Either way you'll know exactly where you stand. If you're not ready, I'll say so directly.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What does B Lab charge on top of your fees?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">For Canadian businesses under $5M revenue, B Corp's annual fee is roughly $2,100 USD. Climate Neutral scales with your footprint, typically $1,000–$5,000 annually. 1% for the Planet has no membership fee, just the commitment to donate 1% of revenue. I walk through all costs in the audit so nothing surprises you.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What's the difference between B Corp and Benefit Corporation?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">B Corp is a third-party certification from B Lab. Benefit Corporation is a legal entity structure in some jurisdictions that expands what directors can consider beyond shareholder profit. They're different things. You can have one without the other. Most businesses I work with want the B Corp certification because it's the certification consumers actually recognise.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">Is this just greenwashing with a nicer logo?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">Fair challenge. B Corp's credibility has taken hits as larger brands have joined. The honest answer: it's a real verification process, but only as meaningful as your actual practices. I won't help a business game the assessment. I help businesses that are genuinely doing the work get credit for it.</p></div></div></div>
@@ -1438,7 +1459,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- CTA -->
 <section class="cta fu" id="contact">
-  <div class="cta-bg"><img src="images/heroes/cta-bg.jpg" sizes="100vw" alt="Forest landscape, Vancouver BC" loading="lazy"/></div>
+  <div class="cta-bg"><img src="images/heroes/cta-bg.jpg" width="1920" height="1080" sizes="100vw" alt="Forest landscape, Vancouver BC" loading="lazy" decoding="async"/></div>
   <div class="cta-in">
     <div class="ey ey-lt">Start here</div>
     <h2 class="cta-h">Start with the <em>free score.</em></h2>
@@ -1471,8 +1492,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a>
       <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms/">Terms</a>
+      <a href="/privacy-policy/#cookies" data-consent-open>Cookie settings</a>
     </div>
-    <div class="foot-copy">© 2026 Candor</div>
+    <div class="foot-copy">© 2026 Candor · Vancouver, BC, Canada</div>
   </div>
   <div class="foot-row">
     <p class="foot-disclaimer">Candor – B Corp &amp; Sustainability Certification Consultant provides independent advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
@@ -1489,35 +1512,35 @@ const CARDS = [
     cat:'Cannabis', side:'right', rot:-1.5,
     name:'Cannabis Brands',
     text:'Craft producers and retailers trying to differentiate in a stigmatised market.',
-    detail:'Your pricing, supply chain, and worker practices are already held to a higher standard by the market. Certification makes that visible — and takes the "but they\'re just a weed company" objection off the table entirely. Cannabis B Corps get significantly higher consumer trust scores.',
+    detail:'Your pricing, supply chain, and worker practices are already held to a higher standard by the market. Certification makes that visible — and gives buyers, landlords, and retailers a third-party signal they can check instead of taking your word for it.',
     img:'images/industry/who-cannabis.jpg'
   },
   {
     cat:'Outdoor & Apparel', side:'left', rot:1.5,
     name:'Outdoor & Apparel',
     text:'Small BC gear brands chasing MEC, REI, or Patagonia-adjacent retail.',
-    detail:'MEC and REI are actively requiring sustainability disclosures from new supplier conversations. Patagonia-adjacent retailers won\'t even open the conversation without it. The Outdoor Retailer network increasingly gates shelf access behind certification. Your product could be perfect and still lose the listing.',
+    detail:'Large outdoor retailers increasingly ask new suppliers for sustainability documentation during onboarding, and values-led buyers shortlist on it. Your product could be perfect and still lose the listing to a brand that can show its work.',
     img:'images/industry/who-outdoor.jpg'
   },
   {
     cat:'Food & Beverage', side:'right', rot:-2,
     name:'Food & Beverage',
     text:'Local food brands making sustainability claims on packaging.',
-    detail:'Canada\'s amended Competition Act (Bill C-59, 2024) now penalises vague environmental claims without substantiation. "Sustainably sourced," "eco-friendly," "carbon-conscious" — all of these are now legally exposed without a third party to back them. Certification converts that liability into an asset.',
+    detail:'Canada\'s amended Competition Act (Bill C-59, 2024) now penalises vague environmental claims without substantiation. "Sustainably sourced," "eco-friendly," "carbon-conscious" — all of these now need adequate and proper substantiation. Certification is not a substitute for that evidence, but the process forces you to document the practices behind the claims — which is most of the substantiation work.',
     img:'images/industry/who-food.jpg'
   },
   {
     cat:'Clean Beauty', side:'left', rot:1,
     name:'Clean Beauty',
     text:'Indie brands chasing Sephora Clean+ or Credo\'s mandate.',
-    detail:'Sephora\'s "Clean + Planet Positive" badge requires disclosure across packaging, ingredient sourcing, and environmental impact. Credo\'s supplier standards are even stricter. Both increasingly want a certified third party, not a brand self-assessment. Supply chain documentation is the part most brands stumble on — and it\'s most of the work.',
+    detail:'Sephora\'s "Clean + Planet Positive" badge requires disclosure across packaging, ingredient sourcing, and environmental impact. Credo\'s supplier standards are even stricter. Both ask for documentation, and third-party verification makes that conversation much shorter than a brand self-assessment. Supply chain documentation is the part most brands stumble on — and it\'s most of the work.',
     img:'images/industry/who-beauty.jpg'
   },
   {
     cat:'Hospitality', side:'right', rot:-1.5,
     name:'Coffee & Hospitality',
     text:'Boutique roasters and 2–6 location restaurant groups.',
-    detail:'Certification gives you a press hook that generates coverage you can\'t buy. "First certified B Corp café group in East Vancouver" is a story. "We care about sustainability" is noise. The certification also tends to anchor staff retention — people want to work for businesses that have put the work in.',
+    detail:'Certification gives you a press hook that generates coverage you can\'t buy. "First certified B Corp café group in East Vancouver" is a story. "We care about sustainability" is noise. Certified workplaces also tend to be easier to recruit for; candidates read the badge as proof you\'ve put the work in.',
     img:'images/industry/who-coffee.jpg'
   },
   {
@@ -1574,7 +1597,7 @@ const cardEls = CARDS.map((d, i) => {
   el.setAttribute('aria-label', d.name + ' — tap for details');
   el.innerHTML = `
     <div class="swipe-img">
-      <img src="${d.img}" alt="${d.name}" loading="lazy"/>
+      <img src="${d.img}" width="1600" height="900" alt="${d.name}" loading="lazy" decoding="async"/>
       <div class="swipe-cat">${d.cat}</div>
     </div>
     <div class="swipe-body">
@@ -1740,7 +1763,7 @@ function buildRiver() {
     cardEl.style.setProperty('--card-rot-val', card.rot);
     cardEl.innerHTML = `
       <div class="rcd-img">
-        <img src="${card.img}" alt="${card.name}" loading="lazy"/>
+        <img src="${card.img}" width="1600" height="900" alt="${card.name}" loading="lazy" decoding="async"/>
         <div class="rcd-cat">${card.cat}</div>
       </div>
       <div class="rcd-body">
@@ -3080,5 +3103,62 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
 });
 
 </script>
+<!-- candor-consent:start -->
+<div id="cc-banner" class="cc-banner" role="dialog" aria-modal="false" aria-labelledby="cc-title" aria-describedby="cc-desc" hidden>
+  <p id="cc-title" class="cc-title">Cookies &amp; analytics</p>
+  <p id="cc-desc" class="cc-desc">Candor uses Google Analytics to see which pages are useful. Analytics cookies stay off until you accept, and the site works the same either way. <a href="/privacy-policy/#cookies">How we use data</a></p>
+  <div class="cc-actions">
+    <button type="button" class="cc-btn cc-accept" data-cc="granted">Accept analytics</button>
+    <button type="button" class="cc-btn cc-decline" data-cc="denied">Decline</button>
+  </div>
+</div>
+<style>
+  .cc-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:900;max-width:400px;margin-left:0;padding:18px 20px 16px;background:#F5F3EE;color:#0D1610;border:1px solid #C8C3B5;border-radius:4px;box-shadow:0 18px 50px -20px rgba(13,22,16,.45);font-family:'Open Sans',system-ui,sans-serif;font-size:13.5px;line-height:1.55;opacity:0;transform:translateY(12px);transition:opacity .35s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+  .cc-banner.cc-in{opacity:1;transform:none}
+  .cc-banner[hidden]{display:none}
+  .cc-title{margin:0 0 6px;font-family:'Urbanist',system-ui,sans-serif;font-weight:700;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#2D6B42}
+  .cc-desc{margin:0 0 14px;color:#4A5548}
+  .cc-desc a{color:#0D1610;text-decoration:underline;text-underline-offset:2px}
+  .cc-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .cc-btn{font-family:'Urbanist',system-ui,sans-serif;font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;border-radius:2px;border:1px solid #0D1610;cursor:pointer;transition:background .25s,color .25s}
+  .cc-accept{background:#0D1610;color:#F5F3EE}
+  .cc-accept:hover{background:#2D6B42;border-color:#2D6B42}
+  .cc-decline{background:transparent;color:#0D1610}
+  .cc-decline:hover{background:#E4E1D6}
+  .cc-btn:focus-visible,.cc-desc a:focus-visible{outline:2px solid #2D6B42;outline-offset:2px}
+  @media (prefers-reduced-motion: reduce){.cc-banner{transition:none;transform:none}}
+  @media (min-width:640px){.cc-banner{left:24px;bottom:24px;right:auto}}
+</style>
+<script>
+(function () {
+  var KEY = 'candor-consent';
+  var banner = document.getElementById('cc-banner');
+  if (!banner) return;
+  function read()  { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v){ try { localStorage.setItem(KEY, v); } catch (e) {} }
+  function apply(v){
+    if (typeof gtag === 'function') gtag('consent', 'update', { analytics_storage: v });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'candor_consent', consent_state: v });
+  }
+  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
+  function hide(){ banner.classList.remove('cc-in'); setTimeout(function(){ banner.hidden = true; }, 300); }
+  banner.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cc]'); if (!b) return;
+    var v = b.getAttribute('data-cc'); write(v); apply(v); hide();
+  });
+  banner.addEventListener('keydown', function (e) { if (e.key === 'Escape') { write('denied'); apply('denied'); hide(); } });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-consent-open]'); if (!a) return;
+    e.preventDefault(); show();
+  });
+  window.candorConsent = { open: show, state: read };
+  var saved = read();
+  if (saved === 'granted' || saved === 'denied') return;          // head snippet already applied it
+  if (navigator.globalPrivacyControl === true) { write('denied'); return; } // honour GPC silently
+  setTimeout(show, 900);
+})();
+</script>
+<!-- candor-consent:end -->
 </body>
 </html>

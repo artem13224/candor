@@ -10,3 +10,10 @@ Candor is a flat-fee sustainability consulting business based in Vancouver, BC, 
 
 ## Industries Served
 Craft cannabis, outdoor gear and apparel, food and beverage, clean beauty, coffee, hospitality, and fitness studios.
+
+## Pricing notes
+All prices are in Canadian dollars and exclude applicable taxes (GST/PST). Certifying bodies (B Lab, Climate Neutral, 1% for the Planet) charge their own fees separately. Candor does not guarantee certification outcomes; see https://candorcertified.com/terms/ for cancellation and refund terms.
+
+## Legal
+- Privacy Policy: https://candorcertified.com/privacy-policy/
+- Terms of Service: https://candorcertified.com/terms/
