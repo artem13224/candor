@@ -14,6 +14,27 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 <!-- candor-consent-default:end -->
 <!-- candor-a11y:start -->
 <style>
+  /* Footer on phones: a stacked, two-column layout instead of wrapped inline links.
+     'footer .x' outranks each page's own '.x' rules, so this wins without !important. */
+  /* Nav on phones: the wordmark and the call-to-action must never touch. */
+  @media (max-width:720px){
+    #site-nav .nav-inner{grid-template-columns:auto minmax(0,1fr) auto;column-gap:12px}
+    #site-nav .nav-cta{padding:8px 11px;font-size:10px;letter-spacing:.08em;white-space:nowrap}
+    #site-nav .nav-cta .nav-ar{display:none}
+    #site-nav .nav-wordmark{font-size:12px;letter-spacing:.18em}
+  }
+  @media (max-width:360px){#site-nav .nav-wordmark{display:none}}
+  @media (max-width:720px){
+    footer{padding-top:32px!important;padding-bottom:40px!important}
+    body:has(#mob-nav) footer{padding-bottom:124px!important}
+    footer .foot-row{flex-direction:column;align-items:flex-start;gap:16px}
+    footer .foot-row+.foot-row{margin-top:22px;padding-top:22px}
+    footer .foot-nav{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
+    footer .foot-links{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
+    footer .foot-links a:first-child{grid-column:1 / -1}
+    footer .foot-copy{margin-top:2px}
+    footer .foot-disclaimer{max-width:none}
+  }
   :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid #3D8A57;outline-offset:3px}
   .skip-link{position:absolute;left:16px;top:-80px;z-index:1000;padding:10px 16px;background:#0D1610;color:#F5F3EE;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;text-decoration:none;transition:top .2s}
   .skip-link:focus{top:12px;outline-color:#F5F3EE}
@@ -254,7 +275,14 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .trailhead-t span+span{border-left:1px solid rgba(245,243,238,.08);padding-left:18px}
 .trailhead-t span b{font-family:"Space Mono",monospace;font-weight:400;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--green2);white-space:nowrap}
 .trailhead-t span::after{display:none}
-@media(max-width:720px){.trailhead-t span{flex-basis:100%;padding:12px 0}.trailhead-t span+span{border-left:0;padding-left:0;border-top:1px solid rgba(245,243,238,.06)}}
+@media(max-width:720px){
+  .trailhead{padding:0 var(--px)}
+  .trailhead-t{display:block;text-align:center;padding:18px 0 20px;border-top:1px solid rgba(245,243,238,.08);border-bottom:1px solid rgba(245,243,238,.08)}
+  .trailhead-t span{display:block;padding:5px 0;border:0;font-size:13px;line-height:1.5;color:rgba(245,243,238,.68);white-space:normal}
+  .trailhead-t span:first-child{color:rgba(245,243,238,.9)}
+  .trailhead-t span+span{border:0;padding-left:0}
+  .trailhead-t span b{display:none}
+}
 
 /* SECTIONS */
 .sec{padding:90px var(--px);background:var(--bg)}
@@ -322,9 +350,11 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
   .why-dotsbar{padding:16px var(--px) 0}
   .why-h{font-size:clamp(18px,5vw,30px)}
   .why-b{font-size:14px}
-  .why-tx{padding:clamp(12px,calc(18vh - 22px),140px) var(--px) clamp(24px,3vh,40px)}
-  .why-vis{padding:0 var(--px) 16px;flex:0 0 auto}
-  .why-vis svg{height:auto}
+  .why-stage{display:flex;flex-direction:column}
+  .why-act{position:absolute;inset:0;justify-content:center;padding-bottom:88px}
+  .why-tx{flex:0 0 auto;padding:0 var(--px) 22px}
+  .why-vis{flex:0 0 auto;padding:0 var(--px);max-height:46vh;align-items:center;justify-content:center}
+  .why-vis svg{width:100%;height:auto;max-height:46vh}
 }
 
 /* SERVICES ACCORDION */
@@ -1246,7 +1276,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   font-size="11" fill="rgba(245,243,238,.3)">people</text>
             <g class="svg3-label" opacity="0">
               <text x="720" y="40" text-anchor="middle" font-family="Space Mono,monospace"
-                    font-size="10" fill="rgba(90,166,114,.65)" letter-spacing=".05em">Cost grows exponentially →</text>
+                    font-size="10" fill="rgba(90,166,114,.65)" letter-spacing=".05em">Cost rises with headcount →</text>
             </g>
           </svg>
         </div>
@@ -2079,7 +2109,7 @@ window.addEventListener('scroll', onScroll, { passive: true });
     '<text x="70" y="442" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(245,243,238,.3)">people</text>' +
     '<text x="575" y="425" text-anchor="middle" font-family="Space Mono,monospace" font-size="12" fill="rgba(245,243,238,.55)" letter-spacing=".04em">40+</text>' +
     '<text x="575" y="442" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(245,243,238,.3)">people</text>' +
-    '<g class="s2-label" opacity="0"><text x="420" y="100" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(90,166,114,.65)" letter-spacing=".05em">Cost grows exponentially →</text></g>' +
+    '<g class="s2-label" opacity="0"><text x="300" y="150" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="rgba(90,166,114,.65)" letter-spacing=".05em">Cost rises with headcount →</text></g>' +
     '</svg>'
   ];
   msvg.forEach(function(html, i) {

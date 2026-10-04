@@ -46,6 +46,27 @@ const A11Y_START = '<!-- candor-a11y:start -->';
 const A11Y_END   = '<!-- candor-a11y:end -->';
 const A11Y_SNIPPET = `${A11Y_START}
 <style>
+  /* Footer on phones: a stacked, two-column layout instead of wrapped inline links.
+     'footer .x' outranks each page's own '.x' rules, so this wins without !important. */
+  /* Nav on phones: the wordmark and the call-to-action must never touch. */
+  @media (max-width:720px){
+    #site-nav .nav-inner{grid-template-columns:auto minmax(0,1fr) auto;column-gap:12px}
+    #site-nav .nav-cta{padding:8px 11px;font-size:10px;letter-spacing:.08em;white-space:nowrap}
+    #site-nav .nav-cta .nav-ar{display:none}
+    #site-nav .nav-wordmark{font-size:12px;letter-spacing:.18em}
+  }
+  @media (max-width:360px){#site-nav .nav-wordmark{display:none}}
+  @media (max-width:720px){
+    footer{padding-top:32px!important;padding-bottom:40px!important}
+    body:has(#mob-nav) footer{padding-bottom:124px!important}
+    footer .foot-row{flex-direction:column;align-items:flex-start;gap:16px}
+    footer .foot-row+.foot-row{margin-top:22px;padding-top:22px}
+    footer .foot-nav{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
+    footer .foot-links{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
+    footer .foot-links a:first-child{grid-column:1 / -1}
+    footer .foot-copy{margin-top:2px}
+    footer .foot-disclaimer{max-width:none}
+  }
   :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid #3D8A57;outline-offset:3px}
   .skip-link{position:absolute;left:16px;top:-80px;z-index:1000;padding:10px 16px;background:#0D1610;color:#F5F3EE;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;text-decoration:none;transition:top .2s}
   .skip-link:focus{top:12px;outline-color:#F5F3EE}
