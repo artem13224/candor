@@ -7,6 +7,7 @@
  *   2. Cookie-consent banner before </body>
  *   3. Footer legal links: Privacy Policy · Terms · Cookie settings
  *   4. Footer business line: © YEAR Candor · Vancouver, BC, Canada
+ *   6. Paper-grain texture overlay (images/textures/grain.png)
  *   5. Shared accessibility styles (focus-visible, .sr-only) + a skip link
  *      pointing at id="main-content" (added to <main>, the article header, or
  *      the first <section> if the page has none)
@@ -52,6 +53,19 @@ const A11Y_SNIPPET = `${A11Y_START}
 </style>
 ${A11Y_END}`;
 const SKIP_LINK = '<a class="skip-link" href="#main-content">Skip to content</a>';
+
+// Paper grain: a 4 KB tile laid over the page with soft-light blending. Static
+// (no animation) so it costs one composited layer and nothing per frame. Off on
+// phones, where the blend layer is the one thing that could hurt scrolling.
+const GRAIN_START = '<!-- candor-grain:start -->';
+const GRAIN_END   = '<!-- candor-grain:end -->';
+const GRAIN_SNIPPET = `${GRAIN_START}
+<style>
+  .candor-grain{position:fixed;inset:0;z-index:500;pointer-events:none;background:url(/images/textures/grain.png) repeat;background-size:160px 160px;opacity:.07;mix-blend-mode:soft-light}
+  @media (max-width:720px),print{.candor-grain{display:none}}
+</style>
+<div class="candor-grain" aria-hidden="true"></div>
+${GRAIN_END}`;
 
 const BODY_START = '<!-- candor-consent:start -->';
 const BODY_END   = '<!-- candor-consent:end -->';
@@ -173,6 +187,11 @@ function transform(html) {
     // drop an invisible, focusable anchor in front of it instead.
     if (!placed) out = out.replace(/<section\b/i, '<div id="main-content" tabindex="-1"></div>\n<section');
   }
+
+  // 1d. Paper grain overlay — right before the consent banner
+  const replacedGrain = replaceBetween(out, GRAIN_START, GRAIN_END, GRAIN_SNIPPET);
+  if (replacedGrain) out = replacedGrain;
+  else out = out.replace(/<\/body>/i, `${GRAIN_SNIPPET}\n</body>`);
 
   // 2. Banner — before </body>
   const replacedBody = replaceBetween(out, BODY_START, BODY_END, BODY_SNIPPET);

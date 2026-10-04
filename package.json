@@ -6,6 +6,12 @@
     "validate": "node scripts/validate-post.js",
     "rebuild": "node scripts/rebuild.js",
     "publish": "node scripts/publish.js",
-    "watch": "node scripts/blog-watcher.js"
+    "watch": "node scripts/blog-watcher.js",
+    "images": "node scripts/optimize-images.js",
+    "og": "node scripts/make-og.js"
+  },
+  "devDependencies": {
+    "playwright": "1.56",
+    "sharp": "^0.33.5"
   }
 }

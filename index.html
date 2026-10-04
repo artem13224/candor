@@ -225,6 +225,8 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 /* HERO */
 .hero{min-height:100svh;padding-top:var(--nav-h);background:var(--bg);display:flex;flex-direction:column;position:relative;overflow:hidden}
 .hero-body{flex:1;display:grid;grid-template-columns:1fr;gap:0;padding:40px var(--px) 72px;max-width:1400px;width:100%;margin:0 auto;align-items:center;position:relative;z-index:1}
+.hero-art{position:absolute;right:-6vw;top:50%;width:min(54vw,820px);height:auto;transform:translateY(-48%);z-index:0;pointer-events:none;mix-blend-mode:multiply;opacity:0;animation:fdup 1.6s .5s var(--ease) forwards;-webkit-mask-image:radial-gradient(ellipse 62% 66% at 58% 50%,#000 42%,transparent 76%);mask-image:radial-gradient(ellipse 62% 66% at 58% 50%,#000 42%,transparent 76%)}
+@media(max-width:980px){.hero-art{display:none}}
 .hero-l{display:flex;flex-direction:column;gap:0}
 .hero-kicker{font-family:var(--u);font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink4);display:flex;align-items:center;gap:10px;margin-bottom:22px;overflow:hidden}
 .hero-kicker-in{display:inline-block;transform:translateY(120%);animation:slup .7s .1s var(--ease) forwards}
@@ -1054,6 +1056,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- HERO -->
 <section class="hero" id="top">
+  <img class="hero-art" src="/images/heroes/hero-art.webp" alt="" aria-hidden="true" width="1400" height="1400" decoding="async" fetchpriority="low" onerror="this.remove()"/>
   <div class="hero-body">
     <div class="hero-l">
       <div class="hero-kicker"><span class="hero-kicker-in">B Corp <span class="sep">|</span> Climate Neutral <span class="sep">|</span> Vancouver-based · Canada-wide</span></div>
@@ -3178,5 +3181,12 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
 })();
 </script>
 <!-- candor-consent:end -->
+<!-- candor-grain:start -->
+<style>
+  .candor-grain{position:fixed;inset:0;z-index:500;pointer-events:none;background:url(/images/textures/grain.png) repeat;background-size:160px 160px;opacity:.07;mix-blend-mode:soft-light}
+  @media (max-width:720px),print{.candor-grain{display:none}}
+</style>
+<div class="candor-grain" aria-hidden="true"></div>
+<!-- candor-grain:end -->
 </body>
 </html>

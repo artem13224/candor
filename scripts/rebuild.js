@@ -12,6 +12,8 @@
 const lib = require('./lib/blog');
 const dryRun = process.argv.includes('--dry-run');
 
+const heroes = lib.applyHeroImages({ dryRun });
+heroes.forEach(h => console.log(`${dryRun ? '[dry-run] would add' : '✓ added'} hero ${h.url} (${h.width}×${h.height}) to blog/${h.file}`));
 const idx = lib.rebuildIndex({ dryRun });
 const sm  = lib.rebuildSitemap({ dryRun });
 const verb = s => dryRun ? (s ? 'would change' : 'up to date') : (s ? 'rebuilt' : 'unchanged');

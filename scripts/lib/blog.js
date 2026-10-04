@@ -146,6 +146,85 @@ function attr(tag, name) {
   return m ? (m[1] !== undefined ? m[1] : m[2]) : null;
 }
 
+// ── Hero images (blog/images/<slug>.webp|jpg|png) ────────────────────────────
+
+const HERO_EXTS = ['webp', 'jpg', 'jpeg', 'png'];
+
+/** The post's hero file if one exists under blog/images named after the slug. */
+function heroImageFor(slug) {
+  for (const ext of HERO_EXTS) {
+    const file = path.join(BLOG_DIR, 'images', `${slug}.${ext}`);
+    if (fs.existsSync(file)) return { file, url: `/blog/images/${slug}.${ext}` };
+  }
+  return null;
+}
+
+/** Pixel size of a PNG / JPEG / WebP without any dependency. */
+function imageSize(file) {
+  const b = fs.readFileSync(file);
+  if (b[0] === 0x89 && b[1] === 0x50) return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+  if (b[0] === 0xFF && b[1] === 0xD8) {
+    let i = 2;
+    while (i < b.length) {
+      if (b[i] !== 0xFF) { i++; continue; }
+      const m = b[i + 1];
+      if (m >= 0xC0 && m <= 0xCF && m !== 0xC4 && m !== 0xC8 && m !== 0xCC) return { w: b.readUInt16BE(i + 7), h: b.readUInt16BE(i + 5) };
+      i += 2 + b.readUInt16BE(i + 2);
+    }
+  }
+  if (b.toString('ascii', 0, 4) === 'RIFF') {
+    const t = b.toString('ascii', 12, 16);
+    if (t === 'VP8 ') return { w: b.readUInt16LE(26) & 0x3fff, h: b.readUInt16LE(28) & 0x3fff };
+    if (t === 'VP8L') { const x = b.readUInt32LE(21); return { w: (x & 0x3fff) + 1, h: ((x >> 14) & 0x3fff) + 1 }; }
+    if (t === 'VP8X') return { w: 1 + b.readUIntLE(24, 3), h: 1 + b.readUIntLE(27, 3) };
+  }
+  return { w: 1600, h: 900 };
+}
+
+const HERO_CSS = `<style>
+  /* hero figure (added automatically) — mirrors the newer posts' .article-img rules */
+  .article-img { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  .article-img img { width: 100%; height: auto; display: block; border-radius: 6px; margin-top: 32px; }
+  .article-img figcaption { font-family: 'Space Mono', monospace; font-size: 0.625rem; letter-spacing: 0.08em; color: #C8C3B5; margin-top: 10px; text-align: center; }
+</style>`;
+
+/**
+ * If blog/images/<slug>.<ext> exists and the post has no hero figure yet, insert
+ * one right after the article divider and point og:image / twitter:image at it.
+ * Idempotent: a post that already has a <figure class="article-img"> is left alone.
+ */
+function applyHeroImage(filePath, opts = {}) {
+  const slug = path.basename(filePath, '.html');
+  const hero = heroImageFor(slug);
+  if (!hero) return { changed: false, reason: 'no hero file' };
+  let html = fs.readFileSync(filePath, 'utf8');
+  if (/<figure class="article-img">/i.test(stripComments(html))) return { changed: false, reason: 'post already has a hero figure' };
+  const marker = '<hr class="article-divider" />';
+  const at = html.indexOf(marker);
+  if (at === -1) return { changed: false, reason: 'no <hr class="article-divider" /> to anchor on' };
+  const { w, h } = imageSize(hero.file);
+  const title = (extractPost(filePath).title || slug).replace(/"/g, '&quot;');
+  const figure = `\n\n<!-- ARTICLE IMAGE (picked up automatically from ${hero.url}) -->\n<figure class="article-img">\n  <img src="${hero.url}" alt="${title}" width="${w}" height="${h}" />\n  <figcaption>Illustration: Candor</figcaption>\n</figure>`;
+  html = html.slice(0, at + marker.length) + figure + html.slice(at + marker.length);
+  if (!/\.article-img\s*\{/.test(html)) html = html.replace('</head>', `${HERO_CSS}\n</head>`);
+  const abs = `${SITE_ORIGIN}${hero.url}`;
+  html = html.replace(/(<meta\s+property="og:image"\s+content=")[^"]*(")/i, `$1${abs}$2`);
+  html = html.replace(/(<meta\s+name="twitter:image"\s+content=")[^"]*(")/i, `$1${abs}$2`);
+  if (!opts.dryRun) fs.writeFileSync(filePath, html, 'utf8');
+  return { changed: true, url: hero.url, width: w, height: h };
+}
+
+/** Run applyHeroImage over every post. */
+function applyHeroImages(opts = {}) {
+  const out = [];
+  for (const f of postFiles()) {
+    const file = path.isAbsolute(f) ? f : path.join(BLOG_DIR, f);
+    const r = applyHeroImage(file, opts);
+    if (r.changed) out.push({ file: path.basename(file), ...r });
+  }
+  return out;
+}
+
 // ── Extraction ────────────────────────────────────────────────────────────────
 
 function extractPost(filePath) {
@@ -198,6 +277,7 @@ function extractPost(filePath) {
     dateModified,
     dateLabel: toDateLabel(date),
     ogImage,
+    heroUrl: (heroImageFor(slug) || {}).url || null,
     readMinutes,
     canonical: canonicalHref(html),
     h1,
@@ -313,7 +393,9 @@ function listPosts() {
 // ── Index (blog/index.html) ───────────────────────────────────────────────────
 
 function buildFeatured(p) {
-  return `    <a href="${p.href}" class="article-card featured" data-tag="${escapeHtml(p.tag)}" data-date="${p.date || ''}">
+  const imgCls  = p.heroUrl ? ' has-img' : '';
+  const imgStyle = p.heroUrl ? ` style="--card-img:url('${p.heroUrl}')"` : '';
+  return `    <a href="${p.href}" class="article-card featured${imgCls}"${imgStyle} data-tag="${escapeHtml(p.tag)}" data-date="${p.date || ''}">
       <div class="featured-left">
         <span class="card-tag">${escapeHtml(p.tag)}</span>
         <h2 class="card-title">${escapeHtml(p.title)}</h2>
@@ -400,6 +482,7 @@ module.exports = {
   ALLOWED_TAGS, MONTHS_SHORT, MONTHS_LONG,
   extractPost, validatePost, listPosts, postFiles,
   rebuildIndex, rebuildSitemap, renderArticlesSection,
+  heroImageFor, imageSize, applyHeroImage, applyHeroImages,
   slugify, toDateLabel, toLongDateLabel, escapeHtml, metaContent, canonicalHref, jsonLdDate,
   bodyImgTags, attr, absoluteUrl, stripComments,
 };

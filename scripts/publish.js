@@ -130,6 +130,10 @@ if (inBlog) {
 console.log(`→ node scripts/sync-shared.js ${rel(destPath)}`);
 syncShared(destPath);
 
+// ── 2b. Hero image, if blog/images/<slug>.* exists ────────────────────────────
+const hero = lib.applyHeroImage(destPath);
+if (hero.changed) console.log(`✓ Added hero image ${hero.url} (${hero.width}×${hero.height})`);
+
 // ── 3. Validate ───────────────────────────────────────────────────────────────
 const problems = lib.validatePost(destPath);
 if (!report(problems) && !FORCE) {

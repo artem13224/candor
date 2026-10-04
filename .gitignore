@@ -6,3 +6,5 @@ Thumbs.db
 *.log
 dist/
 .netlify/
+images/_inbox/*
+!images/_inbox/.gitkeep

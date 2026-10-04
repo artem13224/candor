@@ -123,3 +123,9 @@ rest are regular cards newest-first. Never hand-edit `<section class="articles">
 Boundaries: do not touch `index.html`, `assessment/`, `privacy-policy/`, `netlify.toml` or
 `scripts/sync-shared.js` as part of a blog task. Never run `git push` (via `publish.js` or
 directly) without the user's go-ahead.
+
+## Hero images and share cards
+
+- A hero illustration is optional. If the user provides one, save it as `images/_inbox/blog-<slug>.png` and run `npm run images`; `npm run rebuild` / `publish` then injects the figure and share tags automatically. Do not hand-write the `<figure>` when this path is available.
+- After publishing, offer `npm run og -- blog/<slug>.html` to render the branded share card (needs `npm install` and `npx playwright install chromium` once).
+- Prompts and style blocks for generating a hero live in `images/README.md`.

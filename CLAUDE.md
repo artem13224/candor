@@ -72,6 +72,8 @@ Static site — all styles are inline `<style>` blocks, all JS is inline `<scrip
 | `robots.txt` | Crawl rules — blocks scrapers, allows Googlebot + AI crawlers |
 | `llms.txt` / `llms-full.txt` | LLM-readable site summaries |
 | `google41743c97abeecfa1.html` | Google Search Console verification file — do not delete |
+| `404.html` | Branded not-found page (Netlify serves it automatically); `noindex` |
+| `images/README.md` | Image slots, sizes, and generation prompts |
 
 ---
 
@@ -364,3 +366,9 @@ Owns the snippets above plus the shared accessibility block (`:focus-visible` ou
 ### Images
 
 All JPEGs are recompressed (quality ~76, max 1920 px wide; industry cards 1600 px; portrait and OG image 1200 px). Keep new images under ~300 KB, give every `<img>` `alt`, `width`, `height`, and `loading="lazy"` unless it is above the fold. Blog photos of third-party companies need a stated source/licence in the figcaption.
+
+---
+
+## Image system
+
+`images/README.md` is the source of truth: every image has a named slot in `scripts/lib/image-slots.js`. Workflow: save a file as `images/_inbox/<slot>.png` → `npm run images` (sharp resizes/compresses into the slot's path; the HTML already references it). Blog heroes: `images/_inbox/blog-<slug>.png` → `blog/images/<slug>.webp` → `npm run rebuild` or `publish` injects the figure, share tags and featured-card background. Share cards: `npm run og -- --all | --site` renders `scripts/templates/og.html` with Playwright. Slots `hero-art`, `lost-trail` and `og-bg` are decorative and fall back silently when the file is missing (`onerror="this.remove()"`). `images/textures/grain.png` is a 4 KB tile laid over every page by `sync-shared.js` (soft-light, desktop only). `404.html` is served by Netlify automatically for unknown routes and is `noindex`. Never generate a face to represent Artem; never put text, logos or certification marks inside images.
