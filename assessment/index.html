@@ -38,8 +38,40 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Impact Assessment | Candor</title>
-  <meta name="description" content="See the environmental and social impact your business could unlock through B Corp certification. Takes 2 minutes." />
+  <title>B Corp Readiness Assessment | Candor</title>
+  <meta name="description" content="Four questions, two minutes: see how ready your business is for B Corp certification, which 2026 impact topics you already cover, and a realistic timeline." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="B Corp Readiness Assessment | Candor" />
+  <meta property="og:description" content="Four questions, two minutes: see how ready your business is for B Corp certification, which 2026 impact topics you already cover, and a realistic timeline." />
+  <meta property="og:url" content="https://candorcertified.com/assessment/" />
+  <meta property="og:image" content="https://candorcertified.com/images/heroes/webshare.jpg" />
+  <meta property="og:site_name" content="Candor" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="B Corp Readiness Assessment | Candor" />
+  <meta name="twitter:description" content="Four questions, two minutes: see how ready your business is for B Corp certification and what to do next." />
+  <meta name="twitter:image" content="https://candorcertified.com/images/heroes/webshare.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "B Corp Readiness Assessment",
+        "description": "Free four-question self-assessment that estimates B Corp certification readiness for small businesses in Canada.",
+        "url": "https://candorcertified.com/assessment/",
+        "isPartOf": { "@type": "WebSite", "name": "Candor", "url": "https://candorcertified.com/" },
+        "publisher": { "@type": "Organization", "name": "Candor", "url": "https://candorcertified.com" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://candorcertified.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Assessment", "item": "https://candorcertified.com/assessment/" }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="canonical" href="https://candorcertified.com/assessment/" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -382,6 +414,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       position: relative; overflow: hidden;
     }
     .q-next.ready { opacity: 1; pointer-events: all; }
+    .q-next.nudge { animation: nudge .45s var(--ease2); opacity: .75; }
+    @keyframes nudge { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
     .q-next.ready.shimmer-once::before {
       content: '';
       position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
@@ -435,7 +469,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     #email-submit:hover { background: var(--sage); }
     .results-disclaimer {
-      max-width: 640px; margin: 22px auto 0; text-align: center;
+      max-width: 640px; margin: 22px auto 32px; text-align: center;
       font-size: 0.8rem; line-height: 1.6; color: rgba(245,243,238,.58);
     }
     .email-consent {
@@ -556,7 +590,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       letter-spacing: -0.04em; color: var(--paper);
       display: block; line-height: 1; margin-bottom: 8px;
     }
-    .metric-label { font-size: 0.8125rem; color: rgba(245,243,238,.4); line-height: 1.5; }
+    .metric-label { font-size: 0.8125rem; color: rgba(245,243,238,.6); line-height: 1.5; }
+    .metric-num.is-text { font-size: clamp(1.05rem, 1.6vw, 1.35rem); letter-spacing: -0.01em; line-height: 1.2; }
+    .results-cta-actions { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; flex-shrink: 0; }
+    .results-secondary { font-size: 0.8125rem; color: rgba(245,243,238,.7); text-decoration: underline; text-underline-offset: 3px; }
+    .results-secondary:hover { color: var(--paper); }
+    .results-retake { text-align: center; margin-top: 22px; font-size: 0.8rem; }
+    .results-retake a { color: rgba(245,243,238,.55); text-decoration: underline; text-underline-offset: 3px; }
+    .results-retake a:hover { color: var(--paper); }
+    #email-skip { white-space: nowrap; }
+    @media (prefers-reduced-motion: reduce) {
+      .screen, .opt-card, .journey-card, .check-card, .q-next, .metric-cell, .gauge-item, .verdict-banner, .gap-section, .results-cta-block { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
 
     /* Gap section */
     .gap-section {
@@ -658,6 +703,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       .opt-grid.cols-5 { grid-template-columns: repeat(2, 1fr); }
       .results-cta-block { flex-direction: column; align-items: flex-start; }
       .results-cta-block .btn-primary { width: 100%; justify-content: center; }
+      .results-cta-actions { width: 100%; align-items: stretch; text-align: center; }
       .dual-gauge { flex-direction: column; align-items: center; gap: 32px; }
       .gauge-divider { display: none; }
       .gauge-item { max-width: 100%; }
@@ -812,7 +858,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <!-- PROGRESS BAR -->
-<div id="progress-wrap"><canvas id="progress-canvas"></canvas></div>
+<div id="progress-wrap" aria-hidden="true"><canvas id="progress-canvas"></canvas></div>
+<p id="step-live" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+<noscript><p style="padding:120px 24px 40px;text-align:center;font-family:sans-serif;color:#F5F3EE">The assessment needs JavaScript. If you'd rather not enable it, <a href="https://calendly.com/artemfurman/30min" style="color:#5aA672">book a free call</a> and Artem will walk you through it.</p></noscript>
 
 <!-- TOPO BACKGROUND -->
 <div id="topo-bg" aria-hidden="true"><canvas id="topo-bg-canvas"></canvas></div>
@@ -822,7 +870,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="screen active" id="screen-intro">
   <p class="intro-eyebrow">Impact Assessment</p>
   <h1 class="intro-headline">See the terrain of your<br><em>certification impact.</em></h1>
-  <p class="intro-sub">Answer 4 questions. We'll map what B Corp certification could mean for your business, your team, and the planet.</p>
+  <p class="intro-sub">Answer 4 questions. You'll get a readiness read, the 2026 impact topics you already cover, and a realistic timeline — no score inflation.</p>
   <div class="intro-meta">
     <span>4 questions</span>
     <div class="dot"></div>
@@ -843,30 +891,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Back
     </button>
     <p class="q-number">Question 01 / 04</p>
-    <h2 class="q-title">What's your annual revenue?</h2>
+    <h2 class="q-title" tabindex="-1">What's your annual revenue?</h2>
     <p class="q-sub">An estimate is fine. This shapes your impact potential and certification timeline.</p>
     <div class="opt-grid cols-5">
-      <button class="opt-card" onclick="selectOpt(this,'revenue','under-500k','next-q1')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','under-500k','next-q1')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Under $500K</span>
         <span class="opt-sub">Early stage</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'revenue','500k-2m','next-q1')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','500k-2m','next-q1')">
         <div class="opt-ripple"></div>
         <span class="opt-label">$500K – $2M</span>
         <span class="opt-sub">Growing</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'revenue','2m-10m','next-q1')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','2m-10m','next-q1')">
         <div class="opt-ripple"></div>
         <span class="opt-label">$2M – $10M</span>
         <span class="opt-sub">Established</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'revenue','10m-50m','next-q1')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','10m-50m','next-q1')">
         <div class="opt-ripple"></div>
         <span class="opt-label">$10M – $50M</span>
         <span class="opt-sub">Scaling</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'revenue','50m-plus','next-q1')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','50m-plus','next-q1')">
         <div class="opt-ripple"></div>
         <span class="opt-label">$50M+</span>
         <span class="opt-sub">Enterprise</span>
@@ -884,45 +932,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Back
     </button>
     <p class="q-number">Question 02 / 04</p>
-    <h2 class="q-title">What sector does your business operate in?</h2>
+    <h2 class="q-title" tabindex="-1">What sector does your business operate in?</h2>
     <p class="q-sub">Pick the closest match.</p>
     <div class="opt-grid cols-2">
-      <button class="opt-card" onclick="selectOpt(this,'industry','food-bev','next-q2')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','food-bev','next-q2')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Food & Beverage</span>
         <span class="opt-sub">Restaurants, CPG, brewing</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'industry','retail','next-q2')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','retail','next-q2')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Retail & E-commerce</span>
         <span class="opt-sub">Apparel, home goods, DTC</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'industry','services','next-q2')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','services','next-q2')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Professional Services</span>
         <span class="opt-sub">Consulting, legal, marketing</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'industry','manufacturing','next-q2')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','manufacturing','next-q2')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Manufacturing</span>
         <span class="opt-sub">Production, fabrication</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'industry','tech','next-q2')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','tech','next-q2')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Tech & Software</span>
         <span class="opt-sub">SaaS, digital products</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'industry','health-edu','next-q2')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','health-edu','next-q2')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Health, Education & Nonprofit</span>
         <span class="opt-sub">Care, learning, mission-driven</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'industry','creative','next-q2')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','creative','next-q2')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Creative & Media</span>
         <span class="opt-sub">Design, content, film, PR</span>
       </button>
-      <button class="opt-card" onclick="selectOpt(this,'industry','other','next-q2')">
+      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','other','next-q2')">
         <div class="opt-ripple"></div>
         <span class="opt-label">Other</span>
         <span class="opt-sub">Agriculture, construction, logistics, or mixed</span>
@@ -940,31 +988,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Back
     </button>
     <p class="q-number">Question 03 / 04</p>
-    <h2 class="q-title">Where are you in the B Corp journey?</h2>
+    <h2 class="q-title" tabindex="-1">Where are you in the B Corp journey?</h2>
     <p class="q-sub">Be honest — it directly shapes your readiness estimate.</p>
     <div class="journey-list">
-      <button class="journey-card" onclick="selectJourney(this,'exploring')">
+      <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'exploring')">
         <div class="journey-marker"></div>
         <div class="journey-text">
           <span class="journey-label">Just heard about it</span>
           <span class="journey-sub">Exploring what B Corp certification means</span>
         </div>
       </button>
-      <button class="journey-card" onclick="selectJourney(this,'researching')">
+      <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'researching')">
         <div class="journey-marker"></div>
         <div class="journey-text">
           <span class="journey-label">Actively researching</span>
           <span class="journey-sub">Read the BIA, comparing options, doing due diligence</span>
         </div>
       </button>
-      <button class="journey-card" onclick="selectJourney(this,'in-progress')">
+      <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'in-progress')">
         <div class="journey-marker"></div>
         <div class="journey-text">
           <span class="journey-label">Started the process</span>
           <span class="journey-sub">Completed the BIA or working with a consultant</span>
         </div>
       </button>
-      <button class="journey-card" onclick="selectJourney(this,'certified')">
+      <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'certified')">
         <div class="journey-marker"></div>
         <div class="journey-text">
           <span class="journey-label">Already certified</span>
@@ -984,45 +1032,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Back
     </button>
     <p class="q-number">Question 04 / 04</p>
-    <h2 class="q-title">Which of these does your business currently have?</h2>
+    <h2 class="q-title" tabindex="-1">Which of these does your business currently have?</h2>
     <p class="q-sub">Select everything that applies. No minimum required.</p>
     <div class="check-grid">
-      <button class="check-card" data-id="hr-policies" onclick="toggleCheck(this)">
+      <button class="check-card" data-id="hr-policies" aria-pressed="false" onclick="toggleCheck(this)">
         <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
         <span class="check-label">Written HR policies</span>
         <span class="check-sub">Hiring, conduct, pay equity</span>
       </button>
-      <button class="check-card" data-id="energy-tracking" onclick="toggleCheck(this)">
+      <button class="check-card" data-id="energy-tracking" aria-pressed="false" onclick="toggleCheck(this)">
         <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
         <span class="check-label">Energy tracking or reduction</span>
         <span class="check-sub">Monitoring, offsets, or efficiency programs</span>
       </button>
-      <button class="check-card" data-id="supplier-vetting" onclick="toggleCheck(this)">
+      <button class="check-card" data-id="supplier-vetting" aria-pressed="false" onclick="toggleCheck(this)">
         <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
         <span class="check-label">Supplier vetting process</span>
         <span class="check-sub">Know where your top suppliers source from</span>
       </button>
-      <button class="check-card" data-id="mission-statement" onclick="toggleCheck(this)">
+      <button class="check-card" data-id="mission-statement" aria-pressed="false" onclick="toggleCheck(this)">
         <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
         <span class="check-label">Formal mission or values</span>
         <span class="check-sub">Documented stakeholder or impact commitment</span>
       </button>
-      <button class="check-card" data-id="employee-benefits" onclick="toggleCheck(this)">
+      <button class="check-card" data-id="employee-benefits" aria-pressed="false" onclick="toggleCheck(this)">
         <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
         <span class="check-label">Enhanced employee benefits</span>
         <span class="check-sub">Profit share, extended leave, wellness</span>
       </button>
-      <button class="check-card" data-id="community-giving" onclick="toggleCheck(this)">
+      <button class="check-card" data-id="community-giving" aria-pressed="false" onclick="toggleCheck(this)">
         <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
         <span class="check-label">Community or local sourcing</span>
         <span class="check-sub">Giving programs or local supplier priority</span>
       </button>
-      <button class="check-card" data-id="env-certification" onclick="toggleCheck(this)">
+      <button class="check-card" data-id="env-certification" aria-pressed="false" onclick="toggleCheck(this)">
         <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
         <span class="check-label">Environmental certification</span>
         <span class="check-sub">ISO 14001, Green certification, or audit</span>
       </button>
-      <button class="check-card" data-id="dei-initiatives" onclick="toggleCheck(this)">
+      <button class="check-card" data-id="dei-initiatives" aria-pressed="false" onclick="toggleCheck(this)">
         <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
         <span class="check-label">DEI initiatives</span>
         <span class="check-sub">Formal diversity, equity &amp; inclusion programs</span>
@@ -1046,7 +1094,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
       </svg>
     </div>
-    <h2 class="email-title">Your impact report is ready.</h2>
+    <h2 class="email-title" tabindex="-1">Your readiness report is ready.</h2>
     <p class="email-sub">Enter your email to see your full assessment. Your answers and email are stored so Artem can review them — and he only follows up if you tick the box below.</p>
     <div class="email-field-wrap">
       <label for="email-input" class="sr-only">Work email</label>
@@ -1058,13 +1106,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span>Yes, Candor may email me about these results and my certification options. Optional — you get the report either way, and you can unsubscribe any time.</span>
     </label>
     <p class="email-note" id="email-note">No newsletters, no list sharing. See how your data is handled in the Privacy Policy.</p>
-    <p class="email-privacy"><a href="/privacy-policy/">Privacy Policy</a></p>
+    <p class="email-privacy"><a href="/privacy-policy/">Privacy Policy</a> · <a href="#" id="email-skip">Show my results without saving an email</a></p>
   </div>
 </section>
 
 <!-- ══════════════════════════════════════ RESULTS -->
 <section class="screen" id="screen-results">
   <div class="results-wrap">
+    <h2 class="sr-only" id="results-heading" tabindex="-1">Your results</h2>
 
     <div class="dual-gauge" id="dual-gauge">
       <div class="gauge-item" id="gauge-impact">
@@ -1077,7 +1126,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="gauge-meta">
           <div class="gauge-title">Impact Potential</div>
-          <div class="gauge-subtitle">Scale of your opportunity</div>
+          <div class="gauge-subtitle">Scale of what certification could touch, from size and sector</div>
         </div>
       </div>
 
@@ -1093,7 +1142,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="gauge-meta">
           <div class="gauge-title">Readiness</div>
-          <div class="gauge-subtitle">How prepared you are now</div>
+          <div class="gauge-subtitle">How much of the 2026 evidence you already have</div>
         </div>
       </div>
     </div>
@@ -1104,37 +1153,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="metrics-grid">
-      <div class="metric-cell" id="mc-co2">
-        <div class="metric-content">
-          <span class="metric-icon">CO₂ reduction</span>
-          <span class="metric-num" id="m-co2">—</span>
-          <span class="metric-label">Modelled estimate of tonnes CO₂e per year your certified practices could address</span>
-        </div>
-      </div>
-      <div class="metric-cell" id="mc-workers">
-        <div class="metric-content">
-          <span class="metric-icon">Workers impacted</span>
-          <span class="metric-num" id="m-workers">—</span>
-          <span class="metric-label">Modelled estimate of people across your supply chain covered by stronger standards</span>
-        </div>
-      </div>
-      <div class="metric-cell" id="mc-trust">
-        <div class="metric-content">
-          <span class="metric-icon">Brand trust lift</span>
-          <span class="metric-num" id="m-trust">—</span>
-          <span class="metric-label">Indicative share of consumers who favour certified brands at equal price (survey figures vary by market)</span>
-        </div>
-      </div>
       <div class="metric-cell" id="mc-timeline">
         <div class="metric-content">
           <span class="metric-icon">Est. timeline</span>
           <span class="metric-num" id="m-timeline">—</span>
-          <span class="metric-label">Estimated time to certification based on your readiness</span>
+          <span class="metric-label">Realistic time to certification, including B Lab's current review window</span>
+        </div>
+      </div>
+      <div class="metric-cell" id="mc-topics">
+        <div class="metric-content">
+          <span class="metric-icon">2026 impact topics</span>
+          <span class="metric-num" id="m-topics">—</span>
+          <span class="metric-label">Of B Lab's 7 mandatory topics where you already have at least one practice in place</span>
+        </div>
+      </div>
+      <div class="metric-cell" id="mc-practices">
+        <div class="metric-content">
+          <span class="metric-icon">Practices in place</span>
+          <span class="metric-num" id="m-practices">—</span>
+          <span class="metric-label">Of the 8 foundations we asked about — each one is evidence you won't have to build from scratch</span>
+        </div>
+      </div>
+      <div class="metric-cell" id="mc-tier">
+        <div class="metric-content">
+          <span class="metric-icon">Suggested first step</span>
+          <span class="metric-num" id="m-tier">—</span>
+          <span class="metric-label">Every path starts with the two-week Readiness Audit; this is what usually follows it</span>
         </div>
       </div>
     </div>
 
-    <p class="results-disclaimer">These figures are modelled estimates built from your revenue band, industry, and answers — not measurements of your business, and not a prediction of your B Impact Assessment score. Use them to size the opportunity; the Readiness Audit is where the real numbers come from.</p>
+    <p class="results-disclaimer">These are estimates from four questions, not a B Impact Assessment result and not a certification decision. The readiness score weights what you actually have in place more than where you say you are. The Readiness Audit is where the real numbers come from.</p>
 
     <div class="gap-section" id="gap-section">
       <span class="gap-heading">Your strongest gaps</span>
@@ -1146,10 +1195,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3>Want a real gap assessment?</h3>
         <p>Candor scores your business against the full B Impact Assessment and maps exactly what needs to change. You keep the report either way.</p>
       </div>
-      <a href="https://calendly.com/artemfurman/30min" class="btn-primary" target="_blank" rel="noopener noreferrer">
-        Book a call <span class="arr">→</span>
-      </a>
+      <div class="results-cta-actions">
+        <a href="https://calendly.com/artemfurman/30min" class="btn-primary" target="_blank" rel="noopener noreferrer">
+          Book a call <span class="arr">→</span>
+        </a>
+        <a href="/#services" class="results-secondary">See the Readiness Audit ($1,800 CAD)</a>
+      </div>
     </div>
+    <p class="results-retake"><a href="#" id="retake-link">Retake the assessment</a></p>
 
   </div>
 </section>
@@ -1205,35 +1258,77 @@ const PROGRESS = { intro:0, q1:17, q2:34, q3:52, q4:70, email:85, results:100 };
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwxxXRo2dYACAE5trwLQ1dmR5OGgs1xaObafau8_Gb9wGTgugmZqme5PdkZ3MbWQa1q/exec';
 
 /* ─── Navigation ─────────────────────────────── */
-function goTo(id) {
+const ORDER = ['intro', 'q1', 'q2', 'q3', 'q4', 'email', 'results'];
+const STEP_LABEL = { q1: 'Question 1 of 4', q2: 'Question 2 of 4', q3: 'Question 3 of 4', q4: 'Question 4 of 4', email: 'Almost done — your email', results: 'Your results' };
+
+// A screen may only be left once its answer exists; keyboard users can still
+// activate a pointer-events:none button, so the guard lives here, not in CSS.
+const REQUIRED = { q1: () => !!state.revenue, q2: () => !!state.industry, q3: () => !!state.journey };
+
+function currentScreenId() {
   const current = document.querySelector('.screen.active');
-  if (current) {
-    const fromId = current.id.replace('screen-', '');
-    screenHistory.push(fromId);
-    current.classList.add('exit');
+  return current ? current.id.replace('screen-', '') : null;
+}
+
+function transition(fromEl, toId) {
+  if (fromEl) {
+    fromEl.classList.add('exit');
     setTimeout(() => {
-      current.classList.remove('active', 'exit');
-      current.style.display = 'none';
-      showScreen(id);
+      fromEl.classList.remove('active', 'exit');
+      fromEl.style.display = 'none';
+      showScreen(toId);
     }, 300);
   } else {
-    showScreen(id);
+    showScreen(toId);
   }
+}
+
+function goTo(id) {
+  const fromId = currentScreenId();
+  if (fromId === id) return;
+  if (fromId && REQUIRED[fromId] && !REQUIRED[fromId]()) {
+    const btn = document.querySelector('#screen-' + fromId + ' .q-next');
+    if (btn) { btn.classList.add('nudge'); setTimeout(() => btn.classList.remove('nudge'), 500); }
+    return;
+  }
+  if (fromId) {
+    screenHistory.push(fromId);
+    try { history.pushState({ screen: id }, '', location.pathname + location.search); } catch (e) {}
+  }
+  transition(document.querySelector('.screen.active'), id);
+}
+
+// Internal back: used by the in-page Back buttons and the browser's own Back.
+function goBackInternal() {
+  if (!screenHistory.length) return false;
+  const prevId = screenHistory.pop();
+  transition(document.querySelector('.screen.active'), prevId);
+  return true;
 }
 
 function goBack() {
   if (!screenHistory.length) return;
-  const prevId = screenHistory.pop();
-  const current = document.querySelector('.screen.active');
-  if (current) {
-    current.classList.add('exit');
-    setTimeout(() => {
-      current.classList.remove('active', 'exit');
-      current.style.display = 'none';
-      showScreen(prevId);
-    }, 300);
-  }
+  // Prefer history.back() so the browser's forward/back stack stays in sync;
+  // popstate below performs the actual screen change.
+  if (history.state && history.state.screen) history.back();
+  else goBackInternal();
 }
+
+try { history.replaceState({ screen: 'intro' }, '', location.pathname + location.search); } catch (e) {}
+window.addEventListener('popstate', function (e) {
+  const target = e.state && e.state.screen;
+  const current = currentScreenId();
+  if (!target || target === current) return;
+  const idx = screenHistory.lastIndexOf(target);
+  if (idx !== -1) {                       // going back to a screen we came from
+    screenHistory.length = idx;
+    transition(document.querySelector('.screen.active'), target);
+  } else if (ORDER.indexOf(target) > ORDER.indexOf(current)) { // browser Forward
+    if (REQUIRED[current] && !REQUIRED[current]()) { history.back(); return; }
+    screenHistory.push(current);
+    transition(document.querySelector('.screen.active'), target);
+  }
+});
 
 function showScreen(id) {
   const el = document.getElementById('screen-' + id);
@@ -1247,7 +1342,13 @@ function showScreen(id) {
         if (titleEl) revealWords(titleEl, 80);
       }, 80);
     }
+    // Move focus so keyboard and screen-reader users land on the new step.
+    const focusTarget = el.querySelector('.q-title, .email-title, #results-heading');
+    if (focusTarget && id !== 'intro') setTimeout(() => focusTarget.focus({ preventScroll: true }), 120);
   }));
+
+  const live = document.getElementById('step-live');
+  if (live && STEP_LABEL[id]) live.textContent = STEP_LABEL[id];
 
   const wrap = document.getElementById('progress-wrap');
   const isVisible = id !== 'intro';
@@ -1262,8 +1363,9 @@ function showScreen(id) {
 
 /* ─── Q1/Q2 generic single-select ─────────────── */
 function selectOpt(el, stateKey, val, nextId) {
-  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c => c.classList.remove('selected', 'settle', 'ripple-show'));
+  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c => { c.classList.remove('selected', 'settle', 'ripple-show'); c.setAttribute('aria-pressed', 'false'); });
   el.classList.add('selected');
+  el.setAttribute('aria-pressed', 'true');
 
   // settle animation
   el.classList.add('settle');
@@ -1271,16 +1373,18 @@ function selectOpt(el, stateKey, val, nextId) {
 
   // ripple from click center
   const rect = el.getBoundingClientRect();
-  const rx = ((event.clientX - rect.left) / rect.width * 100).toFixed(1) + '%';
-  const ry = ((event.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+  const ev = (typeof event !== 'undefined' && event && event.clientX) ? event : { clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2 };
+  const rx = ((ev.clientX - rect.left) / rect.width * 100).toFixed(1) + '%';
+  const ry = ((ev.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
   el.style.setProperty('--rx', rx);
   el.style.setProperty('--ry', ry);
   el.classList.add('ripple-show');
   setTimeout(() => el.classList.remove('ripple-show'), 380);
 
-  topoRingBurst(el, event.clientX - rect.left, event.clientY - rect.top);
+  topoRingBurst(el, ev.clientX - rect.left, ev.clientY - rect.top);
 
   state[stateKey] = val;
+  persistState();
 
   const btn = document.getElementById(nextId);
   if (!btn.classList.contains('ready')) {
@@ -1291,11 +1395,14 @@ function selectOpt(el, stateKey, val, nextId) {
 
 /* ─── Q3: Journey ────────────────────────────── */
 function selectJourney(el, val) {
-  document.querySelectorAll('#screen-q3 .journey-card').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('#screen-q3 .journey-card').forEach(c => { c.classList.remove('selected'); c.setAttribute('aria-pressed', 'false'); });
   el.classList.add('selected');
+  el.setAttribute('aria-pressed', 'true');
   var jRect = el.getBoundingClientRect();
-  topoRingBurst(el, event.clientX - jRect.left, event.clientY - jRect.top);
+  var jEv = (typeof event !== 'undefined' && event && event.clientX) ? event : { clientX: jRect.left + jRect.width / 2, clientY: jRect.top + jRect.height / 2 };
+  topoRingBurst(el, jEv.clientX - jRect.left, jEv.clientY - jRect.top);
   state.journey = val;
+  persistState();
   const btn = document.getElementById('next-q3');
   if (!btn.classList.contains('ready')) {
     btn.classList.add('ready', 'shimmer-once');
@@ -1309,7 +1416,9 @@ function toggleCheck(el) {
   const id = el.dataset.id;
   if (el.classList.contains('checked')) {
     el.classList.remove('checked');
+    el.setAttribute('aria-pressed', 'false');
     state.practices = state.practices.filter(p => p !== id);
+    persistState();
     if (badge) {
       badge.classList.remove('badge-in');
       void badge.offsetWidth;
@@ -1322,7 +1431,9 @@ function toggleCheck(el) {
     setTimeout(() => el.classList.remove('card-shrink'), 200);
   } else {
     el.classList.add('checked');
+    el.setAttribute('aria-pressed', 'true');
     if (!state.practices.includes(id)) state.practices.push(id);
+    persistState();
     if (badge) {
       badge.classList.remove('badge-out');
       void badge.offsetWidth;
@@ -1337,6 +1448,61 @@ function toggleCheck(el) {
 }
 
 /* ─── Email ──────────────────────────────────── */
+const PENDING_KEY = 'candor-assessment-pending';
+
+function persistState() {
+  try { sessionStorage.setItem('candor-assessment-state', JSON.stringify({ revenue: state.revenue, industry: state.industry, journey: state.journey, practices: state.practices })); } catch (e) {}
+}
+
+// Fire-and-forget to the Apps Script endpoint. The response is opaque
+// (no-cors), so we can't confirm delivery; keepalive survives navigation and
+// a failed attempt is queued in localStorage and retried on the next visit.
+function sendSubmission(params) {
+  if (!SHEETS_URL) return;
+  const url = SHEETS_URL + '?' + params.toString();
+  let queued = [];
+  try { queued = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]'); } catch (e) {}
+  const attempt = (u) => fetch(u, { mode: 'no-cors', keepalive: true, cache: 'no-store' });
+  try {
+    attempt(url).catch(() => { try { localStorage.setItem(PENDING_KEY, JSON.stringify(queued.concat(url).slice(-5))); } catch (e) {} });
+  } catch (e) {
+    try { localStorage.setItem(PENDING_KEY, JSON.stringify(queued.concat(url).slice(-5))); } catch (e2) {}
+  }
+}
+
+(function retryPending() {
+  let queued = [];
+  try { queued = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]'); } catch (e) { return; }
+  if (!queued.length) return;
+  try { localStorage.removeItem(PENDING_KEY); } catch (e) {}
+  queued.forEach(u => { try { fetch(u, { mode: 'no-cors', keepalive: true, cache: 'no-store' }).catch(() => {}); } catch (e) {} });
+})();
+
+function buildParams(email, followup) {
+  const impact = state.impact || calculate();
+  state.impact = impact;
+  return new URLSearchParams({
+    email:           email || '',
+    followup:        followup ? 'yes' : 'no',
+    consent_text:    followup ? 'Yes, Candor may email me about these results and my certification options.' : '',
+    revenue:         state.revenue  || '',
+    industry:        state.industry || '',
+    journey:         state.journey  || '',
+    practices:       state.practices.length ? state.practices.join(',') : 'none',
+    impact_score:    impact.impactScore,
+    readiness_score: impact.readinessScore,
+    verdict:         impact.verdict,
+    timeline:        impact.timeline,
+    topics_covered:  impact.topics.length,
+    suggested_step:  impact.tier,
+    // Legacy columns kept blank so an existing sheet layout doesn't shift.
+    co2:             '',
+    workers:         '',
+    page:            location.pathname,
+    timestamp:       new Date().toISOString()
+  });
+}
+
 function submitEmail() {
   const input = document.getElementById('email-input');
   const wrap  = input.closest('.email-field-wrap');
@@ -1345,8 +1511,10 @@ function submitEmail() {
   const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
   if (!email || !emailRegex.test(email)) {
     wrap.style.borderColor = '#c0392b';
+    input.setAttribute('aria-invalid', 'true');
     input.addEventListener('input', function reset() {
       wrap.style.borderColor = '';
+      input.removeAttribute('aria-invalid');
       input.removeEventListener('input', reset);
     });
     input.focus();
@@ -1356,34 +1524,57 @@ function submitEmail() {
   wrap.style.borderColor = '';
   state.email = email;
   state.followup = !!document.getElementById('followup-consent').checked;
+  state.impact = calculate();
 
-  const impact = calculate();
-  state.impact = impact;
-
-  const params = new URLSearchParams({
-    email:           email,
-    followup:        state.followup ? 'yes' : 'no',
-    consent_text:    'Yes, Candor may email me about these results and my certification options.',
-    revenue:         state.revenue  || '',
-    industry:        state.industry || '',
-    journey:         state.journey  || '',
-    practices:       state.practices.length ? state.practices.join(',') : 'none',
-    impact_score:    impact.impactScore,
-    readiness_score: impact.readinessScore,
-    verdict:         impact.verdict,
-    timeline:        impact.timeline,
-    co2:             impact.co2,
-    workers:         impact.workers,
-    timestamp:       new Date().toISOString()
-  });
-
-  if (SHEETS_URL) fetch(SHEETS_URL + '?' + params.toString(), { mode: 'no-cors' });
-
+  sendSubmission(buildParams(email, state.followup));
   goTo('results');
 }
 
+function skipEmail() {
+  state.email = '';
+  state.followup = false;
+  state.impact = calculate();
+  // Anonymous row: lets Artem see completion volume without an identity attached.
+  sendSubmission(buildParams('', false));
+  goTo('results');
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const input = document.getElementById('email-input');
+  if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitEmail(); } });
+  const skip = document.getElementById('email-skip');
+  if (skip) skip.addEventListener('click', e => { e.preventDefault(); skipEmail(); });
+  const retake = document.getElementById('retake-link');
+  if (retake) retake.addEventListener('click', e => { e.preventDefault(); try { sessionStorage.removeItem('candor-assessment-state'); } catch (err) {} location.href = location.pathname; });
+});
+
 /* ─── Scoring ─────────────────────────────────── */
+// B Lab's 2025/2026 standards replaced the 80-point score with seven mandatory
+// impact topics. Each practice we ask about is mapped to the nearest topic so
+// the result can say which topics the business already has evidence for.
+const TOPICS = {
+  governance:  'Purpose & Stakeholder Governance',
+  fairwork:    'Fair Work',
+  jedi:        'Justice, Equity, Diversity & Inclusion',
+  humanrights: 'Human Rights',
+  climate:     'Climate Action',
+  environment: 'Environmental Stewardship & Circularity',
+  collective:  'Government Affairs & Collective Action'
+};
+const PRACTICE_TOPIC = {
+  'mission-statement': 'governance',
+  'hr-policies':       'fairwork',
+  'employee-benefits': 'fairwork',
+  'dei-initiatives':   'jedi',
+  'supplier-vetting':  'humanrights',
+  'energy-tracking':   'climate',
+  'env-certification': 'environment',
+  'community-giving':  'collective'
+};
+
 function calculate() {
+  // Impact potential = how much a certification could touch. Honest reading: it
+  // scales with size and sector footprint; it is not a prediction of outcomes.
   const revenueBase = {
     'under-500k': 12, '500k-2m': 28, '2m-10m': 50,
     '10m-50m': 72, '50m-plus': 90
@@ -1396,75 +1587,62 @@ function calculate() {
 
   const impactScore = Math.min(Math.round(revenueBase * industryMult), 100);
 
+  // Readiness: evidence in hand (practices) counts for up to 64 of 100 points;
+  // self-reported stage adds at most 34. Previously stage alone could produce
+  // "ready" with nothing documented, which is the opposite of how B Lab reviews.
   const journeyBase = {
-    'exploring': 10, 'researching': 35, 'in-progress': 65, 'certified': 90
-  }[state.journey] || 10;
+    'exploring': 6, 'researching': 16, 'in-progress': 34, 'certified': 90
+  }[state.journey] || 6;
 
-  const practiceBonus = Math.min(state.practices.length * 4, 28);
+  const practiceBonus = Math.min(state.practices.length * 8, 64);
   const readinessScore = Math.min(Math.round(journeyBase + practiceBonus), 100);
 
-  const revenueEmployees = {
-    'under-500k': 4, '500k-2m': 14, '2m-10m': 40,
-    '10m-50m': 120, '50m-plus': 350
-  }[state.revenue] || 14;
+  const topicKeys = Array.from(new Set(state.practices.map(p => PRACTICE_TOPIC[p]).filter(Boolean)));
+  const topics = topicKeys.map(k => TOPICS[k]);
 
-  const industryFactor = {
-    'food-bev': 5.1, 'manufacturing': 8.4, 'retail': 3.6,
-    'health-edu': 2.8, 'services': 1.8, 'tech': 2.1, 'creative': 1.6
-  }[state.industry] || 2.5;
+  // Timeline brackets mirror the ranges in /blog/how-long-does-b-corp-certification-take:
+  // organised businesses 4–6 months, average 6–9, starting from zero 12–18, with
+  // B Lab's review window included. Larger multi-site businesses get the next bracket.
+  const brackets = ['4–6 mo', '6–9 mo', '9–12 mo', '12–18 mo'];
+  let bi;
+  if (readinessScore >= 70) bi = 0;
+  else if (readinessScore >= 45) bi = 1;
+  else if (readinessScore >= 25) bi = 2;
+  else bi = 3;
+  if ((state.revenue === '10m-50m' || state.revenue === '50m-plus') && bi < 3) bi += 1;
+  let timeline = state.journey === 'certified' ? 'Recert. review' : brackets[bi];
 
-  const co2 = Math.round(revenueEmployees * industryFactor * 1.1);
-
-  const supplyMult = {
-    'manufacturing': 14, 'food-bev': 11, 'retail': 9,
-    'health-edu': 6, 'services': 4, 'tech': 3, 'creative': 3
-  }[state.industry] || 5;
-
-  const workers = Math.round(revenueEmployees * supplyMult);
-
-  let timeline;
+  let verdict, tier;
   if (state.journey === 'certified') {
-    timeline = 'Recertification';
-  } else if (readinessScore >= 70 && impactScore < 50) {
-    timeline = '3–5 mo';
+    verdict = 'Recertification is a fresh review under the 2026 standards. Worth knowing where you stand before the deadline.';
+    tier = 'Audit → Recert plan';
   } else if (readinessScore >= 70) {
-    timeline = '5–7 mo';
-  } else if (readinessScore >= 45 && impactScore < 50) {
-    timeline = '6–9 mo';
+    verdict = 'Well positioned. An audit would confirm it and set the submission plan.';
+    tier = 'Audit → Submit';
   } else if (readinessScore >= 45) {
-    timeline = '8–12 mo';
-  } else if (readinessScore >= 20) {
-    timeline = '10–15 mo';
+    verdict = 'Partway there. The remaining gaps are specific and closable.';
+    tier = 'Audit → Gap work';
+  } else if (readinessScore >= 25) {
+    verdict = 'Early, but with real foundations to build on.';
+    tier = 'Audit → Gap work';
   } else {
-    timeline = '12–18 mo';
+    verdict = 'Starting from the beginning — which is where most businesses start.';
+    tier = 'Audit → Full path';
   }
 
-  let verdict;
-  if (state.journey === 'certified') {
-    verdict = "Time to recertify. Let's see where you stand.";
-  } else if (readinessScore >= 55 && impactScore >= 55) {
-    verdict = "Ready to certify.";
-  } else if (readinessScore >= 55) {
-    verdict = "You're prepared. Let's make it official.";
-  } else if (impactScore >= 55) {
-    verdict = "The opportunity is significant. Time to utilize it.";
-  } else {
-    verdict = "A strong foundation to build from.";
-  }
-
-  return { impactScore, readinessScore, co2, workers, timeline, verdict };
+  return { impactScore, readinessScore, topics, timeline, verdict, tier };
 }
 
 /* ─── Gap analysis ─────────────────────────────── */
 const GAP_COPY = {
-  'hr-policies':       'Written HR policies — the Workers pillar scores heavily on documented pay equity and conduct standards.',
-  'energy-tracking':   'Energy tracking — the Environment pillar starts with measurement. Even basic monitoring adds points.',
-  'supplier-vetting':  'Supply chain visibility — knowing where your suppliers source earns points across Community and Environment.',
-  'mission-statement': 'Formal mission or values — Governance scoring requires documented stakeholder commitment.',
-  'employee-benefits': 'Enhanced benefits — profit sharing or extended leave are among the highest-weighted Worker pillar items.',
-  'community-giving':  'Community programs — local sourcing or giving initiatives contribute to the Community pillar score.',
-  'env-certification': 'Environmental certification — existing credentials (ISO, etc.) can carry directly into your BIA score.',
-  'dei-initiatives':   'DEI programs — formal diversity initiatives are increasingly required for full Worker pillar points.'
+  'hr-policies':       'Written HR policies — Fair Work is a mandatory 2026 topic, and it starts with documented pay, conduct and hiring standards.',
+  'energy-tracking':   'Energy and emissions tracking — Climate Action now requires Scope 1 and 2 measurement; basic monitoring is the first step.',
+  'supplier-vetting':  'Supply chain visibility — Human Rights due diligence needs you to know where your top suppliers source from.',
+  'mission-statement': 'Formal mission or values — Purpose & Stakeholder Governance expects a documented stakeholder commitment.',
+  'employee-benefits': 'Enhanced benefits — profit sharing, extended leave or wellness programs strengthen your Fair Work evidence.',
+  'community-giving':  'Community programs — local sourcing and giving support the Collective Action topic and your community story.',
+  'env-certification': 'Environmental certification — existing credentials (ISO 14001 and similar) shortcut Environmental Stewardship documentation.',
+  'dei-initiatives':   'DEI programs — Justice, Equity, Diversity & Inclusion is a mandatory topic; a written plan is the minimum.'
 };
 
 const INDUSTRY_PRIORITY = {
@@ -1624,16 +1802,20 @@ function initResults() {
   setTimeout(() => document.getElementById('verdict-banner').classList.add('visible'), 200);
 
   // t=600: metric cells stagger
-  ['mc-co2','mc-workers','mc-trust','mc-timeline'].forEach((id, i) => {
+  ['mc-timeline','mc-topics','mc-practices','mc-tier'].forEach((id, i) => {
     setTimeout(() => document.getElementById(id).classList.add('visible'), 600 + i * 120);
   });
 
   // t=900: counters
   setTimeout(() => {
-    animateCount(document.getElementById('m-co2'),     impact.co2,   ' t',  1200);
-    animateCount(document.getElementById('m-workers'), impact.workers, '',  1200);
-    animateCount(document.getElementById('m-trust'),   73,           '%',   900);
-    document.getElementById('m-timeline').textContent = impact.timeline;
+    const tl = document.getElementById('m-timeline');
+    tl.textContent = impact.timeline;
+    tl.classList.toggle('is-text', impact.timeline.length > 8);
+    animateCount(document.getElementById('m-topics'),    impact.topics.length,   ' / 7', 900);
+    animateCount(document.getElementById('m-practices'), state.practices.length, ' / 8', 900);
+    const tier = document.getElementById('m-tier');
+    tier.textContent = impact.tier;
+    tier.classList.add('is-text');
   }, 900);
 
   // t=1400: gap section
@@ -1660,7 +1842,11 @@ function initResults() {
   const canvas = document.getElementById('topo-bg-canvas');
   const ctx = canvas.getContext('2d');
 
-  const COLS = 90, ROWS = 56, LEVELS = 14;
+  const SMALL = window.innerWidth < 700;
+  const COLS = SMALL ? 56 : 90, ROWS = SMALL ? 36 : 56, LEVELS = 14;
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FRAME_MS = 1000 / 30;   // 30 fps is plenty for a slow-drifting background
+  let lastDraw = 0;
   const THRESHOLDS = [];
   for (let i = 0; i < LEVELS; i++) THRESHOLDS.push(-0.9 + (i / (LEVELS - 1)) * 1.8);
 
@@ -1729,9 +1915,12 @@ function initResults() {
   let time = 0, lastFrame = 0;
 
   function render(ts) {
+    if (document.hidden) { lastFrame = ts; requestAnimationFrame(render); return; }
+    if (ts - lastDraw < FRAME_MS) { requestAnimationFrame(render); return; }
+    lastDraw = ts;
     const dt = Math.min((ts - lastFrame) / 1000, 0.05);
     lastFrame = ts;
-    time += dt;
+    if (!REDUCED) time += dt;
 
     if (assessmentStarted) mouse.targetStrength = 0;
     mouse.strength += (mouse.targetStrength - mouse.strength) * 0.06;
@@ -1792,10 +1981,11 @@ function initResults() {
       ctx.fillRect(0, 0, W, Ht);
     }
 
-    requestAnimationFrame(render);
+    if (!REDUCED) requestAnimationFrame(render);   // reduced motion: one static frame
   }
 
   requestAnimationFrame(render);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && !REDUCED) { lastFrame = performance.now(); } });
 }());
 
 /* ─── Mobile nav ─────────────────────────────── */
