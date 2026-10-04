@@ -264,25 +264,6 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .hero-desc strong{color:#0E110D;font-weight:600}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;opacity:0;animation:fdup .9s 1.05s var(--ease) forwards}
 
-/* MARQUEE */
-.mq{background:#0E110D;padding:18px 0;overflow:hidden}
-.mq-t{display:flex;gap:48px;width:max-content;animation:mqs 28s linear infinite;align-items:center}
-.mq-t span{font-family:var(--u);font-style:italic;font-size:19px;font-weight:300;color:rgba(245,243,238,.45);white-space:nowrap;display:flex;align-items:center;gap:48px}
-.mq-t span::after{content:'';display:inline-block;width:6px;height:6px;background:var(--green2);border-radius:50%;flex-shrink:0}
-.trailhead{padding:0 var(--px)}
-.trailhead-t{animation:none;width:100%;max-width:1400px;margin:0 auto;gap:0;justify-content:space-between;flex-wrap:wrap;border-top:1px solid rgba(245,243,238,.08);border-bottom:1px solid rgba(245,243,238,.08)}
-.trailhead-t span{font-style:normal;font-size:12px;font-weight:400;letter-spacing:.02em;color:rgba(245,243,238,.62);gap:10px;padding:16px 18px 16px 0;white-space:normal;flex:1 1 220px;align-items:baseline}
-.trailhead-t span+span{border-left:1px solid rgba(245,243,238,.08);padding-left:18px}
-.trailhead-t span b{font-family:"Space Mono",monospace;font-weight:400;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--green2);white-space:nowrap}
-.trailhead-t span::after{display:none}
-@media(max-width:720px){
-  .trailhead{padding:0 var(--px)}
-  .trailhead-t{display:block;text-align:center;padding:18px 0 20px;border-top:1px solid rgba(245,243,238,.08);border-bottom:1px solid rgba(245,243,238,.08)}
-  .trailhead-t span{display:block;padding:5px 0;border:0;font-size:13px;line-height:1.5;color:rgba(245,243,238,.68);white-space:normal}
-  .trailhead-t span:first-child{color:rgba(245,243,238,.9)}
-  .trailhead-t span+span{border:0;padding-left:0}
-  .trailhead-t span b{display:none}
-}
 
 /* SECTIONS */
 .sec{padding:90px var(--px);background:var(--bg)}
@@ -611,7 +592,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 @keyframes slup{to{transform:translateY(0)}}
 @keyframes scx{to{transform:scaleX(1)}}
 @keyframes fdup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-@keyframes mqs{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+}
 .fu{opacity:0;transform:translateY(32px);transition:opacity .95s var(--ease),transform .95s var(--ease);will-change:opacity,transform}
 .fu.vis{opacity:1;transform:translateY(0)}
 .stg>*{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -1104,16 +1085,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </section>
-
-<!-- MARQUEE -->
-<div class="mq trailhead" role="list" aria-label="What Candor works on">
-  <div class="mq-t trailhead-t">
-    <span role="listitem"><b>Certifications</b> B Corp · Climate Neutral · 1% for the Planet</span>
-    <span role="listitem"><b>Terms</b> Flat fees, quoted in writing</span>
-    <span role="listitem"><b>Who does the work</b> One person, start to finish</span>
-    <span role="listitem"><b>Based in</b> Vancouver · working across Canada</span>
-  </div>
-</div>
 
 <!-- MISSION -->
 <div class="mission fu">

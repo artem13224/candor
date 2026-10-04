@@ -79,22 +79,3 @@
   from = "/blog/:slug"
   to = "/blog/:slug.html"
   status = 200
-
-# Canonical trailing-slash URLs for directory pages
-[[redirects]]
-  from = "/assessment"
-  to = "/assessment/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/privacy-policy"
-  to = "/privacy-policy/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/terms"
-  to = "/terms/"
-  status = 301
-  force = true

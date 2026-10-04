@@ -136,7 +136,7 @@ Footer legal row on every page (managed by `scripts/sync-shared.js`): Privacy Po
 
 ### index.html sections (in order)
 
-Hero → Trailhead strip (static four-fact line: certifications, terms, who does the work, location; replaced the old scrolling capability ticker, which listed services Candor does not offer) → Pull quote → The problem (`#problem`, a numbered `<dl>` ledger with a "Candor's answer" aside per row) → Why now (`#why-now`, scroll-pinned, 240vh track) → Who we serve (`#who`, cards along a trail path, 360px rows) → Process (`#process`) → Services/pricing (`#services`) → Certifications explained (pinned, 170vh track) → About Artem (`#about`) → Social proof (`#stats`) → FAQ (`#faq`) → Assessment CTA → Contact CTA → Footer
+Hero → Pull quote (the old scrolling capability ticker that sat between them was removed: it listed services Candor does not offer, and the later static strip read as a black bar on phones) → The problem (`#problem`, a numbered `<dl>` ledger with a "Candor's answer" aside per row) → Why now (`#why-now`, scroll-pinned, 240vh track) → Who we serve (`#who`, cards along a trail path, 360px rows) → Process (`#process`) → Services/pricing (`#services`) → Certifications explained (pinned, 170vh track) → About Artem (`#about`) → Social proof (`#stats`) → FAQ (`#faq`) → Assessment CTA → Contact CTA → Footer
 
 Design rules learned the hard way: keep pinned scroll tracks short (the two above once added seven screens of near-empty scrolling), never list a certification or service Candor does not actually offer, and avoid copy that implies a client history until there is one.
 
@@ -253,6 +253,8 @@ Netlify publishes the repo root directly. Key `netlify.toml` rules:
 | Images | `max-age=2592000` (30 days) |
 | Fonts | Immutable, long-term |
 | Blog rewrite | `/blog/:slug` → `/blog/:slug.html` (status 200) |
+
+Do **not** add `force = true` trailing-slash redirects for directory pages: Netlify matches `/terms` and `/terms/` with the same rule, so a forced `/terms → /terms/` rule loops. Netlify's own pretty-URL handling already adds the slash.
 
 **Security headers on all routes:**
 - `X-Frame-Options: DENY`
