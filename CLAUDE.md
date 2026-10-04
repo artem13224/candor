@@ -134,7 +134,9 @@ Footer legal row on every page (managed by `scripts/sync-shared.js`): Privacy Po
 
 ### index.html sections (in order)
 
-Hero → Who we serve (`#who`) → Process (`#process`) → Services/pricing (`#services`) → Certifications explained → About Artem (`#about`) → Social proof → FAQ (`#faq`) → Assessment CTA → Contact CTA → Footer
+Hero → Trailhead strip (static four-fact line: certifications, terms, who does the work, location; replaced the old scrolling capability ticker, which listed services Candor does not offer) → Pull quote → The problem (`#problem`, a numbered `<dl>` ledger with a "Candor's answer" aside per row) → Why now (`#why-now`, scroll-pinned, 240vh track) → Who we serve (`#who`, cards along a trail path, 360px rows) → Process (`#process`) → Services/pricing (`#services`) → Certifications explained (pinned, 170vh track) → About Artem (`#about`) → Social proof (`#stats`) → FAQ (`#faq`) → Assessment CTA → Contact CTA → Footer
+
+Design rules learned the hard way: keep pinned scroll tracks short (the two above once added seven screens of near-empty scrolling), never list a certification or service Candor does not actually offer, and avoid copy that implies a client history until there is one.
 
 ---
 

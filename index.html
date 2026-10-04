@@ -152,7 +152,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "What's the difference between B Corp and Benefit Corporation?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "B Corp is a third-party certification from B Lab. Benefit Corporation is a legal entity structure in some jurisdictions that expands what directors can consider beyond shareholder profit. They're different things. You can have one without the other. Most businesses I work with want the B Corp certification because it's the certification consumers actually recognise."
+        "text": "B Corp is a third-party certification from B Lab. Benefit Corporation is a legal entity structure in some jurisdictions that expands what directors can consider beyond shareholder profit. They're different things. You can have one without the other. Most small businesses go for the B Corp certification because it's the one consumers actually recognise."
       }
     },
     {
@@ -246,6 +246,13 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .mq-t{display:flex;gap:48px;width:max-content;animation:mqs 28s linear infinite;align-items:center}
 .mq-t span{font-family:var(--u);font-style:italic;font-size:19px;font-weight:300;color:rgba(245,243,238,.45);white-space:nowrap;display:flex;align-items:center;gap:48px}
 .mq-t span::after{content:'';display:inline-block;width:6px;height:6px;background:var(--green2);border-radius:50%;flex-shrink:0}
+.trailhead{padding:0 var(--px)}
+.trailhead-t{animation:none;width:100%;max-width:1400px;margin:0 auto;gap:0;justify-content:space-between;flex-wrap:wrap;border-top:1px solid rgba(245,243,238,.08);border-bottom:1px solid rgba(245,243,238,.08)}
+.trailhead-t span{font-style:normal;font-size:12px;font-weight:400;letter-spacing:.02em;color:rgba(245,243,238,.62);gap:10px;padding:16px 18px 16px 0;white-space:normal;flex:1 1 220px;align-items:baseline}
+.trailhead-t span+span{border-left:1px solid rgba(245,243,238,.08);padding-left:18px}
+.trailhead-t span b{font-family:"Space Mono",monospace;font-weight:400;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--green2);white-space:nowrap}
+.trailhead-t span::after{display:none}
+@media(max-width:720px){.trailhead-t span{flex-basis:100%;padding:12px 0}.trailhead-t span+span{border-left:0;padding-left:0;border-top:1px solid rgba(245,243,238,.06)}}
 
 /* SECTIONS */
 .sec{padding:90px var(--px);background:var(--bg)}
@@ -275,18 +282,19 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .mission-txt em{font-style:normal;font-weight:700;color:var(--green2)}
 
 /* PROBLEM */
-.prob-row{display:grid;grid-template-columns:1fr;gap:1px;background:rgba(14,17,13,.1);border:1px solid rgba(14,17,13,.1);border-radius:4px;overflow:hidden;margin-top:44px}
-.prob-card{background:var(--bg);padding:36px 28px;position:relative;overflow:hidden;transition:background .35s}
-.prob-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--green);transition:width .55s var(--ease)}
-.prob-card:hover{background:var(--bg2)}
-.prob-card:hover::after{width:100%}
-.prob-n{font-family:var(--u);font-weight:800;font-size:64px;line-height:.9;letter-spacing:-.04em;color:rgba(14,17,13,.06);margin-bottom:14px;transition:color .4s}
-.prob-card:hover .prob-n{color:rgba(45,107,66,.1)}
-.prob-title{font-family:var(--u);font-weight:700;font-size:20px;letter-spacing:-.01em;color:#0E110D;margin-bottom:10px;line-height:1.2}
-.prob-txt{font-family:var(--o);font-size:15px;line-height:1.65;color:var(--ink3);font-weight:300}
+.prob-ledger{margin:48px 0 0;border-top:1px solid rgba(14,17,13,.14)}
+.prob-card{display:grid;grid-template-columns:1fr;gap:10px 40px;padding:28px 0 30px;border-bottom:1px solid rgba(14,17,13,.12);position:relative}
+.prob-card::before{content:'';position:absolute;left:-18px;top:36px;width:6px;height:6px;border-radius:50%;background:var(--green);opacity:0;transform:scale(.4);transition:opacity .35s,transform .45s var(--ease)}
+.prob-card:hover::before{opacity:1;transform:scale(1)}
+.prob-card dt{display:flex;align-items:baseline;gap:14px;margin:0}
+.prob-card dd{margin:0}
+.prob-n{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--green);flex-shrink:0}
+.prob-title{font-family:var(--u);font-weight:700;font-size:21px;letter-spacing:-.015em;color:#0E110D;line-height:1.2}
+.prob-txt{font-family:var(--o);font-size:15.5px;line-height:1.7;color:var(--ink3);font-weight:300;max-width:62ch}
+.prob-aside{display:block;margin-top:12px;padding-left:14px;border-left:2px solid rgba(45,107,66,.35);font-family:var(--u);font-size:13px;font-weight:600;letter-spacing:.01em;color:var(--green)}
 
 /* WHY NOW — sticky 3-act scroll */
-#why-now{min-height:450vh;position:relative;background:#0E110D}
+#why-now{min-height:240vh;position:relative;background:#0E110D}
 .why-header{padding:90px var(--px) clamp(40px,6vh,72px);position:relative;z-index:3}
 .why-header .dh{margin-bottom:0}
 .why-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;z-index:2}
@@ -394,7 +402,7 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .river-path-fill{fill:none;stroke:var(--green);stroke-width:2px;vector-effect:non-scaling-stroke;stroke-linecap:round}
 .river-dot{fill:var(--green);r:5;transition:r .3s ease}
 .river-rows{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 var(--px)}
-.river-row{height:450px;display:flex;align-items:center;position:relative}
+.river-row{height:360px;display:flex;align-items:center;position:relative}
 .river-row.left{justify-content:flex-start;padding-right:50%}
 .river-row.right{justify-content:flex-end;padding-left:50%}
 
@@ -582,9 +590,8 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 @media(min-width:640px){
   .hero-body{grid-template-columns:1fr;align-items:center}
   .hero-l{max-width:860px}
-  .prob-row{grid-template-columns:repeat(3,1fr)}
-  .prob-card{border-bottom:none;border-right:1px solid rgba(14,17,13,.1)}
-  .prob-card:last-child{border-right:none}
+  .prob-card{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start;padding:34px 0 36px}
+  .prob-card dt{position:sticky;top:96px}
   .stats-g{grid-template-columns:repeat(4,1fr)}
   .stat-c:nth-child(2n){border-right:1px solid rgba(245,243,238,.1)}.stat-c:nth-last-child(-n+2){border-bottom:1px solid rgba(245,243,238,.1)}.stat-c:nth-child(4n){border-right:none}.stat-c:last-child{border-bottom:none}
   .svc-dur{display:block}
@@ -716,7 +723,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .cert-note{font-family:var(--o);font-style:italic;font-size:13px;font-weight:300;color:var(--ink4);padding-top:16px;border-top:1px solid rgba(14,17,13,.10);margin-top:16px}
 @media(min-width:640px){.cert-desc{max-width:100%}}
 @media(min-width:900px){
-  .cert-wrap{height:280vh}
+  .cert-wrap{height:170vh}
   .cert-section{position:sticky;top:0;height:100vh}
 }
 @media(min-width:1024px){
@@ -1066,10 +1073,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- MARQUEE -->
-<div class="mq" aria-hidden="true">
-  <div class="mq-t">
-    <span>B Corp Certification</span><span>Climate Neutral</span><span>1% for the Planet</span><span>ISO 14001</span><span>Fair Trade</span><span>BIA Readiness</span><span>CSRD Compliance</span><span>Bill C-59 Defense</span>
-    <span>B Corp Certification</span><span>Climate Neutral</span><span>1% for the Planet</span><span>ISO 14001</span><span>Fair Trade</span><span>BIA Readiness</span><span>CSRD Compliance</span><span>Bill C-59 Defense</span>
+<div class="mq trailhead" role="list" aria-label="What Candor works on">
+  <div class="mq-t trailhead-t">
+    <span role="listitem"><b>Certifications</b> B Corp · Climate Neutral · 1% for the Planet</span>
+    <span role="listitem"><b>Terms</b> Flat fees, quoted in writing</span>
+    <span role="listitem"><b>Who does the work</b> One person, start to finish</span>
+    <span role="listitem"><b>Based in</b> Vancouver · working across Canada</span>
   </div>
 </div>
 
@@ -1087,11 +1096,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="ey">The problem</div>
     <h2 class="dh" style="max-width:720px">Good businesses get overlooked. <em>Here's why.</em></h2>
     <p class="body-p" style="max-width:580px;margin-bottom:0"><a href="#certifications">Sustainability certification</a> is one of the most powerful marketing assets a small business can earn. Most that deserve it never get there, not because they don't qualify, but because the system wasn't built for them.</p>
-    <div class="prob-row stg">
-      <div class="prob-card"><div class="prob-n">01</div><div class="prob-title">Priced for someone else</div><p class="prob-txt">The big firms built their pricing for companies ten times your size. A $40,000 quote isn't a negotiation starting point. It's a signal that you're not their client. Most small businesses just walk away.</p></div>
-      <div class="prob-card"><div class="prob-n">02</div><div class="prob-title">Genuinely confusing</div><p class="prob-txt">B Corp. Benefit Corporation. Climate Neutral. ISO 14001. They overlap, they contradict, and the internet makes it worse. Most owners spend hours researching and still aren't sure which one they actually need.</p></div>
-      <div class="prob-card"><div class="prob-n">03</div><div class="prob-title">Feels like a year</div><p class="prob-txt">For most small businesses, certification takes closer to twelve weeks than a year. The challenge isn't the clock. It's knowing which answers hold up under review and which ones quietly sink a submission before it gets flagged. Most owners are already doing the practices.</p></div>
-    </div>
+    <dl class="prob-ledger stg">
+      <div class="prob-card">
+        <dt><span class="prob-n">01</span><span class="prob-title">Priced for someone else</span></dt>
+        <dd class="prob-txt">The big firms built their pricing for companies ten times your size. A $40,000 quote isn't a negotiation starting point. It's a signal that you're not their client. Most small businesses just walk away.<span class="prob-aside">Candor's answer: a flat fee, quoted before any work starts.</span></dd>
+      </div>
+      <div class="prob-card">
+        <dt><span class="prob-n">02</span><span class="prob-title">Genuinely confusing</span></dt>
+        <dd class="prob-txt">B Corp. Benefit Corporation. Climate Neutral. ISO 14001. They overlap, they contradict, and the internet makes it worse. Most owners spend hours researching and still aren't sure which one they actually need.<span class="prob-aside">Candor's answer: the audit tells you which one, or whether none fits yet.</span></dd>
+      </div>
+      <div class="prob-card">
+        <dt><span class="prob-n">03</span><span class="prob-title">Feels like a year</span></dt>
+        <dd class="prob-txt">For most small businesses the preparation is a matter of weeks, not a year; B Lab's own review then adds a few months on top. The challenge isn't the clock. It's knowing which answers hold up under review and which ones quietly sink a submission. Most owners are already doing the practices.<span class="prob-aside">Candor's answer: documentation first, submission second.</span></dd>
+      </div>
+    </dl>
   </div>
 </section>
 
@@ -1288,7 +1306,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="proc-container">
       <div class="proc-line"><div class="proc-line-fill" id="plf"></div></div>
-      <div class="proc-step"><div class="proc-dot"><span class="proc-n">01</span></div><div><div class="proc-title">A free 20-minute call</div><p class="proc-txt">We talk through your business and whether certification actually makes sense. About a third of the time I point people toward a different credential than the one they came in asking about. No pitch, no pressure.</p><div class="proc-when">Week 1 · No cost</div></div></div>
+      <div class="proc-step"><div class="proc-dot"><span class="proc-n">01</span></div><div><div class="proc-title">A free 30-minute call</div><p class="proc-txt">We talk through your business and whether certification actually makes sense. Sometimes the honest answer is a different credential than the one you came in asking about, and I'll say so. No pitch, no pressure.</p><div class="proc-when">Week 1 · No cost</div></div></div>
       <div class="proc-step"><div class="proc-dot"><span class="proc-n">02</span></div><div><div class="proc-title">The readiness audit</div><p class="proc-txt">Two weeks. I run the assessment, you send supporting docs, we have one working call. You get a written report you own outright. Regardless of what comes next.</p><div class="proc-when">Weeks 2–4 · $1,800 flat</div></div></div>
       <div class="proc-step"><div class="proc-dot"><span class="proc-n">03</span></div><div><div class="proc-title">We close the gaps</div><p class="proc-txt">Policy drafts. Tracking systems. Evidence compilation. I do the work. You make the calls only you can make. Bi-weekly calls, about 30 minutes each.</p><div class="proc-when">Months 2–4 · Tier 02</div></div></div>
       <div class="proc-step"><div class="proc-dot"><span class="proc-n">04</span></div><div><div class="proc-title">Submit and certify</div><p class="proc-txt">I handle the B Lab submission and all correspondence. When the cert comes through, we plan the announcement together: social, press, customer email. It's worth marking properly.</p><div class="proc-when">Months 4–9 · Tier 03</div></div></div>
@@ -1384,7 +1402,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="cert-card-fee">No fee</div>
         </div>
       </div>
-      <p class="cert-note">Most businesses I work with go for B Corp. The others come up on the first call if they're a better fit.</p>
+      <p class="cert-note">Most small businesses go for B Corp. The others come up on the first call if they're a better fit.</p>
     </div>
 
   </div>
@@ -1450,7 +1468,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="faq">
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What if my business doesn't qualify?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans"><a href="#services">The audit</a> will tell you. Most small businesses land in one of two camps: closer to certification than they expected, or in need of 6–12 months of foundational work first. Either way you'll know exactly where you stand. If you're not ready, I'll say so directly.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What does B Lab charge on top of your fees?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">For Canadian businesses under $5M revenue, B Corp's annual fee is roughly $2,100 USD. Climate Neutral scales with your footprint, typically $1,000–$5,000 annually. 1% for the Planet has no membership fee, just the commitment to donate 1% of revenue. I walk through all costs in the audit so nothing surprises you.</p></div></div></div>
-      <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What's the difference between B Corp and Benefit Corporation?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">B Corp is a third-party certification from B Lab. Benefit Corporation is a legal entity structure in some jurisdictions that expands what directors can consider beyond shareholder profit. They're different things. You can have one without the other. Most businesses I work with want the B Corp certification because it's the certification consumers actually recognise.</p></div></div></div>
+      <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">What's the difference between B Corp and Benefit Corporation?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">B Corp is a third-party certification from B Lab. Benefit Corporation is a legal entity structure in some jurisdictions that expands what directors can consider beyond shareholder profit. They're different things. You can have one without the other. Most small businesses go for the B Corp certification because it's the one consumers actually recognise.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">Is this just greenwashing with a nicer logo?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">Fair challenge. B Corp's credibility has taken hits as larger brands have joined. The honest answer: it's a real verification process, but only as meaningful as your actual practices. I won't help a business game the assessment. I help businesses that are genuinely doing the work get credit for it.</p></div></div></div>
       <div class="fq"><div class="fq-q" role="button" tabindex="0" aria-expanded="false"><div class="fq-qt">Why work with you over an established firm?</div><div class="fq-ic"></div></div><div class="fq-body"><div class="fq-bi"><p class="fq-ans">First, my pricing is calibrated for businesses your size. Not companies ten times larger. Second, I come from inside a regulated BC small business, so I understand your compliance overhead without needing it explained. Third, every engagement runs through me directly. No junior consultant managing your file while a partner takes the credit.</p></div></div></div>
     </div>
@@ -2253,7 +2271,7 @@ document.querySelectorAll('.fq').forEach(item => {
   setTimeout(function() { tagline.classList.add('tl-in'); }, 3350);
 
   /* 4300ms: auto-dismiss */
-  setTimeout(dismiss, 4300);
+  setTimeout(dismiss, 2600);
 })();
 
 
