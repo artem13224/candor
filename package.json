@@ -2,6 +2,9 @@
   "name": "candor-website",
   "private": true,
   "scripts": {
+    "new-post": "node scripts/new-post.js",
+    "validate": "node scripts/validate-post.js",
+    "rebuild": "node scripts/rebuild.js",
     "publish": "node scripts/publish.js",
     "watch": "node scripts/blog-watcher.js"
   }

@@ -1,166 +1,175 @@
 #!/usr/bin/env node
 /**
- * publish.js — Candor blog post publisher
- * Usage:  node publish.js path/to/new-post.html
- *         node publish.js path/to/new-post.html --dry-run
+ * publish.js — Candor blog post publisher (single pipeline).
+ *
+ *   node scripts/publish.js path/to/post.html [--dry-run] [--no-git] [--force]
+ *
+ * Steps:
+ *   1. copy the post into blog/ (if it isn't already there)
+ *   2. node scripts/sync-shared.js blog/<slug>.html   (consent banner, footer links)
+ *   3. validate the post  → exit 1 with the problem list unless --force
+ *   4. rebuild blog/index.html cards and the blog block of sitemap.xml
+ *   5. git add / commit "blog: publish <slug>" / push     (skipped by --no-git)
+ *
+ *   --dry-run  prints what would happen (validates a synced temp copy), writes nothing
+ *   --no-git   writes files but skips git
+ *   --force    publish even if validation reports problems
  */
 
-const fs   = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+'use strict';
 
-// ── Config ────────────────────────────────────────────────────────────────────
-const REPO_ROOT   = path.resolve(__dirname, '..');
-const BLOG_DIR    = path.join(REPO_ROOT, 'blog');
-const INDEX_FILE  = path.join(BLOG_DIR, 'index.html');
-const SITEMAP     = path.join(REPO_ROOT, 'sitemap.xml');
-const SITE_ORIGIN = 'https://candorcertified.com';
+const fs   = require('fs');
+const os   = require('os');
+const path = require('path');
+const { execFileSync } = require('child_process');
+const lib  = require('./lib/blog');
+
+const { REPO_ROOT, BLOG_DIR, SITE_ORIGIN } = lib;
+const SYNC_SCRIPT = path.join(__dirname, 'sync-shared.js');
 
 // ── Args ──────────────────────────────────────────────────────────────────────
 const args    = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
+const NO_GIT  = args.includes('--no-git');
+const FORCE   = args.includes('--force');
 const INPUT   = args.find(a => !a.startsWith('--'));
 
-if (!INPUT) {
-  console.error('Usage: node publish.js path/to/post.html [--dry-run]');
-  process.exit(1);
+function usage(code) {
+  console.error('Usage: node scripts/publish.js path/to/post.html [--dry-run] [--no-git] [--force]');
+  process.exit(code);
 }
+if (!INPUT) usage(1);
 
 const srcPath = path.resolve(INPUT);
-if (!fs.existsSync(srcPath)) {
-  console.error(`File not found: ${srcPath}`);
+if (!fs.existsSync(srcPath) || !srcPath.endsWith('.html')) {
+  console.error(`✗ Not an .html file: ${srcPath}`);
+  process.exit(1);
+}
+const slug     = path.basename(srcPath, '.html');
+const destPath = path.join(BLOG_DIR, `${slug}.html`);
+const inBlog   = path.resolve(srcPath) === destPath;
+const rel      = p => path.relative(REPO_ROOT, p) || '.';
+const tag      = DRY_RUN ? '[dry-run]' : '✓';
+
+if (slug === 'index' || slug !== lib.slugify(slug, 200)) {
+  console.error(`✗ "${slug}" is not a valid post slug (lowercase letters, digits and hyphens only).`);
   process.exit(1);
 }
 
-// ── Parse the post HTML ───────────────────────────────────────────────────────
-const html = fs.readFileSync(srcPath, 'utf8');
-
-function extract(pattern, fallback = '') {
-  const m = html.match(pattern);
-  return m ? m[1].trim() : fallback;
+function run(cmd, cmdArgs, opts = {}) {
+  return execFileSync(cmd, cmdArgs, { cwd: REPO_ROOT, stdio: 'inherit', ...opts });
 }
 
-const slug     = path.basename(srcPath, '.html');
-const title    = extract(/<h1[^>]*>([\s\S]*?)<\/h1>/i)
-                   .replace(/<[^>]+>/g, '')
-                   .replace(/\.$/, '').trim();
-const category = extract(/<span class="article-tag">([\s\S]*?)<\/span>/i);
-const lede     = extract(/<p class="article-lede">([\s\S]*?)<\/p>/i)
-                   .replace(/<[^>]+>/g, '').trim();
-const dateStr  = extract(/<span>([A-Z][a-z]+ \d{4})<\/span>/);
-const today    = new Date().toISOString().split('T')[0];
-
-if (!title)    { console.error('Could not parse <h1> from post.'); process.exit(1); }
-if (!category) { console.error('Could not parse article-tag from post.'); process.exit(1); }
-
-const excerpt = lede.length > 120 ? lede.slice(0, 117) + '...' : lede;
-
-console.log('\n── Parsed post ─────────────────────────────────');
-console.log(`  Slug:     ${slug}`);
-console.log(`  Title:    ${title}`);
-console.log(`  Category: ${category}`);
-console.log(`  Date:     ${dateStr || today}`);
-console.log(`  Excerpt:  ${excerpt}`);
-console.log('────────────────────────────────────────────────\n');
-
-// ── 1. Copy HTML to /blog ─────────────────────────────────────────────────────
-const destPath = path.join(BLOG_DIR, `${slug}.html`);
-
-if (destPath === srcPath) {
-  console.log('✓ Post already in /blog — skipping copy');
-} else if (DRY_RUN) {
-  console.log(`[dry-run] Would copy → ${destPath}`);
-} else {
-  fs.copyFileSync(srcPath, destPath);
-  console.log(`✓ Copied post → blog/${slug}.html`);
+function syncShared(file, quiet = false) {
+  run(process.execPath, [SYNC_SCRIPT, file], quiet ? { stdio: 'pipe' } : {});
 }
 
-// ── 2. Update blog/index.html ─────────────────────────────────────────────────
-const newCard = `
-    <a href="/blog/${slug}" class="article-card">
-      <span class="card-tag">${category}</span>
-      <h2 class="card-title">${title}</h2>
-      <p class="card-excerpt">${excerpt}</p>
-      <div class="card-meta">
-        <span class="card-date">${dateStr || today}</span>
-        <span class="card-arrow">&#8594;</span>
-      </div>
-    </a>`;
-
-if (!fs.existsSync(INDEX_FILE)) {
-  console.warn('⚠ blog/index.html not found — skipping index update');
-} else {
-  const indexHtml = fs.readFileSync(INDEX_FILE, 'utf8');
-
-  if (indexHtml.includes(`href="/blog/${slug}"`)) {
-    console.log('⚠ Card already exists in index — skipping');
-  } else {
-    // Find the closing </section> that sits just before <footer>
-    // That's the cards section — inject the new card right before it closes
-    const footerIdx = indexHtml.indexOf('<footer>');
-    const sectionCloseIdx = indexHtml.lastIndexOf('</section>', footerIdx);
-
-    if (sectionCloseIdx === -1) {
-      console.warn('⚠ Could not find cards section in index.html — skipping index update');
-    } else {
-      const updated =
-        indexHtml.slice(0, sectionCloseIdx) +
-        newCard + '\n\n  ' +
-        indexHtml.slice(sectionCloseIdx);
-
-      if (DRY_RUN) {
-        console.log('[dry-run] Would inject card into blog/index.html before </section>');
-      } else {
-        fs.writeFileSync(INDEX_FILE, updated, 'utf8');
-        console.log('✓ Injected card into blog/index.html');
-      }
-    }
-  }
+function report(problems) {
+  if (!problems.length) { console.log(`${tag} Validation passed`); return true; }
+  console.log(`${FORCE ? '⚠' : '✗'} Validation found ${problems.length} problem${problems.length === 1 ? '' : 's'}:`);
+  problems.forEach(p => console.log(`    - ${p}`));
+  return false;
 }
 
-// ── 3. Update sitemap.xml ─────────────────────────────────────────────────────
-const newUrl = `
-  <url>
-    <loc>${SITE_ORIGIN}/blog/${slug}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>`;
+console.log(`\n── publish ${slug} ${DRY_RUN ? '(dry run)' : ''}──────────────────────────`);
+console.log(`  source: ${rel(srcPath)}`);
+console.log(`  target: ${rel(destPath)}\n`);
 
-if (!fs.existsSync(SITEMAP)) {
-  console.warn('⚠ sitemap.xml not found — skipping sitemap update');
-} else {
-  const sitemap = fs.readFileSync(SITEMAP, 'utf8');
-
-  if (sitemap.includes(`/blog/${slug}`)) {
-    console.log('⚠ URL already in sitemap — skipping');
-  } else {
-    const updated = sitemap.replace('</urlset>', newUrl + '\n</urlset>');
-    if (DRY_RUN) {
-      console.log('[dry-run] Would add entry to sitemap.xml');
-    } else {
-      fs.writeFileSync(SITEMAP, updated, 'utf8');
-      console.log('✓ Added entry to sitemap.xml');
-    }
-  }
-}
-
-// ── 4. Git commit & push ──────────────────────────────────────────────────────
+// ── Dry run ───────────────────────────────────────────────────────────────────
 if (DRY_RUN) {
-  console.log('\n[dry-run] Would run:');
-  console.log(`  git add blog/${slug}.html blog/index.html sitemap.xml`);
-  console.log(`  git commit -m "blog: publish ${slug}"`);
-  console.log('  git push');
-  console.log('\nDry run complete — nothing was changed.\n');
-} else {
-  console.log('\nCommitting and pushing...');
+  console.log(inBlog ? '[dry-run] Post already in blog/ — no copy needed'
+                     : `[dry-run] Would copy → ${rel(destPath)}`);
+
+  // Validate a synced temp copy so the result matches what publish would produce.
+  const tmpDir  = fs.mkdtempSync(path.join(os.tmpdir(), 'candor-publish-'));
+  const tmpFile = path.join(tmpDir, `${slug}.html`);
+  fs.copyFileSync(srcPath, tmpFile);
+  let problems;
   try {
-    execSync(`git -C "${REPO_ROOT}" add "blog/${slug}.html" "blog/index.html" "sitemap.xml"`, { stdio: 'inherit' });
-    execSync(`git -C "${REPO_ROOT}" commit -m "blog: publish ${slug}"`, { stdio: 'inherit' });
-    execSync(`git -C "${REPO_ROOT}" push`, { stdio: 'inherit' });
-    console.log(`\n✓ Done. Live at: ${SITE_ORIGIN}/blog/${slug}\n`);
-  } catch (e) {
-    console.error('\n✗ Git step failed. Files were updated locally — commit manually if needed.');
+    console.log(`[dry-run] Would run: node scripts/sync-shared.js ${rel(destPath)}`);
+    syncShared(tmpFile, true);
+    problems = lib.validatePost(tmpFile);
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
+  const ok = report(problems);
+
+  const meta = lib.extractPost(srcPath);
+  console.log('\n  Parsed metadata');
+  console.log(`    title:    ${meta.title}`);
+  console.log(`    tag:      ${meta.tag}`);
+  console.log(`    date:     ${meta.date} (${meta.dateLabel})`);
+  console.log(`    excerpt:  ${meta.excerpt}`);
+  console.log(`    og:image: ${meta.ogImage}\n`);
+
+  const idx = lib.rebuildIndex({ dryRun: true });
+  const sm  = lib.rebuildSitemap({ dryRun: true });
+  console.log(`[dry-run] blog/index.html: ${idx.changed ? 'would change' : 'already up to date'} (${idx.count} posts${inBlog ? '' : ' + this one once copied'}; featured: ${idx.featured})`);
+  console.log(`[dry-run] sitemap.xml:     ${sm.changed ? 'would change' : 'already up to date'}`);
+  console.log(NO_GIT ? '[dry-run] --no-git: would skip git'
+                     : `[dry-run] Would run:\n    git add blog/${slug}.html blog/index.html sitemap.xml <post images>\n    git commit -m "blog: publish ${slug}"\n    git push`);
+  console.log(`\nDry run complete — nothing was written.${ok || FORCE ? '' : ' Fix the problems above before publishing.'}\n`);
+  process.exit(ok || FORCE ? 0 : 1);
+}
+
+// ── 1. Copy into blog/ ────────────────────────────────────────────────────────
+let copied = false;
+if (inBlog) {
+  console.log('✓ Post already in blog/ — skipping copy');
+} else {
+  if (fs.existsSync(destPath) && !FORCE) {
+    console.error(`✗ ${rel(destPath)} already exists. Edit that file directly, or pass --force to overwrite it.`);
     process.exit(1);
   }
+  fs.copyFileSync(srcPath, destPath);
+  copied = true;
+  console.log(`✓ Copied → ${rel(destPath)}`);
+}
+
+// ── 2. Site-wide shared blocks ────────────────────────────────────────────────
+console.log(`→ node scripts/sync-shared.js ${rel(destPath)}`);
+syncShared(destPath);
+
+// ── 3. Validate ───────────────────────────────────────────────────────────────
+const problems = lib.validatePost(destPath);
+if (!report(problems) && !FORCE) {
+  if (copied) {
+    fs.unlinkSync(destPath);
+    console.log(`  Removed the copy at ${rel(destPath)}; your source file is untouched.`);
+  }
+  console.log('  Fix the problems and run again, or pass --force to publish anyway.\n');
+  process.exit(1);
+}
+
+// ── 4. Rebuild index + sitemap ────────────────────────────────────────────────
+const idx = lib.rebuildIndex();
+const sm  = lib.rebuildSitemap();
+console.log(`✓ blog/index.html ${idx.changed ? 'rebuilt' : 'unchanged'} — ${idx.count} posts, featured: ${idx.featured}`);
+console.log(`✓ sitemap.xml ${sm.changed ? 'rebuilt' : 'unchanged'} — ${sm.count} blog URLs`);
+
+// ── 5. Git ────────────────────────────────────────────────────────────────────
+if (NO_GIT) {
+  console.log('\n--no-git: files written, skipping git. Review with `git status`, then commit when ready.\n');
+  process.exit(0);
+}
+
+const html   = fs.readFileSync(destPath, 'utf8');
+const images = lib.bodyImgTags(html)
+  .map(t => lib.attr(t, 'src'))
+  .filter(Boolean)
+  .filter(src => !/^https?:\/\//i.test(src))
+  .map(src => src.startsWith('/') ? path.join(REPO_ROOT, src) : path.join(BLOG_DIR, src.replace(/^\.\//, '')))
+  .filter(p => fs.existsSync(p))
+  .map(rel);
+
+const toAdd = [rel(destPath), rel(lib.INDEX_FILE), rel(lib.SITEMAP_FILE), ...images];
+console.log('\nCommitting and pushing...');
+try {
+  run('git', ['add', '--', ...toAdd]);
+  run('git', ['commit', '-m', `blog: publish ${slug}`]);
+  run('git', ['push']);
+  console.log(`\n✓ Done. Live at: ${SITE_ORIGIN}/blog/${slug}\n`);
+} catch (e) {
+  console.error('\n✗ Git step failed. Files were written locally — commit manually if needed.');
+  process.exit(1);
 }
