@@ -389,14 +389,18 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .who-mobile-head{padding:64px var(--px) 8px}
 .who-mobile .ey{margin-bottom:22px}
 .ws-lede{font-size:14px;margin-bottom:0;color:var(--ink4)}
-/* Track = one screen of pinned stage + ~55% of a screen of scroll per card change */
-.ws-track{position:relative;height:calc(100vh + (var(--n) - 1) * 55vh);height:calc(100svh + (var(--n) - 1) * 55svh)}
-.ws-stage{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px var(--px) 112px;overflow:hidden}
-.ws-deck{position:relative;width:min(84vw,380px);height:min(60vh,520px);height:min(60svh,520px);perspective:900px;perspective-origin:50% 30%}
-.ws-card{position:absolute;inset:0;border-radius:14px;overflow:hidden;background:#0E110D;color:var(--white);cursor:pointer;
-  box-shadow:0 30px 60px -28px rgba(13,22,16,.55),0 0 0 1px rgba(255,255,255,.08) inset;
-  transform-origin:50% 100%;will-change:transform,opacity,filter;backface-visibility:hidden;-webkit-tap-highlight-color:transparent;
-  border:0;padding:0;text-align:left;font:inherit;display:block}
+/* Track: one pinned screen + 80% of a screen of scroll per card.
+   Per card: 0.5 unit pop-up, 0.5 unit dead-still hold, 0.7 unit flip-away. */
+.ws-track{position:relative;height:calc(100vh + (var(--n) - 0.7) * 80vh);height:calc(100svh + (var(--n) - 0.7) * 80svh)}
+.ws-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+/* Same geometry as the reference: full-stage 3D context, perspective 300px,
+   cards centred on it. Hinge on the card's bottom edge so the exit reads as a flip. */
+.ws-deck{position:absolute;inset:0;perspective:300px;perspective-origin:50% 50%}
+.ws-card{position:absolute;left:50%;top:50%;width:min(74vw,400px);height:min(62vh,580px);height:min(62svh,580px);
+  border-radius:10px;overflow:hidden;background:#0E110D;color:var(--white);cursor:pointer;
+  box-shadow:0 30px 60px -30px rgba(13,22,16,.6),0 0 0 1px rgba(255,255,255,.08) inset;
+  transform-origin:50% 100% 0;will-change:transform,opacity,filter;backface-visibility:hidden;
+  -webkit-tap-highlight-color:transparent;border:0;padding:0;text-align:left;font:inherit;display:block;visibility:hidden}
 .ws-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .ws-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,11,.92) 0%,rgba(10,14,11,.62) 34%,rgba(10,14,11,.12) 62%,rgba(10,14,11,0) 78%);pointer-events:none}
 .ws-sheen{position:absolute;inset:0;background:radial-gradient(120% 60% at 20% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 55%);pointer-events:none;mix-blend-mode:soft-light}
@@ -407,7 +411,7 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .ws-desc{display:block;font-family:var(--o);font-weight:400;font-size:14.5px;line-height:1.55;color:rgba(245,243,238,.86);margin-bottom:14px}
 .ws-tap{display:inline-flex;align-items:center;gap:6px;font-family:var(--u);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.78);border-bottom:1px solid rgba(245,243,238,.3);padding-bottom:2px}
 .ws-tap::after{content:'↗'}
-.ws-meta{width:min(84vw,380px);display:flex;align-items:center;gap:14px;margin-top:46px}
+.ws-meta{position:absolute;left:50%;bottom:104px;transform:translateX(-50%);width:min(74vw,400px);display:flex;align-items:center;gap:14px;z-index:20}
 .ws-count{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--ink3);flex-shrink:0}
 .ws-bar{flex:1;height:1px;background:rgba(14,17,13,.14);position:relative;overflow:hidden}
 .ws-bar-fill{position:absolute;inset:0;background:var(--green);transform-origin:0 50%;transform:scaleX(0)}
@@ -415,9 +419,9 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .ws-cue::after{content:' ↓'}
 /* Reduced motion (or no JS): a plain vertical list, no pinning, no blur */
 .ws-static .ws-track{height:auto}
-.ws-static .ws-stage{position:static;height:auto;padding:24px var(--px) 64px}
-.ws-static .ws-deck{height:auto;perspective:none;display:grid;gap:16px}
-.ws-static .ws-card{position:relative;inset:auto;height:min(60svh,460px);transform:none!important;opacity:1!important;filter:none!important}
+.ws-static .ws-stage{position:static;height:auto;overflow:visible;padding:24px var(--px) 64px}
+.ws-static .ws-deck{position:static;perspective:none;display:grid;gap:16px}
+.ws-static .ws-card{position:relative;left:auto;top:auto;width:100%;visibility:visible;height:min(60svh,460px);transform:none!important;opacity:1!important;filter:none!important}
 .ws-static .ws-text,.ws-static .ws-dim{transform:none!important;opacity:revert!important;filter:none!important}
 .ws-static .ws-dim{opacity:0!important}
 .ws-static .ws-meta{display:none}
@@ -1655,15 +1659,12 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
         <span class="ws-tap">Tap for the detail</span>
       </span>
       <span class="ws-dim"></span>`;
-    el.style.zIndex = String(N - i);
     el.addEventListener('click', () => openModal(d));
     // Keyboard: focusing a card scrolls the page so that card is in front.
     el.addEventListener('focus', () => {
       if (track.closest('.ws-static')) return;
       const r = track.getBoundingClientRect();
-      const span = track.offsetHeight - stageH();
-      const raw = (i / Math.max(1, N - 1)) * 0.9 + 0.05;
-      window.scrollTo({ top: window.scrollY + r.top + raw * span, behavior: 'auto' });
+      window.scrollTo({ top: window.scrollY + r.top + i * unitPx(), behavior: 'auto' });
     });
     deck.appendChild(el);
     return { el, text: el.querySelector('.ws-text'), dim: el.querySelector('.ws-dim') };
@@ -1677,63 +1678,72 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
   mqReduce.addEventListener && mqReduce.addEventListener('change', setStatic);
 
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-  const easeIn  = t => t * t;
   const easeOut = t => 1 - (1 - t) * (1 - t);
+  const backIn  = t => t * t * (3 * t - 2);           // GSAP back.in(2)
   const stageH  = () => (track.querySelector('.ws-stage') || track).offsetHeight || window.innerHeight;
+  const unitPx  = () => stageH() * 0.8;               // scroll per card = 80% of a screen
 
   let target = 0, current = 0, raf = 0, active = false;
 
+  // P is measured in cards. Card k is dead-still in front for P in [k-0.2, k+0.3].
+  // It starts popping up while the stage scrolls into view, so it is settled
+  // by the time the section pins.
   function readScroll() {
     const r = track.getBoundingClientRect();
-    const span = track.offsetHeight - stageH();
-    const raw = span > 0 ? clamp(-r.top / span, 0, 1) : 0;
-    // 5% dwell at both ends so the first and last cards settle before/after the pin
-    target = clamp((raw - 0.05) / 0.9, 0, 1) * (N - 1);
+    target = clamp(-r.top / unitPx(), -0.75, N - 1 + 0.35);
   }
 
+  // Reverse of the reference timeline for one card:
+  //   ENTER  (reference's drop played backwards): rises from one card-height
+  //          below with back.in(2) reversed, so it pops up, overshoots and settles.
+  //   HOLD   nothing moves; text sharp.
+  //   EXIT   (reference's approach played backwards): z 0 to -510 and rotateX
+  //          -3 to +2 about the far pivot, so it flips back away from you,
+  //          drifting up then down; blurs out of focus and fades.
   function render(p) {
-    for (let i = 0; i < N; i++) {
-      const c = cards[i], d = i - p;            // d > 0: waiting behind; d < 0: leaving
-      let ty = 0, tz = 0, rx = 0, sc = 1, op = 1, blur = 0, dim = 0;
-      let tOp = 1, tBlur = 0, tTy = 0;
-      if (d >= 0) {
-        // Behind: peeks out below the front card, smaller and dimmer; text hidden
-        const k = Math.min(d, 3);
-        ty = k * 12; tz = -k * 70; sc = 1 - k * 0.045;
-        op = d > 2 ? clamp(3 - d, 0, 1) : 1;
-        dim = clamp(k * 0.26, 0, 0.7);
-        const reveal = clamp(1 - d / 0.45, 0, 1);  // text arrives as the card takes the front
-        tOp = easeOut(reveal); tTy = (1 - reveal) * 16; tBlur = (1 - reveal) * 6;
-      } else {
-        // Leaving: hold briefly, then lift up and forward, blur out of focus, fade
-        const e = -d;
-        const k = easeIn(clamp((e - 0.12) / 0.88, 0, 1));
-        ty = -k * 62; tz = k * 90; rx = -k * 9; sc = 1 + k * 0.04;
-        blur = k * 16; op = 1 - clamp((e - 0.2) / 0.8, 0, 1);
-        const tk = clamp((e - 0.06) / 0.5, 0, 1);   // text goes soft a beat before the image
-        tBlur = tk * 10; tOp = 1 - easeIn(tk); tTy = -tk * 10;
+    for (let k = 0; k < N; k++) {
+      const c = cards[k], s = c.el.style, d = p - k;
+      const last = k === N - 1;
+      if (d < -0.7 || (!last && d > 1)) { s.visibility = 'hidden'; continue; }
+      let y = 0, z = 0, rx = -3, op = 1, blur = 0, dim = 0, tOp = 1, tBlur = 0, tTy = 0;
+      if (d < -0.2) {
+        const e = (d + 0.7) / 0.5;
+        y = 100 * backIn(1 - e);
+        z = 10 * (1 - e);
+        op = clamp(e / 0.12, 0, 1);
+        const tr = clamp((e - 0.55) / 0.45, 0, 1);
+        tOp = easeOut(tr); tBlur = (1 - tr) * 6; tTy = (1 - tr) * 12;
+      } else if (d > 0.3 && !last) {
+        const x = (d - 0.3) / 0.7;
+        z = -510 * x * x;
+        rx = -3 + 41 * easeOut(clamp(x / 0.7, 0, 1)); // hinged on the bottom edge: the top tips back ~38° early, while the card is still big
+        y = -12.5 * Math.sin(Math.PI * x);
+        blur = 14 * clamp((x - 0.05) / 0.95, 0, 1);
+        op = 1 - clamp((x - 0.35) / 0.65, 0, 1);
+        dim = x * 0.6;
+        const tx = clamp(x / 0.45, 0, 1);
+        tBlur = tx * 8; tOp = 1 - tx * tx; tTy = -tx * 6;
       }
-      const s = c.el.style;
-      if (op <= 0.001 || d > 3.2) { s.visibility = 'hidden'; continue; }
       s.visibility = 'visible';
-      s.transform = `translate3d(0, ${d >= 0 ? ty.toFixed(2) + 'px' : ty.toFixed(2) + '%'}, ${tz.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
+      s.zIndex = String(N - k);                         // the leaving card stays in front while it flips away
+      s.transform = `translate(-50%, -54%) translateY(${y.toFixed(2)}%) translateZ(${z.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg)`;
       s.opacity = op.toFixed(3);
       s.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
-      s.pointerEvents = Math.abs(d) < 0.5 ? 'auto' : 'none';
+      s.pointerEvents = d >= -0.2 && d <= 0.45 ? 'auto' : 'none';
       c.dim.style.opacity = dim.toFixed(3);
       const t = c.text.style;
       t.opacity = tOp.toFixed(3);
       t.transform = `translate3d(0, ${tTy.toFixed(2)}px, 0)`;
       t.filter = tBlur > 0.05 ? `blur(${tBlur.toFixed(2)}px)` : 'none';
     }
-    const front = clamp(Math.round(p), 0, N - 1);
+    const front = clamp(Math.round(p - 0.05), 0, N - 1);
     countEl.textContent = `${pad(front + 1)} / ${pad(N)}`;
-    barFill.style.transform = `scaleX(${(p / (N - 1)).toFixed(4)})`;
-    cue.style.opacity = p > 0.15 ? '0' : '1';
+    barFill.style.transform = `scaleX(${clamp(p / (N - 1), 0, 1).toFixed(4)})`;
+    cue.style.opacity = p > 0.25 ? '0' : '1';
   }
 
   function loop() {
-    current += (target - current) * 0.2;
+    current += (target - current) * 0.22;
     if (Math.abs(target - current) < 0.0005) current = target;
     render(current);
     raf = current !== target ? requestAnimationFrame(loop) : 0;
