@@ -648,8 +648,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <article class="article-body">
 
   <h2>What the B Impact Assessment is</h2>
-  <p>The B Impact Assessment is a free scoring tool developed and maintained by B Lab, the nonprofit that administers B Corp certification globally. The tool scores a business across five pillars: Governance, Workers, Community, Environment, and Customers. The maximum possible score is 200. The minimum threshold to qualify for certification is 80 points.</p>
-  <p>Since January 2026, reaching 80 is necessary but no longer sufficient on its own. B Lab's updated certification standards now require businesses to meet mandatory minimum thresholds across seven specific impact topics. A strong overall score doesn't offset a gap in a mandatory area. <a href="/blog/b-corp-certification-changes-2026">Full breakdown of what changed in 2026 →</a></p>
+  <p>The B Impact Assessment is a free scoring tool developed and maintained by B Lab, the nonprofit that administers B Corp certification globally. The tool scores a business across five pillars: Governance, Workers, Community, Environment, and Customers. The maximum possible score is 200. <mark>The minimum threshold to qualify for certification is 80 points.</mark></p>
+  <p>Since January 2026, reaching 80 is necessary but no longer sufficient on its own. B Lab's updated certification standards now require businesses to meet mandatory minimum thresholds across seven specific impact topics. <mark>A strong overall score doesn't offset a gap in a mandatory area.</mark> <a href="/blog/b-corp-certification-changes-2026">Full breakdown of what changed in 2026 →</a></p>
 
   <div class="stat-row">
     <div class="stat-cell">
@@ -666,7 +666,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <p>The average score for businesses that complete the full B Impact Assessment without preparation is 50–65 points. Reaching 80 puts a business in the top performance tier globally among businesses that have attempted it. A score above 100 is considered exceptional.</p>
+  <p><mark>The average score for businesses that complete the full B Impact Assessment without preparation is 50–65 points.</mark> Reaching 80 puts a business in the top performance tier globally among businesses that have attempted it. A score above 100 is considered exceptional.</p>
   <p>The assessment lives at bimpactassessment.net. It's accessible to any business at no cost. You can begin scoring today without engaging B Lab or paying anything. Before going through the full BIA, the <a href="/assessment/">free 2-minute assessment</a> gives you a directional read on where your business stands.</p>
 
   <h2>How the five pillars break down</h2>
@@ -710,7 +710,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>"The gap is documentation, not an overhaul. Most businesses already operate more responsibly than their unaided B Impact Assessment score reflects."</p>
   </div>
 
-  <p>This is the core insight that changes how you approach certification. You're not rebuilding your business. You're making your existing practices legible. Policy drafts. Tracking systems. Evidence compilation. That's the work.</p>
+  <p>This is the core insight that changes how you approach certification. <mark>You're not rebuilding your business. You're making your existing practices legible.</mark> Policy drafts. Tracking systems. Evidence compilation. That's the work.</p>
 
   <div class="callout">
     <span class="callout-label">Year 0 Requirement</span>
@@ -719,7 +719,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <h2>How B Lab verifies your score</h2>
   <p>Completing the self-assessment is the first step. Reaching 80 points on paper is the second. The third is verification — and this is where underprepared businesses stall.</p>
-  <p>Once a business <a href="/blog/how-to-get-b-corp-certified-bc">submits for certification</a>, B Lab assigns a verification analyst who reviews the submission and schedules a call. On that call, the analyst requests supporting documentation: HR policy documents, governance records, financial data, supplier information. The analyst uses this to validate the scores claimed in the self-assessment. Scores without documentation get adjusted downward.</p>
+  <p>Once a business <a href="/blog/how-to-get-b-corp-certified-bc">submits for certification</a>, B Lab assigns a verification analyst who reviews the submission and schedules a call. On that call, the analyst requests supporting documentation: HR policy documents, governance records, financial data, supplier information. The analyst uses this to validate the scores claimed in the self-assessment. <mark>Scores without documentation get adjusted downward.</mark></p>
 
   <div class="callout">
     <span class="callout-label">Worth knowing</span>
@@ -926,6 +926,36 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
 })();
 </script>
 <!-- candor-consent:end -->
+<!-- candor-highlight:start -->
+<style>
+  .article-body mark{
+    --hl:rgba(90,166,114,.30);
+    color:inherit;background-color:transparent;
+    background-image:linear-gradient(var(--hl),var(--hl));
+    background-repeat:no-repeat;background-position:0 88%;background-size:100% 70%;
+    padding:0 .12em;margin:0 -.04em;border-radius:.18em;
+  }
+  .hl-ready .article-body mark{background-size:0% 70%}
+  .hl-ready .article-body mark.is-lit{background-size:100% 70%;transition:background-size 1.1s cubic-bezier(.16,1,.3,1)}
+  @media (prefers-reduced-motion:reduce){.hl-ready .article-body mark.is-lit{transition:none}}
+  @media print{.article-body mark,.hl-ready .article-body mark{background-size:100% 70%!important}}
+</style>
+<script>
+(function () {
+  var marks = document.querySelectorAll('.article-body mark');
+  if (!marks.length || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('hl-ready');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-lit');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -18% 0px', threshold: 0.6 });
+  marks.forEach(function (m) { io.observe(m); });
+})();
+</script>
+<!-- candor-highlight:end -->
 <!-- candor-grain:start -->
 <style>
   .candor-grain{position:fixed;inset:0;z-index:500;pointer-events:none;background:url(/images/textures/grain.png) repeat;background-size:160px 160px;opacity:.07;mix-blend-mode:soft-light}

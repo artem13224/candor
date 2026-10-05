@@ -727,9 +727,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>What 1% for the Planet requires</h2>
 
-    <p>1% for the Planet is a membership program. The core commitment: donate 1% of annual gross revenue to approved environmental nonprofits. Members pay an annual fee, direct their giving through a vetted network of environmental partners, and earn the right to use the 1% for the Planet logo in their marketing.</p>
+    <p>1% for the Planet is a membership program. The core commitment: <mark>donate 1% of annual gross revenue to approved environmental nonprofits</mark>. Members pay an annual fee, direct their giving through a vetted network of environmental partners, and earn the right to use the 1% for the Planet logo in their marketing.</p>
 
-    <p>Verification is financial. 1% for the Planet reviews your donation records each year to confirm the 1% commitment is being met. There is no audit of how you treat employees, what your supply chain looks like, or how your business is governed. The pledge is about where your money goes. That's the whole scope of it.</p>
+    <p>Verification is financial. 1% for the Planet reviews your donation records each year to confirm the 1% commitment is being met. <mark>There is no audit of how you treat employees, what your supply chain looks like, or how your business is governed.</mark> The pledge is about where your money goes. That's the whole scope of it.</p>
 
     <div class="callout">
       <span class="callout-label">Worth knowing</span>
@@ -738,7 +738,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>What B Corp requires</h2>
 
-    <p>B Corp certification is a third-party audit of how your entire business operates. The <a href="/blog/b-impact-assessment-explained">B Impact Assessment</a> scores you across five categories: governance, workers, community, environment, and customers. You need 80 points out of 200 to qualify for certification.</p>
+    <p><mark>B Corp certification is a third-party audit of how your entire business operates.</mark> The <a href="/blog/b-impact-assessment-explained">B Impact Assessment</a> scores you across five categories: governance, workers, community, environment, and customers. You need 80 points out of 200 to qualify for certification.</p>
 
     <p>Environmental giving contributes points in the environment section. It is a small fraction of 200 available points. A business donating 1% of revenue to conservation causes, but with no written worker policies, no supplier standards, and no governance documentation, will score nowhere close to 80. Workers, community, and environment together account for roughly 75% of available points.</p>
 
@@ -761,7 +761,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h2>B Corp vs 1% for the Planet: the core distinction</h2>
 
-    <p>One asks what you give. The other asks how you operate.</p>
+    <p><mark>One asks what you give. The other asks how you operate.</mark></p>
 
     <p>1% for the Planet is an input commitment. You pledge a portion of revenue. B Corp is an outcomes audit. You prove the systems, policies, and documented practices behind your business across governance, workers, community, and environment. You can join 1% for the Planet the week you start a business. Getting <a href="/blog/how-to-get-b-corp-certified-bc">B Corp certified</a> requires operational documentation that most early-stage businesses don't have yet, a submission fee, a third-party verification process, and renewal every three years.</p>
 
@@ -775,7 +775,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p>If your goal is credible third-party validation of how your whole business operates, including how you treat employees, who you buy from, and how decisions are governed: B Corp is the right standard. It covers more ground. The bar is higher. The certification carries more weight with investors, enterprise buyers, and mission-aligned partners who know the difference.</p>
 
-    <p>Some businesses hold both. 1% for the Planet membership can sit inside a B Corp-certified business as part of the environmental giving framework. They are not substitutes. Holding 1% for the Planet membership does not meaningfully accelerate a B Corp application, and B Corp certification does not satisfy the 1% giving commitment.</p>
+    <p>Some businesses hold both. 1% for the Planet membership can sit inside a B Corp-certified business as part of the environmental giving framework. They are not substitutes. <mark>Holding 1% for the Planet membership does not meaningfully accelerate a B Corp application</mark>, and B Corp certification does not satisfy the 1% giving commitment.</p>
 
     <h2>The honest question skeptics are actually asking</h2>
 
@@ -1033,6 +1033,36 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
 })();
 </script>
 <!-- candor-consent:end -->
+<!-- candor-highlight:start -->
+<style>
+  .article-body mark{
+    --hl:rgba(90,166,114,.30);
+    color:inherit;background-color:transparent;
+    background-image:linear-gradient(var(--hl),var(--hl));
+    background-repeat:no-repeat;background-position:0 88%;background-size:100% 70%;
+    padding:0 .12em;margin:0 -.04em;border-radius:.18em;
+  }
+  .hl-ready .article-body mark{background-size:0% 70%}
+  .hl-ready .article-body mark.is-lit{background-size:100% 70%;transition:background-size 1.1s cubic-bezier(.16,1,.3,1)}
+  @media (prefers-reduced-motion:reduce){.hl-ready .article-body mark.is-lit{transition:none}}
+  @media print{.article-body mark,.hl-ready .article-body mark{background-size:100% 70%!important}}
+</style>
+<script>
+(function () {
+  var marks = document.querySelectorAll('.article-body mark');
+  if (!marks.length || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('hl-ready');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-lit');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -18% 0px', threshold: 0.6 });
+  marks.forEach(function (m) { io.observe(m); });
+})();
+</script>
+<!-- candor-highlight:end -->
 <!-- candor-grain:start -->
 <style>
   .candor-grain{position:fixed;inset:0;z-index:500;pointer-events:none;background:url(/images/textures/grain.png) repeat;background-size:160px 160px;opacity:.07;mix-blend-mode:soft-light}

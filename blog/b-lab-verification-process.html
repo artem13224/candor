@@ -730,7 +730,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <p>After you submit, your application enters B Lab's verification queue. B Lab assigns a Standards Analyst to your account — a single point of contact who will review your submission, send document requests, and eventually conduct your review call. You'll receive an email confirmation with their name and a rough timeline.</p>
 
-  <p>The current queue runs 3 to 6 months before initial analyst contact depending on volume. That wait is largely outside your control. What is within your control is being ready to respond quickly once contact starts, because delays on your side restart your position in the analyst's active review queue.</p>
+  <p><mark>The current queue runs 3 to 6 months before initial analyst contact depending on volume.</mark> That wait is largely outside your control. What is within your control is being ready to respond quickly once contact starts, because delays on your side restart your position in the analyst's active review queue.</p>
 
   <div class="stat-row">
     <div class="stat-cell">
@@ -749,7 +749,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <h2>Step 2: The initial documentation request</h2>
 
-  <p>This is where most businesses get surprised. The analyst reviews your self-reported BIA answers and sends a document request through the BIA portal — a list of evidence they need to verify that your answers are accurate. The request covers the sections where you scored points. The higher you scored in an area, the more they'll want to see behind it.</p>
+  <p>This is where most businesses get surprised. The analyst reviews your self-reported BIA answers and sends a document request through the BIA portal — a list of evidence they need to verify that your answers are accurate. The request covers the sections where you scored points. <mark>The higher you scored in an area, the more they'll want to see behind it.</mark></p>
 
   <p>You upload everything directly through the BIA portal. B Lab does not accept documents by email. Organize your files clearly — analysts review dozens of applications and vague filenames slow things down.</p>
 
@@ -775,7 +775,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li>Customer data privacy policy and any relevant certifications</li>
   </ul>
 
-  <p>For businesses certifying under the 2026 standards, Climate Action documentation is now mandatory: at minimum, a Scope 1 and Scope 2 emissions inventory for the most recent full calendar year. If you haven't calculated your carbon footprint before submitting, this will be a gap.</p>
+  <p>For businesses certifying under the 2026 standards, <mark>Climate Action documentation is now mandatory: at minimum, a Scope 1 and Scope 2 emissions inventory for the most recent full calendar year.</mark> If you haven't calculated your carbon footprint before submitting, this will be a gap.</p>
 
   <div class="pull-quote">
     <p>"Most businesses I work with are already doing 70% of what verification requires. The gap is documentation — what you do informally needs to exist in writing."</p>
@@ -795,11 +795,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <li>Governance structure — who holds decision-making authority and how conflicts are managed</li>
   </ul>
 
-  <p>Prepare for this call the same way you'd prepare for a client audit: know your own documentation, be ready to explain the "why" behind your practices, and don't guess. If you don't know an answer on the call, say so and follow up in writing. Analysts flag inconsistency far more than gaps.</p>
+  <p>Prepare for this call the same way you'd prepare for a client audit: know your own documentation, be ready to explain the "why" behind your practices, and don't guess. If you don't know an answer on the call, say so and follow up in writing. <mark>Analysts flag inconsistency far more than gaps.</mark></p>
 
   <h2>Step 4: Score confirmation or adjustment</h2>
 
-  <p>After the call and any final follow-up rounds, the analyst finalizes your verified score. This may be lower than your self-reported score if documentation didn't support certain answers. A verified score of 80 or above moves you forward. Below 80, you receive a gap report and the option to address deficiencies and resubmit — which restarts the queue clock.</p>
+  <p>After the call and any final follow-up rounds, the analyst finalizes your verified score. This may be lower than your self-reported score if documentation didn't support certain answers. A verified score of 80 or above moves you forward. <mark>Below 80, you receive a gap report and the option to address deficiencies and resubmit — which restarts the queue clock.</mark></p>
 
   <p>If you pass, B Lab sends you the B Corp Agreement to sign. You pay the annual certification fee, B Lab publishes your profile, and you're certified. From there, you have one year to amend your articles of incorporation to include stakeholder-interest language if you haven't already.</p>
 
@@ -817,7 +817,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <hr class="section-break" />
 
-  <p>The businesses that move through verification fastest are the ones that treat the pre-submission period as a documentation sprint. Every written policy, every signed agreement, every environmental data point you have ready before you submit is time you don't lose waiting in queue.</p>
+  <p>The businesses that move through verification fastest are the ones that <mark>treat the pre-submission period as a documentation sprint</mark>. Every written policy, every signed agreement, every environmental data point you have ready before you submit is time you don't lose waiting in queue.</p>
 
   <p>If you want to know where your documentation gaps are before you submit, a <a href="https://candorcertified.com/assessment/">readiness assessment</a> is the right first step. Two weeks, flat fee, you keep the report regardless of what you decide next.</p>
 
@@ -1043,6 +1043,36 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
 })();
 </script>
 <!-- candor-consent:end -->
+<!-- candor-highlight:start -->
+<style>
+  .article-body mark{
+    --hl:rgba(90,166,114,.30);
+    color:inherit;background-color:transparent;
+    background-image:linear-gradient(var(--hl),var(--hl));
+    background-repeat:no-repeat;background-position:0 88%;background-size:100% 70%;
+    padding:0 .12em;margin:0 -.04em;border-radius:.18em;
+  }
+  .hl-ready .article-body mark{background-size:0% 70%}
+  .hl-ready .article-body mark.is-lit{background-size:100% 70%;transition:background-size 1.1s cubic-bezier(.16,1,.3,1)}
+  @media (prefers-reduced-motion:reduce){.hl-ready .article-body mark.is-lit{transition:none}}
+  @media print{.article-body mark,.hl-ready .article-body mark{background-size:100% 70%!important}}
+</style>
+<script>
+(function () {
+  var marks = document.querySelectorAll('.article-body mark');
+  if (!marks.length || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('hl-ready');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-lit');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -18% 0px', threshold: 0.6 });
+  marks.forEach(function (m) { io.observe(m); });
+})();
+</script>
+<!-- candor-highlight:end -->
 <!-- candor-grain:start -->
 <style>
   .candor-grain{position:fixed;inset:0;z-index:500;pointer-events:none;background:url(/images/textures/grain.png) repeat;background-size:160px 160px;opacity:.07;mix-blend-mode:soft-light}
