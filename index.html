@@ -385,26 +385,42 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .who-section{background:var(--bg2)}
 
 /* ─── MOBILE SWIPE STACK ─── */
-.who-mobile{display:block;padding:64px var(--px) 0}
+.who-mobile{display:block}
+.who-mobile-head{padding:64px var(--px) 8px}
 .who-mobile .ey{margin-bottom:22px}
-.swipe-arena{position:relative;height:380px;margin-top:32px;user-select:none;-webkit-user-select:none}
-.swipe-card{position:absolute;inset:0;border-radius:16px;overflow:hidden;background:var(--white);border:1px solid rgba(14,17,13,.1);box-shadow:0 4px 24px -8px rgba(14,17,13,.14);touch-action:none;will-change:transform;cursor:grab}
-.swipe-card:active{cursor:grabbing}
-.swipe-img{height:46%;overflow:hidden;position:relative;background:var(--bg2)}
-.swipe-img img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-.swipe-cat{position:absolute;top:12px;left:12px;font-family:var(--u);font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--white);background:rgba(14,17,13,.58);backdrop-filter:blur(6px);padding:4px 9px;border-radius:2px}
-.swipe-body{padding:18px 20px 20px}
-.swipe-name{font-family:var(--u);font-weight:700;font-size:20px;letter-spacing:-.01em;color:#0E110D;margin-bottom:6px;line-height:1.2}
-.swipe-text{font-family:var(--o);font-size:13.5px;line-height:1.58;color:var(--ink3);font-weight:300;margin-bottom:12px}
-.swipe-tap-hint{font-family:var(--u);font-size:10.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);display:inline-flex;align-items:center;gap:6px;border-bottom:1px solid rgba(14,17,13,.15);padding-bottom:1px}
-.swipe-tap-hint::before{content:'↗';font-size:12px}
-.swipe-overlay{position:absolute;inset:0;z-index:10;background:linear-gradient(to bottom,transparent 40%,rgba(14,17,13,.62) 100%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:36px;border-radius:16px;transition:opacity .4s ease}
-.swipe-overlay-inner{display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
-.swipe-overlay-word{font-family:var(--u);font-weight:800;font-size:22px;letter-spacing:.2em;color:var(--white)}
-.swipe-overlay-sub{font-family:var(--u);font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:lowercase;color:rgba(245,243,238,.75)}
-.swipe-footer{display:flex;align-items:center;justify-content:space-between;padding:20px var(--px) 60px}
-.swipe-count{font-family:var(--u);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
-.swipe-hint-txt{font-family:var(--u);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
+.ws-lede{font-size:14px;margin-bottom:0;color:var(--ink4)}
+/* Track = one screen of pinned stage + ~55% of a screen of scroll per card change */
+.ws-track{position:relative;height:calc(100vh + (var(--n) - 1) * 55vh);height:calc(100svh + (var(--n) - 1) * 55svh)}
+.ws-stage{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px var(--px) 112px;overflow:hidden}
+.ws-deck{position:relative;width:min(84vw,380px);height:min(60vh,520px);height:min(60svh,520px);perspective:900px;perspective-origin:50% 30%}
+.ws-card{position:absolute;inset:0;border-radius:14px;overflow:hidden;background:#0E110D;color:var(--white);cursor:pointer;
+  box-shadow:0 30px 60px -28px rgba(13,22,16,.55),0 0 0 1px rgba(255,255,255,.08) inset;
+  transform-origin:50% 100%;will-change:transform,opacity,filter;backface-visibility:hidden;-webkit-tap-highlight-color:transparent;
+  border:0;padding:0;text-align:left;font:inherit;display:block}
+.ws-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.ws-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,11,.92) 0%,rgba(10,14,11,.62) 34%,rgba(10,14,11,.12) 62%,rgba(10,14,11,0) 78%);pointer-events:none}
+.ws-sheen{position:absolute;inset:0;background:radial-gradient(120% 60% at 20% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 55%);pointer-events:none;mix-blend-mode:soft-light}
+.ws-dim{position:absolute;inset:0;background:#0E110D;opacity:0;pointer-events:none}
+.ws-text{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 24px;will-change:transform,opacity,filter}
+.ws-num{display:block;font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8fcfa2;margin-bottom:10px}
+.ws-name{display:block;font-family:var(--u);font-weight:800;font-size:clamp(24px,7vw,30px);line-height:1.05;letter-spacing:-.025em;margin-bottom:10px}
+.ws-desc{display:block;font-family:var(--o);font-weight:400;font-size:14.5px;line-height:1.55;color:rgba(245,243,238,.86);margin-bottom:14px}
+.ws-tap{display:inline-flex;align-items:center;gap:6px;font-family:var(--u);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.78);border-bottom:1px solid rgba(245,243,238,.3);padding-bottom:2px}
+.ws-tap::after{content:'↗'}
+.ws-meta{width:min(84vw,380px);display:flex;align-items:center;gap:14px;margin-top:46px}
+.ws-count{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--ink3);flex-shrink:0}
+.ws-bar{flex:1;height:1px;background:rgba(14,17,13,.14);position:relative;overflow:hidden}
+.ws-bar-fill{position:absolute;inset:0;background:var(--green);transform-origin:0 50%;transform:scaleX(0)}
+.ws-cue{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);flex-shrink:0;transition:opacity .4s}
+.ws-cue::after{content:' ↓'}
+/* Reduced motion (or no JS): a plain vertical list, no pinning, no blur */
+.ws-static .ws-track{height:auto}
+.ws-static .ws-stage{position:static;height:auto;padding:24px var(--px) 64px}
+.ws-static .ws-deck{height:auto;perspective:none;display:grid;gap:16px}
+.ws-static .ws-card{position:relative;inset:auto;height:min(60svh,460px);transform:none!important;opacity:1!important;filter:none!important}
+.ws-static .ws-text,.ws-static .ws-dim{transform:none!important;opacity:revert!important;filter:none!important}
+.ws-static .ws-dim{opacity:0!important}
+.ws-static .ws-meta{display:none}
 
 /* ─── DESKTOP RIVER ─── */
 .who-desktop{display:none}
@@ -624,7 +640,6 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   .hero-body{padding-top:56px;padding-bottom:64px}
   /* river vs mobile swipe */
   .who-mobile{display:none}
-  .swipe-footer{display:none}
   .who-desktop{display:block}
 }
 ::selection{background:var(--green);color:var(--white)}
@@ -700,7 +715,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 }
 
 /* ── IMAGE LABELS — hidden ── */
-.rcd-cat,.swipe-cat{display:none}
+.rcd-cat{display:none}
 
 /* ── FOCUS STYLES (keyboard navigation) ── */
 :focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:2px}
@@ -1262,16 +1277,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- WHO I WORK WITH -->
 <section class="who-section fu" id="who">
 
-  <!-- MOBILE -->
+  <!-- MOBILE: scroll-driven card stack (built by JS from CARDS) -->
   <div class="who-mobile">
-    <div class="ey">Who I work with</div>
-    <h2 class="dh" style="margin-bottom:6px">Not for everyone. <em>Great for these.</em></h2>
-    <p class="body-p" style="font-size:14px;margin-bottom:0;color:var(--ink4)">Tap any card to learn more</p>
-    <div class="swipe-arena" id="swipeArena"></div>
-  </div>
-  <div class="swipe-footer">
-    <div class="swipe-count" id="swipeCount">1 / 6</div>
-    <div class="swipe-hint-txt">← swipe →</div>
+    <div class="who-mobile-head">
+      <div class="ey">Who I work with</div>
+      <h2 class="dh" style="margin-bottom:6px">Not for everyone. <em>Great for these.</em></h2>
+      <p class="body-p ws-lede">Scroll through the six. Tap a card for the detail.</p>
+    </div>
+    <div class="ws-track" id="wsTrack" style="--n:6">
+      <div class="ws-stage">
+        <div class="ws-deck" id="wsDeck" role="list" aria-label="Industries Candor works with"></div>
+        <div class="ws-meta" aria-hidden="true">
+          <span class="ws-count" id="wsCount">01 / 06</span>
+          <span class="ws-bar"><span class="ws-bar-fill" id="wsBarFill"></span></span>
+          <span class="ws-cue" id="wsCue">Scroll</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- DESKTOP RIVER -->
@@ -1601,157 +1623,136 @@ document.getElementById('modalClose').addEventListener('click', closeModal);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 /* ══════════════════════════════════════════
-   MOBILE SWIPE STACK
+   MOBILE SCROLL STACK
+   Front card: text sharp over the image. Scrolling lifts it up and toward
+   the viewer while it blurs out of focus and fades; the next card rises
+   from the stack peeking underneath. Plain JS, scroll-scrubbed, rAF-lerped.
    ══════════════════════════════════════════ */
-const arena    = document.getElementById('swipeArena');
-const countEl  = document.getElementById('swipeCount');
-const TOTAL    = CARDS.length;
-let topIndex   = 0;
+(function () {
+  const track = document.getElementById('wsTrack');
+  const deck  = document.getElementById('wsDeck');
+  if (!track || !deck) return;
+  const N       = CARDS.length;
+  const countEl = document.getElementById('wsCount');
+  const barFill = document.getElementById('wsBarFill');
+  const cue     = document.getElementById('wsCue');
+  const pad     = n => String(n).padStart(2, '0');
+  track.style.setProperty('--n', N);
 
-const cardEls = CARDS.map((d, i) => {
-  const el = document.createElement('div');
-  el.className = 'swipe-card';
-  el.setAttribute('role', 'button');
-  el.setAttribute('tabindex', '0');
-  el.setAttribute('aria-label', d.name + ' — tap for details');
-  el.innerHTML = `
-    <div class="swipe-img">
-      <img src="${d.img}" width="1600" height="900" alt="${d.name}" loading="lazy" decoding="async"/>
-      <div class="swipe-cat">${d.cat}</div>
-    </div>
-    <div class="swipe-body">
-      <div class="swipe-name">${d.name}</div>
-      <p class="swipe-text">${d.text}</p>
-      <span class="swipe-tap-hint">Tap for details</span>
-    </div>`;
-  arena.appendChild(el);
-
-  /* Tap to open modal (distinguish from swipe) */
-  let tapStartX = 0, tapStartY = 0, wasDragged = false;
-  el.addEventListener('touchstart', e => {
-    tapStartX = e.touches[0].clientX;
-    tapStartY = e.touches[0].clientY;
-    wasDragged = false;
-  }, { passive: true });
-  el.addEventListener('touchmove', e => {
-    if (Math.abs(e.touches[0].clientX - tapStartX) > 8 || Math.abs(e.touches[0].clientY - tapStartY) > 8) {
-      wasDragged = true;
-    }
-  }, { passive: true });
-  el.addEventListener('touchend', () => {
-    if (!wasDragged) openModal(CARDS[i]);
+  const cards = CARDS.map((d, i) => {
+    const el = document.createElement('button');
+    el.type = 'button';
+    el.className = 'ws-card';
+    el.setAttribute('role', 'listitem');
+    el.setAttribute('aria-label', `${d.name}. ${d.text} Open details.`);
+    el.innerHTML = `
+      <img src="${d.img}" width="1600" height="900" alt="" ${i > 1 ? 'loading="lazy" ' : ''}decoding="async"/>
+      <span class="ws-shade"></span><span class="ws-sheen"></span>
+      <span class="ws-text">
+        <span class="ws-num">${pad(i + 1)} — ${d.cat}</span>
+        <span class="ws-name">${d.name}</span>
+        <span class="ws-desc">${d.text}</span>
+        <span class="ws-tap">Tap for the detail</span>
+      </span>
+      <span class="ws-dim"></span>`;
+    el.style.zIndex = String(N - i);
+    el.addEventListener('click', () => openModal(d));
+    // Keyboard: focusing a card scrolls the page so that card is in front.
+    el.addEventListener('focus', () => {
+      if (track.closest('.ws-static')) return;
+      const r = track.getBoundingClientRect();
+      const span = track.offsetHeight - stageH();
+      const raw = (i / Math.max(1, N - 1)) * 0.9 + 0.05;
+      window.scrollTo({ top: window.scrollY + r.top + raw * span, behavior: 'auto' });
+    });
+    deck.appendChild(el);
+    return { el, text: el.querySelector('.ws-text'), dim: el.querySelector('.ws-dim') };
   });
-  el.addEventListener('click', () => { if (!_isTouchDragging) openModal(CARDS[i]); });
-  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(CARDS[i]); } });
 
-  return el;
-});
+  const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mqMobile = window.matchMedia('(max-width: 1023px)');
+  const root = document.querySelector('.who-mobile');
+  function setStatic() { root.classList.toggle('ws-static', mqReduce.matches); }
+  setStatic();
+  mqReduce.addEventListener && mqReduce.addEventListener('change', setStatic);
 
-function layoutStack() {
-  const n = TOTAL;
-  for (let i = 0; i < n; i++) {
-    const offset = (i - topIndex + n) % n;
-    const el = cardEls[i];
-    if (offset === 0) {
-      el.style.zIndex        = n + 1;
-      el.style.transform     = 'translateX(0) translateY(0) rotate(0deg) scale(1)';
-      el.style.opacity       = '1';
-      el.style.transition    = 'transform .4s var(--ease), opacity .4s ease';
-      el.style.pointerEvents = 'auto';
-    } else if (offset === 1) {
-      el.style.zIndex        = n;
-      el.style.transform     = 'translateY(10px) scale(0.955)';
-      el.style.opacity       = '1';
-      el.style.transition    = 'transform .45s var(--ease), opacity .4s ease';
-      el.style.pointerEvents = 'none';
-    } else if (offset === 2) {
-      el.style.zIndex        = n - 1;
-      el.style.transform     = 'translateY(20px) scale(0.91)';
-      el.style.opacity       = '0.7';
-      el.style.transition    = 'transform .45s var(--ease), opacity .4s ease';
-      el.style.pointerEvents = 'none';
-    } else {
-      el.style.zIndex        = '0';
-      el.style.transform     = 'translateY(30px) scale(0.87)';
-      el.style.opacity       = '0';
-      el.style.transition    = 'transform .45s var(--ease), opacity .3s ease';
-      el.style.pointerEvents = 'none';
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const easeIn  = t => t * t;
+  const easeOut = t => 1 - (1 - t) * (1 - t);
+  const stageH  = () => (track.querySelector('.ws-stage') || track).offsetHeight || window.innerHeight;
+
+  let target = 0, current = 0, raf = 0, active = false;
+
+  function readScroll() {
+    const r = track.getBoundingClientRect();
+    const span = track.offsetHeight - stageH();
+    const raw = span > 0 ? clamp(-r.top / span, 0, 1) : 0;
+    // 5% dwell at both ends so the first and last cards settle before/after the pin
+    target = clamp((raw - 0.05) / 0.9, 0, 1) * (N - 1);
+  }
+
+  function render(p) {
+    for (let i = 0; i < N; i++) {
+      const c = cards[i], d = i - p;            // d > 0: waiting behind; d < 0: leaving
+      let ty = 0, tz = 0, rx = 0, sc = 1, op = 1, blur = 0, dim = 0;
+      let tOp = 1, tBlur = 0, tTy = 0;
+      if (d >= 0) {
+        // Behind: peeks out below the front card, smaller and dimmer; text hidden
+        const k = Math.min(d, 3);
+        ty = k * 12; tz = -k * 70; sc = 1 - k * 0.045;
+        op = d > 2 ? clamp(3 - d, 0, 1) : 1;
+        dim = clamp(k * 0.26, 0, 0.7);
+        const reveal = clamp(1 - d / 0.45, 0, 1);  // text arrives as the card takes the front
+        tOp = easeOut(reveal); tTy = (1 - reveal) * 16; tBlur = (1 - reveal) * 6;
+      } else {
+        // Leaving: hold briefly, then lift up and forward, blur out of focus, fade
+        const e = -d;
+        const k = easeIn(clamp((e - 0.12) / 0.88, 0, 1));
+        ty = -k * 62; tz = k * 90; rx = -k * 9; sc = 1 + k * 0.04;
+        blur = k * 16; op = 1 - clamp((e - 0.2) / 0.8, 0, 1);
+        const tk = clamp((e - 0.06) / 0.5, 0, 1);   // text goes soft a beat before the image
+        tBlur = tk * 10; tOp = 1 - easeIn(tk); tTy = -tk * 10;
+      }
+      const s = c.el.style;
+      if (op <= 0.001 || d > 3.2) { s.visibility = 'hidden'; continue; }
+      s.visibility = 'visible';
+      s.transform = `translate3d(0, ${d >= 0 ? ty.toFixed(2) + 'px' : ty.toFixed(2) + '%'}, ${tz.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg) scale(${sc.toFixed(4)})`;
+      s.opacity = op.toFixed(3);
+      s.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
+      s.pointerEvents = Math.abs(d) < 0.5 ? 'auto' : 'none';
+      c.dim.style.opacity = dim.toFixed(3);
+      const t = c.text.style;
+      t.opacity = tOp.toFixed(3);
+      t.transform = `translate3d(0, ${tTy.toFixed(2)}px, 0)`;
+      t.filter = tBlur > 0.05 ? `blur(${tBlur.toFixed(2)}px)` : 'none';
     }
+    const front = clamp(Math.round(p), 0, N - 1);
+    countEl.textContent = `${pad(front + 1)} / ${pad(N)}`;
+    barFill.style.transform = `scaleX(${(p / (N - 1)).toFixed(4)})`;
+    cue.style.opacity = p > 0.15 ? '0' : '1';
   }
-  countEl.textContent = (topIndex + 1) + ' / ' + TOTAL;
-}
 
-function sendToBack(dir) {
-  const el  = cardEls[topIndex];
-  const flyX = dir === 'left' ? -110 : 110;
-  const angle = dir === 'left' ? -16 : 16;
-  el.style.transition  = 'transform .42s cubic-bezier(.4,0,1,1), opacity .35s ease';
-  el.style.transform   = `translateX(${flyX}%) rotate(${angle}deg) scale(0.94)`;
-  el.style.opacity     = '0';
-  el.style.pointerEvents = 'none';
-  setTimeout(() => {
-    el.style.transition = 'none';
-    el.style.transform  = 'translateY(30px) scale(0.87)';
-    el.style.opacity    = '0';
-    el.style.zIndex     = '0';
-    topIndex = (topIndex + 1) % TOTAL;
-    layoutStack();
-  }, 420);
-}
-
-let _startX = 0, _startY = 0, _curX = 0, _isDrag = false, _dragEl = null, _isTouchDragging = false;
-const THRESHOLD = 88;
-
-arena.addEventListener('touchstart', e => {
-  const top = cardEls[topIndex];
-  _isDrag = true; _dragEl = top; _isTouchDragging = false;
-  _startX = e.touches[0].clientX; _startY = e.touches[0].clientY; _curX = 0;
-  _dragEl.style.transition = 'none';
-}, { passive: true });
-
-arena.addEventListener('touchmove', e => {
-  if (!_isDrag || !_dragEl) return;
-  const dx = e.touches[0].clientX - _startX;
-  const dy = e.touches[0].clientY - _startY;
-  _curX = dx;
-  if (Math.abs(dx) > 8) _isTouchDragging = true;
-  _dragEl.style.transform = `translateX(${dx}px) translateY(${dy * .28}px) rotate(${dx * .085}deg)`;
-}, { passive: true });
-
-function endDrag() {
-  if (!_isDrag || !_dragEl) return;
-  _isDrag = false;
-  if (Math.abs(_curX) >= THRESHOLD) {
-    sendToBack(_curX < 0 ? 'left' : 'right');
-  } else {
-    _dragEl.style.transition = 'transform .5s var(--ease)';
-    _dragEl.style.transform  = 'translateX(0) translateY(0) rotate(0deg) scale(1)';
+  function loop() {
+    current += (target - current) * 0.2;
+    if (Math.abs(target - current) < 0.0005) current = target;
+    render(current);
+    raf = current !== target ? requestAnimationFrame(loop) : 0;
   }
-  _dragEl = null; _curX = 0;
-  setTimeout(() => { _isTouchDragging = false; }, 50);
-}
+  function onScroll() {
+    if (!active || !mqMobile.matches || root.classList.contains('ws-static')) return;
+    readScroll();
+    if (!raf) raf = requestAnimationFrame(loop);
+  }
 
-arena.addEventListener('touchend', endDrag, { passive: true });
-arena.addEventListener('touchcancel', endDrag, { passive: true });
+  new IntersectionObserver(entries => {
+    active = entries[0].isIntersecting;
+    if (active) onScroll();
+  }, { rootMargin: '20% 0px 20% 0px' }).observe(track);
 
-layoutStack();
-
-/* Swipe hint overlay — first touch only */
-const swipeOverlay = document.createElement('div');
-swipeOverlay.className = 'swipe-overlay';
-swipeOverlay.innerHTML =
-  '<div class="swipe-overlay-inner">' +
-  '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="pointer-events:none" aria-hidden="true">' +
-  '<path d="M6 16h20M20 10l6 6-6 6" stroke="var(--white)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
-  '</svg>' +
-  '<div class="swipe-overlay-word">SWIPE</div>' +
-  '<div class="swipe-overlay-sub">tap card for details</div>' +
-  '</div>';
-arena.appendChild(swipeOverlay);
-swipeOverlay.addEventListener('touchstart', function dismiss() {
-  swipeOverlay.style.opacity = '0';
-  setTimeout(() => swipeOverlay.remove(), 400);
-}, { once: true, passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { readScroll(); current = target; render(current); }, { passive: true });
+  readScroll(); current = target; render(current);
+})();
 
 /* ══════════════════════════════════════════
    DESKTOP RIVER
@@ -2122,7 +2123,7 @@ if (window.matchMedia('(pointer:fine)').matches) {
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; }, { passive:true });
   (function loop(){ rx+=(mx-rx)*.11; ry+=(my-ry)*.11; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); })();
-  document.querySelectorAll('a,button,.svc-head,.fq,.prob-card,.river-card-d,.swipe-card,[data-mag]').forEach(el => {
+  document.querySelectorAll('a,button,.svc-head,.fq,.prob-card,.river-card-d,.ws-card,[data-mag]').forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
   });
@@ -2298,7 +2299,10 @@ document.addEventListener('click', e => {
 const whoSect = document.querySelector('.who-section');
 if (whoSect) {
   whoSect.style.position = 'relative';
-  whoSect.style.overflow = 'hidden';
+  // 'clip' contains the drifting dots without creating a scroll container,
+  // so the pinned mobile card stack inside this section can still stick.
+  // 'hidden' here silently disables position:sticky.
+  if (window.CSS && CSS.supports('overflow', 'clip')) whoSect.style.overflow = 'clip';
   const dotConfigs = [
     { sz:5,  x:'8%',  y:'12%', dx1:'28px', dy1:'-38px', dx2:'-18px', dy2:'22px', dur:13 },
     { sz:4,  x:'82%', y:'7%',  dx1:'-32px',dy1:'24px',  dx2:'18px',  dy2:'-18px',dur:16 },
