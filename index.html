@@ -389,42 +389,34 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .who-mobile-head{padding:64px var(--px) 8px}
 .who-mobile .ey{margin-bottom:22px}
 .ws-lede{font-size:14px;margin-bottom:0;color:var(--ink4)}
-/* Track: one pinned screen + 80% of a screen of scroll per card.
-   Per card: 0.5 unit pop-up, 0.5 unit dead-still hold, 0.7 unit flip-away. */
-.ws-track{position:relative;height:calc(100vh + (var(--n) - 0.7) * 80vh);height:calc(100svh + (var(--n) - 0.7) * 80svh)}
-.ws-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
-/* Same geometry as the reference: full-stage 3D context, perspective 300px,
-   cards centred on it. Hinge on the card's bottom edge so the exit reads as a flip. */
-.ws-deck{position:absolute;inset:0;perspective:300px;perspective-origin:50% 50%}
-.ws-card{position:absolute;left:50%;top:50%;width:min(74vw,400px);height:min(62vh,580px);height:min(62svh,580px);
-  border-radius:10px;overflow:hidden;background:#0E110D;color:var(--white);cursor:pointer;
-  box-shadow:0 30px 60px -30px rgba(13,22,16,.6),0 0 0 1px rgba(255,255,255,.08) inset;
-  transform-origin:50% 100% 0;will-change:transform,opacity,filter;backface-visibility:hidden;
-  -webkit-tap-highlight-color:transparent;border:0;padding:0;text-align:left;font:inherit;display:block;visibility:hidden}
-.ws-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-.ws-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,11,.92) 0%,rgba(10,14,11,.62) 34%,rgba(10,14,11,.12) 62%,rgba(10,14,11,0) 78%);pointer-events:none}
-.ws-sheen{position:absolute;inset:0;background:radial-gradient(120% 60% at 20% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 55%);pointer-events:none;mix-blend-mode:soft-light}
-.ws-dim{position:absolute;inset:0;background:#0E110D;opacity:0;pointer-events:none}
-.ws-text{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 24px;will-change:transform,opacity,filter}
-.ws-num{display:block;font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8fcfa2;margin-bottom:10px}
-.ws-name{display:block;font-family:var(--u);font-weight:800;font-size:clamp(24px,7vw,30px);line-height:1.05;letter-spacing:-.025em;margin-bottom:10px}
-.ws-desc{display:block;font-family:var(--o);font-weight:400;font-size:14.5px;line-height:1.55;color:rgba(245,243,238,.86);margin-bottom:14px}
-.ws-tap{display:inline-flex;align-items:center;gap:6px;font-family:var(--u);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,243,238,.78);border-bottom:1px solid rgba(245,243,238,.3);padding-bottom:2px}
+/* ── "Images glass pop up" — ported 1:1 from the reference (GSAP + ScrollTrigger)
+   main 700vh → track N×100vh; .carousel → .ws-stage/.ws-deck; .card → .ws-card */
+.ws-track{position:relative;height:calc(var(--n) * 100vh);height:calc(var(--n) * 100svh)}
+.ws-stage{position:sticky;top:0;width:100%;height:100vh;height:100svh;overflow:hidden}
+.ws-deck{position:absolute;inset:0;perspective:300px;overflow:hidden;opacity:0}
+.ws-card{position:absolute;left:50%;top:50%;width:60%;height:80%;max-width:400px;max-height:min(600px,calc(100% - 200px));
+  border-radius:10px;overflow:hidden;display:block;padding:0;border:0;margin:0;text-align:left;font:inherit;color:#fff;cursor:pointer;
+  transform-origin:50% 999px -100px;will-change:transform,opacity;-webkit-tap-highlight-color:transparent;visibility:hidden}
+.ws-card .ws-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:.86;pointer-events:none}
+.ws-shade{position:absolute;inset:0;pointer-events:none}
+.ws-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,11,.85) 0%,rgba(10,14,11,.45) 38%,rgba(10,14,11,0) 64%);pointer-events:none}
+.ws-text{position:absolute;left:0;right:0;bottom:0;padding:16px 16px 18px}
+.ws-num{display:block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#a8dcb6;margin-bottom:8px}
+.ws-name{display:block;font-family:var(--u);font-weight:800;font-size:clamp(19px,5.6vw,26px);line-height:1.05;letter-spacing:-.02em;margin-bottom:8px}
+.ws-desc{display:block;font-family:var(--o);font-size:13px;line-height:1.5;color:rgba(255,255,255,.88);margin-bottom:10px}
+.ws-tap{display:inline-flex;gap:6px;font-family:var(--u);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px}
 .ws-tap::after{content:'↗'}
-.ws-meta{position:absolute;left:50%;bottom:104px;transform:translateX(-50%);width:min(74vw,400px);display:flex;align-items:center;gap:14px;z-index:20}
-.ws-count{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--ink3);flex-shrink:0}
-.ws-bar{flex:1;height:1px;background:rgba(14,17,13,.14);position:relative;overflow:hidden}
-.ws-bar-fill{position:absolute;inset:0;background:var(--green);transform-origin:0 50%;transform:scaleX(0)}
-.ws-cue{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);flex-shrink:0;transition:opacity .4s}
-.ws-cue::after{content:' ↓'}
-/* Reduced motion (or no JS): a plain vertical list, no pinning, no blur */
+/* Reference arrow: a line that draws down then retracts, 1s + 0.5s pause */
+.ws-arrow{position:absolute;bottom:108px;left:50%;height:8vh;width:1.6vh;transform:translateX(-50%);overflow:visible;z-index:20;pointer-events:none}
+.ws-arrow path{stroke-dasharray:10 10;stroke-dashoffset:10;animation:wsArrow 1.5s cubic-bezier(.645,.045,.355,1) infinite}
+@keyframes wsArrow{0%{stroke-dashoffset:10}33.3%{stroke-dashoffset:0}66.6%,100%{stroke-dashoffset:-10}}
+/* Settle on each card in focus (fixes cards stopping mid-blur) */
+/* Reduced motion (or no JS): a plain vertical list */
 .ws-static .ws-track{height:auto}
 .ws-static .ws-stage{position:static;height:auto;overflow:visible;padding:24px var(--px) 64px}
-.ws-static .ws-deck{position:static;perspective:none;display:grid;gap:16px}
-.ws-static .ws-card{position:relative;left:auto;top:auto;width:100%;visibility:visible;height:min(60svh,460px);transform:none!important;opacity:1!important;filter:none!important}
-.ws-static .ws-text,.ws-static .ws-dim{transform:none!important;opacity:revert!important;filter:none!important}
-.ws-static .ws-dim{opacity:0!important}
-.ws-static .ws-meta{display:none}
+.ws-static .ws-deck{position:static;perspective:none;overflow:visible;opacity:1;display:grid;gap:16px}
+.ws-static .ws-card{position:relative;left:auto;top:auto;width:100%;max-width:none;height:min(60svh,460px);max-height:none;visibility:visible;transform:none!important;opacity:1!important;filter:none!important}
+.ws-static .ws-arrow{display:none}
 
 /* ─── DESKTOP RIVER ─── */
 .who-desktop{display:none}
@@ -1291,11 +1283,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="ws-track" id="wsTrack" style="--n:6">
       <div class="ws-stage">
         <div class="ws-deck" id="wsDeck" role="list" aria-label="Industries Candor works with"></div>
-        <div class="ws-meta" aria-hidden="true">
-          <span class="ws-count" id="wsCount">01 / 06</span>
-          <span class="ws-bar"><span class="ws-bar-fill" id="wsBarFill"></span></span>
-          <span class="ws-cue" id="wsCue">Scroll</span>
-        </div>
+        <svg class="ws-arrow" id="wsArrow" viewBox="0 0 2 10" aria-hidden="true"><path stroke="#333" d="M1,0 1,10" pathLength="10"/></svg>
       </div>
     </div>
   </div>
@@ -1627,141 +1615,169 @@ document.getElementById('modalClose').addEventListener('click', closeModal);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 /* ══════════════════════════════════════════
-   MOBILE SCROLL STACK
-   Front card: text sharp over the image. Scrolling lifts it up and toward
-   the viewer while it blurs out of focus and fades; the next card rises
-   from the stack peeking underneath. Plain JS, scroll-scrubbed, rAF-lerped.
+   MOBILE "IMAGES GLASS POP UP" — a 1:1 port of the reference GSAP code
+   (gsap.timeline defaults {duration:2}, stagger -1, ScrollTrigger scrub,
+   intro progress 1 → 0.07 over 1.5s expo, looping scroll arrow), with the
+   site's images on the cards. GSAP can't load (CSP), so its eases are below.
+   Two deliberate fixes: the 0.1s autoAlpha snap at the end of each card is a
+   blur-and-fade instead, and when scrolling stops the page glides to the
+   nearest card in focus so nothing rests mid-blur.
    ══════════════════════════════════════════ */
 (function () {
   const track = document.getElementById('wsTrack');
   const deck  = document.getElementById('wsDeck');
+  const arrow = document.getElementById('wsArrow');
   if (!track || !deck) return;
-  const N       = CARDS.length;
-  const countEl = document.getElementById('wsCount');
-  const barFill = document.getElementById('wsBarFill');
-  const cue     = document.getElementById('wsCue');
-  const pad     = n => String(n).padStart(2, '0');
+  const N = CARDS.length, T = N + 1;                 // timeline length: (N-1) stagger + 2s duration
+  const COLORS = ['45,107,66', '236,234,226', '90,166,114'];   // reference tints → Candor palette
+  const pad = n => String(n).padStart(2, '0');
   track.style.setProperty('--n', N);
 
-  const cards = CARDS.map((d, i) => {
+  // GSAP eases
+  const power1Out = u => 1 - (1 - u) * (1 - u);       // default ease
+  const backIn2   = u => u * u * (3 * u - 2);         // back.in(2)
+  const power3In  = u => u * u * u;
+  const sineIn    = u => 1 - Math.cos((u * Math.PI) / 2);
+  const expoOut   = u => (u >= 1 ? 1 : 1 - Math.pow(2, -10 * u));
+  const power2InOut = u => (u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const mix = (a, b, t) => a + (b - a) * t;
+  // radial-gradient(ellipse at Xpx Ypx, rgba(0,0,0,0) A%, #000 B%) — reference keyframes
+  const G_TOP   = { x: 330,   y: 120,  a: 30, b: 150 };
+  const G_OTHER = { x: 2500,  y: -400, a: 0,  b: 60  };
+  const G_MID   = { x: 150,   y: 250,  a: 80, b: 300 };
+  const G_END   = { x: -1000, y: 500,  a: 0,  b: 50  };
+  const grad = g => `radial-gradient(ellipse at ${g.x.toFixed(1)}px ${g.y.toFixed(1)}px, rgba(0,0,0,0) ${g.a.toFixed(2)}%, #000 ${g.b.toFixed(2)}%)`;
+  const lerpG = (g1, g2, t) => ({ x: mix(g1.x, g2.x, t), y: mix(g1.y, g2.y, t), a: mix(g1.a, g2.a, t), b: mix(g1.b, g2.b, t) });
+
+  // j = 0 is the card on top (the reference's last DOM card), animated first.
+  const cards = CARDS.map((d, j) => {
     const el = document.createElement('button');
     el.type = 'button';
     el.className = 'ws-card';
     el.setAttribute('role', 'listitem');
     el.setAttribute('aria-label', `${d.name}. ${d.text} Open details.`);
+    el.style.zIndex = String(N - j);
+    el.style.backgroundColor = `rgba(${COLORS[j % COLORS.length]},0.7)`;
     el.innerHTML = `
-      <img src="${d.img}" width="1600" height="900" alt="" ${i > 1 ? 'loading="lazy" ' : ''}decoding="async"/>
-      <span class="ws-shade"></span><span class="ws-sheen"></span>
+      <img class="ws-img" src="${d.img}" width="1600" height="900" alt="" ${j > 1 ? 'loading="lazy" ' : ''}decoding="async"/>
+      <span class="ws-shade"></span><span class="ws-scrim"></span>
       <span class="ws-text">
-        <span class="ws-num">${pad(i + 1)} — ${d.cat}</span>
+        <span class="ws-num">${pad(j + 1)} — ${d.cat}</span>
         <span class="ws-name">${d.name}</span>
         <span class="ws-desc">${d.text}</span>
         <span class="ws-tap">Tap for the detail</span>
-      </span>
-      <span class="ws-dim"></span>`;
+      </span>`;
     el.addEventListener('click', () => openModal(d));
-    // Keyboard: focusing a card scrolls the page so that card is in front.
-    el.addEventListener('focus', () => {
-      if (track.closest('.ws-static')) return;
-      const r = track.getBoundingClientRect();
-      window.scrollTo({ top: window.scrollY + r.top + i * unitPx(), behavior: 'auto' });
-    });
+    el.addEventListener('focus', () => { if (!root.classList.contains('ws-static')) scrollToCard(j); });
     deck.appendChild(el);
-    return { el, text: el.querySelector('.ws-text'), dim: el.querySelector('.ws-dim') };
+    return { el, shade: el.querySelector('.ws-shade'), gStart: j === 0 ? G_TOP : G_OTHER };
   });
 
   const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   const mqMobile = window.matchMedia('(max-width: 1023px)');
   const root = document.querySelector('.who-mobile');
-  function setStatic() { root.classList.toggle('ws-static', mqReduce.matches); }
+  const setStatic = () => root.classList.toggle('ws-static', mqReduce.matches);
   setStatic();
   mqReduce.addEventListener && mqReduce.addEventListener('change', setStatic);
 
-  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-  const easeOut = t => 1 - (1 - t) * (1 - t);
-  const backIn  = t => t * t * (3 * t - 2);           // GSAP back.in(2)
-  const stageH  = () => (track.querySelector('.ws-stage') || track).offsetHeight || window.innerHeight;
-  const unitPx  = () => stageH() * 0.8;               // scroll per card = 80% of a screen
-
-  let target = 0, current = 0, raf = 0, active = false;
-
-  // P is measured in cards. Card k is dead-still in front for P in [k-0.2, k+0.3].
-  // It starts popping up while the stage scrolls into view, so it is settled
-  // by the time the section pins.
-  function readScroll() {
-    const r = track.getBoundingClientRect();
-    target = clamp(-r.top / unitPx(), -0.75, N - 1 + 0.35);
-  }
-
-  // Reverse of the reference timeline for one card:
-  //   ENTER  (reference's drop played backwards): rises from one card-height
-  //          below with back.in(2) reversed, so it pops up, overshoots and settles.
-  //   HOLD   nothing moves; text sharp.
-  //   EXIT   (reference's approach played backwards): z 0 to -510 and rotateX
-  //          -3 to +2 about the far pivot, so it flips back away from you,
-  //          drifting up then down; blurs out of focus and fades.
+  // Timeline state at progress p (0..1), exactly as the reference tweens it.
   function render(p) {
-    for (let k = 0; k < N; k++) {
-      const c = cards[k], s = c.el.style, d = p - k;
-      const last = k === N - 1;
-      if (d < -0.7 || (!last && d > 1)) { s.visibility = 'hidden'; continue; }
-      let y = 0, z = 0, rx = -3, op = 1, blur = 0, dim = 0, tOp = 1, tBlur = 0, tTy = 0;
-      if (d < -0.2) {
-        const e = (d + 0.7) / 0.5;
-        y = 100 * backIn(1 - e);
-        z = 10 * (1 - e);
-        op = clamp(e / 0.12, 0, 1);
-        const tr = clamp((e - 0.55) / 0.45, 0, 1);
-        tOp = easeOut(tr); tBlur = (1 - tr) * 6; tTy = (1 - tr) * 12;
-      } else if (d > 0.3 && !last) {
-        const x = (d - 0.3) / 0.7;
-        z = -510 * x * x;
-        rx = -3 + 41 * easeOut(clamp(x / 0.7, 0, 1)); // hinged on the bottom edge: the top tips back ~38° early, while the card is still big
-        y = -12.5 * Math.sin(Math.PI * x);
-        blur = 14 * clamp((x - 0.05) / 0.95, 0, 1);
-        op = 1 - clamp((x - 0.35) / 0.65, 0, 1);
-        dim = x * 0.6;
-        const tx = clamp(x / 0.45, 0, 1);
-        tBlur = tx * 8; tOp = 1 - tx * tx; tTy = -tx * 6;
+    const t = p * T;
+    for (let j = 0; j < N; j++) {
+      const c = cards[j], s = c.el.style, lt = t - j;   // this card's local time, 0..2
+      if (lt >= 2) { s.visibility = 'hidden'; continue; }
+      let z = -500, rx = 2, yP = -45, bf = 20, g = c.gStart, op = 1, blur = 0;
+      if (lt > 0) {
+        const u = lt / 2;
+        z  = -500 + 510 * power1Out(u);                 // z: 10
+        rx = 2 - 5 * power1Out(u);                      // rotateX: -3
+        yP = -45 + 145 * backIn2(u);                    // yPercent: 100, ease back.in(2)
+        if (lt <= 1) { const v = power3In(lt);    bf = 20 - 12 * v; g = lerpG(c.gStart, G_MID, v); }
+        else         { const v = sineIn(lt - 1);  bf = 8 - 7 * v;   g = lerpG(G_MID, G_END, v); }
+        // Reference: autoAlpha 0 over 0.1s at 1.9s (a hard snap). Fixed: blur out of focus and fade.
+        const w = clamp((lt - 1.45) / 0.55, 0, 1);
+        op = 1 - w * w; blur = 10 * w;
       }
-      s.visibility = 'visible';
-      s.zIndex = String(N - k);                         // the leaving card stays in front while it flips away
-      s.transform = `translate(-50%, -54%) translateY(${y.toFixed(2)}%) translateZ(${z.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg)`;
+      s.visibility = op > 0.002 ? 'visible' : 'hidden';
+      s.transform = `translate(-50%, ${yP.toFixed(2)}%) translate3d(0, 0, ${z.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg)`;
       s.opacity = op.toFixed(3);
       s.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
-      s.pointerEvents = d >= -0.2 && d <= 0.45 ? 'auto' : 'none';
-      c.dim.style.opacity = dim.toFixed(3);
-      const t = c.text.style;
-      t.opacity = tOp.toFixed(3);
-      t.transform = `translate3d(0, ${tTy.toFixed(2)}px, 0)`;
-      t.filter = tBlur > 0.05 ? `blur(${tBlur.toFixed(2)}px)` : 'none';
+      const bd = `blur(${bf.toFixed(2)}px)`;
+      s.backdropFilter = bd; s.webkitBackdropFilter = bd;
+      s.pointerEvents = lt > 0.9 && lt < 1.6 ? 'auto' : 'none';
+      c.shade.style.backgroundImage = grad(g);
     }
-    const front = clamp(Math.round(p - 0.05), 0, N - 1);
-    countEl.textContent = `${pad(front + 1)} / ${pad(N)}`;
-    barFill.style.transform = `scaleX(${clamp(p / (N - 1), 0, 1).toFixed(4)})`;
-    cue.style.opacity = p > 0.25 ? '0' : '1';
   }
 
-  function loop() {
-    current += (target - current) * 0.22;
-    if (Math.abs(target - current) < 0.0005) current = target;
-    render(current);
-    raf = current !== target ? requestAnimationFrame(loop) : 0;
-  }
-  function onScroll() {
-    if (!active || !mqMobile.matches || root.classList.contains('ws-static')) return;
-    readScroll();
-    if (!raf) raf = requestAnimationFrame(loop);
+  // ScrollTrigger: start '0 0', end '100% 100%', scrub, progress 0.07 → 1.
+  let trackTop = 0, span = 1, target = 0.07, current = 0.07, raf = 0, active = false;
+  let intro = null;                                     // { t0 } while the opening fly-in plays
+  const raw = () => clamp((window.scrollY - trackTop) / span, 0, 1);
+  // Card j is most readable at local time 1.35 (z ≈ -40px, nearly level).
+  const focusRaw = j => clamp(((j + 1.35) / T - 0.07) / 0.93, 0, 1);
+  function scrollToCard(j) { window.scrollTo({ top: trackTop + focusRaw(j) * span, behavior: 'instant' }); }
+
+  function measure() {
+    trackTop = track.getBoundingClientRect().top + window.scrollY;
+    span = Math.max(1, track.offsetHeight - (track.querySelector('.ws-stage').offsetHeight || window.innerHeight));
   }
 
+  // Settle: when scrolling stops inside the section (finger lifted, momentum
+  // over), glide to the nearest card in focus so nothing rests mid-blur.
+  // Not near the end of the track, so you can always scroll on past it.
+  let touching = false, idle = 0, settling = false;
+  function settle() {
+    if (touching || !active || !mqMobile.matches || root.classList.contains('ws-static')) return;
+    const r = raw();
+    if (r < 0.02 || r > 0.92) return;
+    let best = 0;
+    for (let j = 1; j < N; j++) if (Math.abs(focusRaw(j) - r) < Math.abs(focusRaw(best) - r)) best = j;
+    const y = trackTop + focusRaw(best) * span;
+    if (Math.abs(y - window.scrollY) < 6) return;
+    settling = true;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+  const armSettle = () => { clearTimeout(idle); idle = setTimeout(() => { if (settling) { settling = false; return; } settle(); }, 160); };
+  window.addEventListener('touchstart', () => { touching = true; settling = false; clearTimeout(idle); }, { passive: true });
+  window.addEventListener('touchend', () => { touching = false; armSettle(); }, { passive: true });
+  window.addEventListener('wheel', () => { settling = false; }, { passive: true });
+
+  function loop(now) {
+    raf = 0;
+    if (!mqMobile.matches || root.classList.contains('ws-static')) return;
+    target = 0.07 + 0.93 * raw();
+    current += (target - current) * 0.25;               // light smoothing (the cards keep their glide)
+    if (Math.abs(target - current) < 0.0004) current = target;
+    let p = current;
+    if (intro) {
+      const k = clamp((now - intro.t0) / 1500, 0, 1);   // tl progress 1 → 0.07, 1.5s, ease 'expo'
+      p = mix(1, current, expoOut(k));
+      deck.style.opacity = power2InOut(clamp((now - intro.t0) / 800, 0, 1)).toFixed(3);   // carousel fade, 0.8s
+      if (k >= 1) intro = null;
+    }
+    render(p);
+    if (arrow) arrow.style.opacity = String(1 - clamp((window.scrollY - trackTop + 40) / 49, 0, 1));
+    if (active || intro || current !== target) raf = requestAnimationFrame(loop);
+  }
+  const start = () => { if (!raf) raf = requestAnimationFrame(loop); };
+
+  let introDone = false;
   new IntersectionObserver(entries => {
     active = entries[0].isIntersecting;
-    if (active) onScroll();
-  }, { rootMargin: '20% 0px 20% 0px' }).observe(track);
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => { readScroll(); current = target; render(current); }, { passive: true });
-  readScroll(); current = target; render(current);
+    if (active) {
+      measure();
+      if (!introDone) { introDone = true; intro = { t0: performance.now() }; }
+      start();
+    }
+  }, { rootMargin: '0px 0px -35% 0px' }).observe(track);
+  window.addEventListener('scroll', () => { if (active) { start(); armSettle(); } }, { passive: true });
+  window.addEventListener('resize', () => { measure(); start(); }, { passive: true });
+  window.addEventListener('load', measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+  if ('ResizeObserver' in window) new ResizeObserver(measure).observe(document.body);
+  measure();
+  render(1);                                            // before the intro: tl paused at its end state
 })();
 
 /* ══════════════════════════════════════════
