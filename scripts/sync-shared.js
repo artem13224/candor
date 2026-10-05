@@ -106,7 +106,7 @@ const HL_SNIPPET = `${HL_START}
     -webkit-box-decoration-break:clone;box-decoration-break:clone;
   }
   /* With JS: hand-drawn strokes behind each line, scrubbed by scroll and
-     posterised to 6 fps (Vox-style stop motion), boiling while they draw. */
+     posterised to 12 fps (Vox-style stop motion), boiling while they draw. */
   .hl-js .article-body mark{background:none}
   .hl-host{position:relative;isolation:isolate}
   .hl-stroke{position:absolute;z-index:-1;pointer-events:none;display:block;clip-path:inset(-20% 100% -20% 0)}
@@ -119,7 +119,7 @@ const HL_SNIPPET = `${HL_START}
   var marks = Array.prototype.slice.call(document.querySelectorAll('.article-body mark'));
   if (!marks.length || !document.createRange) return;
   document.documentElement.classList.add('hl-js');
-  var INK = '90,166,114', FPS = 6, STEP = 1000 / FPS;
+  var INK = '90,166,114', FPS = 12, STEP = 1000 / FPS;
   var REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Three hand-drawn chisel-marker bodies: wobbly edges, slanted tips.
   // Cycling them frame to frame while drawing gives the stop-motion "boil".
@@ -216,7 +216,7 @@ const HL_SNIPPET = `${HL_START}
   function tick(now) {
     raf = 0;
     if (!near.size) return;
-    if (now - lastTick >= STEP - 4) {                 // posterise time: 6 updates a second
+    if (now - lastTick >= STEP - 4) {                 // posterise time: 12 updates a second
       lastTick = now;
       near.forEach(function (m) {
         var p = target(m);
