@@ -399,10 +399,8 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .ws-card{position:absolute;left:50%;top:50%;width:min(74vw,400px);height:min(62vh,580px);height:min(62svh,580px);
   border-radius:10px;overflow:hidden;background:#0E110D;color:var(--white);cursor:pointer;
   box-shadow:0 30px 60px -30px rgba(13,22,16,.6),0 0 0 1px rgba(255,255,255,.08) inset;
-  transform-origin:50% 100% 0;will-change:transform,opacity;backface-visibility:hidden;
+  transform-origin:50% 100% 0;will-change:transform,opacity,filter;backface-visibility:hidden;
   -webkit-tap-highlight-color:transparent;border:0;padding:0;text-align:left;font:inherit;display:block;visibility:hidden}
-.ws-card .ws-img-soft{filter:blur(14px);transform:scale(1.08);opacity:0}
-.ws-text-soft{filter:blur(7px);opacity:0}
 .ws-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .ws-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,11,.92) 0%,rgba(10,14,11,.62) 34%,rgba(10,14,11,.12) 62%,rgba(10,14,11,0) 78%);pointer-events:none}
 .ws-sheen{position:absolute;inset:0;background:radial-gradient(120% 60% at 20% 0%,rgba(255,255,255,.16),rgba(255,255,255,0) 55%);pointer-events:none;mix-blend-mode:soft-light}
@@ -427,7 +425,6 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .ws-static .ws-text,.ws-static .ws-dim{transform:none!important;opacity:revert!important;filter:none!important}
 .ws-static .ws-dim{opacity:0!important}
 .ws-static .ws-meta{display:none}
-.ws-static .ws-text-soft,.ws-static .ws-img-soft{display:none!important}
 
 /* ─── DESKTOP RIVER ─── */
 .who-desktop{display:none}
@@ -1652,18 +1649,15 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
     el.className = 'ws-card';
     el.setAttribute('role', 'listitem');
     el.setAttribute('aria-label', `${d.name}. ${d.text} Open details.`);
-    const textBlock = `<span class="ws-text">
+    el.innerHTML = `
+      <img src="${d.img}" width="1600" height="900" alt="" ${i > 1 ? 'loading="lazy" ' : ''}decoding="async"/>
+      <span class="ws-shade"></span><span class="ws-sheen"></span>
+      <span class="ws-text">
         <span class="ws-num">${pad(i + 1)} — ${d.cat}</span>
         <span class="ws-name">${d.name}</span>
         <span class="ws-desc">${d.text}</span>
         <span class="ws-tap">Tap for the detail</span>
-      </span>`;
-    el.innerHTML = `
-      <img src="${d.img}" width="1600" height="900" alt="" ${i > 1 ? 'loading="lazy" ' : ''}decoding="async"/>
-      <img class="ws-img-soft" src="${d.img}" width="1600" height="900" alt="" aria-hidden="true" ${i > 1 ? 'loading="lazy" ' : ''}decoding="async"/>
-      <span class="ws-shade"></span><span class="ws-sheen"></span>
-      ${textBlock}
-      ${textBlock.replace('class="ws-text"', 'class="ws-text ws-text-soft" aria-hidden="true"')}
+      </span>
       <span class="ws-dim"></span>`;
     el.addEventListener('click', () => openModal(d));
     // Keyboard: focusing a card scrolls the page so that card is in front.
@@ -1673,8 +1667,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
       window.scrollTo({ top: window.scrollY + r.top + i * unitPx(), behavior: 'auto' });
     });
     deck.appendChild(el);
-    return { el, text: el.querySelector('.ws-text:not(.ws-text-soft)'), soft: el.querySelector('.ws-text-soft'),
-             imgSoft: el.querySelector('.ws-img-soft'), dim: el.querySelector('.ws-dim'), last: '' };
+    return { el, text: el.querySelector('.ws-text'), dim: el.querySelector('.ws-dim') };
   });
 
   const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -1690,18 +1683,15 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
   const stageH  = () => (track.querySelector('.ws-stage') || track).offsetHeight || window.innerHeight;
   const unitPx  = () => stageH() * 0.8;               // scroll per card = 80% of a screen
 
-  let raf = 0, active = false, trackTop = 0, unit = 1, lastP = NaN;
-  function measure() {
-    trackTop = track.getBoundingClientRect().top + window.scrollY;
-    unit = unitPx();
-    lastP = NaN;
-  }
+  let target = 0, current = 0, raf = 0, active = false;
 
   // P is measured in cards. Card k is dead-still in front for P in [k-0.2, k+0.3].
   // It starts popping up while the stage scrolls into view, so it is settled
   // by the time the section pins.
-  // Read straight from scroll position every frame: no easing, no lag.
-  const readP = () => clamp((window.scrollY - trackTop) / unit, -0.75, N - 1 + 0.35);
+  function readScroll() {
+    const r = track.getBoundingClientRect();
+    target = clamp(-r.top / unitPx(), -0.75, N - 1 + 0.35);
+  }
 
   // Reverse of the reference timeline for one card:
   //   ENTER  (reference's drop played backwards): rises from one card-height
@@ -1738,15 +1728,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
       s.zIndex = String(N - k);                         // the leaving card stays in front while it flips away
       s.transform = `translate(-50%, -54%) translateY(${y.toFixed(2)}%) translateZ(${z.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg)`;
       s.opacity = op.toFixed(3);
+      s.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
       s.pointerEvents = d >= -0.2 && d <= 0.45 ? 'auto' : 'none';
       c.dim.style.opacity = dim.toFixed(3);
-      // Blur = crossfade to pre-blurred copies, so each frame is compositor-only.
-      const ib = clamp(blur / 14, 0, 1), tb = clamp(tBlur / 7, 0, 1);
-      c.imgSoft.style.opacity = ib.toFixed(3);
-      const tf = `translate3d(0, ${tTy.toFixed(2)}px, 0)`;
-      c.text.style.opacity = (tOp * (1 - tb)).toFixed(3);
-      c.soft.style.opacity = (tOp * tb).toFixed(3);
-      c.text.style.transform = tf; c.soft.style.transform = tf;
+      const t = c.text.style;
+      t.opacity = tOp.toFixed(3);
+      t.transform = `translate3d(0, ${tTy.toFixed(2)}px, 0)`;
+      t.filter = tBlur > 0.05 ? `blur(${tBlur.toFixed(2)}px)` : 'none';
     }
     const front = clamp(Math.round(p - 0.05), 0, N - 1);
     countEl.textContent = `${pad(front + 1)} / ${pad(N)}`;
@@ -1754,27 +1742,26 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
     cue.style.opacity = p > 0.25 ? '0' : '1';
   }
 
-  // While the section is near the screen, follow scroll every frame (iOS can
-  // coalesce scroll events during momentum; a frame loop never misses one).
   function loop() {
-    raf = 0;
-    if (!active || !mqMobile.matches || root.classList.contains('ws-static')) return;
-    const p = readP();
-    if (p !== lastP) { render(p); lastP = p; }
-    raf = requestAnimationFrame(loop);
+    current += (target - current) * 0.22;
+    if (Math.abs(target - current) < 0.0005) current = target;
+    render(current);
+    raf = current !== target ? requestAnimationFrame(loop) : 0;
   }
-  function start() { if (!raf) raf = requestAnimationFrame(loop); }
+  function onScroll() {
+    if (!active || !mqMobile.matches || root.classList.contains('ws-static')) return;
+    readScroll();
+    if (!raf) raf = requestAnimationFrame(loop);
+  }
 
   new IntersectionObserver(entries => {
     active = entries[0].isIntersecting;
-    if (active) { measure(); start(); }
-  }, { rootMargin: '30% 0px 30% 0px' }).observe(track);
+    if (active) onScroll();
+  }, { rootMargin: '20% 0px 20% 0px' }).observe(track);
 
-  window.addEventListener('resize', () => { measure(); render(readP()); }, { passive: true });
-  window.addEventListener('load', measure);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-  if ('ResizeObserver' in window) new ResizeObserver(measure).observe(document.body);
-  measure(); render(readP());
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { readScroll(); current = target; render(current); }, { passive: true });
+  readScroll(); current = target; render(current);
 })();
 
 /* ══════════════════════════════════════════
