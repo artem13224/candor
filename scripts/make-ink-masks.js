@@ -82,13 +82,16 @@ for (const [i, d] of DROPS.entries()) {
 }
 // Pools briefly, then spreads steadily: the frame fills only at the very end
 const grow = t => Math.pow(t, 1.15);
+// Wash layers: WASHES-1 translucent tide rings of TONE opacity each, then a solid
+// core BAND (frame heights) further in.
+const WASHES = 5, TONE = 0.19, BAND = 0.22;
 
 function revealFrame(f) {
   const t = f / (FRAMES - 1);
   const px = new Uint8Array(FW * FH);
   const radius = DROPS.map(d => {
     const lt = (t - d.start) / (1 - d.start);
-    return lt <= 0 ? -1 : d.grow * grow(lt) - 0.02;
+    return lt <= 0 ? -1 : d.grow * grow(lt) - 0.08;
   });
   const soft = 1.4 / FH;                              // ~1.4 px anti-aliasing
   const spatterOn = smooth(0.03, 0.12, t) * (1 - smooth(0.8, 0.95, t));
@@ -107,17 +110,30 @@ function revealFrame(f) {
         const a = (Math.atan2(dy, dx) + Math.PI) / (Math.PI * 2);
         const lobe = d.lobes[Math.min(LUT - 1, Math.floor(a * LUT))];
         // Lobes stretch the outline into bleeding fingers; grain roughens the rim
-        const v = radius[k] - dist * (1 - 0.9 * lobe) + grain * 0.07;
+        const v = radius[k] - dist * (1 - 0.45 * lobe) + grain * 0.07;
         if (v > field) field = v;
       }
       field += smooth(0.88, 1, t) * 0.6;              // close the last gaps so the final frame is solid
-      let alpha = smooth(-soft, soft, field);
-      // Spatter: specks that land just ahead of the spreading rim
+      // Layered washes: faint tide lines outside, solid core inside. Each layer
+      // has its own crinkled outline so the rings never run parallel.
+      let alpha = 0;
+      if (field > -0.06) {
+        for (let k = 0; k < WASHES; k++) {
+          const crinkle = (fbm(x * 40, y * 40, 80 + k, 3) - 0.5) * 0.05 + (fbm(x * 9, y * 9, 90 + k, 3) - 0.5) * 0.09;
+          const on = smooth(-soft, soft, field - BAND * k / (WASHES - 1) + crinkle);
+          if (k === WASHES - 1) { alpha = Math.max(alpha, on); break; }  // the core is solid
+          const mottle = 0.7 + 0.6 * fbm(x * 5, y * 5, 100 + k, 3);       // uneven density, like wet ink
+          alpha += on * TONE * mottle;
+        }
+        alpha = Math.min(1, alpha);
+      }
+      // Spatter: faint specks that land just ahead of the spreading rim
       if (spatterOn > 0 && field > -0.09 && field < -0.008) {
-        const sp = smooth(0.71, 0.74, fbm(x * 38, y * 38, 41, 2)) * spatterOn * smooth(-0.09, -0.03, field);
+        const sp = 0.5 * smooth(0.74, 0.77, fbm(x * 38, y * 38, 41, 2)) * spatterOn * smooth(-0.09, -0.03, field);
         if (sp > alpha) alpha = sp;
       }
-      px[j * FW + i] = Math.round(alpha * 255);
+      // 16 tones: keeps the stepped look of a wash and the file ~110 KB instead of ~280
+      px[j * FW + i] = Math.round(Math.round(alpha * 15) / 15 * 255);
     }
   }
   return px;
@@ -135,6 +151,9 @@ function edgeMask() {
     const streak = (fbm(along * 2.5, across * 60, 60 + s, 3) - 0.5) * 0.045; // bristle streaks run along the edge
     const v = across - inset + streak;
     let a = smooth(-0.002, 0.004, v);
+    // A translucent wash bleeds a little further out than the solid stroke
+    const wash = smooth(-0.002, 0.004, v + 0.014 + (fbm(along * 9, across * 30, 80 + s, 3) - 0.5) * 0.02);
+    a = Math.max(a, 0.38 * wash);
     // Dry brush: a few bristles skip, leaving gaps just inside the outline
     const gap = smooth(0.58, 0.66, fbm(along * 4, across * 110, 70 + s, 2)) * (1 - smooth(0.0, 0.045, v));
     return a * (1 - gap);
