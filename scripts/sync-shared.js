@@ -9,6 +9,7 @@
  *   4. Footer business line: © YEAR Candor · Vancouver, BC, Canada
  *   6. Paper-grain texture overlay (images/textures/grain.png)
  *   7. Blog key-point highlighter (<mark> in .article-body) — Article pages only
+ *   8. Blog image ink reveal (figure images, masks from make-ink-masks.js) — Article pages only
  *   5. Shared accessibility styles (focus-visible, .sr-only) + a skip link
  *      pointing at id="main-content" (added to <main>, the article header, or
  *      the first <section> if the page has none)
@@ -241,6 +242,90 @@ const HL_SNIPPET = `${HL_START}
 ${HL_END}`;
 const isArticle = html => /"@type"\s*:\s*"Article"/.test(html);
 
+// Ink reveal for blog images: each photo bleeds in through an ink-blot mask as
+// it scrolls into view (once), then keeps a brushed, ragged edge. Both masks
+// are rendered by scripts/make-ink-masks.js. Fail-safe: masks only switch on
+// (html.ink-on) after both files have decoded, so no JS or a missing mask
+// means plain photos. Reduced motion → brushed edge, no animation.
+const INK_START = '<!-- candor-ink:start -->';
+const INK_END   = '<!-- candor-ink:end -->';
+const INK_SNIPPET = `${INK_START}
+<style>
+  .ink-wait :is(.article-img,.article-body figure) img{opacity:0}
+  .ink-on :is(.article-img,.article-body figure) img{
+    -webkit-mask-image:url(/images/textures/ink-edge.webp),url(/images/textures/ink-reveal.webp);
+    mask-image:url(/images/textures/ink-edge.webp),url(/images/textures/ink-reveal.webp);
+    -webkit-mask-size:100% 100%,800% 500%;mask-size:100% 100%,800% 500%;
+    -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    -webkit-mask-position:0 0,var(--ink-x,0%) var(--ink-y,0%);mask-position:0 0,var(--ink-x,0%) var(--ink-y,0%);
+    -webkit-mask-composite:source-in;mask-composite:intersect;
+    border-color:transparent;
+  }
+  .ink-on :is(.article-img,.article-body figure) img.ink-done{
+    -webkit-mask-image:url(/images/textures/ink-edge.webp);mask-image:url(/images/textures/ink-edge.webp);
+    -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-position:0 0;mask-position:0 0;
+  }
+  @media print{
+    .ink-wait :is(.article-img,.article-body figure) img{opacity:1}
+    .ink-on :is(.article-img,.article-body figure) img{-webkit-mask:none;mask:none}
+  }
+</style>
+<script>
+(function () {
+  var imgs = Array.prototype.slice.call(document.querySelectorAll('.article-img img, .article-body figure img'));
+  if (!imgs.length || !window.Promise) return;
+  var root = document.documentElement, EDGE = '/images/textures/ink-edge.webp', REVEAL = '/images/textures/ink-reveal.webp';
+  var COLS = 8, ROWS = 5, FRAMES = COLS * ROWS, DUR = 2000, DELAY = 300;   // 40 frames in 2 s: posterised, ~20 fps
+  var REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.classList.add('ink-wait');
+  var released = false;
+  function release() { released = true; root.classList.remove('ink-wait'); }
+  var bail = setTimeout(release, 4000);                // masks too slow or missing: plain photos
+  function load(src) {
+    return new Promise(function (res, rej) {
+      var i = new Image();
+      i.onload = function () { (i.decode ? i.decode() : Promise.resolve()).then(res, res); };
+      i.onerror = rej; i.src = src;
+    });
+  }
+  function frame(img, f) {
+    img.style.setProperty('--ink-x', (f % COLS) / (COLS - 1) * 100 + '%');
+    img.style.setProperty('--ink-y', Math.floor(f / COLS) / (ROWS - 1) * 100 + '%');
+  }
+  function done(img) { img.classList.add('ink-done'); img.style.removeProperty('--ink-x'); img.style.removeProperty('--ink-y'); }
+  function ready(img) {                                // never let the ink reveal a blank box
+    if (img.complete) return img.decode ? img.decode().catch(function () {}) : Promise.resolve();
+    return new Promise(function (res) { img.addEventListener('load', res, { once: true }); img.addEventListener('error', res, { once: true }); });
+  }
+  function play(img) {
+    ready(img).then(function () {
+      if (!img.naturalWidth) { done(img); return; }
+      setTimeout(function () {
+        var t0 = 0, shown = -1;
+        (function step(now) {
+          if (!t0) t0 = now;
+          var f = Math.min(FRAMES - 1, Math.floor((now - t0) / DUR * FRAMES));
+          if (f !== shown) { shown = f; frame(img, f); }
+          if (f < FRAMES - 1) requestAnimationFrame(step); else done(img);
+        })(performance.now());
+      }, DELAY);
+    });
+  }
+  Promise.all([load(EDGE), load(REVEAL)]).then(function () {
+    if (released) return;                              // timed out: leave the photos plain
+    clearTimeout(bail);
+    if (REDUCE || !('IntersectionObserver' in window)) imgs.forEach(done);
+    root.classList.add('ink-on'); root.classList.remove('ink-wait');
+    if (REDUCE || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); play(e.target); } });
+    }, { rootMargin: '0px 0px -15% 0px' });
+    imgs.forEach(function (img) { io.observe(img); });
+  }, release);
+})();
+</script>
+${INK_END}`;
+
 const BODY_START = '<!-- candor-consent:start -->';
 const BODY_END   = '<!-- candor-consent:end -->';
 const BODY_SNIPPET = `${BODY_START}
@@ -334,6 +419,15 @@ function replaceBetween(html, start, end, snippet) {
   return null;
 }
 
+// Add/refresh a block on Article pages (just before the grain block); strip it elsewhere.
+function articleBlock(html, article, start, end, snippet) {
+  const replaced = replaceBetween(html, start, end, snippet);
+  if (article) return replaced || html.replace(GRAIN_START, `${snippet}\n${GRAIN_START}`);
+  if (!replaced) return html;
+  const a = html.indexOf(start), b = html.indexOf(end) + end.length;
+  return html.slice(0, a) + html.slice(b).replace(/^\n/, '');
+}
+
 function transform(html) {
   let out = html;
 
@@ -367,15 +461,10 @@ function transform(html) {
   if (replacedGrain) out = replacedGrain;
   else out = out.replace(/<\/body>/i, `${GRAIN_SNIPPET}\n</body>`);
 
-  // 1e. Blog key-point highlighter — posts only, before the grain/banner blocks
-  const replacedHl = replaceBetween(out, HL_START, HL_END, HL_SNIPPET);
-  if (isArticle(out)) {
-    if (replacedHl) out = replacedHl;
-    else out = out.replace(GRAIN_START, `${HL_SNIPPET}\n${GRAIN_START}`);
-  } else if (replacedHl) {
-    const a = out.indexOf(HL_START), b = out.indexOf(HL_END) + HL_END.length;
-    out = out.slice(0, a) + out.slice(b).replace(/^\n/, '');
-  }
+  // 1e. Blog-only blocks (highlighter, then ink reveal) — posts only, before the grain/banner blocks
+  const article = isArticle(out);
+  out = articleBlock(out, article, HL_START, HL_END, HL_SNIPPET);
+  out = articleBlock(out, article, INK_START, INK_END, INK_SNIPPET);
 
   // 2. Banner — before </body>
   const replacedBody = replaceBetween(out, BODY_START, BODY_END, BODY_SNIPPET);

@@ -103,3 +103,15 @@ npm run og -- --site                # the generic site card → images/heroes/we
 
 Each card carries the Candor mark, the post's tag, its title with the last two words in green,
 the URL and the month. If `og-bg` is in place it becomes the card background.
+
+---
+
+## Generated textures (not slots)
+
+| File | Made by | Used where |
+|---|---|---|
+| `images/textures/grain.png` | static asset | Paper-grain overlay on every page (`sync-shared.js`) |
+| `images/textures/ink-reveal.webp` | `npm run ink` | Blog image ink reveal: 40-frame alpha mask, 8 × 5 grid of 400×225 frames |
+| `images/textures/ink-edge.webp` | `npm run ink` | Blog image brushed edge: static alpha mask |
+
+The ink masks are computed from seeded noise in `scripts/make-ink-masks.js`. Only their alpha channel matters. Don't edit them by hand: change the constants in the script and re-run `npm run ink` (add `-- --preview <dir>` to get contact sheets to look at).
