@@ -8,6 +8,7 @@
  *   3. Footer legal links: Privacy Policy · Terms · Cookie settings
  *   4. Footer business line: © YEAR Candor · Vancouver, BC, Canada
  *   6. Paper-grain texture overlay (images/textures/grain.png)
+ *   7. Blog key-point highlighter (<mark> in .article-body) — Article pages only
  *   5. Shared accessibility styles (focus-visible, .sr-only) + a skip link
  *      pointing at id="main-content" (added to <main>, the article header, or
  *      the first <section> if the page has none)
@@ -87,6 +88,44 @@ const GRAIN_SNIPPET = `${GRAIN_START}
 </style>
 <div class="candor-grain" aria-hidden="true"></div>
 ${GRAIN_END}`;
+
+// Key-point highlighter for blog posts: any <mark> inside .article-body gets a
+// sage-green sweep behind the text as it scrolls into view. Once lit it stays
+// lit. No JS → marks show highlighted; reduced motion → no sweep. Only injected
+// into pages whose JSON-LD declares "@type": "Article" (posts + template).
+const HL_START = '<!-- candor-highlight:start -->';
+const HL_END   = '<!-- candor-highlight:end -->';
+const HL_SNIPPET = `${HL_START}
+<style>
+  .article-body mark{
+    --hl:rgba(90,166,114,.30);
+    color:inherit;background-color:transparent;
+    background-image:linear-gradient(var(--hl),var(--hl));
+    background-repeat:no-repeat;background-position:0 88%;background-size:100% 70%;
+    padding:0 .12em;margin:0 -.04em;border-radius:.18em;
+  }
+  .hl-ready .article-body mark{background-size:0% 70%}
+  .hl-ready .article-body mark.is-lit{background-size:100% 70%;transition:background-size 1.1s cubic-bezier(.16,1,.3,1)}
+  @media (prefers-reduced-motion:reduce){.hl-ready .article-body mark.is-lit{transition:none}}
+  @media print{.article-body mark,.hl-ready .article-body mark{background-size:100% 70%!important}}
+</style>
+<script>
+(function () {
+  var marks = document.querySelectorAll('.article-body mark');
+  if (!marks.length || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('hl-ready');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-lit');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -18% 0px', threshold: 0.6 });
+  marks.forEach(function (m) { io.observe(m); });
+})();
+</script>
+${HL_END}`;
+const isArticle = html => /"@type"\s*:\s*"Article"/.test(html);
 
 const BODY_START = '<!-- candor-consent:start -->';
 const BODY_END   = '<!-- candor-consent:end -->';
@@ -213,6 +252,16 @@ function transform(html) {
   const replacedGrain = replaceBetween(out, GRAIN_START, GRAIN_END, GRAIN_SNIPPET);
   if (replacedGrain) out = replacedGrain;
   else out = out.replace(/<\/body>/i, `${GRAIN_SNIPPET}\n</body>`);
+
+  // 1e. Blog key-point highlighter — posts only, before the grain/banner blocks
+  const replacedHl = replaceBetween(out, HL_START, HL_END, HL_SNIPPET);
+  if (isArticle(out)) {
+    if (replacedHl) out = replacedHl;
+    else out = out.replace(GRAIN_START, `${HL_SNIPPET}\n${GRAIN_START}`);
+  } else if (replacedHl) {
+    const a = out.indexOf(HL_START), b = out.indexOf(HL_END) + HL_END.length;
+    out = out.slice(0, a) + out.slice(b).replace(/^\n/, '');
+  }
 
   // 2. Banner — before </body>
   const replacedBody = replaceBetween(out, BODY_START, BODY_END, BODY_SNIPPET);

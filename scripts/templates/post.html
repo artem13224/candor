@@ -699,6 +699,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <article class="article-body">
 
   <!-- ══════════════════════════════════════════════════════════════════════
+       KEY-POINT HIGHLIGHTS: wrap the 4–6 most important phrases in <mark>…</mark>
+       (numbers, costs, timelines, decisions, the "so what" of a section; ~6–25 words each,
+       roughly one per section). Only inside plain <p>/<li> body text — never in headings,
+       the lede, links, callouts, pull-quotes or the CTA box. The highlighter sweeps a
+       green tint behind each one as it scrolls into view.
+
        WRITE THE ARTICLE HERE. Allowed building blocks (all styled in <style> above):
 
        <p>…</p>                                   body copy, 17px, links inline with <a href="/blog/slug">
@@ -952,6 +958,36 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
 })();
 </script>
 <!-- candor-consent:end -->
+<!-- candor-highlight:start -->
+<style>
+  .article-body mark{
+    --hl:rgba(90,166,114,.30);
+    color:inherit;background-color:transparent;
+    background-image:linear-gradient(var(--hl),var(--hl));
+    background-repeat:no-repeat;background-position:0 88%;background-size:100% 70%;
+    padding:0 .12em;margin:0 -.04em;border-radius:.18em;
+  }
+  .hl-ready .article-body mark{background-size:0% 70%}
+  .hl-ready .article-body mark.is-lit{background-size:100% 70%;transition:background-size 1.1s cubic-bezier(.16,1,.3,1)}
+  @media (prefers-reduced-motion:reduce){.hl-ready .article-body mark.is-lit{transition:none}}
+  @media print{.article-body mark,.hl-ready .article-body mark{background-size:100% 70%!important}}
+</style>
+<script>
+(function () {
+  var marks = document.querySelectorAll('.article-body mark');
+  if (!marks.length || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('hl-ready');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-lit');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -18% 0px', threshold: 0.6 });
+  marks.forEach(function (m) { io.observe(m); });
+})();
+</script>
+<!-- candor-highlight:end -->
 <!-- candor-grain:start -->
 <style>
   .candor-grain{position:fixed;inset:0;z-index:500;pointer-events:none;background:url(/images/textures/grain.png) repeat;background-size:160px 160px;opacity:.07;mix-blend-mode:soft-light}

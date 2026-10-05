@@ -129,3 +129,11 @@ directly) without the user's go-ahead.
 - A hero illustration is optional. If the user provides one, save it as `images/_inbox/blog-<slug>.png` and run `npm run images`; `npm run rebuild` / `publish` then injects the figure and share tags automatically. Do not hand-write the `<figure>` when this path is available.
 - After publishing, offer `npm run og -- blog/<slug>.html` to render the branded share card (needs `npm install` and `npx playwright install chromium` once).
 - Prompts and style blocks for generating a hero live in `images/README.md`.
+
+## Key-point highlights
+
+Every post marks its 4–6 most important phrases with `<mark>…</mark>` so skimmers get the point fast; a shared script sweeps a sage-green tint behind each one as it scrolls into view (injected by `scripts/sync-shared.js` into any page with `"@type": "Article"` JSON-LD, so `publish.js` adds it automatically).
+
+- Mark concrete takeaways: numbers, costs, timelines, decisions, the one-line "so what" of a section. About 6–25 words each, roughly one per section, never the same idea twice.
+- Only inside plain `<p>`/`<li>` text in `.article-body`. Never in headings, the lede, figcaptions, links, callouts, pull-quotes, stat rows or the CTA box (dark backgrounds).
+- The `<mark>` must open and close inside the same element; it may contain `<strong>`/`<em>` but must not cross a tag boundary or wrap a link.

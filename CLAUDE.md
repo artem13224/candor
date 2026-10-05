@@ -182,6 +182,7 @@ Metadata is read from `<head>` first, with `<h1>` / `.article-tag` / `.article-l
 - Every `<img>` needs `alt`, real `width`/`height` (`identify -format "%w %h" file`), and `loading="lazy" decoding="async"` on all but the first image. Images live in `blog/images/` as compressed `.webp`/`.jpg`; the `<figcaption>` states the source/licence.
 - The consent banner (`candor-consent:start`) and footer legal links are injected by `scripts/sync-shared.js`; `publish.js` runs it for you.
 - HTML comments are ignored by the validator, so the template's commented examples are safe.
+- **Key-point highlights:** wrap the 4–6 most important phrases of each post in `<mark>…</mark>` (plain `<p>`/`<li>` body text only, never headings, links, callouts or the CTA). `sync-shared.js` injects the `candor-highlight` block into every page whose JSON-LD has `"@type": "Article"`; it sweeps a sage tint (`rgba(90,166,114,.30)`) behind each mark as it scrolls into view and leaves it lit. Backgrounds and text colours are untouched.
 
 ### Card logic in blog/index.html
 
