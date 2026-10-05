@@ -1619,9 +1619,12 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
    (gsap.timeline defaults {duration:2}, stagger -1, ScrollTrigger scrub,
    intro progress 1 → 0.07 over 1.5s expo, looping scroll arrow), with the
    site's images on the cards. GSAP can't load (CSP), so its eases are below.
-   Two deliberate fixes: the 0.1s autoAlpha snap at the end of each card is a
-   blur-and-fade instead, and when scrolling stops the page glides to the
-   nearest card in focus so nothing rests mid-blur.
+   Played as a full rewind (the user's call): each card swings up from below
+   in focus, holds, then shrinks back into the distance, blurring and fading
+   out, while the next card rises from below over it. Same tweens, local time
+   run 2 → 0. Two other deliberate fixes: the 0.1s autoAlpha snap is a fade,
+   and when scrolling stops the page glides to the nearest card in focus so
+   nothing rests mid-blur.
    ══════════════════════════════════════════ */
 (function () {
   const track = document.getElementById('wsTrack');
@@ -1650,14 +1653,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
   const grad = g => `radial-gradient(ellipse at ${g.x.toFixed(1)}px ${g.y.toFixed(1)}px, rgba(0,0,0,0) ${g.a.toFixed(2)}%, #000 ${g.b.toFixed(2)}%)`;
   const lerpG = (g1, g2, t) => ({ x: mix(g1.x, g2.x, t), y: mix(g1.y, g2.y, t), a: mix(g1.a, g2.a, t), b: mix(g1.b, g2.b, t) });
 
-  // j = 0 is the card on top (the reference's last DOM card), animated first.
+  // j = 0 is shown first; each later card rises over the one before it.
   const cards = CARDS.map((d, j) => {
     const el = document.createElement('button');
     el.type = 'button';
     el.className = 'ws-card';
     el.setAttribute('role', 'listitem');
     el.setAttribute('aria-label', `${d.name}. ${d.text} Open details.`);
-    el.style.zIndex = String(N - j);
+    el.style.zIndex = String(j + 1);
     el.style.backgroundColor = `rgba(${COLORS[j % COLORS.length]},0.7)`;
     el.innerHTML = `
       <img class="ws-img" src="${d.img}" width="1600" height="900" alt="" ${j > 1 ? 'loading="lazy" ' : ''}decoding="async"/>
@@ -1681,12 +1684,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
   setStatic();
   mqReduce.addEventListener && mqReduce.addEventListener('change', setStatic);
 
-  // Timeline state at progress p (0..1), exactly as the reference tweens it.
+  // Timeline state at progress p (0..1): the reference tweens, each card's
+  // local time played backwards (2 = dropped below, 0 = far back in the stack).
   function render(p) {
     const t = p * T;
     for (let j = 0; j < N; j++) {
-      const c = cards[j], s = c.el.style, lt = t - j;   // this card's local time, 0..2
-      if (lt >= 2) { s.visibility = 'hidden'; continue; }
+      const c = cards[j], s = c.el.style, lt = 2 - (t - j);   // this card's local time, 2 → 0
+      if (lt >= 2 || lt <= 0) { s.visibility = 'hidden'; continue; }
       let z = -500, rx = 2, yP = -45, bf = 20, g = c.gStart, op = 1, blur = 0;
       if (lt > 0) {
         const u = lt / 2;
@@ -1695,9 +1699,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
         yP = -45 + 145 * backIn2(u);                    // yPercent: 100, ease back.in(2)
         if (lt <= 1) { const v = power3In(lt);    bf = 20 - 12 * v; g = lerpG(c.gStart, G_MID, v); }
         else         { const v = sineIn(lt - 1);  bf = 8 - 7 * v;   g = lerpG(G_MID, G_END, v); }
-        // Reference: autoAlpha 0 over 0.1s at 1.9s (a hard snap). Fixed: blur out of focus and fade.
-        const w = clamp((lt - 1.45) / 0.55, 0, 1);
-        op = 1 - w * w; blur = 10 * w;
+        // Rising from below (reference: a 0.1s autoAlpha snap at 1.9s): a short, sharp fade-in.
+        op = clamp((2 - lt) / 0.25, 0, 1);
+        // Receding into the stack: blur out of focus and fade away.
+        const w = clamp((0.6 - lt) / 0.6, 0, 1);
+        op *= 1 - w * w; blur = 10 * w;
       }
       s.visibility = op > 0.002 ? 'visible' : 'hidden';
       s.transform = `translate(-50%, ${yP.toFixed(2)}%) translate3d(0, 0, ${z.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg)`;
@@ -1714,8 +1720,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
   let trackTop = 0, span = 1, target = 0.07, current = 0.07, raf = 0, active = false;
   let intro = null;                                     // { t0 } while the opening fly-in plays
   const raw = () => clamp((window.scrollY - trackTop) / span, 0, 1);
-  // Card j is most readable at local time 1.35 (z ≈ -40px, nearly level).
-  const focusRaw = j => clamp(((j + 1.35) / T - 0.07) / 0.93, 0, 1);
+  // Card j is most readable at local time 1.35 (z ≈ -40px, nearly level), i.e. t = j + 0.65.
+  const focusRaw = j => clamp(((j + 0.65) / T - 0.07) / 0.93, 0, 1);
   function scrollToCard(j) { window.scrollTo({ top: trackTop + focusRaw(j) * span, behavior: 'instant' }); }
 
   function measure() {
@@ -1751,8 +1757,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
     if (Math.abs(target - current) < 0.0004) current = target;
     let p = current;
     if (intro) {
-      const k = clamp((now - intro.t0) / 1500, 0, 1);   // tl progress 1 → 0.07, 1.5s, ease 'expo'
-      p = mix(1, current, expoOut(k));
+      const k = clamp((now - intro.t0) / 1500, 0, 1);   // tl progress 0 → 0.07, 1.5s, ease 'expo' (rewound)
+      p = mix(0, current, expoOut(k));
       deck.style.opacity = power2InOut(clamp((now - intro.t0) / 800, 0, 1)).toFixed(3);   // carousel fade, 0.8s
       if (k >= 1) intro = null;
     }
@@ -1777,7 +1783,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   if ('ResizeObserver' in window) new ResizeObserver(measure).observe(document.body);
   measure();
-  render(1);                                            // before the intro: tl paused at its end state
+  render(0);                                            // before the intro: first card still below
 })();
 
 /* ══════════════════════════════════════════
