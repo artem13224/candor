@@ -1009,9 +1009,9 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     ' float m3=smoothstep(uWl+.12,1.02,iu.y)*smoothstep(.35,.75,wisp(vec2(iu.x*2.,iu.y*9.+5.),uT*.03));',
     ' c=mix(c,mistC,m1*.55+m2*.35);c=mix(c,mistC,m3*.6);',
     // mist banked behind the title: always a little, thick on arrival, thickening again as you scroll
-    ' vec2 cq=(p-uCloudC)/vec2(uRes.x*.42,uRes.y*.16);float cb=exp(-dot(cq,cq));',
+    ' float cb=exp(-pow((p.y-uCloudC.y)/(uRes.y*.14),2.));',
     ' float cw=smoothstep(.28,.72,wisp(vec2(p.x/uRes.x*3.,p.y/uRes.y*7.),uT*.14));',
-    ' c=mix(c,mix(uBg,vec3(1.),.65),clamp(cb*cw*(.45+uCloud*.9),0.,1.));',
+    ' c=mix(c,mix(uBg,vec3(1.),.25),clamp(cb*cw*(.35+uCloud*.6),0.,1.));',
     ' if(uRise>0.){float yb=1.-p.y/uRes.y;',
     '  float e1=uRise*1.5-.25+(wisp(vec2(p.x/uRes.x*2.2,yb*3.),uT*.05)-.5)*.35;',
     '  float e2=uRise*1.5-.4+(wisp(vec2(p.x/uRes.x*3.2+7.,yb*4.),uT*.08)-.5)*.3;',
@@ -1023,23 +1023,18 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
 
   // Veil: wisps that drift in front of the title. Dense on arrival, light while you read, total as you scroll away.
   var FSV = HEAD + NOISE + '\n' + [
-    'uniform vec2 uRes;uniform float uT;uniform float uAmt;uniform float uIdle;uniform vec3 uCol;',
-    // density: drifting wisps while you read, plus a core that grows until it hides the title
-    'float puffAt(vec2 p){return wisp(vec2(p.x*2.4,p.y*2.8),uT*.16);}',
-    'float dens(vec2 p){vec2 e=(p-.5)/.5;float r=length(e*vec2(.78,1.2));',
-    // billowing cloud: noise decides the edge; a soft radial bias makes it fill in as the amount grows
-    ' float n=wisp(vec2(p.x*2.4,p.y*2.8),uT*.16);float n2=wisp(vec2(p.x*4.2+5.,p.y*4.8),uT*.24);float n3=fbm(vec2(p.x*9.+uT*.4,p.y*10.));',
-    ' float puff=n*.55+n2*.3+n3*.15;',
-    ' float base=1.-smoothstep(.15,1.,r);',
-    ' float field=puff*1.05+base*(.24+uAmt*1.1)-(1.-uAmt)*.2;',
-    ' float halo=smoothstep(.38,1.,field)*.72;float body=smoothstep(.62,1.12,field);',
-    ' float D=max(halo,body)*mix(.62,1.,uAmt);',
-    ' return D*(1.-smoothstep(.8,1.05,r));}',
-    'void main(){vec2 p=gl_FragCoord.xy/uRes;float D=dens(p);',
-    // light from the upper left: where the mist toward the light is denser, this pixel sits in its shadow
-    ' float sh=clamp((dens(p+vec2(-.025,.04))-D)*3.,0.,1.);',
-    ' vec3 lit=vec3(.996,.992,.982);vec3 shade=vec3(.85,.845,.81);',
-    ' float hollow=1.-puffAt(p);vec3 col=mix(lit,shade,clamp(sh*.7+hollow*.28-.08,0.,1.)*smoothstep(.25,.9,D));',
+    'uniform vec2 uRes;uniform float uT;uniform float uAmt;uniform float uIdle;uniform vec3 uCol;uniform vec3 uMouse;',
+    'void main(){vec2 p=gl_FragCoord.xy/uRes;float asp=uRes.x/uRes.y;',
+    // a horizontal band, heaviest across the lower half of the title, fading out above and below (no edges, no blob)
+    ' float band=smoothstep(.04,.36,p.y)*smoothstep(.86,.5,p.y);',
+    ' float full=smoothstep(0.,.26,p.y)*smoothstep(1.,.74,p.y);',
+    ' float n=wisp(vec2(p.x*asp*.9,p.y*2.6),uT*.11);float n2=fbm(vec2(p.x*asp*2.2-uT*.22,p.y*5.+uT*.05));',
+    ' float idle=band*clamp(.5+(n-.5)*1.5+(n2-.5)*.5,0.,1.)*uIdle;',
+    ' float D=mix(idle,max(idle,full*(.85+(n-.5)*.3)),uAmt);',
+    // hover: the mist parts softly around the pointer
+    ' vec2 d=(p-uMouse.xy)*vec2(asp,1.);float clear=exp(-dot(d,d)/.09)*uMouse.z;',
+    ' D*=1.-clear*.8*(1.-uAmt*.85);',
+    ' vec3 col=uCol*(1.+(n2-.5)*.03);',
     ' gl_FragColor=vec4(col*D,D);}'
   ].join('\n');
 
@@ -1058,7 +1053,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     gl = cv.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' }) || cv.getContext('experimental-webgl');
     if (gl) U = program(gl, FS, ['tImg', 'uRes', 'uOff', 'uSize', 'uWl', 'uCanoe', 'uBg', 'uMatch', 'uT', 'uPr', 'uPar', 'uRise', 'uLift', 'uCloud', 'uCloudC', 'uTall', 'uRings']);
     glv = veil.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: true, powerPreference: 'low-power' });
-    if (glv) UV = program(glv, FSV, ['uRes', 'uT', 'uAmt', 'uIdle', 'uCol']);
+    if (glv) UV = program(glv, FSV, ['uRes', 'uT', 'uAmt', 'uIdle', 'uCol', 'uMouse']);
   } catch (e) { if (window.console) console.error(e); gl = null; }
   if (!gl) { root.classList.add('lake-no-gl'); glv = null; }
 
@@ -1087,6 +1082,13 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
   // ── State ───────────────────────────────────────────────────────────────────
   var t0 = performance.now(), pS = 0, NR = 8, rings = [], ringBuf = new Float32Array(NR * 4), nextDrop = 2.5;
   var mouse = { x: 0, y: 0, tx: 0, ty: 0, last: 0, lx: -1e4, ly: -1e4 };
+  var push = { x: .5, y: .5, tx: .5, ty: .5, v: 0, on: 0 };
+  function parting(e, on) { var r = veil.getBoundingClientRect(); push.tx = (e.clientX - r.left) / r.width; push.ty = 1 - (e.clientY - r.top) / r.height;
+    push.on = on && push.tx > -.05 && push.tx < 1.05 && push.ty > -.05 && push.ty < 1.05 ? 1 : 0; kick(); }
+  stage.addEventListener('pointermove', function (e) { parting(e, true); });
+  stage.addEventListener('pointerdown', function (e) { parting(e, true); });
+  stage.addEventListener('pointerleave', function (e) { parting(e, false); });
+  stage.addEventListener('pointerup', function (e) { if (e.pointerType !== 'mouse') { push.on = 0; kick(); } });
   function now() { return (performance.now() - t0) / 1000; }
   function scrollP() { var r = lake.getBoundingClientRect(), track = r.height - L.cssH; return track > 0 ? Math.min(1, Math.max(0, -r.top / track)) : 0; }
   function addRing(x, y, amp) { rings.push({ t: now(), x: x, y: y, amp: amp }); if (rings.length > NR) rings.shift(); }
@@ -1143,8 +1145,10 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     if (glv) {
       glv.viewport(0, 0, veil.width, veil.height); glv.clearColor(0, 0, 0, 0); glv.clear(glv.COLOR_BUFFER_BIT);
       glv.uniform2f(UV.uRes, veil.width, veil.height); glv.uniform1f(UV.uT, REDUCE ? 0 : t);
-      glv.uniform1f(UV.uAmt, Math.max(arrive, away)); glv.uniform1f(UV.uIdle, REDUCE ? 0 : .9);
-      glv.uniform3f(UV.uCol, Math.min(1, BG[0] / 255 + .03), Math.min(1, BG[1] / 255 + .03), Math.min(1, BG[2] / 255 + .03));
+      glv.uniform1f(UV.uAmt, Math.max(arrive * .9, away)); glv.uniform1f(UV.uIdle, REDUCE ? .55 : .9);
+      glv.uniform3f(UV.uCol, Math.min(1, BG[0] / 255 + .025), Math.min(1, BG[1] / 255 + .025), Math.min(1, BG[2] / 255 + .025));
+      push.v += (push.on - push.v) * .08; push.x += (push.tx - push.x) * .18; push.y += (push.ty - push.y) * .18;
+      glv.uniform3f(UV.uMouse, push.x, push.y, REDUCE ? 0 : push.v);
       glv.drawArrays(glv.TRIANGLES, 0, 3);
     }
   }
@@ -1157,7 +1161,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     draw(now());
     frames.push(dt); if (frames.length > 40) { var avg = frames.reduce(function (a, b) { return a + b; }) / frames.length; frames.length = 0;
       if (avg > 26 && quality > .55) { quality *= .85; layout(); draw(now()); } }   // redraw at once: a resized canvas is blank until drawn
-    var busy = !REDUCE || Math.abs(target - pS) > .001 || rings.length;
+    var busy = !REDUCE || Math.abs(target - pS) > .001 || rings.length || Math.abs(push.v - push.on) > .01;
     if (onScreen && !document.hidden && busy) raf = requestAnimationFrame(loop);
   }
   function kick() { if (!raf && onScreen && !document.hidden) { lastTs = 0; raf = requestAnimationFrame(loop); } }
