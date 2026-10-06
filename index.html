@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en" style="background:#0D1610">
 <head>
+<script>document.documentElement.classList.add('js')</script>
 <!-- candor-consent-default:start -->
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -349,6 +350,7 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .svc-head-l{display:flex;align-items:baseline;gap:16px;min-width:0}
 .svc-num{font-family:var(--u);font-weight:800;font-size:12px;letter-spacing:.12em;color:var(--ink4);flex-shrink:0}
 .svc-name{font-family:var(--u);font-weight:700;font-size:clamp(20px,2.8vw,30px);letter-spacing:-.015em;color:#0E110D;line-height:1;transition:color .3s;white-space:nowrap;overflow:visible;padding-bottom:3px}
+@media(max-width:600px){.svc-name{white-space:normal;line-height:1.15}}
 .svc-item:hover .svc-name{color:var(--green)}
 .svc-head-r{display:flex;align-items:center;gap:14px;flex-shrink:0;padding-right:4px}
 .svc-price{font-family:var(--u);font-weight:700;font-style:italic;font-size:19px;color:var(--green);white-space:nowrap}
@@ -419,7 +421,7 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 .ws-static .ws-track{height:auto}
 .ws-static .ws-stage{position:static;height:auto;overflow:visible;padding:24px var(--px) 64px}
 .ws-static .ws-deck{position:static;perspective:none;overflow:visible;opacity:1;display:grid;gap:16px}
-.ws-static .ws-card{position:relative;left:auto;top:auto;width:100%;max-width:none;height:min(60svh,460px);max-height:none;visibility:visible;transform:none!important;opacity:1!important;filter:none!important}
+.ws-static .ws-card{position:relative;left:auto;top:auto;width:100%;max-width:none;height:min(60svh,460px);max-height:none;visibility:visible!important;transform:none!important;opacity:1!important;filter:none!important}
 .ws-static .ws-arrow{display:none}
 
 /* ─── DESKTOP RIVER ─── */
@@ -608,12 +610,12 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 @keyframes slup{to{transform:translateY(0)}}
 @keyframes scx{to{transform:scaleX(1)}}
 @keyframes fdup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-}
-.fu{opacity:0;transform:translateY(32px);transition:opacity .95s var(--ease),transform .95s var(--ease);will-change:opacity,transform}
+.js .fu{opacity:0;transform:translateY(32px);transition:opacity .95s var(--ease),transform .95s var(--ease);will-change:opacity,transform}
 .fu.vis{opacity:1;transform:translateY(0)}
-.stg>*{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .stg>*{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .stg.vis>*:nth-child(1){transition-delay:.04s}.stg.vis>*:nth-child(2){transition-delay:.12s}.stg.vis>*:nth-child(3){transition-delay:.20s}.stg.vis>*:nth-child(4){transition-delay:.28s}.stg.vis>*:nth-child(5){transition-delay:.36s}.stg.vis>*:nth-child(6){transition-delay:.44s}
 .stg.vis>*{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.js .fu,.js .stg>*{opacity:1;transform:none;transition:none}}
 
 /* RESPONSIVE 640+ */
 @media(min-width:640px){
@@ -923,7 +925,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 #mob-nav.mob-open .mob-item:nth-child(7){transition-delay:210ms}  /* Assessment */
 /* Dial pill */
 #mob-dial{
-  position:absolute;left:50%;top:85%;
+  position:absolute;left:50%;top:min(85%, calc(100% - var(--cc-h, 0px) - 30px));
   transform:translate(-50%,-50%);
   pointer-events:auto;
   background:rgba(245,243,238,.94);
@@ -935,7 +937,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   box-shadow:0 4px 28px -8px rgba(14,17,13,.32);
   z-index:2;
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  transition:background .35s,border-color .35s,box-shadow .35s,transform .4s var(--ease);
+  transition:background .35s,border-color .35s,box-shadow .35s,transform .4s var(--ease),top .35s var(--ease);
   white-space:nowrap;
 }
 #mob-dial:active{transform:translate(-50%,-50%) scale(.93)}
@@ -1039,16 +1041,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 
 <!-- MOBILE RADIAL DIAL NAV -->
-<div id="mob-nav" aria-hidden="true">
+<div id="mob-nav">
   <div id="mob-backdrop"></div>
   <div id="mob-arc">
-    <a href="#services" class="mob-item">Services</a>
-    <a href="#process"  class="mob-item">Process</a>
-    <a href="#who"      class="mob-item">Who</a>
-    <a href="#about"    class="mob-item">About</a>
-    <a href="#faq"      class="mob-item">FAQ</a>
-    <a href="#contact"  class="mob-item">Contact</a>
-    <a href="/assessment/" class="mob-item">Assessment</a>
+    <a href="#services" class="mob-item" inert>Services</a>
+    <a href="#process"  class="mob-item" inert>Process</a>
+    <a href="#who"      class="mob-item" inert>Who</a>
+    <a href="#about"    class="mob-item" inert>About</a>
+    <a href="#faq"      class="mob-item" inert>FAQ</a>
+    <a href="#contact"  class="mob-item" inert>Contact</a>
+    <a href="/assessment/" class="mob-item" inert>Assessment</a>
     <button id="mob-dial" aria-label="Open navigation" aria-expanded="false">
       <svg id="dial-clock-svg" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="#0D1610"/>
@@ -2807,7 +2809,7 @@ document.querySelectorAll('.river-card-d').forEach(el => {
     isOpen = true;
     mobNav.classList.add('mob-open');
     dial.setAttribute('aria-expanded', 'true');
-    mobNav.setAttribute('aria-hidden', 'false');
+    items.forEach(function(i) { i.inert = false; });
     dialSvg.querySelectorAll('.dial-hand').forEach(function(h) { h.setAttribute('stroke', 'var(--white)'); });
     dialSvg.querySelectorAll('circle').forEach(function(c, ci) {
       c.setAttribute('stroke', ci === 0 ? 'rgba(245,243,238,.55)' : '#2D6B42');
@@ -2818,7 +2820,7 @@ document.querySelectorAll('.river-card-d').forEach(el => {
     isOpen = false;
     mobNav.classList.remove('mob-open');
     dial.setAttribute('aria-expanded', 'false');
-    mobNav.setAttribute('aria-hidden', 'true');
+    items.forEach(function(i) { i.inert = true; });
     /* restore SVG colors */
     dialSvg.querySelectorAll('.dial-hand').forEach(function(h) { h.setAttribute('stroke', '#0E110D'); });
     dialSvg.querySelectorAll('circle').forEach(function(c, ci) {
@@ -3195,6 +3197,7 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
   .cc-decline:hover{background:#E4E1D6}
   .cc-btn:focus-visible,.cc-desc a:focus-visible{outline:2px solid #2D6B42;outline-offset:2px}
   @media (prefers-reduced-motion: reduce){.cc-banner{transition:none;transform:none}}
+  @media (max-width:639px){.cc-banner{left:12px;right:12px;bottom:12px;padding:12px 14px;font-size:13px;line-height:1.45}.cc-title{display:inline;margin:0 6px 0 0;font-size:10px}.cc-desc{display:inline}.cc-actions{margin-top:10px;flex-wrap:nowrap}.cc-btn{flex:1;padding:12px 8px}}
   @media (min-width:640px){.cc-banner{left:24px;bottom:24px;right:auto}}
 </style>
 <script>
@@ -3209,8 +3212,9 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'candor_consent', consent_state: v });
   }
-  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
-  function hide(){ banner.classList.remove('cc-in'); setTimeout(function(){ banner.hidden = true; }, 300); }
+  /* --cc-h lets fixed page UI (e.g. the mobile nav pill) sit above the banner while it is open */
+  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); document.documentElement.style.setProperty('--cc-h', (banner.offsetHeight + 16) + 'px'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
+  function hide(){ banner.classList.remove('cc-in'); document.documentElement.style.removeProperty('--cc-h'); setTimeout(function(){ banner.hidden = true; }, 300); }
   banner.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cc]'); if (!b) return;
     var v = b.getAttribute('data-cc'); write(v); apply(v); hide();

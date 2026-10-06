@@ -581,7 +581,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       transition: background 0.2s;
     }
 
-    .cta-btn:hover { background: var(--green2); }
+    .cta-btn:hover { background: #235437; }
 
     /* MORE ARTICLES */
     .more-articles {
@@ -1005,6 +1005,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
   .cc-decline:hover{background:#E4E1D6}
   .cc-btn:focus-visible,.cc-desc a:focus-visible{outline:2px solid #2D6B42;outline-offset:2px}
   @media (prefers-reduced-motion: reduce){.cc-banner{transition:none;transform:none}}
+  @media (max-width:639px){.cc-banner{left:12px;right:12px;bottom:12px;padding:12px 14px;font-size:13px;line-height:1.45}.cc-title{display:inline;margin:0 6px 0 0;font-size:10px}.cc-desc{display:inline}.cc-actions{margin-top:10px;flex-wrap:nowrap}.cc-btn{flex:1;padding:12px 8px}}
   @media (min-width:640px){.cc-banner{left:24px;bottom:24px;right:auto}}
 </style>
 <script>
@@ -1019,8 +1020,9 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'candor_consent', consent_state: v });
   }
-  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
-  function hide(){ banner.classList.remove('cc-in'); setTimeout(function(){ banner.hidden = true; }, 300); }
+  /* --cc-h lets fixed page UI (e.g. the mobile nav pill) sit above the banner while it is open */
+  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); document.documentElement.style.setProperty('--cc-h', (banner.offsetHeight + 16) + 'px'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
+  function hide(){ banner.classList.remove('cc-in'); document.documentElement.style.removeProperty('--cc-h'); setTimeout(function(){ banner.hidden = true; }, 300); }
   banner.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cc]'); if (!b) return;
     var v = b.getAttribute('data-cc'); write(v); apply(v); hide();
