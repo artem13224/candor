@@ -1182,9 +1182,11 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
   function draw(t) {
     if (!L.sw) return;
     // the rising fog hugs the top edge of the incoming posts instead of filling the whole screen:
-    // ct = how far up the stage their top edge has come (0 at the bottom, 1 at the top)
-    var sr = stage.getBoundingClientRect(), ct = nxt ? (sr.bottom - nxt.getBoundingClientRect().top) / sr.height : pS;
-    var rise = REDUCE ? sstep(.5, .95, pS) : Math.max(sstep(.1, .5, pS) * .35, Math.min(1, (ct + .44) / 1.5));
+    // ct = how far up the stage their top edge has come (0 at the bottom, 1 at the top);
+    // past the middle of the track it keeps climbing on its own so the mountain is veiled by the time the posts settle
+    var sr = stage.getBoundingClientRect(), nt = nxt ? nxt.getBoundingClientRect().top : innerHeight;
+    var ct = nxt ? (sr.bottom - nt) / sr.height : pS, cv = 1 - nt / innerHeight;   // cv: the same edge, measured up the screen
+    var rise = REDUCE ? sstep(.5, .95, pS) : Math.max(sstep(.1, .5, pS) * .35, Math.min(1, (ct + .44) / 1.5), sstep(.1, .6, cv));
     L.lift = REDUCE ? 0 : Math.pow(seg(pS, .1, 1), 1.4) * L.h * .32;
     var arrive = REDUCE ? 0 : 1 - sstep(.3, 2.8, t);
     var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .42, pS);
