@@ -247,6 +247,8 @@ All styles live in `<style>` blocks inside each HTML file. Never introduce an ex
 --px: clamp(20px, 5vw, 80px);       /* responsive horizontal padding */
 ```
 
+Text contrast (WCAG 2.2 AA needs 4.5:1 for body text): `--sage` and `--stone` fail as text on `--bg`/`--paper` (2.4–2.7:1 and 1.5–1.6:1); `--field` passes only for large text. The full token contrast table, review checklist and evidence-graded UX principles are in `.claude/skills/ux-review/SKILL.md`; use it for any design critique or visual change.
+
 ### Typography
 
 - Headings & UI: **Urbanist** (weights 300, 400, 700, 800)
