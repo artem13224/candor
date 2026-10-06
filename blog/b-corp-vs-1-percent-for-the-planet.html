@@ -1203,7 +1203,8 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
   var imgs = Array.prototype.slice.call(document.querySelectorAll('.article-img img, .article-body figure img'));
   if (!imgs.length || !window.Promise) return;
   var root = document.documentElement, EDGE = '/images/textures/ink-edge.webp', REVEAL = '/images/textures/ink-reveal.webp';
-  var COLS = 8, ROWS = 5, FRAMES = COLS * ROWS, DUR = 2000, DELAY = 300;   // 40 frames in 2 s: posterised, ~20 fps
+  var COLS = 8, ROWS = 5, FRAMES = COLS * ROWS, STEP = 50;   // posterised: one frame every 50 ms (~20 fps)
+  var START = 5;   // frame 0 is the hidden pre-state and 1–4 are blank, so play from the first visible ink
   var REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   root.classList.add('ink-wait');
   var released = false;
@@ -1228,15 +1229,13 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
   function play(img) {
     ready(img).then(function () {
       if (!img.naturalWidth) { done(img); return; }
-      setTimeout(function () {
-        var t0 = 0, shown = -1;
-        (function step(now) {
-          if (!t0) t0 = now;
-          var f = Math.min(FRAMES - 1, Math.floor((now - t0) / DUR * FRAMES));
-          if (f !== shown) { shown = f; frame(img, f); }
-          if (f < FRAMES - 1) requestAnimationFrame(step); else done(img);
-        })(performance.now());
-      }, DELAY);
+      var t0 = 0, shown = -1;
+      (function step(now) {
+        if (!t0) t0 = now;
+        var f = Math.min(FRAMES - 1, START + Math.floor((now - t0) / STEP));
+        if (f !== shown) { shown = f; frame(img, f); }
+        if (f < FRAMES - 1) requestAnimationFrame(step); else done(img);
+      })(performance.now());
     });
   }
   Promise.all([load(EDGE), load(REVEAL)]).then(function () {
@@ -1245,10 +1244,19 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     if (REDUCE || !('IntersectionObserver' in window)) imgs.forEach(done);
     root.classList.add('ink-on'); root.classList.remove('ink-wait');
     if (REDUCE || !('IntersectionObserver' in window)) return;
+    // One screen ahead: fetch and decode lazy photos early, so the ink never waits on the network
+    var warm = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var img = e.target; warm.unobserve(img);
+        if (img.loading === 'lazy') img.loading = 'eager';
+        if (img.decode) img.decode().catch(function () {});
+      });
+    }, { rootMargin: '0px 0px 100% 0px' });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); play(e.target); } });
-    }, { rootMargin: '0px 0px -15% 0px' });
-    imgs.forEach(function (img) { io.observe(img); });
+    }, { rootMargin: '0px 0px -5% 0px' });
+    imgs.forEach(function (img) { warm.observe(img); io.observe(img); });
   }, release);
 })();
 </script>
