@@ -239,7 +239,7 @@ All styles live in `<style>` blocks inside each HTML file. Never introduce an ex
 --paper: #F5F3EE;       /* cream/card background */
 --body: #4A5548;        /* body text dark gray */
 --stone: #C8C3B5;       /* mid-tone neutral — rules/borders only, never text on light backgrounds */
---muted: #68665D;       /* secondary text (meta lines, captions): 4.8:1 on --bg, 5.2:1 on --paper */
+--muted: #64625A;       /* secondary text (meta lines, captions): 5.1:1 on --bg, 5.5:1 on --paper, 4.7:1 on --light */
 --light: #E4E1D6;       /* light neutral */
 --u: "Urbanist", sans-serif;
 --mono: "Space Mono", monospace;

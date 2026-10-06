@@ -27,6 +27,7 @@
   --amber-soft:#E8B888; /* 10 Signal soft */
   --oat-deep:#E4E1D6;   /* 11 Tint */
   --linen:#D8D3C3;      /* 12 Disabled */
+  --muted:#64625A;      /* 13 Muted text — 5.1:1 on Oat, 5.5:1 on Paper, 4.7:1 on Tint */
 
   /* Type — Section 06 */
   --sans:'Open Sans',-apple-system,BlinkMacSystemFont,sans-serif;
@@ -58,7 +59,7 @@ body{
   text-transform:uppercase;
   color:var(--slate);
 }
-.mono-dim{color:var(--stone);}
+.mono-dim{color:var(--muted);}
 
 /* ---------- Top bar ---------- */
 .topbar{
@@ -185,7 +186,7 @@ p{margin-top:0;}
 .type-row .label{display:flex;flex-direction:column;gap:6px;}
 .type-row .label .nm{font-size:13px;color:var(--slate);}
 .type-spec{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;align-self:start;}
-.type-spec .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--stone);}
+.type-spec .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
 .type-spec .v{font-size:13px;color:var(--slate);}
 
 .spec-display{font-family:var(--display);font-weight:800;font-size:clamp(40px,6vw,72px);line-height:.92;letter-spacing:-.045em;color:var(--ink);}
@@ -244,7 +245,7 @@ p{margin-top:0;}
 .docid{font-family:var(--mono);font-size:11px;color:var(--slate);letter-spacing:.06em;text-align:right;line-height:1.7;}
 .doc-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 24px;padding:18px 28px;border-bottom:1px solid var(--stone);}
 .doc-meta>div{display:flex;gap:10px;align-items:baseline;}
-.doc-meta .k{color:var(--stone);min-width:46px;}
+.doc-meta .k{color:var(--muted);min-width:46px;}
 .doc-meta .v{color:var(--ink);}
 .doc-body{padding:24px 28px;}
 .doc-body .lines{display:flex;flex-direction:column;gap:9px;}
@@ -331,7 +332,7 @@ p{margin-top:0;}
 .copy .callout{font-size:18px;margin:18px 0;padding-left:18px;max-width:none;}
 
 .colophon{display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px;}
-.row-mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--stone);display:block;margin-bottom:8px;}
+.row-mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px;}
 
 @media (max-width:880px){
   .doc-body{grid-template-columns:1fr;}
@@ -1040,7 +1041,7 @@ p{margin-top:0;}
           <span class="hex">#C8C3B5</span>
           <div class="nm">Border Stone</div>
         </div>
-        <p class="use">Hairline rules, table borders, dividers, input outlines. Never used for type.</p>
+        <p class="use">Hairline rules, table borders, dividers. Never used for type, and not for input outlines (1.5:1; form-field borders need 3:1, so use Slate Moss).</p>
       </div>
     </div>
 
@@ -1106,6 +1107,19 @@ p{margin-top:0;}
           <div class="nm">Linen Mute</div>
         </div>
         <p class="use">Disabled buttons, placeholder fills, inactive avatar rings. Never the only signal &mdash; pair with text.</p>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="chip dark" style="background: #64625A;">
+        <span class="ratio-pill">13 / Muted</span>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="hex">#64625A</span>
+          <div class="nm">Muted Stone</div>
+        </div>
+        <p class="use">Small secondary type: bylines, dates, captions, credits, mono labels. Passes WCAG AA on every light surface (5.1:1 on Oat, 5.5:1 on Paper, 4.7:1 on Tint); lighter than Slate Moss so it still reads as secondary.</p>
       </div>
     </div>
 

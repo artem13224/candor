@@ -199,7 +199,7 @@ These are single-evaluator findings: treat them as likely problems and confirm b
 | `--field` | 3.51 (large text only) | 3.81 (large text only) | 4.36 ✗ for small text |
 | `--sage` | 2.44 ✗ | 2.66 ✗ | 6.26 |
 | `--stone` | 1.46 ✗ | 1.59 ✗ | 10.47 |
-| `--muted` #68665D | 4.78 | 5.19 | — |
+| `--muted` #64625A | 5.07 (4.67 on `--light`) | 5.51 | — |
 
 **Fixed (Oct 2026)**
 - **Grey meta text (was a 1.4.3 failure, severity 3).** `--stone` text (about 1.6:1) in the blog `.article-meta`, `.card-meta`, figcaptions and `.timeline-label`, and in the `.article-meta` / `.policy-note` of the 404, privacy and terms pages, now uses the new `--muted` token. The post template `scripts/templates/post.html` was updated too.
@@ -211,6 +211,7 @@ These are single-evaluator findings: treat them as likely problems and confirm b
   - The tagline's opacity went from .45 to .5, raising its contrast from 4.19:1 to 4.89:1.
   - It is still skippable (click, tap, Esc). Verified in Chromium in normal, reduced-motion and no-JS modes.
 - When adding beats to the loader, keep them before the dismiss time.
+- **Brand Guide** (`Brand Guide/Brand Guide.html`): its four `--stone` type rules now use `--muted`; there is a new "13 / Muted" swatch; and the Stone swatch no longer recommends Stone for input outlines (1.5:1, where form-field borders need 3:1).
 
 **Checked and passing**
 - **Consent banner:** Accept and Decline are both one-click buttons of the same size; Esc declines; GPC is honoured; the default is denied. Decline is outlined and Accept filled, a mild asymmetry that is acceptable.
