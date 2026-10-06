@@ -16,6 +16,10 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 <style>
   /* Footer on phones: a stacked, two-column layout instead of wrapped inline links.
      'footer .x' outranks each page's own '.x' rules, so this wins without !important. */
+  /* Nav at tablet widths: the links tighten, then step aside, so the call-to-action never wraps or spills off screen. */
+  #site-nav .nav-cta{white-space:nowrap}
+  @media (max-width:1100px){#site-nav .nav-links{padding-left:16px}#site-nav .nav-link{padding:6px 8px;letter-spacing:.1em}}
+  @media (max-width:940px){#site-nav .nav-links{display:none}#site-nav .nav-cta-wrap{grid-column:3;justify-self:end}}
   /* Nav on phones: the wordmark and the call-to-action must never touch. */
   @media (max-width:720px){
     #site-nav .nav-inner{grid-template-columns:auto minmax(0,1fr) auto;column-gap:12px}
@@ -496,17 +500,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section class="articles">
 
-    <a href="/blog/b-corp-decertified-companies" class="article-card featured" data-tag="B Corp Basics" data-date="2026-05-30">
+    <a href="/blog/b-corp-news-fall-2026" class="article-card featured has-img" style="--card-img:url('/blog/images/b-corp-news-fall-2026.webp')" data-tag="B Corp Basics" data-date="2026-10-06">
       <div class="featured-left">
         <span class="card-tag">B Corp Basics</span>
-        <h2 class="card-title">B Corps That Lost Their Certification</h2>
+        <h2 class="card-title">B Corp News Fall 2026: What Changed This Quarter</h2>
       </div>
       <div class="featured-right">
-        <p class="card-excerpt">What actually happens when B Corp certification is revoked — four high-profile decertification cases and what small businesses should take from each.</p>
+        <p class="card-excerpt">B Corp news from July to October 2026: the logo now comes with stricter claim rules, and the first companies have certified on B Lab's new standards.</p>
         <div class="card-meta">
-          <span class="card-date">May 2026</span>
+          <span class="card-date">Oct 2026</span>
           <span class="card-arrow">&#8594;</span>
         </div>
+      </div>
+    </a>
+
+    <a href="/blog/b-corp-decertified-companies" class="article-card" data-tag="B Corp Basics" data-date="2026-05-30">
+      <span class="card-tag">B Corp Basics</span>
+      <h2 class="card-title">B Corps That Lost Their Certification</h2>
+      <p class="card-excerpt">What actually happens when B Corp certification is revoked — four high-profile decertification cases and what small businesses should take from each.</p>
+      <div class="card-meta">
+        <span class="card-date">May 2026</span>
+        <span class="card-arrow">&#8594;</span>
       </div>
     </a>
 
