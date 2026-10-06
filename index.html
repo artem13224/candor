@@ -15,8 +15,6 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 <!-- candor-consent-default:end -->
 <!-- candor-a11y:start -->
 <style>
-  /* Footer on phones: a stacked, two-column layout instead of wrapped inline links.
-     'footer .x' outranks each page's own '.x' rules, so this wins without !important. */
   /* Nav at tablet widths: the links tighten, then step aside, so the call-to-action never wraps or spills off screen. */
   #site-nav .nav-cta{white-space:nowrap}
   @media (max-width:1100px){#site-nav .nav-links{padding-left:16px}#site-nav .nav-link{padding:6px 8px;letter-spacing:.1em}}
@@ -29,17 +27,6 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
     #site-nav .nav-wordmark{font-size:12px;letter-spacing:.18em}
   }
   @media (max-width:360px){#site-nav .nav-wordmark{display:none}}
-  @media (max-width:720px){
-    footer{padding-top:32px!important;padding-bottom:40px!important}
-    body:has(#mob-nav) footer{padding-bottom:124px!important}
-    footer .foot-row{flex-direction:column;align-items:flex-start;gap:16px}
-    footer .foot-row+.foot-row{margin-top:22px;padding-top:22px}
-    footer .foot-nav{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
-    footer .foot-links{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
-    footer .foot-links a:first-child{grid-column:1 / -1}
-    footer .foot-copy{margin-top:2px}
-    footer .foot-disclaimer{max-width:none}
-  }
   :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid #3D8A57;outline-offset:3px}
   .skip-link{position:absolute;left:16px;top:-80px;z-index:1000;padding:10px 16px;background:#0D1610;color:#F5F3EE;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;text-decoration:none;transition:top .2s}
   .skip-link:focus{top:12px;outline-color:#F5F3EE}
@@ -386,92 +373,6 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 #services .body-p{color:rgba(245,243,238,.65)}
 
 /* ═══════════════════════════════════════════
-   WHO SECTION
-   ═══════════════════════════════════════════ */
-.who-section{background:var(--bg2)}
-
-/* ─── MOBILE SWIPE STACK ─── */
-.who-mobile{display:block}
-.who-mobile-head{padding:64px var(--px) 8px}
-.who-mobile .ey{margin-bottom:22px}
-.ws-lede{font-size:14px;margin-bottom:0;color:var(--ink4)}
-/* ── "Images glass pop up" — ported 1:1 from the reference (GSAP + ScrollTrigger)
-   main 700vh → track N×100vh; .carousel → .ws-stage/.ws-deck; .card → .ws-card */
-.ws-track{position:relative;height:calc(var(--n) * 100vh);height:calc(var(--n) * 100svh)}
-.ws-stage{position:sticky;top:0;width:100%;height:100vh;height:100svh;overflow:hidden}
-.ws-deck{position:absolute;inset:0;perspective:300px;overflow:hidden;opacity:0}
-.ws-card{position:absolute;left:50%;top:50%;width:60%;height:80%;max-width:400px;max-height:min(600px,calc(100% - 200px));
-  border-radius:10px;overflow:hidden;display:block;padding:0;border:0;margin:0;text-align:left;font:inherit;color:#fff;cursor:pointer;
-  transform-origin:50% 999px -100px;will-change:transform,opacity;-webkit-tap-highlight-color:transparent;visibility:hidden}
-.ws-card .ws-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:.86;pointer-events:none}
-.ws-shade{position:absolute;inset:0;pointer-events:none}
-.ws-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,11,.85) 0%,rgba(10,14,11,.45) 38%,rgba(10,14,11,0) 64%);pointer-events:none}
-.ws-text{position:absolute;left:0;right:0;bottom:0;padding:16px 16px 18px}
-.ws-num{display:block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#a8dcb6;margin-bottom:8px}
-.ws-name{display:block;font-family:var(--u);font-weight:800;font-size:clamp(19px,5.6vw,26px);line-height:1.05;letter-spacing:-.02em;margin-bottom:8px}
-.ws-desc{display:block;font-family:var(--o);font-size:13px;line-height:1.5;color:rgba(255,255,255,.88);margin-bottom:10px}
-.ws-tap{display:inline-flex;gap:6px;font-family:var(--u);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px}
-.ws-tap::after{content:'↗'}
-/* Reference arrow: a line that draws down then retracts, 1s + 0.5s pause */
-.ws-arrow{position:absolute;bottom:108px;left:50%;height:8vh;width:1.6vh;transform:translateX(-50%);overflow:visible;z-index:20;pointer-events:none}
-.ws-arrow path{stroke-dasharray:10 10;stroke-dashoffset:10;animation:wsArrow 1.5s cubic-bezier(.645,.045,.355,1) infinite}
-@keyframes wsArrow{0%{stroke-dashoffset:10}33.3%{stroke-dashoffset:0}66.6%,100%{stroke-dashoffset:-10}}
-/* Settle on each card in focus (fixes cards stopping mid-blur) */
-/* Reduced motion (or no JS): a plain vertical list */
-.ws-static .ws-track{height:auto}
-.ws-static .ws-stage{position:static;height:auto;overflow:visible;padding:24px var(--px) 64px}
-.ws-static .ws-deck{position:static;perspective:none;overflow:visible;opacity:1;display:grid;gap:16px}
-.ws-static .ws-card{position:relative;left:auto;top:auto;width:100%;max-width:none;height:min(60svh,460px);max-height:none;visibility:visible!important;transform:none!important;opacity:1!important;filter:none!important}
-.ws-static .ws-arrow{display:none}
-
-/* ─── DESKTOP RIVER ─── */
-.who-desktop{display:none}
-.river-intro{padding:80px var(--px) 0}
-.river-container{position:relative;padding:80px 0 130px}
-.river-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
-.river-path-bg{fill:none;stroke:rgba(45,107,66,.14);stroke-width:2px;vector-effect:non-scaling-stroke}
-.river-path-fill{fill:none;stroke:var(--green);stroke-width:2px;vector-effect:non-scaling-stroke;stroke-linecap:round}
-.river-dot{fill:var(--green);r:5;transition:r .3s ease}
-.river-rows{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 var(--px)}
-.river-row{height:360px;display:flex;align-items:center;position:relative}
-.river-row.left{justify-content:flex-start;padding-right:50%}
-.river-row.right{justify-content:flex-end;padding-left:50%}
-
-/* Desktop river card */
-.river-card-d{
-  width:clamp(330px,32vw,419px);
-  background:var(--white);
-  border:1px solid rgba(14,17,13,.1);
-  border-radius:10px;
-  overflow:hidden;
-  cursor:pointer;
-  position:relative;
-  transform:var(--card-rot, rotate(0deg));
-  transform-origin:center center;
-  box-shadow:0 2px 16px -6px rgba(14,17,13,.1);
-  transition:transform .45s var(--ease), box-shadow .4s ease, border-color .3s;
-  opacity:0;
-  will-change:transform,opacity;
-}
-.river-card-d:hover{
-  transform:rotate(0deg) translateY(-12px) scale(1.04);
-  box-shadow:0 24px 56px -16px rgba(14,17,13,.28);
-  border-color:rgba(14,17,13,.22);
-  transition:.45s var(--ease);
-}
-.river-card-d.revealed{opacity:1}
-.rcd-img{height:213px;overflow:hidden;position:relative;background:var(--bg2)}
-.rcd-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.6s var(--ease)}
-.river-card-d:hover .rcd-img img{transform:scale(1.08)}
-.rcd-cat{position:absolute;top:10px;left:10px;font-family:var(--u);font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--white);background:rgba(14,17,13,.58);backdrop-filter:blur(5px);padding:3px 8px;border-radius:2px}
-.rcd-body{padding:16px 18px 18px}
-.rcd-name{font-family:var(--u);font-weight:700;font-size:17px;letter-spacing:-.01em;color:#0E110D;margin-bottom:6px;line-height:1.2}
-.rcd-text{font-family:var(--o);font-size:13px;line-height:1.55;color:var(--ink3);font-weight:300;margin-bottom:10px}
-.rcd-more{font-family:var(--u);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--green);display:inline-flex;align-items:center;gap:5px}
-.rcd-more::after{content:'→';transition:transform .3s var(--ease)}
-.river-card-d:hover .rcd-more::after{transform:translateX(4px)}
-
-/* ═══════════════════════════════════════════
    MODAL (both mobile + desktop)
    ═══════════════════════════════════════════ */
 .crd-modal{position:fixed;inset:0;z-index:800;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;opacity:0;transition:opacity .35s ease}
@@ -642,9 +543,6 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   body{font-size:17px}
   .sec{padding:120px var(--px)}
   .hero-body{padding-top:56px;padding-bottom:64px}
-  /* river vs mobile swipe */
-  .who-mobile{display:none}
-  .who-desktop{display:block}
 }
 ::selection{background:var(--green);color:var(--white)}
 /* inline body-copy anchor links */
@@ -982,6 +880,113 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
 <!-- without JS nothing would dismiss the intro loader, so never show it -->
 <noscript><style>#loader{display:none}</style></noscript>
+<style>/* who-land:css:start */
+/* Base = the static layout (no JS, reduced motion). .wl-js turns on the pinned timeline. */
+.wl{position:relative;background:#ECEAE2;overflow-x:clip;scroll-margin-top:0}
+.wl-stage{position:relative;padding:clamp(72px,10vh,120px) 0 0}
+.wl-head{position:relative;z-index:2;text-align:center;padding:0 var(--px)}
+.wl-head .ey{justify-content:center}
+.wl-head .dh{margin-bottom:0}
+.wl-wrap{position:relative;z-index:2;max-width:1100px;margin:clamp(28px,5vh,56px) auto 0;padding:0 var(--px)}
+.wl-line{position:absolute;top:0;bottom:0;left:50%;width:1px;margin-left:-.5px}
+.wl-js .wl-line{bottom:auto;height:var(--lnh,100%)}
+.wl-line i{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(90,166,114,0),rgba(90,166,114,.75) 6%,rgba(90,166,114,.75) 70%,rgba(90,166,114,0));transform-origin:50% 0}
+.wl-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:clamp(10px,2.2vh,28px)}
+@media (min-width:768px){.wl-list{gap:0}.wl-item+.wl-item{margin-top:clamp(-24px,-2.2vh,-10px)}}
+/* a faint paper edge keeps the text legible where it crosses the peaks (kept tight so it never washes over the line above) */
+.wl-name,.wl-text{text-shadow:0 0 2px #ECEAE2,0 0 6px rgba(236,234,226,.7)}
+.wl-name{position:relative;z-index:1}
+/* drifting fog over each industry, feathered on every side so it never shows an edge; it lifts on hover / tap */
+.wl-btn::after{content:'';position:absolute;inset:-24px -44px;z-index:2;pointer-events:none;
+  background:radial-gradient(closest-side at 50% 50%,rgba(236,234,226,.31),rgba(236,234,226,.2) 50%,rgba(236,234,226,0)),radial-gradient(closest-side at 30% 42%,rgba(236,234,226,.16),rgba(236,234,226,0)),radial-gradient(closest-side at 72% 58%,rgba(236,234,226,.14),rgba(236,234,226,0));
+  animation:wlFog 17s ease-in-out infinite alternate;transition:opacity .7s var(--ease)}
+.wl-item:nth-child(2n) .wl-btn::after{animation-duration:21s;animation-direction:alternate-reverse}
+.wl-item:nth-child(3n) .wl-btn::after{animation-duration:14s}
+.wl-btn:hover::after,.wl-btn:focus-visible::after,.wl-btn:active::after{opacity:0}
+@keyframes wlFog{from{transform:translateX(-5%)}to{transform:translateX(5%)}}
+.wl-item{position:relative;width:50%}
+.wl-item.l{margin-right:50%;text-align:right}
+.wl-item.r{margin-left:50%;text-align:left}
+.wl-btn{all:unset;box-sizing:border-box;display:block;width:100%;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
+.wl-item.l .wl-btn{padding-right:clamp(28px,4vw,56px)}
+.wl-item.r .wl-btn{padding-left:clamp(28px,4vw,56px)}
+.wl-btn:focus-visible{outline:2px solid #2D6B42;outline-offset:4px;border-radius:4px}
+.wl-name{display:block;font-family:var(--u);font-weight:700;font-size:clamp(17px,1.6vw,22px);letter-spacing:-.01em;line-height:1.15;color:#0E110D}
+.wl-rule{position:relative;display:block;height:1px;margin:10px 0 9px;background:linear-gradient(var(--rd,to left),rgba(90,166,114,.85),rgba(90,166,114,.15))}
+.wl-item.l .wl-rule{margin-right:calc(-1 * clamp(28px,4vw,56px));margin-left:auto;width:min(300px,calc(100% + clamp(28px,4vw,56px)));transform-origin:100% 50%;--rd:to left}
+.wl-item.r .wl-rule{margin-left:calc(-1 * clamp(28px,4vw,56px));width:min(300px,calc(100% + clamp(28px,4vw,56px)));transform-origin:0 50%;--rd:to right}
+.wl-mark{position:absolute;top:50%;width:14px;height:14px;margin-top:-7px;color:#5AA672}
+.wl-item.l .wl-mark{right:-7px}
+.wl-item.r .wl-mark{left:-7px}
+.wl-mark svg{display:block;width:100%;height:100%;fill:currentColor}
+.wl-text{display:block;font-family:var(--o);font-weight:300;font-size:14px;line-height:1.55;color:var(--ink4);max-width:34ch}
+.wl-item.l .wl-text{margin-left:auto}
+.wl-go{display:inline-block;margin-left:7px;font-size:.7em;font-weight:600;color:#2D6B42;opacity:.55;transform:translateY(-.15em);transition:opacity .3s,transform .3s var(--ease)}
+.wl-btn:hover .wl-go{opacity:1;transform:translate(2px,-.3em)}
+.wl-btn:hover .wl-name{color:#2D6B42}
+/* the landscape: real transparent photo, graded to the palette, blended with haze and drifting mist */
+.wl-land{position:relative;z-index:1;margin-top:-6vw;pointer-events:none;overflow:hidden}
+.wl-land img{display:block;width:100%;height:auto}
+.wl-haze{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(236,234,226,0) 0%,rgba(236,234,226,.42) 9%,rgba(236,234,226,.34) 18%,rgba(236,234,226,.08) 36%,rgba(236,234,226,0) 48%,rgba(236,234,226,0) 66%,rgba(236,234,226,.5) 84%,#ECEAE2 97%)}
+.wl-mist{position:absolute;left:0;right:0;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 30%,#000 70%,transparent)}
+.wl-mist-b{-webkit-mask-image:linear-gradient(to bottom,transparent,#000 30%);mask-image:linear-gradient(to bottom,transparent,#000 30%)}
+.wl-mist i{position:absolute;inset:0 -25%;will-change:transform}
+.wl-mist-a{top:30%;height:30%}
+.wl-mist-a i:nth-child(1){background:radial-gradient(24% 40% at 14% 60%,rgba(236,234,226,.5),rgba(236,234,226,0) 72%),radial-gradient(26% 34% at 44% 50%,rgba(236,234,226,.38),rgba(236,234,226,0) 72%),radial-gradient(24% 42% at 72% 62%,rgba(236,234,226,.48),rgba(236,234,226,0) 72%),radial-gradient(24% 36% at 96% 48%,rgba(236,234,226,.4),rgba(236,234,226,0) 72%);animation:wlDrift 52s ease-in-out infinite alternate}
+.wl-mist-a i:nth-child(2){background:radial-gradient(30% 30% at 28% 40%,rgba(236,234,226,.3),rgba(236,234,226,0) 72%),radial-gradient(28% 32% at 62% 66%,rgba(236,234,226,.26),rgba(236,234,226,0) 72%),radial-gradient(30% 30% at 88% 34%,rgba(236,234,226,.28),rgba(236,234,226,0) 72%);animation:wlDrift 38s ease-in-out infinite alternate-reverse}
+.wl-mist-b{top:64%;bottom:0}
+.wl-mist-b i:nth-child(1){background:radial-gradient(24% 28% at 10% 30%,rgba(236,234,226,.9),rgba(236,234,226,0) 72%),radial-gradient(28% 26% at 40% 22%,rgba(236,234,226,.8),rgba(236,234,226,0) 72%),radial-gradient(24% 30% at 70% 34%,rgba(236,234,226,.9),rgba(236,234,226,0) 72%),radial-gradient(26% 26% at 96% 24%,rgba(236,234,226,.8),rgba(236,234,226,0) 72%),linear-gradient(to bottom,rgba(236,234,226,0) 30%,rgba(236,234,226,.85) 62%,#ECEAE2 82%);animation:wlDrift 44s ease-in-out infinite alternate}
+.wl-mist-b i:nth-child(2){background:radial-gradient(30% 22% at 24% 14%,rgba(244,243,238,.6),rgba(244,243,238,0) 72%),radial-gradient(30% 24% at 58% 40%,rgba(244,243,238,.5),rgba(244,243,238,0) 72%),radial-gradient(30% 22% at 86% 18%,rgba(244,243,238,.55),rgba(244,243,238,0) 72%);animation:wlDrift 31s ease-in-out infinite alternate-reverse}
+@keyframes wlDrift{from{transform:translateX(-7%)}to{transform:translateX(7%)}}
+.wl-tail{height:0}
+
+/* ── Pinned mode (JS) ── */
+.wl-js .wl-track{position:relative;height:calc(100svh + var(--pin,150svh))}
+.wl-js .wl-stage{position:sticky;top:0;height:100svh;height:100lvh;padding-bottom:0}
+.wl-js .wl-wrap{position:absolute;left:0;right:0;margin:0 auto;top:var(--wt,240px);bottom:var(--wb,40%);padding-top:10px}
+.wl-js .wl-list{will-change:transform}
+.wl-js .wl-land{position:absolute;left:0;right:0;top:var(--lt,62%);margin:0;z-index:3;will-change:transform}
+.wl-js .wl-head,.wl-js .wl-wrap{will-change:opacity,transform}
+.wl-js .wl-tail{height:var(--tail,0px)}
+.wl-js .wl-line i{transform:scaleY(var(--ln,0))}
+.wl-js .wl-name,.wl-js .wl-text{opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .7s var(--ease),transform .8s var(--ease),filter .7s var(--ease)}
+.wl-js .wl-item.on .wl-name{transition-delay:.32s}
+.wl-js .wl-item.on .wl-text{transition-delay:.42s}
+.wl-js .wl-rule{transform:scaleX(0);transition:transform .55s var(--ease)}
+.wl-js .wl-item.on .wl-rule{transition-delay:.12s}
+.wl-js .wl-mark{transform:scale(0) rotate(-90deg);transition:transform .45s var(--ease)}
+.wl-js .wl-item.on .wl-name,.wl-js .wl-item.on .wl-text{opacity:1;transform:none;filter:none}
+.wl-js .wl-item.on .wl-rule{transform:scaleX(1)}
+.wl-js .wl-item.on .wl-mark{transform:scale(1) rotate(0deg)}
+.wl-js .wl-item:not(.on) .wl-btn::after{opacity:0}
+
+/* ── Phones: line on the left, everything to its right ── */
+@media (max-width:767px){
+  .wl-wrap{padding:0 14px}
+  .wl-list{gap:0}
+  .wl-nophone{display:none}
+  /* sides flip on phones so the roomier right holds three industries and the left two (Cannabis is hidden) */
+  .wl-item.l{margin:0 0 0 50%;text-align:left}
+  .wl-item.r{margin:0 50% 0 0;text-align:right}
+  .wl-item.l .wl-btn{padding:0 0 0 16px}
+  .wl-item.r .wl-btn{padding:0 16px 0 0}
+  .wl-item.l .wl-rule{margin:7px 0 7px -16px;width:calc(100% + 16px);transform-origin:0 50%;--rd:to right}
+  .wl-item.r .wl-rule{margin:7px -16px 7px auto;width:calc(100% + 16px);transform-origin:100% 50%;--rd:to left}
+  .wl-mark{width:12px;height:12px;margin-top:-6px}
+  .wl-item.l .wl-mark{left:-6px;right:auto}
+  .wl-item.r .wl-mark{right:-6px;left:auto}
+  .wl-item.l .wl-text{margin-left:0}
+  .wl-item.r .wl-text{margin-left:auto}
+  .wl-item+.wl-item{margin-top:-18px}
+  .wl-name{font-size:15.5px;line-height:1.2}
+  .wl-go{display:none}
+  .wl-btn::after{inset:-16px -20px;background:radial-gradient(closest-side at 50% 50%,rgba(236,234,226,.3),rgba(236,234,226,.19) 55%,rgba(236,234,226,0)),radial-gradient(closest-side at 62% 44%,rgba(236,234,226,.11),rgba(236,234,226,0))}
+  .wl-text{font-size:12.5px;line-height:1.45}
+  .wl-land{margin-left:-45%;margin-right:-45%;margin-top:-12vw}
+  .wl-js .wl-land{left:-45%;right:-45%;margin:0}
+}
+@media (prefers-reduced-motion:reduce){.wl-mist i,.wl-btn::after{animation:none}}
+/* who-land:css:end */</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -1281,46 +1286,74 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <img src="images/heroes/break-1.jpg" width="1920" height="1080" sizes="100vw" alt="Mountain mist over British Columbia" loading="lazy" decoding="async"/>
 </div>
 
-<!-- WHO I WORK WITH -->
-<section class="who-section fu" id="who">
-
-  <!-- MOBILE: scroll-driven card stack (built by JS from CARDS) -->
-  <div class="who-mobile">
-    <div class="who-mobile-head">
-      <div class="ey">Who I work with</div>
-      <h2 class="dh" style="margin-bottom:6px">Not for everyone. <em>Great for these.</em></h2>
-      <p class="body-p ws-lede">Scroll through the six. Tap a card for the detail.</p>
-    </div>
-    <div class="ws-track" id="wsTrack" style="--n:6">
-      <div class="ws-stage">
-        <div class="ws-deck" id="wsDeck" role="list" aria-label="Industries Candor works with"></div>
-        <svg class="ws-arrow" id="wsArrow" viewBox="0 0 2 10" aria-hidden="true"><path stroke="#333" d="M1,0 1,10" pathLength="10"/></svg>
-      </div>
-    </div>
-  </div>
-
-  <!-- DESKTOP RIVER -->
-  <div class="who-desktop">
-    <div class="river-intro">
-      <div class="mw">
+<!-- who-land:start -->
+<!-- WHO I WORK WITH: pinned timeline over a misty BC landscape. Industries appear as the centre line draws down;
+     the landscape rises from below, then scrolls up and dissolves into mist before Process. -->
+<section class="wl" id="who" aria-labelledby="wlTitle">
+  <div class="wl-track">
+    <div class="wl-stage">
+      <header class="wl-head">
         <div class="ey">Who I work with</div>
-        <h2 class="dh" style="max-width:700px;margin-bottom:6px">Not for everyone. <em>Great for these.</em></h2>
-        <p class="body-p" style="font-size:14px;color:var(--ink4)">Click any card to learn more</p>
+        <h2 class="dh" id="wlTitle">Not for everyone. <em>Great for these.</em></h2>
+      </header>
+      <div class="wl-wrap">
+        <div class="wl-line" aria-hidden="true"><i></i></div>
+        <ol class="wl-list" aria-label="Industries Candor works with">
+          <li class="wl-item l">
+            <button type="button" class="wl-btn" data-card="1">
+              <span class="wl-name">Outdoor &amp; Apparel<span class="wl-go" aria-hidden="true">↗</span></span>
+              <span class="wl-rule" aria-hidden="true"><span class="wl-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0C10.6 6 14 9.4 20 10C14 10.6 10.6 14 10 20C9.4 14 6 10.6 0 10C6 9.4 9.4 6 10 0Z"/></svg></span></span>
+              <span class="wl-text">Small BC gear brands chasing MEC, REI, or Patagonia-adjacent retail.</span>
+            </button>
+          </li>
+          <li class="wl-item r">
+            <button type="button" class="wl-btn" data-card="2">
+              <span class="wl-name">Food &amp; Beverage<span class="wl-go" aria-hidden="true">↗</span></span>
+              <span class="wl-rule" aria-hidden="true"><span class="wl-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0C10.6 6 14 9.4 20 10C14 10.6 10.6 14 10 20C9.4 14 6 10.6 0 10C6 9.4 9.4 6 10 0Z"/></svg></span></span>
+              <span class="wl-text">Local food brands making sustainability claims on packaging.</span>
+            </button>
+          </li>
+          <li class="wl-item l">
+            <button type="button" class="wl-btn" data-card="3">
+              <span class="wl-name">Clean Beauty<span class="wl-go" aria-hidden="true">↗</span></span>
+              <span class="wl-rule" aria-hidden="true"><span class="wl-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0C10.6 6 14 9.4 20 10C14 10.6 10.6 14 10 20C9.4 14 6 10.6 0 10C6 9.4 9.4 6 10 0Z"/></svg></span></span>
+              <span class="wl-text">Indie brands chasing Sephora Clean+ or Credo's mandate.</span>
+            </button>
+          </li>
+          <li class="wl-item r">
+            <button type="button" class="wl-btn" data-card="4">
+              <span class="wl-name">Coffee &amp; Hospitality<span class="wl-go" aria-hidden="true">↗</span></span>
+              <span class="wl-rule" aria-hidden="true"><span class="wl-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0C10.6 6 14 9.4 20 10C14 10.6 10.6 14 10 20C9.4 14 6 10.6 0 10C6 9.4 9.4 6 10 0Z"/></svg></span></span>
+              <span class="wl-text">Boutique roasters and 2–6 location restaurant groups.</span>
+            </button>
+          </li>
+          <li class="wl-item l">
+            <button type="button" class="wl-btn" data-card="5">
+              <span class="wl-name">Studios &amp; Agencies<span class="wl-go" aria-hidden="true">↗</span></span>
+              <span class="wl-rule" aria-hidden="true"><span class="wl-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0C10.6 6 14 9.4 20 10C14 10.6 10.6 14 10 20C9.4 14 6 10.6 0 10C6 9.4 9.4 6 10 0Z"/></svg></span></span>
+              <span class="wl-text">Architecture firms and design agencies under 50 people pitching ESG-conscious clients.</span>
+            </button>
+          </li>
+          <li class="wl-item r wl-nophone">
+            <button type="button" class="wl-btn" data-card="0">
+              <span class="wl-name">Cannabis Brands<span class="wl-go" aria-hidden="true">↗</span></span>
+              <span class="wl-rule" aria-hidden="true"><span class="wl-mark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0C10.6 6 14 9.4 20 10C14 10.6 10.6 14 10 20C9.4 14 6 10.6 0 10C6 9.4 9.4 6 10 0Z"/></svg></span></span>
+              <span class="wl-text">Craft producers and retailers trying to differentiate in a stigmatised market.</span>
+            </button>
+          </li>
+        </ol>
       </div>
-    </div>
-    <div class="river-container" id="riverContainer">
-      <svg class="river-svg" id="riverSvg" preserveAspectRatio="none" aria-hidden="true">
-        <path class="river-path-bg" id="riverBg"/>
-        <path class="river-path-fill" id="riverFill"/>
-        <!-- dots injected by JS -->
-      </svg>
-      <div class="river-rows" id="riverRows">
-        <!-- rows injected by JS -->
+      <div class="wl-land" aria-hidden="true">
+        <img src="images/industry/who-landscape.webp" width="1536" height="1024" alt="" decoding="async" loading="lazy">
+        <div class="wl-haze"></div>
+        <div class="wl-mist wl-mist-a"><i></i><i></i></div>
+        <div class="wl-mist wl-mist-b"><i></i><i></i></div>
       </div>
     </div>
   </div>
-
+  <div class="wl-tail" aria-hidden="true"></div>
 </section>
+<!-- who-land:end -->
 
 <!-- PROCESS -->
 <section class="sec fu" id="process">
@@ -1516,35 +1549,167 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </main>
 
-<footer>
-  <div class="foot-row">
-    <div class="foot-l">
-      <svg width="22" height="22" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="rgba(61,138,87,.55)"/></svg>
-      <span class="foot-name">Candor</span>
+<!-- candor-footer:start -->
+<style>
+  footer.cf{position:relative;overflow:hidden;background:#0B0F0C;color:rgba(245,243,238,.72);border-top:1px solid rgba(245,243,238,.06);
+    padding:clamp(56px,7vw,96px) clamp(20px,5vw,80px) 30px;font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .cf-in{position:relative;z-index:1;max-width:1200px;margin:0 auto}
+  .cf-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,2fr);gap:clamp(40px,7vw,110px)}
+  .cf-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#F5F3EE;margin-bottom:26px}
+  .cf-logo{width:26px;height:26px;flex-shrink:0}
+  .cf-word{font:800 13px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase}
+  .cf-pitch{margin:0 0 28px;max-width:21ch;font:300 clamp(22px,2.2vw,30px)/1.25 'Urbanist',system-ui,sans-serif;letter-spacing:-.015em;color:#F5F3EE}
+  .cf-pitch em{font-style:italic;color:#7CC08F}
+  .cf-sub{margin:-12px 0 28px;font-size:14px;line-height:1.6;color:rgba(245,243,238,.55);max-width:36ch}
+  .cf-ctas{display:flex;flex-wrap:wrap;gap:10px}
+  .cf-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:2px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .25s,color .25s,border-color .25s}
+  .cf-btn-p{background:#F5F3EE;color:#0E110D}
+  .cf-btn-p:hover{background:#5AA672;color:#0E110D}
+  .cf-btn-s{border:1px solid rgba(245,243,238,.22);color:rgba(245,243,238,.85)}
+  .cf-btn-s:hover{border-color:rgba(245,243,238,.6);color:#F5F3EE}
+  .cf-cols{display:flex;justify-content:flex-end;align-items:flex-start;gap:clamp(56px,8vw,120px)}
+  .cf-h{margin:4px 0 16px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#5AA672}
+  .cf-col ul{list-style:none;margin:0;padding:0}
+  .cf-col li{margin:0}
+  .cf-col a{display:inline-block;padding:6px 0;font-size:14.5px;line-height:1.4;color:rgba(245,243,238,.72);text-decoration:none;transition:color .2s}
+  .cf-col a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(124,192,143,.7)}
+  .cf-bot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:clamp(48px,6vw,80px);padding-top:22px;border-top:1px solid rgba(245,243,238,.08);font-size:12.5px;color:rgba(245,243,238,.5)}
+  .cf-legal{display:flex;flex-wrap:wrap;gap:6px 22px}
+  .cf-legal a{color:rgba(245,243,238,.6);text-decoration:none}
+  .cf-legal a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:3px}
+  .cf-disc{margin:16px 0 0;max-width:none;font-size:11.5px;line-height:1.65;color:rgba(245,243,238,.36)}
+  .cf-mark{position:relative;z-index:0;display:block;margin:clamp(28px,4vw,48px) auto -.18em;max-width:1200px;font:800 clamp(64px,17vw,220px)/.8 'Urbanist',system-ui,sans-serif;letter-spacing:-.05em;color:rgba(245,243,238,.035);user-select:none;pointer-events:none;white-space:nowrap}
+  @media (max-width:820px){
+    .cf-top{grid-template-columns:1fr;gap:44px}
+    .cf-cols{display:grid;grid-template-columns:1fr 1fr;gap:30px 20px;justify-content:start}
+  }
+  @media (max-width:520px){
+    footer.cf{padding-top:56px}
+    .cf-ctas{flex-direction:column}
+    .cf-btn{justify-content:center;padding:15px 20px}
+    .cf-bot{flex-direction:column;align-items:flex-start}
+  }
+  body:has(#mob-nav) footer.cf{padding-bottom:120px}
+  .cf-dlg{position:fixed;inset:0;margin:auto;height:fit-content;width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:6px;background:#F5F3EE;color:#0E110D;box-shadow:0 30px 80px -20px rgba(0,0,0,.45)}
+  .cf-dlg,.cf-dlg *{cursor:auto!important}
+  .cf-dlg input,.cf-dlg textarea{cursor:text!important}
+  .cf-dlg button,.cf-dlg a,.cf-dlg label{cursor:pointer!important}
+  html:has(.cf-dlg[open]) #cur,html:has(.cf-dlg[open]) #cur2{display:none!important}
+  html:has(.cf-dlg[open]) body{cursor:auto!important}
+  .cf-dlg::backdrop{background:rgba(11,15,12,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .cf-dlg form,.cf-done{padding:30px clamp(20px,5vw,34px) 28px}
+  .cf-dlg h2{margin:0 0 6px;font:800 26px/1.1 'Urbanist',system-ui,sans-serif;letter-spacing:-.02em}
+  .cf-dlg h2 em{font-style:italic;font-weight:300;color:#2D6B42}
+  .cf-dlg p{margin:0 0 20px;font:400 14px/1.6 'Open Sans',system-ui,sans-serif;color:#4A5548}
+  .cf-dlg label{display:block;margin:0 0 6px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#4A5548}
+  .cf-dlg input,.cf-dlg textarea{box-sizing:border-box;width:100%;margin:0 0 16px;padding:12px 14px;border:1px solid #C8C3B5;border-radius:3px;background:#fff;font:400 15px/1.4 'Open Sans',system-ui,sans-serif;color:#0E110D}
+  .cf-dlg textarea{min-height:120px;resize:vertical}
+  .cf-dlg input:focus,.cf-dlg textarea:focus{outline:2px solid #3D8A57;outline-offset:1px;border-color:#3D8A57}
+  .cf-hp{position:absolute;left:-9999px}
+  .cf-send{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .cf-dlg .cf-btn-p{background:#0E110D;color:#F5F3EE;border:0;cursor:pointer}
+  .cf-dlg .cf-btn-p:hover{background:#2D6B42;color:#F5F3EE}
+  .cf-dlg .cf-btn-p[disabled]{opacity:.6;cursor:progress}
+  .cf-small{font:400 12px/1.5 'Open Sans',system-ui,sans-serif;color:#5E6E5E}
+  .cf-small a{color:#2D6B42}
+  .cf-x{position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;font:400 22px/1 system-ui,sans-serif;color:#4A5548;cursor:pointer}
+  .cf-x:hover{background:#E4E1D6}
+  .cf-err{display:none;margin:0 0 14px;font:400 13px/1.5 'Open Sans',system-ui,sans-serif;color:#8A3B2E}
+  .cf-dlg.is-err .cf-err{display:block}
+  .cf-done{display:none}
+  .cf-dlg.is-done form{display:none}
+  .cf-dlg.is-done .cf-done{display:block}
+</style>
+<footer class="cf">
+  <div class="cf-in">
+    <div class="cf-top">
+      <div>
+        <a class="cf-brand" href="/" aria-label="Candor home"><svg class="cf-logo" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="#5AA672"/></svg><span class="cf-word">Candor</span></a>
+        <p class="cf-pitch">B Corp certification for small businesses, <em>without the guesswork.</em></p>
+        <p class="cf-sub">Flat fees and one consultant, working online from Vancouver, BC.</p>
+        <div class="cf-ctas">
+          <a class="cf-btn cf-btn-p" href="https://calendly.com/artemfurman/30min" target="_blank" rel="noopener noreferrer">Book a free call <span aria-hidden="true">→</span></a>
+          <a class="cf-btn cf-btn-s" href="/assessment/">Free readiness score</a>
+        </div>
+      </div>
+      <nav class="cf-cols" aria-label="Footer">
+        <div class="cf-col">
+          <h2 class="cf-h">Navigate</h2>
+          <ul>
+            <li><a href="/#who">Who it's for</a></li>
+            <li><a href="/#process">How it works</a></li>
+            <li><a href="/#services">Services &amp; pricing</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="cf-col">
+          <h2 class="cf-h">Resources</h2>
+          <ul>
+            <li><a href="/blog/">Field notes</a></li>
+            <li><a href="/assessment/">Readiness score</a></li>
+            <li><a href="mailto:candorcertified@gmail.com" data-contact-open>Contact</a></li>
+          </ul>
+        </div>
+      </nav>
     </div>
-    <nav class="foot-nav" aria-label="Footer navigation">
-      <a href="#services">Services</a>
-      <a href="#process">How It Works</a>
-      <a href="#about">About</a>
-      <a href="#faq">FAQ</a>
-      <a href="/blog">Resources</a>
-      <a href="/assessment/">Assessment</a>
-    </nav>
-  </div>
-  <div class="foot-row">
-    <div class="foot-links">
-      <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a>
-      <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="/privacy-policy/">Privacy Policy</a>
-      <a href="/terms/">Terms</a>
-      <a href="/privacy-policy/#cookies" data-consent-open>Cookie settings</a>
+    <div class="cf-bot">
+      <div>© 2026 Candor · Vancouver, BC</div>
+      <div class="cf-legal">
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/privacy-policy/#cookies" data-consent-open>Cookie settings</a>
+        <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      </div>
     </div>
-    <div class="foot-copy">© 2026 Candor · Vancouver, BC, Canada</div>
+    <p class="cf-disc">Candor provides independent B Corp and sustainability certification advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
   </div>
-  <div class="foot-row">
-    <p class="foot-disclaimer">Candor – B Corp &amp; Sustainability Certification Consultant provides independent advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
-  </div>
+  <span class="cf-mark" aria-hidden="true">Candor</span>
 </footer>
+<dialog class="cf-dlg" id="cf-contact" aria-labelledby="cf-contact-title">
+  <button class="cf-x" type="button" aria-label="Close" data-contact-close>×</button>
+  <form name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="contact">
+    <p class="cf-hp" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <h2 id="cf-contact-title">Send a <em>note.</em></h2>
+    <p>A question about certification, your business, or anything on the site. I read every message and reply by email.</p>
+    <label for="cf-name">Name</label>
+    <input id="cf-name" name="name" autocomplete="name" required>
+    <label for="cf-email">Email</label>
+    <input id="cf-email" name="email" type="email" autocomplete="email" required>
+    <label for="cf-msg">Message</label>
+    <textarea id="cf-msg" name="message" required></textarea>
+    <p class="cf-err" role="alert">That didn't send. Please email <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a> instead.</p>
+    <div class="cf-send">
+      <button class="cf-btn cf-btn-p" type="submit">Send message <span aria-hidden="true">→</span></button>
+      <span class="cf-small">Used only to reply to you. <a href="/privacy-policy/">Privacy</a></span>
+    </div>
+  </form>
+  <div class="cf-done" role="status">
+    <h2>Thanks, <em>got it.</em></h2>
+    <p>Your message is on its way. I'll reply by email.</p>
+    <button class="cf-btn cf-btn-p" type="button" data-contact-close>Close</button>
+  </div>
+</dialog>
+<script>
+(function () {
+  var dlg = document.getElementById('cf-contact');
+  if (!dlg || typeof dlg.showModal !== 'function') return;          // very old browsers keep the mailto link
+  var form = dlg.querySelector('form'), btn = form.querySelector('[type=submit]');
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-contact-open]')) { e.preventDefault(); dlg.classList.remove('is-done', 'is-err'); dlg.showModal(); }
+    else if (e.target.closest('[data-contact-close]') || e.target === dlg) dlg.close();
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); btn.disabled = true; dlg.classList.remove('is-err');
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+      .then(function (r) { if (!r.ok) throw r; form.reset(); dlg.classList.add('is-done'); })
+      .catch(function () { dlg.classList.add('is-err'); })
+      .then(function () { btn.disabled = false; });
+  });
+})();
+</script>
+<!-- candor-footer:end -->
 
 <script>
 (function(){
@@ -1616,6 +1781,8 @@ function openModal(card) {
   setTimeout(() => { document.getElementById('modalClose').focus(); }, 50);
 }
 
+window.candorOpenCard = function (i) { if (CARDS[i]) openModal(CARDS[i]); };
+
 window.closeModal = function() {
   modal.classList.remove('open');
   document.body.style.overflow = '';
@@ -1624,295 +1791,6 @@ window.closeModal = function() {
 document.getElementById('modalBackdrop').addEventListener('click', closeModal);
 document.getElementById('modalClose').addEventListener('click', closeModal);
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-/* ══════════════════════════════════════════
-   MOBILE "IMAGES GLASS POP UP" — a 1:1 port of the reference GSAP code
-   (gsap.timeline defaults {duration:2}, stagger -1, ScrollTrigger scrub,
-   intro progress 1 → 0.07 over 1.5s expo, looping scroll arrow), with the
-   site's images on the cards. GSAP can't load (CSP), so its eases are below.
-   Played as a full rewind (the user's call): each card swings up from below
-   in focus, holds, then shrinks back into the distance, blurring and fading
-   out, while the next card rises from below over it. Same tweens, local time
-   run 2 → 0. Two other deliberate fixes: the 0.1s autoAlpha snap is a fade,
-   and when scrolling stops the page glides to the nearest card in focus so
-   nothing rests mid-blur.
-   ══════════════════════════════════════════ */
-(function () {
-  const track = document.getElementById('wsTrack');
-  const deck  = document.getElementById('wsDeck');
-  const arrow = document.getElementById('wsArrow');
-  if (!track || !deck) return;
-  const N = CARDS.length, T = N + 1;                 // timeline length: (N-1) stagger + 2s duration
-  const COLORS = ['45,107,66', '236,234,226', '90,166,114'];   // reference tints → Candor palette
-  const pad = n => String(n).padStart(2, '0');
-  track.style.setProperty('--n', N);
-
-  // GSAP eases
-  const power1Out = u => 1 - (1 - u) * (1 - u);       // default ease
-  const backIn2   = u => u * u * (3 * u - 2);         // back.in(2)
-  const power3In  = u => u * u * u;
-  const sineIn    = u => 1 - Math.cos((u * Math.PI) / 2);
-  const expoOut   = u => (u >= 1 ? 1 : 1 - Math.pow(2, -10 * u));
-  const power2InOut = u => (u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
-  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-  const mix = (a, b, t) => a + (b - a) * t;
-  // radial-gradient(ellipse at Xpx Ypx, rgba(0,0,0,0) A%, #000 B%) — reference keyframes
-  const G_TOP   = { x: 330,   y: 120,  a: 30, b: 150 };
-  const G_OTHER = { x: 2500,  y: -400, a: 0,  b: 60  };
-  const G_MID   = { x: 150,   y: 250,  a: 80, b: 300 };
-  const G_END   = { x: -1000, y: 500,  a: 0,  b: 50  };
-  const grad = g => `radial-gradient(ellipse at ${g.x.toFixed(1)}px ${g.y.toFixed(1)}px, rgba(0,0,0,0) ${g.a.toFixed(2)}%, #000 ${g.b.toFixed(2)}%)`;
-  const lerpG = (g1, g2, t) => ({ x: mix(g1.x, g2.x, t), y: mix(g1.y, g2.y, t), a: mix(g1.a, g2.a, t), b: mix(g1.b, g2.b, t) });
-
-  // j = 0 is shown first; each later card rises over the one before it.
-  const cards = CARDS.map((d, j) => {
-    const el = document.createElement('button');
-    el.type = 'button';
-    el.className = 'ws-card';
-    el.setAttribute('role', 'listitem');
-    el.setAttribute('aria-label', `${d.name}. ${d.text} Open details.`);
-    el.style.zIndex = String(j + 1);
-    el.style.backgroundColor = `rgba(${COLORS[j % COLORS.length]},0.7)`;
-    el.innerHTML = `
-      <img class="ws-img" src="${d.img}" width="1600" height="900" alt="" ${j > 1 ? 'loading="lazy" ' : ''}decoding="async"/>
-      <span class="ws-shade"></span><span class="ws-scrim"></span>
-      <span class="ws-text">
-        <span class="ws-num">${pad(j + 1)} — ${d.cat}</span>
-        <span class="ws-name">${d.name}</span>
-        <span class="ws-desc">${d.text}</span>
-        <span class="ws-tap">Tap for the detail</span>
-      </span>`;
-    el.addEventListener('click', () => openModal(d));
-    el.addEventListener('focus', () => { if (!root.classList.contains('ws-static')) scrollToCard(j); });
-    deck.appendChild(el);
-    return { el, shade: el.querySelector('.ws-shade'), gStart: j === 0 ? G_TOP : G_OTHER };
-  });
-
-  const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const mqMobile = window.matchMedia('(max-width: 1023px)');
-  const root = document.querySelector('.who-mobile');
-  const setStatic = () => root.classList.toggle('ws-static', mqReduce.matches);
-  setStatic();
-  mqReduce.addEventListener && mqReduce.addEventListener('change', setStatic);
-
-  // Timeline state at progress p (0..1): the reference tweens, each card's
-  // local time played backwards (2 = dropped below, 0 = far back in the stack).
-  function render(p) {
-    const t = p * T;
-    for (let j = 0; j < N; j++) {
-      const c = cards[j], s = c.el.style, lt = 2 - (t - j);   // this card's local time, 2 → 0
-      if (lt >= 2 || lt <= 0) { s.visibility = 'hidden'; continue; }
-      let z = -500, rx = 2, yP = -45, bf = 20, g = c.gStart, op = 1, blur = 0;
-      if (lt > 0) {
-        const u = lt / 2;
-        z  = -500 + 510 * power1Out(u);                 // z: 10
-        rx = 2 - 5 * power1Out(u);                      // rotateX: -3
-        yP = -45 + 145 * backIn2(u);                    // yPercent: 100, ease back.in(2)
-        if (lt <= 1) { const v = power3In(lt);    bf = 20 - 12 * v; g = lerpG(c.gStart, G_MID, v); }
-        else         { const v = sineIn(lt - 1);  bf = 8 - 7 * v;   g = lerpG(G_MID, G_END, v); }
-        // Rising from below (reference: a 0.1s autoAlpha snap at 1.9s): a short, sharp fade-in.
-        op = clamp((2 - lt) / 0.25, 0, 1);
-        // Receding into the stack: blur out of focus and fade away.
-        const w = clamp((0.6 - lt) / 0.6, 0, 1);
-        op *= 1 - w * w; blur = 10 * w;
-      }
-      s.visibility = op > 0.002 ? 'visible' : 'hidden';
-      s.transform = `translate(-50%, ${yP.toFixed(2)}%) translate3d(0, 0, ${z.toFixed(1)}px) rotateX(${rx.toFixed(2)}deg)`;
-      s.opacity = op.toFixed(3);
-      s.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
-      const bd = `blur(${bf.toFixed(2)}px)`;
-      s.backdropFilter = bd; s.webkitBackdropFilter = bd;
-      s.pointerEvents = lt > 0.9 && lt < 1.6 ? 'auto' : 'none';
-      c.shade.style.backgroundImage = grad(g);
-    }
-  }
-
-  // ScrollTrigger: start '0 0', end '100% 100%', scrub, progress 0.07 → 1.
-  let trackTop = 0, span = 1, target = 0.07, current = 0.07, raf = 0, active = false;
-  let intro = null;                                     // { t0 } while the opening fly-in plays
-  const raw = () => clamp((window.scrollY - trackTop) / span, 0, 1);
-  // Card j is most readable at local time 1.35 (z ≈ -40px, nearly level), i.e. t = j + 0.65.
-  const focusRaw = j => clamp(((j + 0.65) / T - 0.07) / 0.93, 0, 1);
-  function scrollToCard(j) { window.scrollTo({ top: trackTop + focusRaw(j) * span, behavior: 'instant' }); }
-
-  function measure() {
-    trackTop = track.getBoundingClientRect().top + window.scrollY;
-    span = Math.max(1, track.offsetHeight - (track.querySelector('.ws-stage').offsetHeight || window.innerHeight));
-  }
-
-  // Settle: when scrolling stops inside the section (finger lifted, momentum
-  // over), glide to the nearest card in focus so nothing rests mid-blur.
-  // Not near the end of the track, so you can always scroll on past it.
-  let touching = false, idle = 0, settling = false;
-  function settle() {
-    if (touching || !active || !mqMobile.matches || root.classList.contains('ws-static')) return;
-    const r = raw();
-    if (r < 0.02 || r > 0.92) return;
-    let best = 0;
-    for (let j = 1; j < N; j++) if (Math.abs(focusRaw(j) - r) < Math.abs(focusRaw(best) - r)) best = j;
-    const y = trackTop + focusRaw(best) * span;
-    if (Math.abs(y - window.scrollY) < 6) return;
-    settling = true;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }
-  const armSettle = () => { clearTimeout(idle); idle = setTimeout(() => { if (settling) { settling = false; return; } settle(); }, 160); };
-  window.addEventListener('touchstart', () => { touching = true; settling = false; clearTimeout(idle); }, { passive: true });
-  window.addEventListener('touchend', () => { touching = false; armSettle(); }, { passive: true });
-  window.addEventListener('wheel', () => { settling = false; }, { passive: true });
-
-  function loop(now) {
-    raf = 0;
-    if (!mqMobile.matches || root.classList.contains('ws-static')) return;
-    target = 0.07 + 0.93 * raw();
-    current += (target - current) * 0.25;               // light smoothing (the cards keep their glide)
-    if (Math.abs(target - current) < 0.0004) current = target;
-    let p = current;
-    if (intro) {
-      const k = clamp((now - intro.t0) / 1500, 0, 1);   // tl progress 0 → 0.07, 1.5s, ease 'expo' (rewound)
-      p = mix(0, current, expoOut(k));
-      deck.style.opacity = power2InOut(clamp((now - intro.t0) / 800, 0, 1)).toFixed(3);   // carousel fade, 0.8s
-      if (k >= 1) intro = null;
-    }
-    render(p);
-    if (arrow) arrow.style.opacity = String(1 - clamp((window.scrollY - trackTop + 40) / 49, 0, 1));
-    if (active || intro || current !== target) raf = requestAnimationFrame(loop);
-  }
-  const start = () => { if (!raf) raf = requestAnimationFrame(loop); };
-
-  let introDone = false;
-  new IntersectionObserver(entries => {
-    active = entries[0].isIntersecting;
-    if (active) {
-      measure();
-      if (!introDone) { introDone = true; intro = { t0: performance.now() }; }
-      start();
-    }
-  }, { rootMargin: '0px 0px -35% 0px' }).observe(track);
-  window.addEventListener('scroll', () => { if (active) { start(); armSettle(); } }, { passive: true });
-  window.addEventListener('resize', () => { measure(); start(); }, { passive: true });
-  window.addEventListener('load', measure);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
-  if ('ResizeObserver' in window) new ResizeObserver(measure).observe(document.body);
-  measure();
-  render(0);                                            // before the intro: first card still below
-})();
-
-/* ══════════════════════════════════════════
-   DESKTOP RIVER
-   ══════════════════════════════════════════ */
-function buildRiver() {
-  const container = document.getElementById('riverContainer');
-  const svg       = document.getElementById('riverSvg');
-  const riverBg   = document.getElementById('riverBg');
-  const riverFill = document.getElementById('riverFill');
-  const rowsEl    = document.getElementById('riverRows');
-  if (!container || !svg) return;
-
-  /* Generate rows */
-  const sides = CARDS.map(c => c.side);
-  const rots  = CARDS.map(c => c.rot);
-
-  rowsEl.innerHTML = '';
-  CARDS.forEach((card, i) => {
-    const row = document.createElement('div');
-    row.className = `river-row ${card.side}`;
-
-    const cardEl = document.createElement('div');
-    cardEl.className = 'river-card-d';
-    cardEl.setAttribute('role', 'button');
-    cardEl.setAttribute('tabindex', '0');
-    cardEl.setAttribute('aria-label', card.name + ' — click for details');
-    cardEl.style.setProperty('--card-rot', `rotate(${card.rot}deg)`);
-    cardEl.style.setProperty('--card-rot-val', card.rot);
-    cardEl.innerHTML = `
-      <div class="rcd-img">
-        <img src="${card.img}" width="1600" height="900" alt="${card.name}" loading="lazy" decoding="async"/>
-        <div class="rcd-cat">${card.cat}</div>
-      </div>
-      <div class="rcd-body">
-        <div class="rcd-name">${card.name}</div>
-        <p class="rcd-text">${card.text}</p>
-        <span class="rcd-more">Learn more</span>
-      </div>`;
-    cardEl.addEventListener('click', () => openModal(card));
-    cardEl.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); } });
-    row.appendChild(cardEl);
-    rowsEl.appendChild(row);
-  });
-
-  /* Wait a frame for layout, then compute SVG path */
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const W = container.offsetWidth;
-      const H = container.offsetHeight;
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-
-      const cx = W / 2;
-      const amp = W * 0.063; // how far river bends left/right
-
-      /* Collect card center Y positions */
-      const rows = rowsEl.querySelectorAll('.river-row');
-      const pts = [];
-      rows.forEach((row, i) => {
-        const rowTop  = row.offsetTop;
-        const rowMid  = rowTop + row.offsetHeight / 2;
-        const xOffset = sides[i] === 'right' ? amp : -amp;
-        pts.push({ x: cx + xOffset, y: rowMid });
-      });
-
-      /* Build smooth bezier path through points */
-      let d = `M ${cx} 0 `;
-      pts.forEach((pt, i) => {
-        const prevY = i === 0 ? -50 : pts[i - 1].y;
-        const prevX = i === 0 ? cx : pts[i - 1].x;
-        const c1x = prevX; const c1y = prevY + (pt.y - prevY) * 0.45;
-        const c2x = pt.x;  const c2y = prevY + (pt.y - prevY) * 0.55;
-        d += `C ${c1x} ${c1y} ${c2x} ${c2y} ${pt.x} ${pt.y} `;
-      });
-      /* Tail back to center */
-      const last = pts[pts.length - 1];
-      d += `C ${last.x} ${last.y + 60} ${cx} ${H - 40} ${cx} ${H}`;
-
-      riverBg.setAttribute('d', d);
-      riverFill.setAttribute('d', d);
-
-      /* Stroke dash */
-      const len = riverFill.getTotalLength ? riverFill.getTotalLength() : 3000;
-      riverFill.style.strokeDasharray  = len;
-      riverFill.style.strokeDashoffset = len;
-      riverFill._totalLen = len;
-
-      /* Node dots */
-      pts.forEach(pt => {
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle.setAttribute('cx', pt.x);
-        circle.setAttribute('cy', pt.y);
-        circle.setAttribute('r', '5');
-        circle.setAttribute('fill', 'var(--green)');
-        circle.setAttribute('opacity', '0.7');
-        svg.appendChild(circle);
-      });
-
-      /* Reveal cards staggered */
-      const cardObserver = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (!e.isIntersecting) return;
-          const idx = [...rows].indexOf(e.target);
-          const card = e.target.querySelector('.river-card-d');
-          if (card) {
-            setTimeout(() => {
-              card.style.transition = `opacity .7s ${idx * 0.08}s var(--ease), transform .7s ${idx * 0.08}s var(--ease), box-shadow .4s ease, border-color .3s`;
-              card.classList.add('revealed');
-            }, idx * 80);
-          }
-          cardObserver.unobserve(e.target);
-        });
-      }, { threshold: 0.25 });
-
-      rows.forEach(r => cardObserver.observe(r));
-    });
-  });
-}
 
 /* ══════════════════════════════════════════
    CONSOLIDATED SCROLL HANDLER
@@ -1924,7 +1802,6 @@ window.addEventListener('resize', () => {
   _resizeT = setTimeout(() => {
     const was = _desktop;
     _desktop = window.innerWidth >= 1024;
-    if (_desktop && !was) buildRiver();
   }, 200);
 }, { passive: true });
 
@@ -2727,12 +2604,6 @@ document.querySelectorAll('.hero,.mission,.sec,.who-section,.about-new,.sec-dk,.
 
 /* ── Init ── */
 onScroll();
-if (_desktop) buildRiver();
-document.querySelectorAll('.river-card-d').forEach(el => {
-  const rot = (Math.random() * 4) - 2;
-  el.style.setProperty('--card-rot', `rotate(${rot}deg)`);
-  el.style.setProperty('--card-rot-val', rot);
-});
 
 })();
 
@@ -3245,5 +3116,95 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
 </style>
 <div class="candor-grain" aria-hidden="true"></div>
 <!-- candor-grain:end -->
+<!-- who-land:js:start -->
+<script>
+/* "Who I work with": pins the section, draws the centre line down as you scroll and reveals each industry as the
+   line reaches it; the landscape rises in from below, then scrolls up into mist. Reduced motion keeps the static list. */
+(function () {
+  var sec = document.getElementById('who'); if (!sec || !sec.classList.contains('wl')) return;
+  var btns = sec.querySelectorAll('.wl-btn');
+  btns.forEach(function (b) { b.addEventListener('click', function () { if (window.candorOpenCard) window.candorOpenCard(+b.dataset.card); }); });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  sec.classList.add('wl-js');
+  var track = sec.querySelector('.wl-track'), stage = sec.querySelector('.wl-stage'), head = sec.querySelector('.wl-head'),
+      wrap = sec.querySelector('.wl-wrap'), list = sec.querySelector('.wl-list'), land = sec.querySelector('.wl-land'),
+      items = [].slice.call(sec.querySelectorAll('.wl-item')), raf = 0, phone = false, ys = [], P1 = 140, P2 = 90, shift = 0;
+  function clamp(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function sstep(a, b, x) { var t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); }
+  function layout() {
+    phone = innerWidth < 768;
+    var vh = stage.offsetHeight, wt = head.offsetTop + head.offsetHeight + (phone ? 22 : 34);
+    // two locked phases: the industries appear (P1), then the mountains slide up over them (P2)
+    sec.style.setProperty('--pin', (P1 = phone ? 160 : 140) + (P2 = 90) + 'svh');
+    // phones: make the picture at least a screen tall so it can cover the text (centred crop)
+    if (phone) { var w = Math.max(innerWidth * 1.8, innerHeight * 1.5); land.style.left = land.style.right = ((innerWidth - w) / 2) + 'px'; }
+    else land.style.left = land.style.right = '';
+    sec.style.setProperty('--wt', wt + 'px');
+    var img = land.querySelector('img'), lh = land.offsetHeight || img.offsetHeight, top;
+    if (phone) {
+      // phones: the peaks sit low (~80% down the screen) while the industries appear, then rise over them
+      top = vh * .8 - lh * .28;
+      sec.style.setProperty('--wb', Math.max(vh * .05, vh - top - lh * .28 + 10) + 'px');
+    } else {
+      // desktop: show ~57% of the picture whatever the screen's shape, so wide and 4K screens get the full ridgeline;
+      // the list may overlap the peaks a little
+      // ...but never so high that the twin spires (~28% down the picture) climb into the bottom industries
+      top = Math.min(vh * .62, Math.max(vh * .24, vh - lh * .57, wt + 10 + list.offsetHeight - lh * .28 - 10));
+      sec.style.setProperty('--wb', (vh * .14) + 'px');
+    }
+    sec.style.setProperty('--lt', top + 'px');
+    // where the mountains end up once they've covered the text: bottom of the picture at the bottom of the screen
+    shift = Math.min(0, Math.min(vh - lh, vh * .02) - top);
+    sec.style.setProperty('--tail', Math.max(0, top + shift + lh - vh) + 'px');
+    var vis = items.filter(function (it) { return it.offsetParent !== null; }), last = vis[vis.length - 1];
+    evenJoints(vis);
+    sec.style.setProperty('--lnh', (last.offsetTop + last.offsetHeight + 34) + 'px');
+    var lineEl = sec.querySelector('.wl-line'), lt0 = lineEl.getBoundingClientRect().top, lnh = lineEl.offsetHeight || 1;
+    ys = items.map(function (it) { if (it.offsetParent === null) return 9; var r = it.querySelector('.wl-rule').getBoundingClientRect(); return (r.top + r.height / 2 - lt0) / lnh; });
+    frame();
+  }
+  // space the branches so their joints on the trunk are exactly evenly apart; the step is the smallest that keeps
+  // items on the same side (every other one) from touching
+  function evenJoints(vis) {
+    var gap = phone ? 26 : 44, n = vis.length, h = [], off = [], step = 0, i;
+    vis.forEach(function (it) { it.style.marginTop = '0px'; });
+    for (i = 0; i < n; i++) { h[i] = vis[i].offsetHeight; off[i] = vis[i].querySelector('.wl-rule').offsetTop; }
+    for (i = 0; i + 2 < n; i++) step = Math.max(step, (h[i] - off[i] + off[i + 2] + gap) / 2);
+    for (i = 0; i + 1 < n; i++) step = Math.max(step, off[i + 1] - off[i] + 8);   // neighbours never share a joint height
+    var prevBottom = 0, j0 = off[0];
+    for (i = 0; i < n; i++) {
+      var top = j0 + i * step - off[i];
+      vis[i].style.marginTop = (i ? top - prevBottom : 0) + 'px';
+      prevBottom = top + h[i];
+    }
+  }
+  function frame() {
+    raf = 0;
+    var r = track.getBoundingClientRect(), vh = innerHeight, pin = track.offsetHeight - stage.offsetHeight;
+    var p = pin > 0 ? clamp(-r.top / pin) : 0;                 // progress through the whole locked stretch
+    var f1 = P1 / (P1 + P2), p1 = clamp(p / f1), p2 = clamp((p - f1) / (1 - f1));
+    var a = clamp(1 - r.top / vh);                             // approach: 0 when the section's top is at the bottom of the screen
+    var line = sstep(.02, .9, p1);
+    sec.style.setProperty('--ln', line.toFixed(4));
+    // the landscape rises in from below as the section arrives
+    var rise = sstep(.35, 1, a);
+    // then, still locked, it slides up over the industries and the text mists away underneath
+    var up = sstep(0, 1, p2);
+    land.style.transform = 'translate3d(0,' + ((1 - rise) * vh * .32 + shift * up).toFixed(1) + 'px,0)';
+    land.style.opacity = (.25 + .75 * rise).toFixed(3);
+    var gone = phone ? sstep(.5, .92, p2) : sstep(.15, .75, p2),   // phones: the text holds until the peaks reach mid-screen
+         o = (1 - gone).toFixed(3), ty = 'translate3d(0,' + (-gone * vh * .06).toFixed(1) + 'px,0)';
+    head.style.opacity = wrap.style.opacity = o; head.style.transform = ty; wrap.style.transform = ty;
+    // each branch sprouts the moment the trunk's tip reaches its joint (ys = joint position along the trunk, 0-1)
+    items.forEach(function (it, i) { it.classList.toggle('on', line >= ys[i] + .012); });
+  }
+  function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+  addEventListener('scroll', kick, { passive: true });
+  addEventListener('resize', function () { requestAnimationFrame(layout); });
+  var img = land.querySelector('img');
+  if (img.complete) layout(); else { img.addEventListener('load', layout); layout(); }
+})();
+</script>
+<!-- who-land:js:end -->
 </body>
 </html>

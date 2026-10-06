@@ -136,7 +136,7 @@ Footer legal row on every page (managed by `scripts/sync-shared.js`): Privacy Po
 
 ### index.html sections (in order)
 
-Hero → Pull quote (the old scrolling capability ticker that sat between them was removed: it listed services Candor does not offer, and the later static strip read as a black bar on phones) → The problem (`#problem`, a numbered `<dl>` ledger with a "Candor's answer" aside per row) → Why now (`#why-now`, scroll-pinned, 240vh track) → Who we serve (`#who`; desktop: cards along a trail path, 360px rows; phones and tablets under 1024px: a scroll-pinned card stack built from `CARDS` in the "MOBILE 'IMAGES GLASS POP UP'" script, a 1:1 hand port of the user's GSAP "Images glass pop up" reference — keep it that way, the user rejected every reinterpretation. Played as a full rewind at the user's request (each card's local time runs 2 → 0): a card swings up from below in focus, holds, then shrinks back into the distance, blurring and fading out, while the next card rises from below over it (z-index grows with the card index; the intro rewinds progress 0 → 0.07). Same tweens as the GSAP code: stagger -1, 2 units per card, perspective 300px, transform-origin `50% 999px -100px`, z -500→10, rotateX 2→-3, yPercent -45→100 on back.in(2), backdrop blur 20→8→1 with the moving radial-gradient shading; ScrollTrigger emulated (progress 0.07→1 across a `--n`×100svh track, 0.25 lerp per frame). Other deliberate changes: the 0.1 s autoAlpha snap is a short fade-in as each card rises, the receding card blurs and fades, and when scrolling stops (finger up, momentum over) the page glides to the nearest card in focus so nothing rests mid-blur — not past 92 % of the track, so you can always scroll out. Card colours are Candor tints, and card height is capped to clear the floating bottom pill. Only the blog marker is posterised, never the cards; reduced-motion users get a plain list. The section's ambient-dots script sets `overflow: clip`, never `hidden`, because `hidden` silently breaks the sticky stage) → Process (`#process`) → Services/pricing (`#services`) → Certifications explained (pinned, 170vh track) → About Artem (`#about`) → Social proof (`#stats`) → FAQ (`#faq`) → Assessment CTA → Contact CTA → Footer
+Hero → Pull quote (the old scrolling capability ticker that sat between them was removed: it listed services Candor does not offer, and the later static strip read as a black bar on phones) → The problem (`#problem`, a numbered `<dl>` ledger with a "Candor's answer" aside per row) → Why now (`#why-now`, scroll-pinned, 240vh track) → Who I work with (`#who`, between the `who-land:*` markers in index.html: markup, CSS and JS). A locked (sticky) section: a sage trunk line draws down the centre and each industry branches off it (sparkle → rule → name and one-liner) the moment the trunk's tip reaches its joint; joints are spaced exactly evenly. Desktop alternates left/right with Cannabis last; phones keep the same branching tree with three on the right, two on the left and Cannabis hidden. Each industry wears a light drifting fog that clears on hover/tap and opens the shared industry modal (`window.candorOpenCard(i)` → `CARDS`). Behind it, `images/industry/who-landscape.webp` (a transparent-sky BC mountain photo graded to the palette) rises from below, sits under the list (its position is computed from the list's end and the screen shape, so wide/4K screens see the full ridgeline), then, still locked, slides up over the text while the text fades, and finally scrolls on into mist that dissolves into the off-white before Process. Haze and mist layers fade to zero at every edge (hard edges showed as lines). Reduced motion / no JS: a plain list with the landscape below) → Process (`#process`) → Services/pricing (`#services`) → Certifications explained (pinned, 170vh track) → About Artem (`#about`) → Social proof (`#stats`) → FAQ (`#faq`) → Assessment CTA → Contact CTA → Footer
 
 Design rules learned the hard way: keep pinned scroll tracks short (the two above once added seven screens of near-empty scrolling), never list a certification or service Candor does not actually offer, and avoid copy that implies a client history until there is one.
 
@@ -186,7 +186,7 @@ Metadata is read from `<head>` first, with `<h1>` / `.article-tag` / `.article-l
 
 ### Still-lake hero (blog/index.html)
 
-The listing opens with "Field notes." / "All things B-Corp" over a painted misty lake (`images/heroes/lake-wide.webp` on landscape screens, `lake-tall.webp` on portrait; slots `lake-wide` / `lake-tall`). The painting is the art; a WebGL canvas adds the life: drifting mist bands, a slow swell and occasional drops on the lake, tap/click ripples (tapping the sky ripples its reflection), a very subtle depth parallax (scroll, plus pointer on desktop), and a second small canvas of mist in front of the title: by default the title sits in a translucent, drifting band of mist (heavier on its lower half) that parts softly around the pointer; the title glyphs are redrawn into that canvas (2D-canvas texture placed at DOM Range positions; the DOM text stays for SEO/screen readers but is visually hidden), so the mist can dissolve them: on load the title forms out of mist, and on scroll it fades gently and slightly unevenly into the mist (one broad, slow noise over a soft global fade, scaled in screen pixels; no fine grain, which read as blotchy), the bottom mist rises over a 170svh pinned track and the scene drifts up; the content after the hero is pulled up 30svh (`.lake + *`) so the post cards rise out of the fog under a soft `.lake-lip` mist gradient while it is still rolling in, leaving only a short beat of plain fog. The image is colour-matched to the page background `#ECEAE2` so the hand-off is seamless. The waterline and canoe box (where ripples are suppressed) are hard-coded per image in the script, so re-measure them if the art changes. The hero lives between the `still-lake:start/end` (markup), `still-lake:css:start/end` and `still-lake:js:start/end` markers; `rebuildIndex()` never touches it. Fallbacks: no WebGL → the still image with a fade; reduced motion → no ambient motion and no canvas title, the DOM text simply fades. The section keeps `id="main-content"` for the skip link.
+The listing opens with "Field notes." / "All things B-Corp" over a painted misty lake (`images/heroes/lake-wide.webp` on landscape screens, `lake-tall.webp` on portrait; slots `lake-wide` / `lake-tall`). The painting is the art; a WebGL canvas adds the life: drifting mist bands, a slow swell and occasional drops on the lake, tap/click ripples (tapping the sky ripples its reflection), a very subtle depth parallax (scroll, plus pointer on desktop), and a second small canvas of mist in front of the title: by default the title sits in a translucent, drifting band of mist (heavier on its lower half) that parts softly around the pointer; the title glyphs are redrawn into that canvas (2D-canvas texture placed at DOM Range positions; the DOM text stays for SEO/screen readers but is visually hidden), so the mist can dissolve them: on load the title forms out of mist, and on scroll it fades gently and slightly unevenly into the mist (one broad, slow noise over a soft global fade, scaled in screen pixels; no fine grain, which read as blotchy), the bottom mist rises over a 170svh pinned track and the scene drifts up; the content after the hero is pulled up 30svh (`.lake + *`) so the post cards rise out of the fog under a soft `.lake-lip` mist gradient. The rising fog's height follows the top edge of the incoming posts (not the scroll alone), so the mountains stay visible while the posts arrive and are veiled once the posts pass the middle of the screen, and a drifting `.lake-front` fog band sits in front of the filter bar and first cards, fading out (scroll-linked) as they settle. The stage is `100lvh` so it reaches under Safari's floating address bar on iPhone. The image is colour-matched to the page background `#ECEAE2` so the hand-off is seamless. The waterline and canoe box (where ripples are suppressed) are hard-coded per image in the script, so re-measure them if the art changes. The hero lives between the `still-lake:start/end` (markup), `still-lake:css:start/end` and `still-lake:js:start/end` markers; `rebuildIndex()` never touches it. Fallbacks: no WebGL → the still image with a fade; reduced motion → no ambient motion and no canvas title, the DOM text simply fades. The section keeps `id="main-content"` for the skip link.
 
 ### Card logic in blog/index.html
 
@@ -200,7 +200,7 @@ The `<section class="more-articles">` block at the bottom of every post is gener
 
 ### Weekly blog routine
 
-A scheduled routine drafts one post a week following `.claude/skills/blog-publish/SKILL.md` (news roundup or an uncovered topic), runs `publish.js --no-git`, and opens a **draft PR** on `claude/blog-<slug>` with the sources and a hero image prompt. Nothing goes live until the user reviews and merges.
+A scheduled routine (Saturdays 8:45 am Pacific, a weekly-recap slot) drafts one post a week following `.claude/skills/blog-publish/SKILL.md`, switching the post type from the previous week (news, tips, fun facts, myth vs fact, case study, explainer…), runs `publish.js --no-git`, and opens a **draft PR** on `claude/blog-<slug>` with the sources and a hero image prompt. Nothing goes live until the user reviews and merges.
 
 ### Sitemap
 
@@ -208,16 +208,18 @@ A scheduled routine drafts one post a week following `.claude/skills/blog-publis
 
 ### Existing blog posts
 
+The `[type]` at the start of each Topic is the post type. The weekly routine rotates types (news, tips, fun facts, myth vs fact, case study, explainer, guide, comparison) and never repeats last week's.
+
 | File | Topic | Tag |
 |---|---|---|
-| `blog/how-to-get-b-corp-certified-bc.html` | BC-specific certification process | B Corp Basics |
-| `blog/how-long-does-b-corp-certification-take.html` | Timeline expectations | Process |
-| `blog/b-impact-assessment-explained.html` | BIA scoring breakdown | B Corp Basics |
-| `blog/b-corp-certification-changes-2026.html` | 2026 standard updates | B Corp Basics |
-| `blog/b-corp-vs-1-percent-for-the-planet.html` | Certification path comparison | Certifications |
-| `blog/b-lab-verification-process.html` | What B Lab verification involves | Process |
-| `blog/b-corp-decertified-companies.html` | Decertification case studies (BrewDog, Etsy, Havas, Dr. Bronner's) | B Corp Basics |
-| `blog/b-corp-news-fall-2026.html` | News roundup Jul–Oct 2026 (EU ECGT logo deadline, B Lab logo rules, L'OCCITANE on the new standards, Butterfield & Robinson) | B Corp Basics |
+| `blog/how-to-get-b-corp-certified-bc.html` | [guide] BC-specific certification process | B Corp Basics |
+| `blog/how-long-does-b-corp-certification-take.html` | [guide] Timeline expectations | Process |
+| `blog/b-impact-assessment-explained.html` | [explainer] BIA scoring breakdown | B Corp Basics |
+| `blog/b-corp-certification-changes-2026.html` | [explainer] 2026 standard updates | B Corp Basics |
+| `blog/b-corp-vs-1-percent-for-the-planet.html` | [comparison] Certification path comparison | Certifications |
+| `blog/b-lab-verification-process.html` | [explainer] What B Lab verification involves | Process |
+| `blog/b-corp-decertified-companies.html` | [case study] Decertification case studies (BrewDog, Etsy, Havas, Dr. Bronner's) | B Corp Basics |
+| `blog/b-corp-news-fall-2026.html` | [news] News roundup Jul–Oct 2026 (EU ECGT logo deadline, B Lab logo rules, L'OCCITANE on the new standards, Butterfield & Robinson) | B Corp Basics |
 
 ---
 
@@ -326,6 +328,7 @@ When adding a new top-level page or route, check whether a redirect/rewrite rule
 | `images/heroes/cta-bg.jpg` | CTA section background |
 | `images/heroes/webshare.jpg` | Social/OG share image |
 | `images/heroes/lake-wide.webp` / `lake-tall.webp` | Blog index still-lake hero (landscape / portrait) |
+| `images/industry/who-landscape.webp` | Homepage "Who I work with" landscape (transparent sky) |
 | `images/industry/who-cannabis.jpg` | Industry card — Cannabis |
 | `images/industry/who-coffee.jpg` | Industry card — Coffee |
 | `images/industry/who-food.jpg` | Industry card — Food & Beverage |
@@ -374,7 +377,7 @@ Both pages share the privacy-policy shell (nav, `article-header`, `article-body`
 
 ### `scripts/sync-shared.js`
 
-Owns the snippets above plus the shared accessibility block (`:focus-visible` outline, `.sr-only`, skip link → `#main-content`) and the shared nav sizing: the "Book a free call" button never wraps; below 1100px the nav links tighten and below 940px they hide, with the button pinned right. Run `node scripts/sync-shared.js` after creating any new page, and `node scripts/sync-shared.js --check` before committing. Never hand-edit content between `candor-*:start/end` markers — edit the script and re-run it.
+Owns the snippets above, the site footer (`candor-footer:start/end`: brand line, two CTAs, Navigate / Resources columns flush right, legal row with Privacy · Terms · Cookie settings · LinkedIn, disclaimer, faint oversized wordmark) and the footer's contact popup (a `<dialog>` with a Netlify Forms form named `contact`, opened by any `[data-contact-open]` link, posting with fetch; on failure it shows the email address; requires Netlify form detection + an email notification set up in the Netlify UI), plus the shared accessibility block (`:focus-visible` outline, `.sr-only`, skip link → `#main-content`) and the shared nav sizing: the "Book a free call" button never wraps; below 1100px the nav links tighten and below 940px they hide, with the button pinned right. Run `node scripts/sync-shared.js` after creating any new page, and `node scripts/sync-shared.js --check` before committing. Never hand-edit content between `candor-*:start/end` markers — edit the script and re-run it.
 
 ### Claims policy
 
