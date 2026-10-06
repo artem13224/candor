@@ -405,7 +405,7 @@ const FOOTER_SNIPPET = `${FOOT_START}
           <ul>
             <li><a href="/#who">Who it's for</a></li>
             <li><a href="/#process">How it works</a></li>
-            <li><a href="/#services">Services &amp; pricing</a></li>
+            <li><a href="/#services">Pricing</a></li>
             <li><a href="/#about">About</a></li>
             <li><a href="/#faq">FAQ</a></li>
           </ul>
