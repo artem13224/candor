@@ -1024,14 +1024,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="journey-marker"></div>
         <div class="journey-text">
           <span class="journey-label">Actively researching</span>
-          <span class="journey-sub">Read the BIA, comparing options, doing due diligence</span>
+          <span class="journey-sub">Read up on B Lab's requirements, comparing options</span>
         </div>
       </button>
       <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'in-progress')">
         <div class="journey-marker"></div>
         <div class="journey-text">
           <span class="journey-label">Started the process</span>
-          <span class="journey-sub">Completed the BIA or working with a consultant</span>
+          <span class="journey-sub">Started B Lab's self-assessment or working with a consultant</span>
         </div>
       </button>
       <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'certified')">
@@ -1206,7 +1206,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <p class="results-disclaimer">These are estimates from four questions, not a B Impact Assessment result and not a certification decision. The readiness score weights what you actually have in place more than where you say you are. The Readiness Audit is where the real numbers come from.</p>
+    <p class="results-disclaimer">These are estimates from four questions, not a B Lab self-assessment result and not a certification decision. The readiness score weights what you actually have in place more than where you say you are. The Readiness Audit is where the real numbers come from.</p>
 
     <div class="gap-section" id="gap-section">
       <span class="gap-heading">Your strongest gaps</span>
@@ -1216,7 +1216,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="results-cta-block" id="results-cta">
       <div class="results-cta-text">
         <h3>Want a real gap assessment?</h3>
-        <p>Candor scores your business against the full B Impact Assessment and maps exactly what needs to change. You keep the report either way.</p>
+        <p>Candor's Readiness Audit runs your business through B Lab's full self-assessment and maps exactly what needs to change. You keep the report either way.</p>
       </div>
       <div class="results-cta-actions">
         <a href="https://calendly.com/artemfurman/30min" class="btn-primary" target="_blank" rel="noopener noreferrer">
@@ -1348,7 +1348,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
     </div>
-    <p class="cf-disc">Candor provides independent B Corp and sustainability certification advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
+    <p class="cf-disc">Candor provides independent B Corp and sustainability certification advisory services and is not affiliated with, endorsed by, or a part of B Lab, The Change Climate Project (The Climate Label), or 1% for the Planet.</p>
   </div>
   <span class="cf-mark" aria-hidden="true" data-word="Candor"></span>
 </footer>
@@ -1762,9 +1762,10 @@ function calculate() {
   const topics = topicKeys.map(k => TOPICS[k]);
 
   // Timeline brackets mirror the ranges in /blog/how-long-does-b-corp-certification-take:
-  // organised businesses 4–6 months, average 6–9, starting from zero 12–18, with
-  // B Lab's review window included. Larger multi-site businesses get the next bracket.
-  const brackets = ['4–6 mo', '6–9 mo', '9–12 mo', '12–18 mo'];
+  // organised businesses 4–6 months, average 6–9, starting from zero 9–15 (split here
+  // into 9–12 and 12–15), with B Lab's review window included. Larger multi-site
+  // businesses get the next bracket.
+  const brackets = ['4–6 mo', '6–9 mo', '9–12 mo', '12–15 mo'];
   let bi;
   if (readinessScore >= 70) bi = 0;
   else if (readinessScore >= 45) bi = 1;

@@ -101,7 +101,7 @@ function setOgImage(postFile, url) {
     const out = DRY ? path.join(outRoot, 'webshare.jpg') : SITE_OUT;
     await render(page, {
       TITLE: 'Candor', TITLE_HTML: 'Flat-fee B Corp certification consulting for <em>small businesses.</em>', TITLE_SIZE: 60,
-      TAG: 'Vancouver, BC · Canada-wide', PATH: '', DATE: 'B Corp · Climate Neutral · 1% for the Planet', BG_SRC: bgSrc,
+      TAG: 'Vancouver, BC · Canada-wide', PATH: '', DATE: 'B Corp · The Climate Label · 1% for the Planet', BG_SRC: bgSrc,
     }, out);
     console.log(`✓ site share image → ${path.relative(ROOT, out)}`);
   }

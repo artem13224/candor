@@ -85,7 +85,7 @@ Three flat-fee tiers, all in CAD:
 
 | Tier | Price | Timeline | What's included |
 |---|---|---|---|
-| Readiness Audit | $1,800 | 2 weeks | Full BIA diagnostic, gap analysis, certification comparison, 10–15 page written report, 60-min walkthrough |
+| Readiness Audit | $1,800 | 2 weeks | Full self-assessment against B Lab's new standards, gap analysis, certification comparison, 10–15 page written report, 60-min walkthrough |
 | Gap-Closing Engagement | $6,500 | 3–4 months | Policy drafts, tracking systems, evidence package, bi-weekly check-ins, post-certification launch plan |
 | Full Path to Certification | $12,000+ | 9–12 months | Everything above + submission management, B Lab correspondence, revision round, press release, badge assets |
 
@@ -93,11 +93,11 @@ Three flat-fee tiers, all in CAD:
 
 | Certification | Body | Renewal | Annual cost |
 |---|---|---|---|
-| B Corp | B Lab | Every 3 years | ~$2,100 USD (under $5M CAD revenue) |
-| Climate Neutral | Climate Neutral | Annual | $1,000–$5,000 (scales with footprint) |
-| 1% for the Planet | 1% FTP | Annual | None (1% revenue donation commitment) |
+| B Corp | B Lab | Ongoing audits; Year 3 audit, requirements phase in at Years 0/3/5 | $2,100 USD (B Lab U.S. & Canada 2026, $0–$5M revenue) + one-time submission fee |
+| The Climate Label (formerly Climate Neutral Certified) | The Change Climate Project | Annual | Brand licence fee scales with emissions + $15/t carbon fee into a climate budget; no Guided Support fee under $5M revenue |
+| 1% for the Planet | 1% FTP | Annual | Sliding-scale dues (from $500/yr under $500K revenue) that count toward the 1% revenue commitment |
 
-B Corp minimum score: 80/200 on the B Impact Assessment across 5 areas: Governance, Workers, Community, Environment, Customers.
+B Corp standards (published 8 April 2025; every submission after 1 January 2026): Foundation Requirements plus minimum requirements in seven Impact Topics — Purpose & Stakeholder Governance, Fair Work, Justice Equity Diversity & Inclusion, Human Rights, Climate Action, Environmental Stewardship & Circularity, Government Affairs & Collective Action — scaled by company size, sector and location. The old 80/200 B Impact Assessment score (Version 6) no longer decides certification; mention it only as history. Site-wide timelines: well documented 4–6 months, average 6–9, from zero 9–15 (total, incl. B Lab review). Global figures (B Lab, July 2025): 10,000+ B Corps, 1M+ workers, 103 countries, 160 industries.
 
 ### Target industries
 
@@ -214,7 +214,7 @@ The `[type]` at the start of each Topic is the post type. The weekly routine rot
 |---|---|---|
 | `blog/how-to-get-b-corp-certified-bc.html` | [guide] BC-specific certification process | B Corp Basics |
 | `blog/how-long-does-b-corp-certification-take.html` | [guide] Timeline expectations | Process |
-| `blog/b-impact-assessment-explained.html` | [explainer] BIA scoring breakdown | B Corp Basics |
+| `blog/b-impact-assessment-explained.html` | [explainer] BIA (Version 6) scoring breakdown, with a 2026-standards update note | B Corp Basics |
 | `blog/b-corp-certification-changes-2026.html` | [explainer] 2026 standard updates | B Corp Basics |
 | `blog/b-corp-vs-1-percent-for-the-planet.html` | [comparison] Certification path comparison | Certifications |
 | `blog/b-lab-verification-process.html` | [explainer] What B Lab verification involves | Process |
