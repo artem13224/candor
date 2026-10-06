@@ -49,6 +49,10 @@ const A11Y_SNIPPET = `${A11Y_START}
 <style>
   /* Footer on phones: a stacked, two-column layout instead of wrapped inline links.
      'footer .x' outranks each page's own '.x' rules, so this wins without !important. */
+  /* Nav at tablet widths: the links tighten, then step aside, so the call-to-action never wraps or spills off screen. */
+  #site-nav .nav-cta{white-space:nowrap}
+  @media (max-width:1100px){#site-nav .nav-links{padding-left:16px}#site-nav .nav-link{padding:6px 8px;letter-spacing:.1em}}
+  @media (max-width:940px){#site-nav .nav-links{display:none}#site-nav .nav-cta-wrap{grid-column:3;justify-self:end}}
   /* Nav on phones: the wordmark and the call-to-action must never touch. */
   @media (max-width:720px){
     #site-nav .nav-inner{grid-template-columns:auto minmax(0,1fr) auto;column-gap:12px}

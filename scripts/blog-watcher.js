@@ -19,6 +19,7 @@ const ONCE = process.argv.includes('--once');
 
 function rebuild(reason) {
   try {
+    lib.rebuildRelated();   // idempotent, so the writes it triggers settle after one pass
     const idx = lib.rebuildIndex();
     const sm  = lib.rebuildSitemap();
     console.log(`[blog-watcher] ${reason}: index ${idx.changed ? 'rebuilt' : 'unchanged'} (${idx.count} posts, featured: ${idx.featured}); sitemap ${sm.changed ? 'rebuilt' : 'unchanged'}`);

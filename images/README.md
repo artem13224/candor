@@ -82,7 +82,30 @@ Example: `images/_inbox/blog-how-long-does-b-corp-certification-take.png`.
 points the post's share tags at it, and uses it as the background of the featured card on the
 blog index if that post is the newest. Posts that already have a hero figure are left alone.
 
-Prompt pattern for a post hero (after the illustration style block):
+### Blog hero prompt (current, approved style)
+
+The user approved the soft, misty "still lake" look (it matches the blog index hero), not the
+ink-and-wash style above. Use this for every new post hero; change only the SCENE line.
+
+```
+Wide 16:9 landscape illustration for a blog header. Soft, quiet, misty Pacific Northwest scene,
+painted in a gentle soft-3D style: smooth matte forms, subtle depth, soft diffused morning light,
+no harsh shadows, no glow, no hyper-detail. Looks hand-made and calm, not like glossy AI art or a photo.
+
+SCENE: <one concrete object or place that stands for the post's idea, placed in the right third,
+e.g. a weathered dock with a blank plaque on a post, mirrored in still water>. Layered mountain
+ridges fade into low mist behind it, a few dark evergreens on the far right for depth.
+
+The left half is mostly open soft mist over pale water and sky, so text can sit on it.
+
+Palette: dominated by warm off-white #ECEAE2, muted sage and forest greens #5AA672 / #2D6B42,
+soft stone grey #C8C3B5, small touches of warm wood. Low contrast; the edges fade into #ECEAE2.
+
+No text, no letters, no numbers, no logos, no badges, no flags, no people, no watermark,
+no border, no vignette.
+```
+
+Older prompt pattern (ink-and-wash, kept for reference):
 
 ```
 A single-idea illustration for an article titled "<TITLE>". Depict <one concrete object or

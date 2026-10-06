@@ -38,8 +38,8 @@ Useful extras:
 - Title: the SEO title (Title Case, no trailing period). It becomes `<title>`, `og:title`,
   JSON-LD `headline`, the breadcrumb and the `<h1>`. You may rewrite the `<h1>` afterwards in
   sentence case with a trailing period, as existing posts do — keep `<title>` unchanged.
-- Slug is derived automatically (kebab-case, ≤ 60 chars, punctuation stripped). Override with
-  `--slug` only if the user asks.
+- Pass a short, keyword-first `--slug` (e.g. `b-corp-news-fall-2026`, not the whole title).
+  Without it the slug is the full title in kebab-case, which makes long, clumsy URLs.
 - `--tag` must be one of the allowed tags (below). `--date` defaults to today. `--read` is the
   stated reading time; estimate ~200 words/min once the article is written and update the
   `N min read` span if it changed.
@@ -55,8 +55,11 @@ Useful extras:
   it lists every allowed building block (`p`, `h2`, `h3`, `ul.checklist`, `ol.step-list`,
   `div.callout`, `div.pull-quote`, `div.stat-row`, `hr.section-break`, `figure.article-img`).
   Do not invent new classes or add `<style>`; the skeleton already contains all CSS.
-- Delete the instruction comments when done. Tailor the two lines in the CTA section and swap the
-  first two "More from the blog" cards for the two most related existing posts.
+- Delete the instruction comments when done. Tailor the two lines in the CTA section.
+- Leave the "More from the blog" section alone: `rebuildRelated()` (run by `npm run rebuild` and
+  `publish.js`) fills it on **every** post with the newest post, one post with the same tag, and
+  the "All articles" card. So each new post is suggested across the whole blog the day it goes
+  out, and its own page suggests older posts. `publish.js` commits the posts whose suggestions changed.
 - Internal links use root-relative paths without `.html` (`/blog/b-impact-assessment-explained`).
 - Optional FAQ: if the article has a real FAQ section, uncomment the `FAQPage` JSON-LD in `<head>`
   and mirror the visible questions/answers exactly; otherwise remove that comment.
@@ -126,9 +129,43 @@ directly) without the user's go-ahead.
 
 ## Hero images and share cards
 
-- A hero illustration is optional. If the user provides one, save it as `images/_inbox/blog-<slug>.png` and run `npm run images`; `npm run rebuild` / `publish` then injects the figure and share tags automatically. Do not hand-write the `<figure>` when this path is available.
+- Every post should have a hero. The user generates it in ChatGPT from a prompt you write (the
+  approved "misty lake" style, template in `images/README.md` under "Blog hero prompt"). Give
+  the prompt in chat (or in the PR body for the weekly routine), never generate faces, text or logos.
+- Save the file as `images/_inbox/blog-<slug>.png` (or `.webp`/`.jpg`) and run `npm run images`,
+  then `npm run rebuild` / `publish`. That injects the `<figure>`, points `og:image` /
+  `twitter:image` at it, and uses it as the featured card's background. Do not hand-write the figure.
+- The injected `alt` is the post title: replace it with a one-line description of the picture.
 - After publishing, offer `npm run og -- blog/<slug>.html` to render the branded share card (needs `npm install` and `npx playwright install chromium` once).
-- Prompts and style blocks for generating a hero live in `images/README.md`.
+
+## The featured card
+
+The newest post by JSON-LD `datePublished` becomes the big dark featured card at the top of
+`blog/index.html`, and the previous one drops into the regular grid. Nothing to do by hand:
+`rebuildIndex()` handles it. To keep an older post on top, its date would have to be newer, so don't.
+
+## News posts (and the weekly routine)
+
+The blog mixes evergreen guides with news. Every existing topic is listed in CLAUDE.md under
+"Existing blog posts"; don't write a second post on one of them. For a news post:
+
+1. Cover roughly the last three months of B Corp news that matters to a small business in BC:
+   B Lab standards and rules, notable certifications/recertifications/decertifications (Canadian
+   ones especially), and Canadian or EU rules on green claims.
+2. Every fact needs a named, dated source linked inline. In the cloud environment WebFetch is
+   usually blocked by the egress proxy, so confirm each claim in at least two independent search
+   results. Drop anything you can only find once, and list the weakest-sourced claims for the user.
+3. Title pattern: "B Corp News <Season> <Year>: <angle>"; tag `B Corp Basics`; slug `b-corp-news-<season>-<year>`.
+4. Voice and structure come from the `candor-blog-writer` skill. If it isn't available: no em
+   dashes, nothing in threes, no bullet lists, first person, plain and confident, 600–1,000 words,
+   3–5 `<h2>`s, one pull quote, one callout, a stat row only with real sourced numbers, and the
+   closing line "Start with the free score. Two minutes, and you'll know where you actually stand."
+   linking to `/assessment/`.
+
+The weekly routine follows this skill end to end, then: `node scripts/publish.js blog/<slug>.html --no-git`,
+commit on a new branch `claude/blog-<slug>` from the default branch, push, and open a **draft** PR
+whose body has the summary, the sources, the weakest claims and the hero image prompt. It never
+merges and never pushes to the default branch; the user approves on the PR.
 
 ## Key-point highlights
 
