@@ -1036,13 +1036,13 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     ' vec2 d=(p-uMouse.xy)*vec2(asp,1.);float clear=exp(-dot(d,d)/.09)*uMouse.z;',
     ' D*=1.-clear*.8*(1.-uAmt*.85);',
     ' vec3 col=uCol*(1.+(n2-.5)*.03);',
-    // the title, drawn here so it can dissolve like ink lifting off a page: big soft patches go first,
-    // a finer noise roughens their edges, lower lines (the subheading) a little ahead of the title
-    ' vec2 q=gl_FragCoord.xy/uPx;',                       // patch size in screen pixels, so phones get the same grain as desktops
-    ' float big=wisp(q/140.+vec2(3.1,1.7),0.);float fine=fbm(q/22.+vec2(uT*.03,0.));',
-    ' float nn=big*.75+fine*.25;float th=uDis*1.3-.15+(.55-p.y)*.22;',
-    ' float vis=smoothstep(th-.15,th+.17,nn);vec4 tx=texture2D(tText,p);float ta=tx.a*vis*uHasText;',
-    ' float lift=(1.-smoothstep(0.,.12,abs(nn-th)))*tx.a*uHasText*step(.001,uDis);D=max(D,lift*.35);',
+    // the title, drawn here so it can fade gently into the mist: one broad, slow-drifting unevenness over a
+    // soft global fade (no fine grain, so no mottling inside letters); the subheading goes a little ahead
+    ' vec2 q=gl_FragCoord.xy/uPx;',                       // scale in screen pixels, so phones match desktops
+    ' float big=wisp(q/420.+vec2(3.1+uT*.01,1.7),0.);',
+    ' float f=1.-uDis*1.45+(big-.5)*.5+(p.y-.55)*.25;',
+    ' float vis=smoothstep(0.,.7,f);vec4 tx=texture2D(tText,p);float ta=tx.a*vis*uHasText;',
+    ' D=max(D,(1.-vis)*vis*4.*tx.a*uHasText*.06);',      // the faintest breath of mist where it fades
     ' gl_FragColor=vec4(col*D+tx.rgb*ta*(1.-D),D+ta*(1.-D));}'
   ].join('\n');
 
@@ -1150,7 +1150,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     var rise = REDUCE ? sstep(.5, .95, pS) : sstep(.12, .92, pS);
     L.lift = REDUCE ? 0 : Math.pow(seg(pS, .1, 1), 1.4) * L.h * .32;
     var arrive = REDUCE ? 0 : 1 - sstep(.3, 2.8, t);
-    var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .3, pS);
+    var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .42, pS);
     mouse.x += (mouse.tx - mouse.x) * .04; mouse.y += (mouse.ty - mouse.y) * .04;
     var k = L.pr, px = (FINE && !REDUCE ? -mouse.x * 4 : 0) * k, py = (FINE && !REDUCE ? -mouse.y * 2 : 0) * k + (REDUCE ? 0 : pS * 12 * k);
     // the title mists away: blur, fade and a slow drift up while the veil thickens over it
