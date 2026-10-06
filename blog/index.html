@@ -422,6 +422,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .lake-js .lake-go .lake-rise{opacity:1;transition:opacity .3s linear}
   .lake-cue{position:absolute;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:grid;justify-items:center;gap:9px;font:400 10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:#4A5548;pointer-events:none;opacity:0;z-index:1}
   .lake-cue i{display:block;width:1px;height:30px;background:linear-gradient(#4A5548,transparent)}
+  .lake-ctext .lake-copy{opacity:0!important}   /* the canvas draws the title; the real text stays for search and screen readers */
   @media (prefers-reduced-motion: reduce){.lake-js .lake-rise{opacity:1}}
   /* still-lake:css:end */</style>
 </head>
@@ -1023,19 +1024,26 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
 
   // Veil: wisps that drift in front of the title. Dense on arrival, light while you read, total as you scroll away.
   var FSV = HEAD + NOISE + '\n' + [
-    'uniform vec2 uRes;uniform float uT;uniform float uAmt;uniform float uIdle;uniform vec3 uCol;uniform vec3 uMouse;',
+    'uniform vec2 uRes;uniform float uT;uniform float uAmt;uniform float uIdle;uniform vec3 uCol;uniform vec3 uMouse;uniform sampler2D tText;uniform float uDis;uniform float uHasText;uniform float uPx;',
     'void main(){vec2 p=gl_FragCoord.xy/uRes;float asp=uRes.x/uRes.y;',
     // a horizontal band, heaviest across the lower half of the title, fading out above and below (no edges, no blob)
     ' float band=smoothstep(.04,.36,p.y)*smoothstep(.86,.5,p.y);',
     ' float full=smoothstep(0.,.26,p.y)*smoothstep(1.,.74,p.y);',
     ' float n=wisp(vec2(p.x*asp*.9,p.y*2.6),uT*.11);float n2=fbm(vec2(p.x*asp*2.2-uT*.22,p.y*5.+uT*.05));',
     ' float idle=band*clamp(.5+(n-.5)*1.5+(n2-.5)*.5,0.,1.)*uIdle;',
-    ' float D=mix(idle,max(idle,full*(.85+(n-.5)*.3)),uAmt);',
+    ' float D=mix(idle,max(idle,full*(.5+(n-.5)*.3)),uAmt);',
     // hover: the mist parts softly around the pointer
     ' vec2 d=(p-uMouse.xy)*vec2(asp,1.);float clear=exp(-dot(d,d)/.09)*uMouse.z;',
     ' D*=1.-clear*.8*(1.-uAmt*.85);',
     ' vec3 col=uCol*(1.+(n2-.5)*.03);',
-    ' gl_FragColor=vec4(col*D,D);}'
+    // the title, drawn here so it can dissolve like ink lifting off a page: big soft patches go first,
+    // a finer noise roughens their edges, lower lines (the subheading) a little ahead of the title
+    ' vec2 q=gl_FragCoord.xy/uPx;',                       // patch size in screen pixels, so phones get the same grain as desktops
+    ' float big=wisp(q/140.+vec2(3.1,1.7),0.);float fine=fbm(q/22.+vec2(uT*.03,0.));',
+    ' float nn=big*.75+fine*.25;float th=uDis*1.3-.15+(.55-p.y)*.22;',
+    ' float vis=smoothstep(th-.15,th+.17,nn);vec4 tx=texture2D(tText,p);float ta=tx.a*vis*uHasText;',
+    ' float lift=(1.-smoothstep(0.,.12,abs(nn-th)))*tx.a*uHasText*step(.001,uDis);D=max(D,lift*.35);',
+    ' gl_FragColor=vec4(col*D+tx.rgb*ta*(1.-D),D+ta*(1.-D));}'
   ].join('\n');
 
   function program(gl, fs, names) {
@@ -1053,7 +1061,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     gl = cv.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' }) || cv.getContext('experimental-webgl');
     if (gl) U = program(gl, FS, ['tImg', 'uRes', 'uOff', 'uSize', 'uWl', 'uCanoe', 'uBg', 'uMatch', 'uT', 'uPr', 'uPar', 'uRise', 'uLift', 'uCloud', 'uCloudC', 'uTall', 'uRings']);
     glv = veil.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: true, powerPreference: 'low-power' });
-    if (glv) UV = program(glv, FSV, ['uRes', 'uT', 'uAmt', 'uIdle', 'uCol', 'uMouse']);
+    if (glv) UV = program(glv, FSV, ['uRes', 'uT', 'uAmt', 'uIdle', 'uCol', 'uMouse', 'tText', 'uDis', 'uHasText', 'uPx']);
   } catch (e) { if (window.console) console.error(e); gl = null; }
   if (!gl) { root.classList.add('lake-no-gl'); glv = null; }
 
@@ -1076,7 +1084,35 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     var ty0 = parseFloat(copy.dataset.ty || 0); L.cloudC = [(cr.left - sr.left + cr.width / 2) * pr, (cr.top - sr.top - ty0 + cr.height / 2) * pr];
     L.veil = { x: 0, y: Math.max(0, cr.top - sr.top - padY - parseFloat(copy.dataset.ty || 0)), w: w, h: cr.height + padY * 2 };
     veil.style.left = L.veil.x + 'px'; veil.style.top = L.veil.y + 'px'; veil.style.width = L.veil.w + 'px'; veil.style.height = L.veil.h + 'px';
-    veil.width = Math.max(2, Math.round(L.veil.w * .5)); veil.height = Math.max(2, Math.round(L.veil.h * .5));   // soft mist: half resolution is plenty
+    veil.width = Math.max(2, Math.round(L.veil.w * pr)); veil.height = Math.max(2, Math.round(L.veil.h * pr));   // full resolution: the title is drawn here
+    buildText();
+  }
+  // Draw the title into a texture, glyph by glyph at the exact positions the browser laid them out
+  // (so kerning, letter-spacing and wrapping match), for the ink-lifting dissolve. The real text stays in the page for search and screen readers.
+  var ttex = null, hasText = 0;
+  function buildText() {
+    if (!glv || REDUCE) return;
+    var c = document.createElement('canvas'); c.width = veil.width; c.height = veil.height;
+    var g = c.getContext('2d'), sc = veil.width / L.veil.w, sr = stage.getBoundingClientRect(), ty0 = parseFloat(copy.dataset.ty || 0);
+    var walk = document.createTreeWalker(copy, NodeFilter.SHOW_TEXT), node, range = document.createRange(), drawn = 0;
+    while ((node = walk.nextNode())) {
+      var cs = getComputedStyle(node.parentElement), fs = parseFloat(cs.fontSize) * sc, txt = node.data;
+      g.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + fs + 'px ' + cs.fontFamily; g.fillStyle = cs.color; g.textBaseline = 'alphabetic';
+      for (var i = 0; i < txt.length; i++) {
+        var ch = txt[i]; if (!ch.trim()) continue;
+        range.setStart(node, i); range.setEnd(node, i + 1); var r = range.getBoundingClientRect(); if (!r.width) continue;
+        var m = g.measureText(ch), asc = m.fontBoundingBoxAscent != null ? m.fontBoundingBoxAscent : fs * .8, desc = m.fontBoundingBoxDescent != null ? m.fontBoundingBoxDescent : fs * .2;
+        g.fillText(ch, (r.left - sr.left - L.veil.x) * sc, (r.top - sr.top - ty0 - L.veil.y) * sc + (r.height * sc - asc - desc) / 2 + asc); drawn++;
+      }
+    }
+    if (!drawn) return;
+    if (ttex) glv.deleteTexture(ttex);
+    ttex = glv.createTexture(); glv.activeTexture(glv.TEXTURE0); glv.bindTexture(glv.TEXTURE_2D, ttex);
+    glv.pixelStorei(glv.UNPACK_FLIP_Y_WEBGL, true); glv.pixelStorei(glv.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+    glv.texImage2D(glv.TEXTURE_2D, 0, glv.RGBA, glv.RGBA, glv.UNSIGNED_BYTE, c);
+    glv.texParameteri(glv.TEXTURE_2D, glv.TEXTURE_MIN_FILTER, glv.LINEAR); glv.texParameteri(glv.TEXTURE_2D, glv.TEXTURE_MAG_FILTER, glv.LINEAR);
+    glv.texParameteri(glv.TEXTURE_2D, glv.TEXTURE_WRAP_S, glv.CLAMP_TO_EDGE); glv.texParameteri(glv.TEXTURE_2D, glv.TEXTURE_WRAP_T, glv.CLAMP_TO_EDGE);
+    glv.uniform1i(UV.tText, 0); hasText = 1; root.classList.add('lake-ctext');
   }
 
   // ── State ───────────────────────────────────────────────────────────────────
@@ -1114,7 +1150,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     var rise = REDUCE ? sstep(.5, .95, pS) : sstep(.12, .92, pS);
     L.lift = REDUCE ? 0 : Math.pow(seg(pS, .1, 1), 1.4) * L.h * .32;
     var arrive = REDUCE ? 0 : 1 - sstep(.3, 2.8, t);
-    var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .24, pS);
+    var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .3, pS);
     mouse.x += (mouse.tx - mouse.x) * .04; mouse.y += (mouse.ty - mouse.y) * .04;
     var k = L.pr, px = (FINE && !REDUCE ? -mouse.x * 4 : 0) * k, py = (FINE && !REDUCE ? -mouse.y * 2 : 0) * k + (REDUCE ? 0 : pS * 12 * k);
     // the title mists away: blur, fade and a slow drift up while the veil thickens over it
@@ -1145,7 +1181,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     if (glv) {
       glv.viewport(0, 0, veil.width, veil.height); glv.clearColor(0, 0, 0, 0); glv.clear(glv.COLOR_BUFFER_BIT);
       glv.uniform2f(UV.uRes, veil.width, veil.height); glv.uniform1f(UV.uT, REDUCE ? 0 : t);
-      glv.uniform1f(UV.uAmt, Math.max(arrive * .9, away)); glv.uniform1f(UV.uIdle, REDUCE ? .55 : .9);
+      glv.uniform1f(UV.uAmt, Math.max(arrive * .6, away)); glv.uniform1f(UV.uDis, REDUCE ? 0 : Math.max(arrive, away)); glv.uniform1f(UV.uHasText, hasText); glv.uniform1f(UV.uPx, k); glv.uniform1f(UV.uIdle, REDUCE ? .55 : .9);
       glv.uniform3f(UV.uCol, Math.min(1, BG[0] / 255 + .025), Math.min(1, BG[1] / 255 + .025), Math.min(1, BG[2] / 255 + .025));
       push.v += (push.on - push.v) * .08; push.x += (push.tx - push.x) * .18; push.y += (push.ty - push.y) * .18;
       glv.uniform3f(UV.uMouse, push.x, push.y, REDUCE ? 0 : push.v);
