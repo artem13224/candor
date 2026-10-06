@@ -8,8 +8,7 @@
     "publish": "node scripts/publish.js",
     "watch": "node scripts/blog-watcher.js",
     "images": "node scripts/optimize-images.js",
-    "og": "node scripts/make-og.js",
-    "ink": "node scripts/make-ink-masks.js"
+    "og": "node scripts/make-og.js"
   },
   "devDependencies": {
     "playwright": "1.56",

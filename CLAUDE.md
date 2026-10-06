@@ -43,9 +43,6 @@ node scripts/publish.js path/to/post.html --force     # publish despite validati
 
 # Rebuild index + sitemap whenever blog/*.html changes (dev convenience)
 npm run watch
-
-# Re-render the ink-reveal masks (images/textures/ink-reveal.webp + ink-edge.webp)
-npm run ink                       # add -- --preview <dir> for contact sheets
 ```
 
 All blog logic lives in `scripts/lib/blog.js` — `extractPost`, `validatePost`, `listPosts`, `rebuildIndex`, `rebuildSitemap`, `ALLOWED_TAGS`. The CLIs (`new-post.js`, `validate-post.js`, `rebuild.js`, `publish.js`, `blog-watcher.js`) are thin wrappers over it. `publish.js` reads metadata from `<head>` (title, description, `article:section`, JSON-LD dates), refuses to publish a post that fails validation, commits with message `blog: publish {slug}` and pushes. `scripts/sync-shared.js` injects the site-wide consent banner, footer links and a11y block; `publish.js` runs it on the post being published. The end-to-end flow for Claude is documented in `.claude/skills/blog-publish/SKILL.md`.
@@ -69,7 +66,7 @@ Static site — all styles are inline `<style>` blocks, all JS is inline `<scrip
 | `images/favicons/` | All favicon files + `site.webmanifest` |
 | `images/heroes/` | Hero, break, CTA background, OG share images |
 | `images/industry/` | Industry card images (`who-*.jpg`) |
-| `scripts/` | Blog pipeline (`lib/blog.js`, `new-post.js`, `validate-post.js`, `rebuild.js`, `publish.js`, `blog-watcher.js`, `templates/post.html`) `sync-shared.js` (site-wide consent/footer/a11y snippets) and `make-ink-masks.js` (blog image ink-reveal masks) |
+| `scripts/` | Blog pipeline (`lib/blog.js`, `new-post.js`, `validate-post.js`, `rebuild.js`, `publish.js`, `blog-watcher.js`, `templates/post.html`) `sync-shared.js` (site-wide consent/footer/a11y snippets) |
 | `netlify.toml` | Deployment config, cache rules, security headers, blog rewrite |
 | `sitemap.xml` | Updated by `scripts/publish.js` on each publish |
 | `robots.txt` | Crawl rules — blocks scrapers, allows Googlebot + AI crawlers |
@@ -186,7 +183,6 @@ Metadata is read from `<head>` first, with `<h1>` / `.article-tag` / `.article-l
 - The consent banner (`candor-consent:start`) and footer legal links are injected by `scripts/sync-shared.js`; `publish.js` runs it for you.
 - HTML comments are ignored by the validator, so the template's commented examples are safe.
 - **Key-point highlights:** wrap the 4–6 most important phrases of each post in `<mark>…</mark>` (plain `<p>`/`<li>` body text only, never headings, links, callouts or the CTA). `sync-shared.js` injects the `candor-highlight` block into every page whose JSON-LD has `"@type": "Article"`; it draws a hand-drawn chisel-marker stroke (SVG, sage `rgba(90,166,114,.40)`, uneven edges, drag streaks, slanted tips) behind each line of each mark, line by line in reading order. The draw is **scrubbed by scroll** (starts when the mark's top crosses 88% of the screen height, complete by 52%) and **posterised to 12 fps** Vox-style: the visible state only updates every 83 ms, and while mid-draw the stroke boils between three hand-drawn variants. Scrolling back up un-draws it the same way. Reduced motion: drawn statically. Without JS a CSS gradient marker shows instead. Backgrounds and text colours are untouched.
-- **Image ink reveal:** every `.article-img img` (hero) and `.article-body figure img` bleeds in through layered ink washes (translucent, crinkle-edged tide rings around a solid core, 16 tones) the first time it scrolls into view (starts as soon as 5 % of the screen height clears it, ~1.75 s of posterised 50 ms frames, skipping the blank lead-in frames; photos are fetched and decoded one screen ahead so the ink never waits on the network), then keeps a permanent brushed, ragged edge. `sync-shared.js` injects the `candor-ink` block into Article pages. The two CSS alpha masks, `images/textures/ink-reveal.webp` (8 × 5 frame grid) and `images/textures/ink-edge.webp`, are rendered by `scripts/make-ink-masks.js` (`npm run ink`); never hand-edit them. Fail-safe: masks switch on (`html.ink-on`) only after both files decode, so no JS, a missing mask or a 4 s timeout leaves plain photos. Reduced motion: brushed edge, no animation. Print: no masks. The edge trims a few percent off every side of a photo, so keep credits and key detail away from the edges.
 
 ### Card logic in blog/index.html
 
@@ -378,4 +374,4 @@ All JPEGs are recompressed (quality ~76, max 1920 px wide; industry cards 1600 p
 
 ## Image system
 
-`images/README.md` is the source of truth: every image has a named slot in `scripts/lib/image-slots.js`. Workflow: save a file as `images/_inbox/<slot>.png` → `npm run images` (sharp resizes/compresses into the slot's path; the HTML already references it). Blog heroes: `images/_inbox/blog-<slug>.png` → `blog/images/<slug>.webp` → `npm run rebuild` or `publish` injects the figure, share tags and featured-card background. Share cards: `npm run og -- --all | --site` renders `scripts/templates/og.html` with Playwright. Slots `hero-art`, `lost-trail` and `og-bg` are decorative and fall back silently when the file is missing (`onerror="this.remove()"`). `images/textures/grain.png` is a 4 KB tile laid over every page by `sync-shared.js` (soft-light, desktop only). `images/textures/ink-reveal.webp` and `ink-edge.webp` are generated masks for the blog image ink reveal (`npm run ink`). `404.html` is served by Netlify automatically for unknown routes and is `noindex`. Never generate a face to represent Artem; never put text, logos or certification marks inside images.
+`images/README.md` is the source of truth: every image has a named slot in `scripts/lib/image-slots.js`. Workflow: save a file as `images/_inbox/<slot>.png` → `npm run images` (sharp resizes/compresses into the slot's path; the HTML already references it). Blog heroes: `images/_inbox/blog-<slug>.png` → `blog/images/<slug>.webp` → `npm run rebuild` or `publish` injects the figure, share tags and featured-card background. Share cards: `npm run og -- --all | --site` renders `scripts/templates/og.html` with Playwright. Slots `hero-art`, `lost-trail` and `og-bg` are decorative and fall back silently when the file is missing (`onerror="this.remove()"`). `images/textures/grain.png` is a 4 KB tile laid over every page by `sync-shared.js` (soft-light, desktop only). `404.html` is served by Netlify automatically for unknown routes and is `noindex`. Never generate a face to represent Artem; never put text, logos or certification marks inside images.
