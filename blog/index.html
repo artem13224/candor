@@ -414,15 +414,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .lake-no-gl .lake-still{display:block}
   .lake-veil{pointer-events:none;z-index:2}
   .lake-no-gl .lake-veil{display:none}
-  .lake-copy{position:absolute;left:0;right:0;top:clamp(104px,15svh,156px);padding-inline:20px;text-align:center;pointer-events:none;z-index:1;will-change:transform,opacity,filter}
+  .lake-copy{position:absolute;left:0;right:0;top:clamp(104px,15svh,156px);padding-inline:20px;text-align:center;pointer-events:none;z-index:1;will-change:transform}
   .lake-copy h1{margin:0;font:800 clamp(56px,9.5vw,124px)/.92 'Urbanist',system-ui,sans-serif;letter-spacing:-.045em;color:#0D1610;text-wrap:balance}
   .lake-copy h1 .dot{color:#2D6B42}
   .lake-copy .lake-sub{margin:18px 0 0;font:400 clamp(17px,1.9vw,23px)/1.4 'Open Sans',system-ui,sans-serif;color:#4A5548;letter-spacing:.01em}
-  .lake-js .lake-rise{opacity:0;filter:blur(12px);transform:translateY(.4rem)}
-  .lake-js .lake-go .lake-rise{opacity:1;filter:blur(0);transform:none;transition:opacity 1.6s cubic-bezier(.17,.17,.51,1),filter 1.9s cubic-bezier(.17,.17,.51,1),transform 1.6s cubic-bezier(.17,.17,.51,1)}
+  .lake-js .lake-rise{opacity:0}
+  .lake-js .lake-go .lake-rise{opacity:1;transition:opacity .3s linear}
   .lake-cue{position:absolute;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:grid;justify-items:center;gap:9px;font:400 10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:#4A5548;pointer-events:none;opacity:0;z-index:1}
   .lake-cue i{display:block;width:1px;height:30px;background:linear-gradient(#4A5548,transparent)}
-  @media (prefers-reduced-motion: reduce){.lake-js .lake-rise{opacity:1;filter:none;transform:none}}
+  @media (prefers-reduced-motion: reduce){.lake-js .lake-rise{opacity:1}}
   /* still-lake:css:end */</style>
 </head>
 <body>
@@ -467,8 +467,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <canvas class="lake-gl" aria-hidden="true"></canvas>
       <img class="lake-still" src="/images/heroes/lake-wide.webp" alt="" aria-hidden="true" width="2000" height="1126" decoding="async">
       <div class="lake-copy">
-        <h1><span class="lake-rise" style="display:block;transition-delay:.35s">Field notes<span class="dot">.</span></span></h1>
-        <p class="lake-sub lake-rise" style="transition-delay:.75s">All things B-Corp</p>
+        <h1><span class="lake-rise" style="display:block">Field notes<span class="dot">.</span></span></h1>
+        <p class="lake-sub lake-rise">All things B-Corp</p>
       </div>
       <canvas class="lake-veil" aria-hidden="true"></canvas>
       <div class="lake-cue" aria-hidden="true">Scroll<i></i></div>
@@ -1010,8 +1010,8 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     ' c=mix(c,mistC,m1*.55+m2*.35);c=mix(c,mistC,m3*.6);',
     // mist banked behind the title: always a little, thick on arrival, thickening again as you scroll
     ' vec2 cq=(p-uCloudC)/vec2(uRes.x*.42,uRes.y*.16);float cb=exp(-dot(cq,cq));',
-    ' float cw=smoothstep(.3,.75,wisp(vec2(p.x/uRes.x*3.,p.y/uRes.y*7.),uT*.06));',
-    ' c=mix(c,mix(uBg,vec3(1.),.5),clamp(cb*cw*(.32+uCloud*.9),0.,1.));',
+    ' float cw=smoothstep(.28,.72,wisp(vec2(p.x/uRes.x*3.,p.y/uRes.y*7.),uT*.14));',
+    ' c=mix(c,mix(uBg,vec3(1.),.65),clamp(cb*cw*(.45+uCloud*.9),0.,1.));',
     ' if(uRise>0.){float yb=1.-p.y/uRes.y;',
     '  float e1=uRise*1.5-.25+(wisp(vec2(p.x/uRes.x*2.2,yb*3.),uT*.05)-.5)*.35;',
     '  float e2=uRise*1.5-.4+(wisp(vec2(p.x/uRes.x*3.2+7.,yb*4.),uT*.08)-.5)*.3;',
@@ -1024,13 +1024,23 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
   // Veil: wisps that drift in front of the title. Dense on arrival, light while you read, total as you scroll away.
   var FSV = HEAD + NOISE + '\n' + [
     'uniform vec2 uRes;uniform float uT;uniform float uAmt;uniform float uIdle;uniform vec3 uCol;',
-    'void main(){vec2 p=gl_FragCoord.xy/uRes;',
-    ' vec2 e=(p-.5)/.5;float edge=1.-smoothstep(.35,1.,length(e*vec2(1.,1.15)));edge*=edge;',
-    ' float n=wisp(vec2(p.x*2.4,p.y*3.6),uT*.05);float n2=wisp(vec2(p.x*3.6+5.,p.y*5.2),uT*.085);',
-    ' float idle=(smoothstep(.55,.85,n)*.7+smoothstep(.6,.85,n2)*.4)*uIdle;',
-    ' float thick=smoothstep(.75-uAmt*.75,1.05-uAmt*.55,n*.6+n2*.4+uAmt*.35);',
-    ' float a=clamp(max(idle,thick*uAmt),0.,1.)*edge;',
-    ' gl_FragColor=vec4(uCol*a,a);}'
+    // density: drifting wisps while you read, plus a core that grows until it hides the title
+    'float puffAt(vec2 p){return wisp(vec2(p.x*2.4,p.y*2.8),uT*.16);}',
+    'float dens(vec2 p){vec2 e=(p-.5)/.5;float r=length(e*vec2(.78,1.2));',
+    // billowing cloud: noise decides the edge; a soft radial bias makes it fill in as the amount grows
+    ' float n=wisp(vec2(p.x*2.4,p.y*2.8),uT*.16);float n2=wisp(vec2(p.x*4.2+5.,p.y*4.8),uT*.24);float n3=fbm(vec2(p.x*9.+uT*.4,p.y*10.));',
+    ' float puff=n*.55+n2*.3+n3*.15;',
+    ' float base=1.-smoothstep(.15,1.,r);',
+    ' float field=puff*1.05+base*(.24+uAmt*1.1)-(1.-uAmt)*.2;',
+    ' float halo=smoothstep(.38,1.,field)*.72;float body=smoothstep(.62,1.12,field);',
+    ' float D=max(halo,body)*mix(.62,1.,uAmt);',
+    ' return D*(1.-smoothstep(.8,1.05,r));}',
+    'void main(){vec2 p=gl_FragCoord.xy/uRes;float D=dens(p);',
+    // light from the upper left: where the mist toward the light is denser, this pixel sits in its shadow
+    ' float sh=clamp((dens(p+vec2(-.025,.04))-D)*3.,0.,1.);',
+    ' vec3 lit=vec3(.996,.992,.982);vec3 shade=vec3(.85,.845,.81);',
+    ' float hollow=1.-puffAt(p);vec3 col=mix(lit,shade,clamp(sh*.7+hollow*.28-.08,0.,1.)*smoothstep(.25,.9,D));',
+    ' gl_FragColor=vec4(col*D,D);}'
   ].join('\n');
 
   function program(gl, fs, names) {
@@ -1067,9 +1077,9 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     if (im) { var s = Math.max(L.w / im.width, L.h / im.height); L.sw = im.width * s; L.sh = im.height * s; L.ox = (L.w - L.sw) / 2; L.oy = (L.h - L.sh) / 2;
       if (L.key === 'wide') L.oy += L.h * .15; }        // wide screens: drop the scene so the peak clears the title (the painting's top edge is plain mist)
     cv.width = L.w; cv.height = L.h;
-    var cr = copy.getBoundingClientRect(), sr = stage.getBoundingClientRect(), padX = cr.width * .1, padY = cr.height * .55;
+    var cr = copy.getBoundingClientRect(), sr = stage.getBoundingClientRect(), padX = cr.width * .28, padY = cr.height * 1.1;
     var ty0 = parseFloat(copy.dataset.ty || 0); L.cloudC = [(cr.left - sr.left + cr.width / 2) * pr, (cr.top - sr.top - ty0 + cr.height / 2) * pr];
-    L.veil = { x: Math.max(0, cr.left - sr.left - padX), y: Math.max(0, cr.top - sr.top - padY - parseFloat(copy.dataset.ty || 0)), w: Math.min(w, cr.width + padX * 2), h: cr.height + padY * 2 };
+    L.veil = { x: 0, y: Math.max(0, cr.top - sr.top - padY - parseFloat(copy.dataset.ty || 0)), w: w, h: cr.height + padY * 2 };
     veil.style.left = L.veil.x + 'px'; veil.style.top = L.veil.y + 'px'; veil.style.width = L.veil.w + 'px'; veil.style.height = L.veil.h + 'px';
     veil.width = Math.max(2, Math.round(L.veil.w * .5)); veil.height = Math.max(2, Math.round(L.veil.h * .5));   // soft mist: half resolution is plenty
   }
@@ -1101,15 +1111,14 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     if (!L.sw) return;
     var rise = REDUCE ? sstep(.5, .95, pS) : sstep(.12, .92, pS);
     L.lift = REDUCE ? 0 : Math.pow(seg(pS, .1, 1), 1.4) * L.h * .32;
-    var arrive = REDUCE ? 0 : 1 - sstep(.1, 2.2, t);
-    var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .26, pS);
+    var arrive = REDUCE ? 0 : 1 - sstep(.3, 2.8, t);
+    var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .24, pS);
     mouse.x += (mouse.tx - mouse.x) * .04; mouse.y += (mouse.ty - mouse.y) * .04;
     var k = L.pr, px = (FINE && !REDUCE ? -mouse.x * 4 : 0) * k, py = (FINE && !REDUCE ? -mouse.y * 2 : 0) * k + (REDUCE ? 0 : pS * 12 * k);
     // the title mists away: blur, fade and a slow drift up while the veil thickens over it
     var ty = -pS * 10 * L.cssH / 100;
+    if (REDUCE) copy.style.opacity = String(1 - away);
     copy.dataset.ty = ty;
-    copy.style.opacity = String(1 - away);
-    copy.style.filter = away > 0 ? 'blur(' + (away * 14).toFixed(1) + 'px)' : '';
     copy.style.transform = 'translateY(' + ty.toFixed(1) + 'px)';
     veil.style.transform = 'translateY(' + ty.toFixed(1) + 'px)';
     cue.style.opacity = String(seg(t, 2.4, 3.2) * (1 - sstep(.01, .06, pS)));
@@ -1134,7 +1143,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     if (glv) {
       glv.viewport(0, 0, veil.width, veil.height); glv.clearColor(0, 0, 0, 0); glv.clear(glv.COLOR_BUFFER_BIT);
       glv.uniform2f(UV.uRes, veil.width, veil.height); glv.uniform1f(UV.uT, REDUCE ? 0 : t);
-      glv.uniform1f(UV.uAmt, Math.max(arrive, away)); glv.uniform1f(UV.uIdle, REDUCE ? 0 : .3);
+      glv.uniform1f(UV.uAmt, Math.max(arrive, away)); glv.uniform1f(UV.uIdle, REDUCE ? 0 : .9);
       glv.uniform3f(UV.uCol, Math.min(1, BG[0] / 255 + .03), Math.min(1, BG[1] / 255 + .03), Math.min(1, BG[2] / 255 + .03));
       glv.drawArrays(glv.TRIANGLES, 0, 3);
     }
@@ -1147,7 +1156,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     var target = scrollP(); pS += (target - pS) * (REDUCE ? 1 : .12);
     draw(now());
     frames.push(dt); if (frames.length > 40) { var avg = frames.reduce(function (a, b) { return a + b; }) / frames.length; frames.length = 0;
-      if (avg > 26 && quality > .55) { quality *= .85; layout(); } }
+      if (avg > 26 && quality > .55) { quality *= .85; layout(); draw(now()); } }   // redraw at once: a resized canvas is blank until drawn
     var busy = !REDUCE || Math.abs(target - pS) > .001 || rings.length;
     if (onScreen && !document.hidden && busy) raf = requestAnimationFrame(loop);
   }
