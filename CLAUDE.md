@@ -200,7 +200,7 @@ The `<section class="more-articles">` block at the bottom of every post is gener
 
 ### Weekly blog routine
 
-A scheduled routine drafts one post a week following `.claude/skills/blog-publish/SKILL.md` (news roundup or an uncovered topic), runs `publish.js --no-git`, and opens a **draft PR** on `claude/blog-<slug>` with the sources and a hero image prompt. Nothing goes live until the user reviews and merges.
+A scheduled routine (Saturdays 8:45 am Pacific, a weekly-recap slot) drafts one post a week following `.claude/skills/blog-publish/SKILL.md`, switching the post type from the previous week (news, tips, fun facts, myth vs fact, case study, explainer…), runs `publish.js --no-git`, and opens a **draft PR** on `claude/blog-<slug>` with the sources and a hero image prompt. Nothing goes live until the user reviews and merges.
 
 ### Sitemap
 
@@ -208,16 +208,18 @@ A scheduled routine drafts one post a week following `.claude/skills/blog-publis
 
 ### Existing blog posts
 
+The `[type]` at the start of each Topic is the post type. The weekly routine rotates types (news, tips, fun facts, myth vs fact, case study, explainer, guide, comparison) and never repeats last week's.
+
 | File | Topic | Tag |
 |---|---|---|
-| `blog/how-to-get-b-corp-certified-bc.html` | BC-specific certification process | B Corp Basics |
-| `blog/how-long-does-b-corp-certification-take.html` | Timeline expectations | Process |
-| `blog/b-impact-assessment-explained.html` | BIA scoring breakdown | B Corp Basics |
-| `blog/b-corp-certification-changes-2026.html` | 2026 standard updates | B Corp Basics |
-| `blog/b-corp-vs-1-percent-for-the-planet.html` | Certification path comparison | Certifications |
-| `blog/b-lab-verification-process.html` | What B Lab verification involves | Process |
-| `blog/b-corp-decertified-companies.html` | Decertification case studies (BrewDog, Etsy, Havas, Dr. Bronner's) | B Corp Basics |
-| `blog/b-corp-news-fall-2026.html` | News roundup Jul–Oct 2026 (EU ECGT logo deadline, B Lab logo rules, L'OCCITANE on the new standards, Butterfield & Robinson) | B Corp Basics |
+| `blog/how-to-get-b-corp-certified-bc.html` | [guide] BC-specific certification process | B Corp Basics |
+| `blog/how-long-does-b-corp-certification-take.html` | [guide] Timeline expectations | Process |
+| `blog/b-impact-assessment-explained.html` | [explainer] BIA scoring breakdown | B Corp Basics |
+| `blog/b-corp-certification-changes-2026.html` | [explainer] 2026 standard updates | B Corp Basics |
+| `blog/b-corp-vs-1-percent-for-the-planet.html` | [comparison] Certification path comparison | Certifications |
+| `blog/b-lab-verification-process.html` | [explainer] What B Lab verification involves | Process |
+| `blog/b-corp-decertified-companies.html` | [case study] Decertification case studies (BrewDog, Etsy, Havas, Dr. Bronner's) | B Corp Basics |
+| `blog/b-corp-news-fall-2026.html` | [news] News roundup Jul–Oct 2026 (EU ECGT logo deadline, B Lab logo rules, L'OCCITANE on the new standards, Butterfield & Robinson) | B Corp Basics |
 
 ---
 

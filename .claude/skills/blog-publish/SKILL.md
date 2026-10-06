@@ -144,10 +144,14 @@ The newest post by JSON-LD `datePublished` becomes the big dark featured card at
 `blog/index.html`, and the previous one drops into the regular grid. Nothing to do by hand:
 `rebuildIndex()` handles it. To keep an older post on top, its date would have to be newer, so don't.
 
-## News posts (and the weekly routine)
+## Post types, news posts and the weekly routine
 
-The blog mixes evergreen guides with news. Every existing topic is listed in CLAUDE.md under
-"Existing blog posts"; don't write a second post on one of them. For a news post:
+Post types: `news` (recap of the last weeks/months), `tips` (practical, numbered where order
+matters), `fun facts` (surprising, sourced facts about B Corps), `myth vs fact`, `case study`
+(one company's story), `explainer`, `guide`, `comparison`. Every post in CLAUDE.md's "Existing
+blog posts" table starts its Topic with `[type]`; add it for new posts. The weekly routine picks
+a different type from the newest post's, and avoids any type used in the last three posts when
+it can. Don't write a second post on a topic that's already in the table. For a news post:
 
 1. Cover roughly the last three months of B Corp news that matters to a small business in BC:
    B Lab standards and rules, notable certifications/recertifications/decertifications (Canadian
