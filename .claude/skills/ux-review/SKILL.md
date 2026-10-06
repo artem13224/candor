@@ -199,22 +199,25 @@ These are single-evaluator findings: treat them as likely problems and confirm b
 | `--field` | 3.51 (large text only) | 3.81 (large text only) | 4.36 ✗ for small text |
 | `--sage` | 2.44 ✗ | 2.66 ✗ | 6.26 |
 | `--stone` | 1.46 ✗ | 1.59 ✗ | 10.47 |
+| `--muted` #68665D | 4.78 | 5.19 | — |
 
-**Open findings**
-- **1.4.3 failure, severity 3:** `--stone` text on `--paper` appears in every blog post's `.article-meta` (author, date, read time), `.article-img figcaption` (the required source and licence credit) and `.card-meta`, and in `404.html`. It measures about 1.6:1 on 10–11px text. Fix with `--body` or a new muted token that passes 4.5:1, and update `scripts/templates/post.html`.
-- **Borderline:** `--field` eyebrow labels on the dark assessment page measure 4.36:1 at 10px.
-- **Homepage loader, severity 2** (`index.html`, "PAGE LOAD ANIMATION"):
-  - It blocks scrolling for 2.6 s on the first visit of each session.
-  - It runs even with `prefers-reduced-motion`. Apple says to reduce automatic animation; this isn't a WCAG failure, because the animation is under 5 s and isn't triggered by interaction.
-  - It is skippable (click, tap, Esc), which is good.
-  - Craft bug: `dismiss` fires at 2600 ms, but the wordmark (2900 ms) and tagline (3350 ms) are scheduled after it, and the comment says "4300ms". Those two beats never show properly.
+**Fixed (Oct 2026)**
+- **Grey meta text (was a 1.4.3 failure, severity 3).** `--stone` text (about 1.6:1) in the blog `.article-meta`, `.card-meta`, figcaptions and `.timeline-label`, and in the `.article-meta` / `.policy-note` of the 404, privacy and terms pages, now uses the new `--muted` token. The post template `scripts/templates/post.html` was updated too.
+- **Small `--field` labels on the dark assessment page** (eyebrows, question number, verdict eyebrow at 3.90:1 on the verdict banner, metric labels, mobile-menu link) now use `--sage`: 6.26:1 on ink, 5.59:1 on the banner. The large headline `em` keeps `--field`, since large text needs only 3:1.
+- **Homepage loader** (`index.html`, "PAGE LOAD ANIMATION"):
+  - Every beat now lands by about 2.4 s, inside the 2.6 s dismiss. Before, the wordmark and tagline were scheduled after dismissal, left over from the 4.3 s → 2.6 s cut.
+  - It is skipped under `prefers-reduced-motion`, by both CSS and JS.
+  - It is hidden without JavaScript (a `<noscript>` style). Previously nothing could remove the full-screen overlay without JS.
+  - The tagline's opacity went from .45 to .5, raising its contrast from 4.19:1 to 4.89:1.
+  - It is still skippable (click, tap, Esc). Verified in Chromium in normal, reduced-motion and no-JS modes.
+- When adding beats to the loader, keep them before the dismiss time.
 
 **Checked and passing**
 - **Consent banner:** Accept and Decline are both one-click buttons of the same size; Esc declines; GPC is honoured; the default is denied. Decline is outlined and Accept filled, a mild asymmetry that is acceptable.
 - **Assessment email gate:** instructions are written above the field (3.3.2); it has `autocomplete="email"` (1.3.5) and an `aria-live` step announcer (4.1.3).
 - **Blog body links:** underlined, `--forest` (5.75:1 on paper).
 
-`--sage` and `--stone` are fine for decoration (the highlighter stroke, rules and borders that carry no meaning), but not for text on light backgrounds.
+Use `--muted` for small secondary text on light backgrounds. `--sage` and `--stone` are fine for decoration (the highlighter stroke, rules and borders that carry no meaning), but not for text on light backgrounds.
 
 ## 7. Learning path (from the HCI textbook's authors)
 

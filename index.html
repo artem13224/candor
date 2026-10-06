@@ -662,9 +662,10 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 #loader-inner{
   display:flex;flex-direction:column;align-items:center;
 }
+@media (prefers-reduced-motion: reduce){#loader{display:none}}
 #loader-mark-wrap{
   opacity:0;transform:scale(.91);
-  transition:opacity .6s ease,transform .6s ease;
+  transition:opacity .45s ease,transform .45s ease;
 }
 #loader-mark-wrap.mark-in{opacity:1;transform:scale(1)}
 #loader-mark{width:210px;height:auto;display:block;overflow:visible}
@@ -672,7 +673,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   font-family:var(--u);font-weight:800;font-size:50px;
   letter-spacing:-2.5px;color:#F5F3EE;
   opacity:0;transform:translateY(14px);
-  transition:opacity .7s ease,transform .7s ease;
+  transition:opacity .5s ease,transform .5s ease;
   margin-top:18px;line-height:1;
 }
 #loader-wordmark.wm-in{opacity:1;transform:translateY(0)}
@@ -680,10 +681,10 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   font-family:'Open Sans',sans-serif;font-weight:300;
   font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
   color:#F5F3EE;opacity:0;
-  transition:opacity .6s ease;
+  transition:opacity .4s ease;
   margin-top:10px;
 }
-#loader-tagline.tl-in{opacity:.45}
+#loader-tagline.tl-in{opacity:.5}
 @keyframes dotPop{
   0%{transform:scale(0);opacity:0}
   60%{transform:scale(1.4);opacity:1}
@@ -975,6 +976,8 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
+<!-- without JS nothing would dismiss the intro loader, so never show it -->
+<noscript><style>#loader{display:none}</style></noscript>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -2211,8 +2214,11 @@ document.querySelectorAll('.fq').forEach(item => {
   var loader    = document.getElementById('loader');
   if (!loader) return;
 
-  if (sessionStorage.getItem('loaderSeen')) {
+  /* skip on repeat visits this session, and for reduced motion (the CSS already hides it) */
+  if (sessionStorage.getItem('loaderSeen') ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     loader.style.display = 'none';
+    document.documentElement.style.background = '';
     return;
   }
   sessionStorage.setItem('loaderSeen', '1');
@@ -2257,58 +2263,61 @@ document.querySelectorAll('.fq').forEach(item => {
     r.style.strokeDashoffset = l;
   });
 
-  /* mark scale-in at 120ms */
-  setTimeout(function() { markWrap.classList.add('mark-in'); }, 120);
+  /* Every beat lands by ~2.4s so the whole sequence fits the 2.6s budget.
+     Keep it that way: anything scheduled after the dismiss never shows. */
 
-  /* ring 1 draws at 580ms over 1.1s */
+  /* 70ms: mark scales in */
+  setTimeout(function() { markWrap.classList.add('mark-in'); }, 70);
+
+  /* 350ms: ring 1 draws over .66s */
   setTimeout(function() {
-    ring1.style.transition = 'stroke-dashoffset 1.1s cubic-bezier(.37,0,.2,1)';
+    ring1.style.transition = 'stroke-dashoffset .66s cubic-bezier(.37,0,.2,1)';
     ring1.style.strokeDashoffset = '0';
-  }, 580);
+  }, 350);
 
-  /* 1120ms: ring1 dims, ring2 starts drawing */
+  /* 670ms: ring1 dims, ring2 draws over .57s */
   setTimeout(function() {
-    ring1.style.transition = 'stroke-dashoffset 1.1s cubic-bezier(.37,0,.2,1),opacity .3s ease';
+    ring1.style.transition = 'stroke-dashoffset .66s cubic-bezier(.37,0,.2,1),opacity .3s ease';
     ring1.style.opacity = '0.7';
-    ring2.style.transition = 'stroke-dashoffset .95s cubic-bezier(.37,0,.2,1)';
+    ring2.style.transition = 'stroke-dashoffset .57s cubic-bezier(.37,0,.2,1)';
     ring2.style.strokeDashoffset = '0';
-  }, 1120);
+  }, 670);
 
-  /* 1650ms: ring2 dims, ring3 starts drawing */
+  /* 990ms: ring2 dims, ring3 draws over .51s */
   setTimeout(function() {
-    ring2.style.transition = 'stroke-dashoffset .95s cubic-bezier(.37,0,.2,1),opacity .3s ease';
+    ring2.style.transition = 'stroke-dashoffset .57s cubic-bezier(.37,0,.2,1),opacity .3s ease';
     ring2.style.opacity = '0.75';
-    ring3.style.transition = 'stroke-dashoffset .85s cubic-bezier(.37,0,.2,1)';
+    ring3.style.transition = 'stroke-dashoffset .51s cubic-bezier(.37,0,.2,1)';
     ring3.style.strokeDashoffset = '0';
-  }, 1650);
+  }, 990);
 
-  /* 2300ms: all rings return to full opacity */
-  setTimeout(function() {
-    [ring1, ring2, ring3].forEach(function(r) {
-      r.style.transition = 'opacity .4s ease';
-      r.style.opacity = '1';
-    });
-  }, 2300);
-
-  /* 2280ms: dot pop */
+  /* 1370ms: dot pop */
   setTimeout(function() {
     dot.style.opacity = '1';
-    dot.style.animation = 'dotPop .55s cubic-bezier(.34,1.56,.64,1) forwards';
-  }, 2280);
+    dot.style.animation = 'dotPop .4s cubic-bezier(.34,1.56,.64,1) forwards';
+  }, 1370);
 
-  /* 2600ms: pulse ring */
+  /* 1380ms: all rings return to full opacity */
+  setTimeout(function() {
+    [ring1, ring2, ring3].forEach(function(r) {
+      r.style.transition = 'opacity .3s ease';
+      r.style.opacity = '1';
+    });
+  }, 1380);
+
+  /* 1560ms: pulse ring */
   setTimeout(function() {
     pulse.style.opacity = '1';
-    pulse.style.animation = 'ringPulse .9s ease-out forwards';
-  }, 2600);
+    pulse.style.animation = 'ringPulse .6s ease-out forwards';
+  }, 1560);
 
-  /* 2900ms: wordmark */
-  setTimeout(function() { wordmark.classList.add('wm-in'); }, 2900);
+  /* 1740ms: wordmark (in by ~2.24s) */
+  setTimeout(function() { wordmark.classList.add('wm-in'); }, 1740);
 
-  /* 3350ms: tagline */
-  setTimeout(function() { tagline.classList.add('tl-in'); }, 3350);
+  /* 2010ms: tagline (in by ~2.41s) */
+  setTimeout(function() { tagline.classList.add('tl-in'); }, 2010);
 
-  /* 4300ms: auto-dismiss */
+  /* 2600ms: auto-dismiss (.5s fade) */
   setTimeout(dismiss, 2600);
 })();
 

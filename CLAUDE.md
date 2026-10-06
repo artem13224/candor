@@ -238,7 +238,8 @@ All styles live in `<style>` blocks inside each HTML file. Never introduce an ex
 --oat: #ECEAE2;         /* alias for --bg */
 --paper: #F5F3EE;       /* cream/card background */
 --body: #4A5548;        /* body text dark gray */
---stone: #C8C3B5;       /* mid-tone neutral */
+--stone: #C8C3B5;       /* mid-tone neutral — rules/borders only, never text on light backgrounds */
+--muted: #68665D;       /* secondary text (meta lines, captions): 4.8:1 on --bg, 5.2:1 on --paper */
 --light: #E4E1D6;       /* light neutral */
 --u: "Urbanist", sans-serif;
 --mono: "Space Mono", monospace;
@@ -247,7 +248,7 @@ All styles live in `<style>` blocks inside each HTML file. Never introduce an ex
 --px: clamp(20px, 5vw, 80px);       /* responsive horizontal padding */
 ```
 
-Text contrast (WCAG 2.2 AA needs 4.5:1 for body text): `--sage` and `--stone` fail as text on `--bg`/`--paper` (2.4–2.7:1 and 1.5–1.6:1); `--field` passes only for large text. The full token contrast table, review checklist and evidence-graded UX principles are in `.claude/skills/ux-review/SKILL.md`; use it for any design critique or visual change.
+Text contrast (WCAG 2.2 AA needs 4.5:1 for body text): `--sage` and `--stone` fail as text on `--bg`/`--paper` (2.4–2.7:1 and 1.5–1.6:1), so small secondary text uses `--muted`; `--field` passes only for large text, and on the dark assessment page small labels use `--sage` (6.3:1 on `--ink`). The full token contrast table, review checklist and evidence-graded UX principles are in `.claude/skills/ux-review/SKILL.md`; use it for any design critique or visual change.
 
 ### Typography
 
