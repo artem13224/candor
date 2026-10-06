@@ -21,6 +21,14 @@ function loadPlaywright() {
   process.exit(2);
 }
 const { chromium } = loadPlaywright();
+function loadAxe() {
+  for (const t of [process.env.AXE_PATH, 'axe-core', path.join(__dirname, 'node_modules/axe-core')].filter(Boolean)) {
+    try { const m = require(t); if (m && m.source) return m.source; } catch (_) {}
+    try { const f = path.join(t, 'axe.min.js'); if (fs.existsSync(f)) return fs.readFileSync(f, 'utf8'); } catch (_) {}
+  }
+  return null;
+}
+const AXE = loadAxe();
 
 // ---------- args ----------
 const argv = process.argv.slice(2);
@@ -194,6 +202,26 @@ const PROBES = () => {
     customCursor: !!D.querySelector('[style*="cursor:none"],[style*="cursor: none"]') || [...D.styleSheets].some(sh => { try { return [...sh.cssRules].some(r => /cursor:\s*none/.test(r.cssText)); } catch (_) { return false; } }),
     autoplayVideo: [...D.querySelectorAll('video[autoplay]')].map(v => ({ muted: v.muted, loop: v.loop, controls: v.controls })),
     gifs: imgs.filter(i => /\.gif(\?|$)/i.test(i.src)).length };
+  // --- text collisions: visible text boxes that overlap other text (not ancestors)
+  const shown = e => { if (cumOpacity(e) < 0.1) return false;
+    for (let a = e; a && a !== D.body; a = a.parentElement) { const s = getComputedStyle(a);
+      if (s.position === 'fixed' || s.visibility === 'hidden' || /rect\(/.test(s.clip) || (s.clipPath !== 'none' && /inset\(50%|circle\(0/.test(s.clipPath))) return false;
+      const r = a.getBoundingClientRect(); if (s.overflow === 'hidden' && (r.width <= 2 || r.height <= 2)) return false; }
+    return true; };
+  const leaves = [...D.querySelectorAll('body *')].filter(e => vis(e) && [...e.childNodes].some(c => c.nodeType === 3 && c.nodeValue.trim().length > 1) && shown(e)).slice(0, 2500);
+  const boxes = leaves.map(e => { const rg = D.createRange(); rg.selectNodeContents(e); const r = rg.getBoundingClientRect();
+    return { e, x: r.left, y: r.top + scrollY, w: r.width, h: r.height }; }).filter(b => b.w > 4 && b.h > 4).sort((a, b) => a.y - b.y);
+  const hits = [];
+  for (let i = 0; i < boxes.length && hits.length < 12; i++) for (let j = i + 1; j < boxes.length && boxes[j].y < boxes[i].y + boxes[i].h; j++) {
+    const a = boxes[i], b = boxes[j]; if (a.e.contains(b.e) || b.e.contains(a.e)) continue;
+    const ow = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x), oh = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+    if (ow > 3 && oh > 3 && ow * oh > 40) hits.push(`"${a.e.textContent.trim().slice(0, 24)}" (${sel(a.e)}) × "${b.e.textContent.trim().slice(0, 24)}" (${sel(b.e)}) ${Math.round(ow)}×${Math.round(oh)}px`); }
+  out.collisions = hits;
+  // --- CSS integrity: unbalanced braces in inline <style> (one stray brace silently drops later rules)
+  out.cssIntegrity = [...D.querySelectorAll('style')].map((st, k) => { const t = st.textContent.replace(/\/\*[\s\S]*?\*\//g, '').replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g, '""');
+    let d = 0, neg = -1; for (let i = 0; i < t.length; i++) { if (t[i] === '{') d++; else if (t[i] === '}') { d--; if (d < 0 && neg < 0) { neg = i; d = 0; } } }
+    if (d === 0 && neg < 0) return null; const at = neg >= 0 ? neg : t.length;
+    return `<style> #${k + 1}: ${neg >= 0 ? 'stray "}"' : d + ' unclosed "{"'} near "${t.slice(Math.max(0, at - 60), at + 10).replace(/\s+/g, ' ').trim()}"`; }).filter(Boolean);
   return out;
 };
 
@@ -262,7 +290,7 @@ async function auditPage(browser, url) {
     const steps = Math.min(SHOTS, Math.ceil(H / vp.height)); const scrollAnimList = []; const shots = [];
     for (let i = 0; i < steps; i++) {
       const y = Math.round(i * (H - vp.height) / Math.max(1, steps - 1));
-      await p.evaluate(y => window.scrollTo(0, y), y); await wait(700);
+      await p.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), y); await wait(700);
       scrollAnimList.push(...(await p.evaluate(ANIMS).catch(() => [])).filter(isMotion));
       const f = `shots/${id}-${vp.name}-${String(i + 1).padStart(2, '0')}.png`; await p.screenshot({ path: path.join(OUT, f) }); shots.push(f);
     }
@@ -274,8 +302,23 @@ async function auditPage(browser, url) {
         fonts: res.filter(r => /\.(woff2?|ttf|otf)(\?|$)/.test(r.name) || /fonts\.g/.test(r.name)).length,
         thirdParty: [...new Set(res.map(r => { try { return new URL(r.name).host; } catch (_) { return ''; } }).filter(h => h && h !== location.host))].slice(0, 15) }; });
     V.consoleErrors = consoleErrs.slice(0, 10); V.failedRequests = failed.slice(0, 10);
-    await p.evaluate(() => window.scrollTo(0, 0)); await wait(300);
+    await p.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' })); await wait(300);
 
+    if (vp.name === 'desktop' && AXE) {
+      V.axe = await p.evaluate(async src => { eval(src); const r = await axe.run(document, { resultTypes: ['violations'] });
+        return r.violations.map(v => ({ id: v.id, impact: v.impact, n: v.nodes.length, help: v.help, sample: v.nodes.slice(0, 2).map(x => x.target.join(' ')) })); }, AXE).catch(e => [{ id: 'axe-error', impact: 'n/a', n: 0, help: e.message.slice(0, 80) }]);
+    }
+    if (vp.name === 'desktop') {
+      // back-button scroll restoration: scroll halfway, follow a same-origin link, go back
+      V.backRestore = await (async () => { try {
+        const half = await p.evaluate(() => { const y = Math.round(document.documentElement.scrollHeight / 2); window.scrollTo({ top: y, behavior: 'instant' }); return window.scrollY; });
+        const href = await p.evaluate(() => { const a = [...document.querySelectorAll('a[href]')].find(a => a.origin === location.origin && !a.hash && a.pathname !== location.pathname && !/\.(pdf|zip|jpe?g|png)$/i.test(a.pathname)); return a && a.href; });
+        if (!href || half < 200) return null;
+        await p.goto(href, { waitUntil: 'domcontentloaded', timeout: 30000 }); await wait(600); await p.goBack({ waitUntil: 'domcontentloaded', timeout: 30000 }); await wait(1200);
+        const back = await p.evaluate(() => window.scrollY); await p.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' })); await wait(300);
+        return { leftAt: half, cameBackAt: back, restored: Math.abs(back - half) < 120, via: href };
+      } catch (e) { return { error: e.message.split('\n')[0] }; } })();
+    }
     if (vp.name === 'desktop') {
       // keyboard pass: focus visibility, obscuring, traps
       const keys = []; let last = null, repeat = 0;
@@ -317,7 +360,7 @@ async function auditPage(browser, url) {
     const t = []; for (const at of [300, 2500, 6000]) { await wait(at - (t.length ? [300, 2500, 6000][t.length - 1] : 0)); t.push(await p.evaluate(ANIMS).catch(() => [])); }
     const ov = await p.evaluate(CENTRE).catch(() => null);
     const H = await p.evaluate(() => document.documentElement.scrollHeight); const sc = [];
-    for (let i = 1; i <= 4; i++) { await p.evaluate(y => window.scrollTo(0, y), Math.round(i * H / 5)); await wait(500); sc.push(...(await p.evaluate(ANIMS)).filter(isMotion)); }
+    for (let i = 1; i <= 4; i++) { await p.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), Math.round(i * H / 5)); await wait(500); sc.push(...(await p.evaluate(ANIMS)).filter(isMotion)); }
     R.reducedMotion = { runningAt: `300ms:${t[0].length} 2500ms:${t[1].length} 6000ms:${t[2].length}`, overlayAt6s: ov,
       stillAnimating: group([...new Map(t.flat().filter(a => a.dur > 0 && isMotion(a)).map(a => [a.target + a.name + a.dur, a])).values()]).slice(0, 12),
       scrollAnimsStillOn: group([...new Map(sc.map(a => [a.target + a.name + a.dur, a])).values()]).slice(0, 12) };
@@ -361,6 +404,12 @@ function digest(all) {
     flag(N.placeholderOnlyFields.length, `Placeholder used as label: ${N.placeholderOnlyFields.join(', ')} (3.3.2)`);
     flag(N.missingAutocomplete.length, `Personal-data fields without autocomplete: ${N.missingAutocomplete.join(', ')} (1.3.5)`);
     flag(N.iframesNoTitle, `${N.iframesNoTitle} iframe(s) without title`);
+    if (d.axe) { const ax = d.axe.filter(v => v.impact === 'critical' || v.impact === 'serious');
+      L.push(`- axe-core: ${d.axe.length} rule violations (${ax.length} serious/critical)${d.axe.length ? ': ' + d.axe.slice(0, 8).map(v => `${v.id}[${v.impact}]×${v.n}`).join(', ') : ''}`); }
+    else L.push('- axe-core not installed (npm i axe-core, or set AXE_PATH) — rule-based checks skipped');
+    for (const [vpn, V] of [['mobile', m], ['tablet', R.viewports.tablet], ['desktop', d]]) flag(V && V.probes.collisions.length, `Text collisions (${vpn}): ${V && V.probes.collisions.slice(0, 5).join(' | ')}`);
+    flag(P.cssIntegrity.length, `CSS syntax: ${P.cssIntegrity.join(' | ')} (later rules may be silently dropped)`);
+    flag(d.backRestore && d.backRestore.restored === false, `Back button loses scroll position: left at ${d.backRestore && d.backRestore.leftAt}px, returned at ${d.backRestore && d.backRestore.cameBackAt}px`);
     for (const [vpn, V] of [['desktop', d], ['mobile', m]]) for (const f of V.probes.contrast.failures.slice(0, vpn === 'desktop' ? 12 : 6))
       L.push(`- Contrast ${f.ratio}:1 < ${f.need} (${vpn}) ${f.pair} ×${f.count} — ${f.sample.join(' | ')}`);
     flag(d.probes.contrast.overImageUnverified, `${d.probes.contrast.overImageUnverified} text elements over images: contrast unverified, check screenshots`);

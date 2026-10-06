@@ -20,7 +20,7 @@ Do the audit the way a senior design auditor would: **measure everything a brows
 node <skill-dir>/scripts/collect.js <url> --pages /,/pricing,/contact --out ux-audit-<host> [--shots 6]
 ```
 
-- It needs Playwright and Chromium (`npm i -D playwright && npx playwright install chromium` if missing; set `CHROMIUM_PATH` or `PLAYWRIGHT_PATH` for preinstalled copies). It routes through `HTTPS_PROXY` automatically, except for localhost.
+- It needs Playwright and Chromium (`npm i -D playwright && npx playwright install chromium` if missing; set `CHROMIUM_PATH` or `PLAYWRIGHT_PATH` for preinstalled copies). Install axe-core too (`npm i axe-core`, or point `AXE_PATH` at a copy) so rule-based accessibility checks run; without it the digest says so. It routes through `HTTPS_PROXY` automatically, except for localhost.
 - It takes about 45 s per page.
 - **What it does:**
   - Renders each page at 375, 768 and 1440 px.
@@ -32,6 +32,10 @@ node <skill-dir>/scripts/collect.js <url> --pages /,/pricing,/contact --out ux-a
   - Checks reflow at 320 px and the text-spacing override.
   - Computes contrast for every text node against its real background.
   - Measures target sizes, headings, landmarks, names, alt text, autocomplete, the type, colour and motion system histograms, images, Core Web Vitals, console errors and third parties.
+  - Runs axe-core (if installed).
+  - Detects **text collisions** (text overlapping other text, per viewport).
+  - Detects **CSS syntax breaks**: a stray `}` silently drops every rule after it.
+  - Checks whether the **Back button restores scroll position**.
 - **Read `digest.md` first.** It's compact; `report.json` has everything.
 - **Then look at every screenshot** in `shots/` (Read them as images), mobile first. Most real problems are visual, and the digest can't see them.
 - If Playwright can't run, fall back to fetching the HTML and reviewing statically, and state the reduced coverage in the Coverage line.
@@ -55,7 +59,10 @@ Read the reference file for each pass as you do it; don't load them all up front
 - submit forms empty and invalid;
 - hover and press states on the primary CTA;
 - capture motion frames, a `page.screenshot` every ~100 ms through an entrance or transition;
-- click during an animation (can input interrupt it?).
+- click during an animation (can input interrupt it?);
+- **search**, if there is one: test a typo ("fits law"), a synonym and a body-text term, and check whether the results help;
+- **claims:** check that numbers, dates and promises agree across the site (home vs blog vs pricing vs terms). Contradictions with the site's own content are high-value findings;
+- **look for collisions** in every mobile screenshot: text on text, text under fixed bars or banners, clipped labels.
 
 **Severity** (NN/g 0–4), from frequency × impact × persistence:
 - **4** blocks a task or a user group;
@@ -69,7 +76,9 @@ Skip 0s.
 
 ## 4. Report: short, dense, ranked
 
-Use exactly this structure. Tables over prose; no paragraph longer than two lines; table cells ≤15 words; no methodology essay. Collapse repeats ("×14 instances") rather than listing them. Cap the main table at 20 rows. If there are more, say "+N minor in report.json".
+**Budget: 450–700 words in chat. Count before sending (`wc -w audit.md`) and cut until it fits.** Brevity is the deliverable. Detail lives in the evidence folder, not the chat. Cutting order: merge findings that share one fix → drop severity-1 rows to "+N minor" → shorten cells → trim Motion to 6 lines. Never cut evidence references or numbers.
+
+Use exactly this structure. Tables over prose; no paragraph longer than two lines; table cells ≤15 words; no methodology essay. Collapse repeats ("×14 instances") rather than listing them. Cap the main table at 15 rows. If there are more, say "+N minor in `audit-full.md`" and write those rows there. Motion section: at most 6 lines. Works well: at most 3 bullets.
 
 ```
 # UX audit · <site> · <YYYY-MM-DD>
@@ -118,4 +127,4 @@ _Expert prediction by one evaluator; confirm the top issues with 5 real users._
 
 **Fixes are specific:** name the value ("#64625A, 5.1:1", "250 ms ease-out", "44×44 hit area"), not "improve contrast" or "make it smoother".
 
-Write the report in chat. Also save it as `<out-dir>/audit.md` so the evidence folder is self-contained.
+Write the report in chat. Also save it as `<out-dir>/audit.md` so the evidence folder is self-contained. If minor findings were cut for length, put them in `<out-dir>/audit-full.md`.
