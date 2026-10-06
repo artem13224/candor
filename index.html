@@ -31,6 +31,10 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
   .skip-link{position:absolute;left:16px;top:-80px;z-index:1000;padding:10px 16px;background:#0D1610;color:#F5F3EE;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;text-decoration:none;transition:top .2s}
   .skip-link:focus{top:12px;outline-color:#F5F3EE}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  /* custom dot cursor: text fields keep the real I-beam, and a light ring keeps the dot visible on dark sections */
+  @media (pointer:fine){input:not([type=checkbox]):not([type=radio]),textarea{cursor:text!important}#cur{box-shadow:0 0 0 1.5px rgba(245,243,238,.85)}}
+  /* the logo link gets a 44px-tall hit area without moving the nav */
+  .nav-logo{padding-block:11px;margin-block:-11px}
 </style>
 <!-- candor-a11y:end -->
 <!-- Google Tag Manager -->
@@ -360,23 +364,24 @@ body{background:#ECEAE2;color:#0E110D;font-family:'Open Sans',-apple-system,sans
 #services .svc-item{border-bottom-color:rgba(245,243,238,.12)}
 #services .svc-name{color:var(--white)}
 #services .svc-item:hover .svc-name{color:var(--green2)}
-#services .svc-num{color:rgba(245,243,238,.35)}
+#services .svc-num{color:rgba(245,243,238,.62)}
 #services .svc-price{color:var(--green2)}
-#services .svc-dur{color:rgba(245,243,238,.4)}
+#services .svc-dur{color:rgba(245,243,238,.62)}
 #services .svc-tog{border-color:rgba(245,243,238,.2)}
 #services .svc-tog::before,#services .svc-tog::after{background:var(--white)}
 #services .svc-item.open .svc-tog{background:var(--white);border-color:var(--white)}
 #services .svc-item.open .svc-tog::before,#services .svc-item.open .svc-tog::after{background:#0E110D}
 #services .svc-desc{color:rgba(245,243,238,.6)}
 #services .svc-feats{border-top-color:rgba(245,243,238,.08)}
-#services .svc-feat{color:rgba(245,243,238,.55);border-color:rgba(245,243,238,.14)}
+#services .svc-feat{color:rgba(245,243,238,.68);border-color:rgba(245,243,238,.14)}
 #services .body-p{color:rgba(245,243,238,.65)}
 
 /* ═══════════════════════════════════════════
    MODAL (both mobile + desktop)
    ═══════════════════════════════════════════ */
-.crd-modal{position:fixed;inset:0;z-index:800;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;opacity:0;transition:opacity .35s ease}
-.crd-modal.open{opacity:1;pointer-events:auto}
+/* visibility (delayed until the fade ends) takes the closed modal out of the tab order and the accessibility tree */
+.crd-modal{position:fixed;inset:0;z-index:800;display:flex;align-items:flex-end;justify-content:center;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s}
+.crd-modal.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .35s ease}
 .crd-modal-backdrop{position:absolute;inset:0;background:rgba(14,17,13,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .crd-modal-box{
   position:relative;z-index:1;
@@ -452,8 +457,8 @@ h2.about-name::after{content:'';display:block;height:2px;background:var(--green2
 .dark-zone .sec-dk{background:transparent;position:relative;z-index:2}
 
 /* STATS */
-.stats-g{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:52px;border:1px solid rgba(245,243,238,.1)}
-.stat-c{padding:36px 24px;border-right:1px solid rgba(245,243,238,.1);border-bottom:1px solid rgba(245,243,238,.1)}
+.stats-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:52px;border:1px solid rgba(245,243,238,.1)}
+.stat-c{padding:36px clamp(14px,5vw,24px);overflow-wrap:anywhere;border-right:1px solid rgba(245,243,238,.1);border-bottom:1px solid rgba(245,243,238,.1)}
 .stat-c:nth-child(2n){border-right:none}
 .stat-c:nth-last-child(-n+2){border-bottom:none}
 .st-n{font-family:var(--u);font-weight:800;font-size:clamp(48px,6.5vw,84px);line-height:.9;letter-spacing:-.03em;color:var(--white);margin-bottom:10px}
@@ -668,7 +673,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .cert-nudge{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 800ms var(--ease);pointer-events:none;z-index:2}
 .cert-nudge.show{opacity:1}
 .cert-nudge-lbl{font-family:var(--u);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(14,17,13,.38)}
-.cert-nudge-chev{width:12px;height:12px;border-right:1.5px solid rgba(14,17,13,.28);border-bottom:1.5px solid rgba(14,17,13,.28);transform:rotate(45deg);animation:nudge-bob 1.6s ease-in-out infinite}
+.cert-nudge-chev{width:12px;height:12px;border-right:1.5px solid rgba(14,17,13,.28);border-bottom:1.5px solid rgba(14,17,13,.28);transform:rotate(45deg);animation:nudge-bob 1.6s ease-in-out 3}
 @keyframes nudge-bob{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(6px)}}
 @media(max-width:899px){.cert-nudge{display:none}}
 
@@ -825,7 +830,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 #mob-nav.mob-open .mob-item:nth-child(7){transition-delay:210ms}  /* Assessment */
 /* Dial pill */
 #mob-dial{
-  position:absolute;left:50%;top:min(85%, calc(100% - var(--cc-h, 0px) - 30px));
+  position:absolute;left:50%;top:85%;
   transform:translate(-50%,-50%);
   pointer-events:auto;
   background:rgba(245,243,238,.94);
@@ -837,9 +842,11 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   box-shadow:0 4px 28px -8px rgba(14,17,13,.32);
   z-index:2;
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  transition:background .35s,border-color .35s,box-shadow .35s,transform .4s var(--ease),top .35s var(--ease);
+  transition:background .35s,border-color .35s,box-shadow .35s,transform .4s var(--ease),opacity .3s,visibility 0s;
   white-space:nowrap;
 }
+/* the pill steps aside while the cookie banner is open, so the two never stack over the hero buttons */
+html.cc-open #mob-dial{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s,visibility 0s linear .3s}
 #mob-dial:active{transform:translate(-50%,-50%) scale(.93)}
 #mob-nav.mob-open #mob-dial{
   background:rgba(14,17,13,.9);
@@ -879,7 +886,19 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
 <!-- without JS nothing would dismiss the intro loader, so never show it -->
-<noscript><style>#loader{display:none}</style></noscript>
+<noscript><style>#loader{display:none}
+/* no JS: the Why-now acts stack as a plain list and the certification panel shows its final state */
+#why-now{min-height:0;padding-bottom:40px}
+.why-sticky{position:static;height:auto;overflow:visible}
+.why-dotsbar{display:none}
+.why-stage{overflow:visible}
+.why-act,#why-now .why-act[data-act="0"] .why-tx,#why-now .why-act[data-act="0"] .why-vis{position:relative;inset:auto;opacity:1;transform:none;pointer-events:auto}
+.why-act{padding:0 0 56px}
+.why-tx{padding:0 var(--px) 22px}
+.why-vis{max-height:40vh}
+.cert-ey,.cert-h,.cert-ring-svg,.cert-desc,.cert-fee-item,.cert-tags,.cert-card{opacity:1;transform:none}
+.cert-wrap{height:auto}.cert-section{position:relative;height:auto}
+</style></noscript>
 <style>/* who-land:css:start */
 /* Base = the static layout (no JS, reduced motion). .wl-js turns on the pinned timeline. */
 .wl{position:relative;background:#ECEAE2;overflow-x:clip;scroll-margin-top:0}
@@ -892,11 +911,14 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .wl-js .wl-line{bottom:auto;height:var(--lnh,100%)}
 .wl-line i{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(90,166,114,0),rgba(90,166,114,.75) 6%,rgba(90,166,114,.75) 70%,rgba(90,166,114,0));transform-origin:50% 0}
 .wl-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:clamp(10px,2.2vh,28px)}
-@media (min-width:768px){.wl-list{gap:0}.wl-item+.wl-item{margin-top:clamp(-24px,-2.2vh,-10px)}}
+@media (min-width:768px){.wl-list{gap:0}.wl-item+.wl-item{margin-top:clamp(-24px,-2.2vh,-10px)}
+  /* right-hand one-liners stop short of the tall right peak, so they always sit on plain background */
+  .wl-item.r .wl-text{max-width:29ch}}
 /* a faint paper edge keeps the text legible where it crosses the peaks (kept tight so it never washes over the line above) */
 .wl-name,.wl-text{text-shadow:0 0 2px #ECEAE2,0 0 6px rgba(236,234,226,.7)}
 .wl-name{position:relative;z-index:1}
-/* drifting fog over each industry, feathered on every side so it never shows an edge; it lifts on hover / tap */
+/* drifting fog over each industry name (the one-liner sits above it so it always reads at full contrast), feathered on
+   every side so it never shows an edge; it lifts on hover / focus, clears on its own on touch screens, and settles once revealed */
 .wl-btn::after{content:'';position:absolute;inset:-24px -44px;z-index:2;pointer-events:none;
   background:radial-gradient(closest-side at 50% 50%,rgba(236,234,226,.31),rgba(236,234,226,.2) 50%,rgba(236,234,226,0)),radial-gradient(closest-side at 30% 42%,rgba(236,234,226,.16),rgba(236,234,226,0)),radial-gradient(closest-side at 72% 58%,rgba(236,234,226,.14),rgba(236,234,226,0));
   animation:wlFog 17s ease-in-out infinite alternate;transition:opacity .7s var(--ease)}
@@ -919,7 +941,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .wl-item.l .wl-mark{right:-7px}
 .wl-item.r .wl-mark{left:-7px}
 .wl-mark svg{display:block;width:100%;height:100%;fill:currentColor}
-.wl-text{display:block;font-family:var(--o);font-weight:300;font-size:14px;line-height:1.55;color:var(--ink4);max-width:34ch}
+.wl-text{position:relative;z-index:3;display:block;font-family:var(--o);font-weight:400;font-size:14px;line-height:1.55;color:var(--ink3);max-width:34ch}
 .wl-item.l .wl-text{margin-left:auto}
 .wl-go{display:inline-block;margin-left:7px;font-size:.7em;font-weight:600;color:#2D6B42;opacity:.55;transform:translateY(-.15em);transition:opacity .3s,transform .3s var(--ease)}
 .wl-btn:hover .wl-go{opacity:1;transform:translate(2px,-.3em)}
@@ -959,6 +981,8 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .wl-js .wl-item.on .wl-rule{transform:scaleX(1)}
 .wl-js .wl-item.on .wl-mark{transform:scale(1) rotate(0deg)}
 .wl-js .wl-item:not(.on) .wl-btn::after{opacity:0}
+.wl-item.settled .wl-btn::after,.wl-off .wl-btn::after,.wl-off .wl-mist i{animation-play-state:paused}
+@media (hover:none){.wl-js .wl-item.on .wl-btn::after{opacity:0}}
 
 /* ── Phones: line on the left, everything to its right ── */
 @media (max-width:767px){
@@ -985,7 +1009,8 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
   .wl-land{margin-left:-45%;margin-right:-45%;margin-top:-12vw}
   .wl-js .wl-land{left:-45%;right:-45%;margin:0}
 }
-@media (prefers-reduced-motion:reduce){.wl-mist i,.wl-btn::after{animation:none}}
+/* .wl prefix: must outrank the .wl-mist-a/-b i:nth-child() drift rules above */
+@media (prefers-reduced-motion:reduce){.wl .wl-mist i:nth-child(n),.wl .wl-btn::after{animation:none}}
 /* who-land:css:end */</style>
 </head>
 <body>
@@ -1575,9 +1600,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   .cf-col a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(124,192,143,.7)}
   .cf-bot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:clamp(48px,6vw,80px);padding-top:22px;border-top:1px solid rgba(245,243,238,.08);font-size:12.5px;color:rgba(245,243,238,.5)}
   .cf-legal{display:flex;flex-wrap:wrap;gap:6px 22px}
-  .cf-legal a{color:rgba(245,243,238,.6);text-decoration:none}
+  .cf-legal a{display:inline-block;padding:4px 0;color:rgba(245,243,238,.6);text-decoration:none}
   .cf-legal a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:3px}
-  .cf-disc{margin:16px 0 0;max-width:none;font-size:11.5px;line-height:1.65;color:rgba(245,243,238,.36)}
+  .cf-disc{margin:16px 0 0;max-width:none;font-size:11.5px;line-height:1.65;color:rgba(245,243,238,.55)}
+  /* the faint wordmark is drawn from a pseudo-element: pure decoration, so it is not text to contrast checkers or AT */
+  .cf-mark::before{content:attr(data-word)}
   .cf-mark{position:relative;z-index:0;display:block;margin:clamp(28px,4vw,48px) auto -.18em;max-width:1200px;font:800 clamp(64px,17vw,220px)/.8 'Urbanist',system-ui,sans-serif;letter-spacing:-.05em;color:rgba(245,243,238,.035);user-select:none;pointer-events:none;white-space:nowrap}
   @media (max-width:820px){
     .cf-top{grid-template-columns:1fr;gap:44px}
@@ -1616,6 +1643,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   .cf-x:hover{background:#E4E1D6}
   .cf-err{display:none;margin:0 0 14px;font:400 13px/1.5 'Open Sans',system-ui,sans-serif;color:#8A3B2E}
   .cf-dlg.is-err .cf-err{display:block}
+  .cf-err a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   .cf-done{display:none}
   .cf-dlg.is-done form{display:none}
   .cf-dlg.is-done .cf-done{display:block}
@@ -1664,7 +1692,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <p class="cf-disc">Candor provides independent B Corp and sustainability certification advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
   </div>
-  <span class="cf-mark" aria-hidden="true">Candor</span>
+  <span class="cf-mark" aria-hidden="true" data-word="Candor"></span>
 </footer>
 <dialog class="cf-dlg" id="cf-contact" aria-labelledby="cf-contact-title">
   <button class="cf-x" type="button" aria-label="Close" data-contact-close>×</button>
@@ -1693,6 +1721,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </dialog>
 <script>
 (function () {
+  // on the assessment itself, the footer's "Free readiness score" button would only link back to this page
+  if (location.pathname === '/assessment/' || location.pathname === '/assessment') { var self = document.querySelector('.cf-btn-s[href="/assessment/"]'); if (self) self.remove(); }
   var dlg = document.getElementById('cf-contact');
   if (!dlg || typeof dlg.showModal !== 'function') return;          // very old browsers keep the mailto link
   var form = dlg.querySelector('form'), btn = form.querySelector('[type=submit]');
@@ -1776,21 +1806,36 @@ function openModal(card) {
   modalName.textContent = card.name;
   modalDesc.textContent = card.text;
   modalDetail.textContent = card.detail;
+  modalOpener = document.activeElement;
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
   setTimeout(() => { document.getElementById('modalClose').focus(); }, 50);
 }
+let modalOpener = null;
 
 window.candorOpenCard = function (i) { if (CARDS[i]) openModal(CARDS[i]); };
 
 window.closeModal = function() {
+  if (!modal.classList.contains('open')) return;
   modal.classList.remove('open');
   document.body.style.overflow = '';
+  // hand focus back to the industry that opened it
+  if (modalOpener && modalOpener.focus && document.contains(modalOpener)) modalOpener.focus({ preventScroll: true });
+  modalOpener = null;
 };
 
 document.getElementById('modalBackdrop').addEventListener('click', closeModal);
 document.getElementById('modalClose').addEventListener('click', closeModal);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (!modal.classList.contains('open')) return;
+  if (e.key === 'Escape') { closeModal(); return; }
+  // keep Tab inside the open modal
+  if (e.key === 'Tab') {
+    const f = [...modal.querySelectorAll('button, a[href]')], first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
 
 /* ══════════════════════════════════════════
    CONSOLIDATED SCROLL HANDLER
@@ -3076,6 +3121,8 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
   @media (prefers-reduced-motion: reduce){.cc-banner{transition:none;transform:none}}
   @media (max-width:639px){.cc-banner{left:12px;right:12px;bottom:12px;padding:12px 14px;font-size:13px;line-height:1.45}.cc-title{display:inline;margin:0 6px 0 0;font-size:10px}.cc-desc{display:inline}.cc-actions{margin-top:10px;flex-wrap:nowrap}.cc-btn{flex:1;padding:12px 8px}}
   @media (min-width:640px){.cc-banner{left:24px;bottom:24px;right:auto}}
+  /* while the banner is open, keyboard focus scrolls clear of it instead of landing underneath */
+  html.cc-open{scroll-padding-bottom:var(--cc-h,0px)}
 </style>
 <script>
 (function () {
@@ -3090,13 +3137,21 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
     window.dataLayer.push({ event: 'candor_consent', consent_state: v });
   }
   /* --cc-h lets fixed page UI (e.g. the mobile nav pill) sit above the banner while it is open */
-  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); document.documentElement.style.setProperty('--cc-h', (banner.offsetHeight + 16) + 'px'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
-  function hide(){ banner.classList.remove('cc-in'); document.documentElement.style.removeProperty('--cc-h'); setTimeout(function(){ banner.hidden = true; }, 300); }
+  /* the banner never takes focus on its own: Accept and Decline stay equal, and keyboard users start at the skip link */
+  var root = document.documentElement;
+  function show(){ banner.hidden = false; root.classList.add('cc-open'); requestAnimationFrame(function(){ banner.classList.add('cc-in'); root.style.setProperty('--cc-h', (banner.offsetHeight + 16) + 'px'); }); }
+  function hide(){ banner.classList.remove('cc-in'); root.classList.remove('cc-open'); root.style.removeProperty('--cc-h'); setTimeout(function(){ banner.hidden = true; }, 300); }
   banner.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cc]'); if (!b) return;
     var v = b.getAttribute('data-cc'); write(v); apply(v); hide();
   });
   banner.addEventListener('keydown', function (e) { if (e.key === 'Escape') { write('denied'); apply('denied'); hide(); } });
+  // keyboard focus that lands under the open banner is scrolled clear of it (scroll-padding alone skips elements already on screen)
+  document.addEventListener('focusin', function (e) {
+    if (banner.hidden || banner.contains(e.target) || e.target === document.body) return;
+    var a = e.target.getBoundingClientRect(), b = banner.getBoundingClientRect();
+    if (a.bottom > b.top - 8 && a.top < b.bottom && a.right > b.left && a.left < b.right) window.scrollBy({ top: a.bottom - b.top + 16, behavior: 'instant' });
+  });
   document.addEventListener('click', function (e) {
     var a = e.target.closest('[data-consent-open]'); if (!a) return;
     e.preventDefault(); show();
@@ -3135,7 +3190,7 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
     phone = innerWidth < 768;
     var vh = stage.offsetHeight, wt = head.offsetTop + head.offsetHeight + (phone ? 22 : 34);
     // two locked phases: the industries appear (P1), then the mountains slide up over them (P2)
-    sec.style.setProperty('--pin', (P1 = phone ? 160 : 140) + (P2 = 90) + 'svh');
+    sec.style.setProperty('--pin', (P1 = phone ? 130 : 110) + (P2 = 70) + 'svh');
     // phones: make the picture at least a screen tall so it can cover the text (centred crop)
     if (phone) { var w = Math.max(innerWidth * 1.8, innerHeight * 1.5); land.style.left = land.style.right = ((innerWidth - w) / 2) + 'px'; }
     else land.style.left = land.style.right = '';
@@ -3184,7 +3239,7 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
     var p = pin > 0 ? clamp(-r.top / pin) : 0;                 // progress through the whole locked stretch
     var f1 = P1 / (P1 + P2), p1 = clamp(p / f1), p2 = clamp((p - f1) / (1 - f1));
     var a = clamp(1 - r.top / vh);                             // approach: 0 when the section's top is at the bottom of the screen
-    var line = sstep(.02, .9, p1);
+    var line = sstep(0, .86, p1);
     sec.style.setProperty('--ln', line.toFixed(4));
     // the landscape rises in from below as the section arrives
     var rise = sstep(.35, 1, a);
@@ -3196,11 +3251,18 @@ document.querySelectorAll('.btn, .nav-cta').forEach(function(el) {
          o = (1 - gone).toFixed(3), ty = 'translate3d(0,' + (-gone * vh * .06).toFixed(1) + 'px,0)';
     head.style.opacity = wrap.style.opacity = o; head.style.transform = ty; wrap.style.transform = ty;
     // each branch sprouts the moment the trunk's tip reaches its joint (ys = joint position along the trunk, 0-1)
-    items.forEach(function (it, i) { it.classList.toggle('on', line >= ys[i] + .012); });
+    items.forEach(function (it, i) {
+      var on = line >= ys[i] + .012;
+      it.classList.toggle('on', on);
+      // the fog drifts while a branch arrives, then holds still
+      if (on && !it._st) it._st = setTimeout(function () { it.classList.add('settled'); }, 4000);
+    });
   }
   function kick() { if (!raf) raf = requestAnimationFrame(frame); }
   addEventListener('scroll', kick, { passive: true });
   addEventListener('resize', function () { requestAnimationFrame(layout); });
+  // no ambient drift while the section is off screen
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { sec.classList.toggle('wl-off', !e[0].isIntersecting); }).observe(sec);
   var img = land.querySelector('img');
   if (img.complete) layout(); else { img.addEventListener('load', layout); layout(); }
 })();

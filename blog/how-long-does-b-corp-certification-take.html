@@ -30,6 +30,10 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
   .skip-link{position:absolute;left:16px;top:-80px;z-index:1000;padding:10px 16px;background:#0D1610;color:#F5F3EE;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;text-decoration:none;transition:top .2s}
   .skip-link:focus{top:12px;outline-color:#F5F3EE}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  /* custom dot cursor: text fields keep the real I-beam, and a light ring keeps the dot visible on dark sections */
+  @media (pointer:fine){input:not([type=checkbox]):not([type=radio]),textarea{cursor:text!important}#cur{box-shadow:0 0 0 1.5px rgba(245,243,238,.85)}}
+  /* the logo link gets a 44px-tall hit area without moving the nav */
+  .nav-logo{padding-block:11px;margin-block:-11px}
 </style>
 <!-- candor-a11y:end -->
 <!-- Google Tag Manager -->
@@ -107,7 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         "name": "What happens if you submit for B Corp certification too early?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Roughly a third of businesses that submit don't pass their first verification. The most common reason is submitting before documentation fully supports the claimed score. A failed submission adds two to four months to your total timeline."
+          "text": "Verification checks every claim against your documentation, so submitting before your documents fully support your answers is the most common cause of delay. A failed submission adds two to four months to your total timeline."
         }
       },
       {
@@ -423,6 +427,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
     .timeline-bar {
       height: 36px;
@@ -438,9 +443,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       color: var(--paper);
       white-space: nowrap;
     }
-    .bar-organized { background: var(--forest); width: 240px; }
-    .bar-average   { background: var(--field);  width: 340px; }
-    .bar-zero      { background: var(--body);   width: 480px; }
+    /* widths are shares of the track (4–6 : 6–8 : 12–18 months) so the bars never overflow a narrow screen;
+       the middle green is darkened from --field to keep its label at 4.7:1 */
+    .bar-organized { background: var(--forest); width: 50%; }
+    .bar-average   { background: #357A4C;       width: 71%; }
+    .bar-zero      { background: var(--body);   width: 100%; }
 
     .stat-row {
       display: grid;
@@ -595,9 +602,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       .stat-row { grid-template-columns: 1fr; }
       .article-header h1 { font-size: 1.75rem; }
       .timeline-item { grid-template-columns: 72px 1fr; }
-      .bar-organized { width: 160px; }
-      .bar-average   { width: 220px; }
-      .bar-zero      { width: 280px; }
     }
   </style>
   <style>@media(pointer:fine){*{cursor:none!important}#cur{position:fixed;width:12px;height:12px;background:#2D6B42;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background .3s;will-change:left,top}body.hov #cur{width:15px;height:15px;background:#3D8A57}}@media(pointer:coarse){#cur{display:none}}</style>
@@ -637,7 +641,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </header>
 
-<header class="article-header" id="main-content" tabindex="-1">
+<main id="main-content" tabindex="-1">
+<header class="article-header">
   <span class="article-tag">Process</span>
   <h1>How Long B Corp Certification Takes in 2026.</h1>
   <p class="article-lede">B Lab's official answer is "several months to over a year." That range is accurate. What determines where you land in it is almost entirely within your control.</p>
@@ -681,10 +686,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
   <p>A business that enters the process organized — HR policies drafted, a governance structure in place, supplier and environmental data accessible — can complete Phase 1 in six to twelve weeks. <mark>Add B Lab's review window, and you're looking at four to six months total.</mark></p>
-  <p>A business starting from zero on documentation commonly takes three to six months just to close its scoring gaps. Add B Lab's queue, and nine to fifteen months is the realistic total. Candor's clients average six to eight months from initial gap assessment to certification. That's with structured preparation and consistent forward momentum on both sides.</p>
+  <p>A business starting from zero on documentation commonly takes three to six months just to close its scoring gaps. Add B Lab's queue, and nine to fifteen months is the realistic total. With structured preparation and steady momentum, six to eight months is achievable for a business that already runs on written policies.</p>
 
   <div class="pull-quote">
-    <p>"Businesses that treat B Corp certification as a side project routinely take twice as long as businesses that structure it as a real initiative."</p>
+    <p>Treat certification as a side project and it tends to take far longer than when it is run as a real initiative.</p>
   </div>
 
   <div class="callout">
@@ -700,7 +705,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="callout">
     <span class="callout-label">Important</span>
-    <p>Submitting too early is a real risk. Roughly a third of businesses that submit for B Corp certification don't pass their first verification. The most common reason: submitting before documentation fully supports the claimed score. A failed submission adds two to four months to your total timeline. Get the assessment right before submitting.</p>
+    <p>Submitting too early is a real risk. Verification checks every claim against your documentation, and claims your documents don't support come back for revision. A failed submission adds two to four months to your total timeline. Get the assessment right before submitting.</p>
   </div>
 
   <h2>How to move faster</h2>
@@ -766,6 +771,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+</main>
 <!-- candor-footer:start -->
 <style>
   footer.cf{position:relative;overflow:hidden;background:#0B0F0C;color:rgba(245,243,238,.72);border-top:1px solid rgba(245,243,238,.06);
@@ -792,9 +798,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   .cf-col a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(124,192,143,.7)}
   .cf-bot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:clamp(48px,6vw,80px);padding-top:22px;border-top:1px solid rgba(245,243,238,.08);font-size:12.5px;color:rgba(245,243,238,.5)}
   .cf-legal{display:flex;flex-wrap:wrap;gap:6px 22px}
-  .cf-legal a{color:rgba(245,243,238,.6);text-decoration:none}
+  .cf-legal a{display:inline-block;padding:4px 0;color:rgba(245,243,238,.6);text-decoration:none}
   .cf-legal a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:3px}
-  .cf-disc{margin:16px 0 0;max-width:none;font-size:11.5px;line-height:1.65;color:rgba(245,243,238,.36)}
+  .cf-disc{margin:16px 0 0;max-width:none;font-size:11.5px;line-height:1.65;color:rgba(245,243,238,.55)}
+  /* the faint wordmark is drawn from a pseudo-element: pure decoration, so it is not text to contrast checkers or AT */
+  .cf-mark::before{content:attr(data-word)}
   .cf-mark{position:relative;z-index:0;display:block;margin:clamp(28px,4vw,48px) auto -.18em;max-width:1200px;font:800 clamp(64px,17vw,220px)/.8 'Urbanist',system-ui,sans-serif;letter-spacing:-.05em;color:rgba(245,243,238,.035);user-select:none;pointer-events:none;white-space:nowrap}
   @media (max-width:820px){
     .cf-top{grid-template-columns:1fr;gap:44px}
@@ -833,6 +841,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   .cf-x:hover{background:#E4E1D6}
   .cf-err{display:none;margin:0 0 14px;font:400 13px/1.5 'Open Sans',system-ui,sans-serif;color:#8A3B2E}
   .cf-dlg.is-err .cf-err{display:block}
+  .cf-err a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   .cf-done{display:none}
   .cf-dlg.is-done form{display:none}
   .cf-dlg.is-done .cf-done{display:block}
@@ -881,7 +890,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <p class="cf-disc">Candor provides independent B Corp and sustainability certification advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
   </div>
-  <span class="cf-mark" aria-hidden="true">Candor</span>
+  <span class="cf-mark" aria-hidden="true" data-word="Candor"></span>
 </footer>
 <dialog class="cf-dlg" id="cf-contact" aria-labelledby="cf-contact-title">
   <button class="cf-x" type="button" aria-label="Close" data-contact-close>×</button>
@@ -910,6 +919,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </dialog>
 <script>
 (function () {
+  // on the assessment itself, the footer's "Free readiness score" button would only link back to this page
+  if (location.pathname === '/assessment/' || location.pathname === '/assessment') { var self = document.querySelector('.cf-btn-s[href="/assessment/"]'); if (self) self.remove(); }
   var dlg = document.getElementById('cf-contact');
   if (!dlg || typeof dlg.showModal !== 'function') return;          // very old browsers keep the mailto link
   var form = dlg.querySelector('form'), btn = form.querySelector('[type=submit]');
@@ -1030,6 +1041,8 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
   @media (prefers-reduced-motion: reduce){.cc-banner{transition:none;transform:none}}
   @media (max-width:639px){.cc-banner{left:12px;right:12px;bottom:12px;padding:12px 14px;font-size:13px;line-height:1.45}.cc-title{display:inline;margin:0 6px 0 0;font-size:10px}.cc-desc{display:inline}.cc-actions{margin-top:10px;flex-wrap:nowrap}.cc-btn{flex:1;padding:12px 8px}}
   @media (min-width:640px){.cc-banner{left:24px;bottom:24px;right:auto}}
+  /* while the banner is open, keyboard focus scrolls clear of it instead of landing underneath */
+  html.cc-open{scroll-padding-bottom:var(--cc-h,0px)}
 </style>
 <script>
 (function () {
@@ -1044,13 +1057,21 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     window.dataLayer.push({ event: 'candor_consent', consent_state: v });
   }
   /* --cc-h lets fixed page UI (e.g. the mobile nav pill) sit above the banner while it is open */
-  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); document.documentElement.style.setProperty('--cc-h', (banner.offsetHeight + 16) + 'px'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
-  function hide(){ banner.classList.remove('cc-in'); document.documentElement.style.removeProperty('--cc-h'); setTimeout(function(){ banner.hidden = true; }, 300); }
+  /* the banner never takes focus on its own: Accept and Decline stay equal, and keyboard users start at the skip link */
+  var root = document.documentElement;
+  function show(){ banner.hidden = false; root.classList.add('cc-open'); requestAnimationFrame(function(){ banner.classList.add('cc-in'); root.style.setProperty('--cc-h', (banner.offsetHeight + 16) + 'px'); }); }
+  function hide(){ banner.classList.remove('cc-in'); root.classList.remove('cc-open'); root.style.removeProperty('--cc-h'); setTimeout(function(){ banner.hidden = true; }, 300); }
   banner.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cc]'); if (!b) return;
     var v = b.getAttribute('data-cc'); write(v); apply(v); hide();
   });
   banner.addEventListener('keydown', function (e) { if (e.key === 'Escape') { write('denied'); apply('denied'); hide(); } });
+  // keyboard focus that lands under the open banner is scrolled clear of it (scroll-padding alone skips elements already on screen)
+  document.addEventListener('focusin', function (e) {
+    if (banner.hidden || banner.contains(e.target) || e.target === document.body) return;
+    var a = e.target.getBoundingClientRect(), b = banner.getBoundingClientRect();
+    if (a.bottom > b.top - 8 && a.top < b.bottom && a.right > b.left && a.left < b.right) window.scrollBy({ top: a.bottom - b.top + 16, behavior: 'instant' });
+  });
   document.addEventListener('click', function (e) {
     var a = e.target.closest('[data-consent-open]'); if (!a) return;
     e.preventDefault(); show();
