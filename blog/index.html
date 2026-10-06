@@ -406,7 +406,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <style>/* still-lake:css:start */
   /* ── Still-lake hero: a painted lake in a pinned stage; code adds mist, ripples and depth,
      and on scroll the mist rises, the title mists away and the posts follow. ── */
-  .lake{position:relative;height:210svh}
+  .lake{position:relative;height:170svh}
+  /* the posts rise out of the fog: they overlap the last 30svh of the pinned track, under a soft mist lip */
+  .lake ~ *{position:relative;z-index:3}
+  .lake + *{margin-top:-30svh}
+  .lake-lip{position:absolute;left:0;right:0;bottom:0;height:62svh;z-index:2;pointer-events:none;
+    background:radial-gradient(38% 22% at 18% 47%,rgba(236,234,226,.75),rgba(236,234,226,0) 70%),radial-gradient(34% 20% at 62% 44%,rgba(236,234,226,.7),rgba(236,234,226,0) 70%),radial-gradient(30% 18% at 90% 49%,rgba(236,234,226,.7),rgba(236,234,226,0) 70%),
+      linear-gradient(to bottom,rgba(236,234,226,0),rgba(236,234,226,.35) 22%,rgba(236,234,226,.8) 38%,#ECEAE2 52%)}
   .lake-stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#ECEAE2;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
   .lake-gl,.lake-still,.lake-veil{position:absolute;display:block}
   .lake-gl,.lake-still{inset:0;width:100%;height:100%}
@@ -474,6 +480,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <canvas class="lake-veil" aria-hidden="true"></canvas>
       <div class="lake-cue" aria-hidden="true">Scroll<i></i></div>
     </div>
+    <div class="lake-lip" aria-hidden="true"></div>
   </section>
   <!-- still-lake:end -->
 
@@ -1147,7 +1154,7 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
 
   function draw(t) {
     if (!L.sw) return;
-    var rise = REDUCE ? sstep(.5, .95, pS) : sstep(.12, .92, pS);
+    var rise = REDUCE ? sstep(.5, .95, pS) : sstep(.1, .8, pS);
     L.lift = REDUCE ? 0 : Math.pow(seg(pS, .1, 1), 1.4) * L.h * .32;
     var arrive = REDUCE ? 0 : 1 - sstep(.3, 2.8, t);
     var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .42, pS);
