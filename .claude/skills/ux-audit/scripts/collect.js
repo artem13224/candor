@@ -203,6 +203,8 @@ const PROBES = () => {
     autoplayVideo: [...D.querySelectorAll('video[autoplay]')].map(v => ({ muted: v.muted, loop: v.loop, controls: v.controls })),
     gifs: imgs.filter(i => /\.gif(\?|$)/i.test(i.src)).length };
   // --- text collisions: visible text boxes that overlap other text (not ancestors)
+  // content-visibility:auto leaves off-screen sections unlaid-out, which fakes overlaps; lay everything out first
+  const cvFix = D.createElement('style'); cvFix.textContent = '*{content-visibility:visible!important}'; D.head.appendChild(cvFix);
   const shown = e => { if (cumOpacity(e) < 0.1) return false;
     for (let a = e; a && a !== D.body; a = a.parentElement) { const s = getComputedStyle(a);
       if (s.position === 'fixed' || s.visibility === 'hidden' || /rect\(/.test(s.clip) || (s.clipPath !== 'none' && /inset\(50%|circle\(0/.test(s.clipPath))) return false;
@@ -216,7 +218,7 @@ const PROBES = () => {
     const a = boxes[i], b = boxes[j]; if (a.e.contains(b.e) || b.e.contains(a.e)) continue;
     const ow = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x), oh = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
     if (ow > 3 && oh > 3 && ow * oh > 40) hits.push(`"${a.e.textContent.trim().slice(0, 24)}" (${sel(a.e)}) × "${b.e.textContent.trim().slice(0, 24)}" (${sel(b.e)}) ${Math.round(ow)}×${Math.round(oh)}px`); }
-  out.collisions = hits;
+  out.collisions = hits; cvFix.remove();
   // --- CSS integrity: unbalanced braces in inline <style> (one stray brace silently drops later rules)
   out.cssIntegrity = [...D.querySelectorAll('style')].map((st, k) => { const t = st.textContent.replace(/\/\*[\s\S]*?\*\//g, '').replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g, '""');
     let d = 0, neg = -1; for (let i = 0; i < t.length; i++) { if (t[i] === '{') d++; else if (t[i] === '}') { d--; if (d < 0 && neg < 0) { neg = i; d = 0; } } }
