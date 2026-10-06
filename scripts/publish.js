@@ -104,10 +104,12 @@ if (DRY_RUN) {
 
   const idx = lib.rebuildIndex({ dryRun: true });
   const sm  = lib.rebuildSitemap({ dryRun: true });
+  const relDry = lib.rebuildRelated({ dryRun: true });
+  console.log(`[dry-run] related posts:   ${relDry.changed.length ? `would update ${relDry.changed.join(', ')}` : 'up to date'}`);
   console.log(`[dry-run] blog/index.html: ${idx.changed ? 'would change' : 'already up to date'} (${idx.count} posts${inBlog ? '' : ' + this one once copied'}; featured: ${idx.featured})`);
   console.log(`[dry-run] sitemap.xml:     ${sm.changed ? 'would change' : 'already up to date'}`);
   console.log(NO_GIT ? '[dry-run] --no-git: would skip git'
-                     : `[dry-run] Would run:\n    git add blog/${slug}.html blog/index.html sitemap.xml <post images>\n    git commit -m "blog: publish ${slug}"\n    git push`);
+                     : `[dry-run] Would run:\n    git add blog/${slug}.html <posts with new suggestions> blog/index.html sitemap.xml <post images>\n    git commit -m "blog: publish ${slug}"\n    git push`);
   console.log(`\nDry run complete — nothing was written.${ok || FORCE ? '' : ' Fix the problems above before publishing.'}\n`);
   process.exit(ok || FORCE ? 0 : 1);
 }
@@ -146,8 +148,10 @@ if (!report(problems) && !FORCE) {
 }
 
 // ── 4. Rebuild index + sitemap ────────────────────────────────────────────────
+const related = lib.rebuildRelated();
 const idx = lib.rebuildIndex();
 const sm  = lib.rebuildSitemap();
+console.log(`✓ related posts ${related.changed.length ? `updated in ${related.changed.length} post(s)` : 'unchanged'}`);
 console.log(`✓ blog/index.html ${idx.changed ? 'rebuilt' : 'unchanged'} — ${idx.count} posts, featured: ${idx.featured}`);
 console.log(`✓ sitemap.xml ${sm.changed ? 'rebuilt' : 'unchanged'} — ${sm.count} blog URLs`);
 
@@ -166,7 +170,8 @@ const images = lib.bodyImgTags(html)
   .filter(p => fs.existsSync(p))
   .map(rel);
 
-const toAdd = [rel(destPath), rel(lib.INDEX_FILE), rel(lib.SITEMAP_FILE), ...images];
+const relatedFiles = related.changed.map(f => rel(path.join(BLOG_DIR, f)));
+const toAdd = [...new Set([rel(destPath), ...relatedFiles, rel(lib.INDEX_FILE), rel(lib.SITEMAP_FILE), ...images])];
 console.log('\nCommitting and pushing...');
 try {
   run('git', ['add', '--', ...toAdd]);
