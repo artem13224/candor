@@ -16,6 +16,10 @@ const SLOTS = [
     where: 'Home page hero, right half, masked into the paper background. Decorative only.' },
   { name: 'lost-trail',  dest: 'images/heroes/lost-trail.webp', width: 1600, height: 1000, format: 'webp', quality: 80, kind: 'illustration',
     where: '404 page, right half, masked into the background.' },
+  { name: 'lake-wide',   dest: 'images/heroes/lake-wide.webp',  width: 2000, height: 1126, format: 'webp', quality: 82, kind: 'illustration',
+    where: 'Blog index hero (landscape screens): the misty lake painting. Waterline at 70 % height; the canoe box and waterline are hard-coded in blog/index.html (still-lake script) — re-measure them if the art changes.' },
+  { name: 'lake-tall',   dest: 'images/heroes/lake-tall.webp',  width: 1126, height: 2000, format: 'webp', quality: 82, kind: 'illustration',
+    where: 'Blog index hero (portrait screens): the same lake, recomposed tall. Waterline at 63.2 % height.' },
   { name: 'og-bg',       dest: 'images/heroes/og-bg.webp',      width: 1200, height: 630,  format: 'webp', quality: 82, kind: 'illustration',
     where: 'Background of every generated share image (scripts/make-og.js draws the title and wordmark on top).' },
 

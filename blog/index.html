@@ -174,38 +174,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .nav-cta:hover .nav-ar{transform:translateX(4px)}
 
     /* HERO */
-    .blog-hero {
-      padding: 140px 40px 80px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
 
-    .blog-hero .eyebrow {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--green);
-      font-weight: 600;
-      margin-bottom: 20px;
-      display: block;
-    }
 
-    .blog-hero h1 {
-      font-family: 'Urbanist', sans-serif;
-      font-weight: 800;
-      font-size: clamp(44px, 6vw, 80px);
-      letter-spacing: -2.5px;
-      line-height: 1.0;
-      color: var(--dark);
-      margin-bottom: 24px;
-    }
 
-    .blog-hero p {
-      font-size: 17px;
-      line-height: 1.7;
-      max-width: 52ch;
-      opacity: 0.65;
-    }
 
     /* DIVIDER */
     .divider {
@@ -425,7 +396,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     @media (max-width: 768px) {
       #site-nav { padding: 0 20px; }
       .nav-links { display: none; }
-      .blog-hero { padding: 110px 20px 60px; }
       .divider { width: calc(100% - 40px); }
       .filter-bar { padding: 20px 20px 0; }
       .articles { padding: 40px 20px 80px; grid-template-columns: 1fr; }
@@ -433,6 +403,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
   </style>
   <style>@media(pointer:fine){*{cursor:none!important}#cur{position:fixed;width:12px;height:12px;background:#2D6B42;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background .3s;will-change:left,top}body.hov #cur{width:15px;height:15px;background:#3D8A57}}@media(pointer:coarse){#cur{display:none}}</style>
+  <style>/* still-lake:css:start */
+  /* ── Still-lake hero: a painted lake in a pinned stage; code adds mist, ripples and depth,
+     and on scroll the mist rises, the title mists away and the posts follow. ── */
+  .lake{position:relative;height:210svh}
+  .lake-stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#ECEAE2;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+  .lake-gl,.lake-still,.lake-veil{position:absolute;display:block}
+  .lake-gl,.lake-still{inset:0;width:100%;height:100%}
+  .lake-still{object-fit:cover;display:none}
+  .lake-no-gl .lake-still{display:block}
+  .lake-veil{pointer-events:none;z-index:2}
+  .lake-no-gl .lake-veil{display:none}
+  .lake-copy{position:absolute;left:0;right:0;top:clamp(104px,15svh,156px);padding-inline:20px;text-align:center;pointer-events:none;z-index:1;will-change:transform,opacity,filter}
+  .lake-copy h1{margin:0;font:800 clamp(56px,9.5vw,124px)/.92 'Urbanist',system-ui,sans-serif;letter-spacing:-.045em;color:#0D1610;text-wrap:balance}
+  .lake-copy h1 .dot{color:#2D6B42}
+  .lake-copy .lake-sub{margin:18px 0 0;font:400 clamp(17px,1.9vw,23px)/1.4 'Open Sans',system-ui,sans-serif;color:#4A5548;letter-spacing:.01em}
+  .lake-js .lake-rise{opacity:0;filter:blur(12px);transform:translateY(.4rem)}
+  .lake-js .lake-go .lake-rise{opacity:1;filter:blur(0);transform:none;transition:opacity 1.6s cubic-bezier(.17,.17,.51,1),filter 1.9s cubic-bezier(.17,.17,.51,1),transform 1.6s cubic-bezier(.17,.17,.51,1)}
+  .lake-cue{position:absolute;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:grid;justify-items:center;gap:9px;font:400 10px/1 'Space Mono',ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:#4A5548;pointer-events:none;opacity:0;z-index:1}
+  .lake-cue i{display:block;width:1px;height:30px;background:linear-gradient(#4A5548,transparent)}
+  @media (prefers-reduced-motion: reduce){.lake-js .lake-rise{opacity:1;filter:none;transform:none}}
+  /* still-lake:css:end */</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -469,11 +460,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </header>
 
-  <section id="main-content" tabindex="-1" class="blog-hero">
-    <span class="eyebrow">Resources</span>
-    <h1>The real guide to B Corp certification.</h1>
-    <p>No fluff. Practical breakdowns of what certification requires, what it costs, and what most consultants won't tell you upfront.</p>
+  <!-- still-lake:start -->
+  <script>document.documentElement.classList.add('lake-js')</script>
+  <section class="lake" id="main-content" tabindex="-1" aria-label="Field notes">
+    <div class="lake-stage">
+      <canvas class="lake-gl" aria-hidden="true"></canvas>
+      <img class="lake-still" src="/images/heroes/lake-wide.webp" alt="" aria-hidden="true" width="2000" height="1126" decoding="async">
+      <div class="lake-copy">
+        <h1><span class="lake-rise" style="display:block;transition-delay:.35s">Field notes<span class="dot">.</span></span></h1>
+        <p class="lake-sub lake-rise" style="transition-delay:.75s">All things B-Corp</p>
+      </div>
+      <canvas class="lake-veil" aria-hidden="true"></canvas>
+      <div class="lake-cue" aria-hidden="true">Scroll<i></i></div>
+    </div>
   </section>
+  <!-- still-lake:end -->
 
   <div class="divider"></div>
 
@@ -947,5 +948,232 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
 </style>
 <div class="candor-grain" aria-hidden="true"></div>
 <!-- candor-grain:end -->
+<!-- still-lake:js:start -->
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement; root.classList.add('lake-js');
+  var lake = document.querySelector('.lake'); if (!lake) return;
+  var stage = lake.querySelector('.lake-stage'), copy = lake.querySelector('.lake-copy'), cue = lake.querySelector('.lake-cue');
+  var cv = lake.querySelector('.lake-gl'), veil = lake.querySelector('.lake-veil'), still = lake.querySelector('.lake-still');
+  // The two paintings: wide for landscape screens, tall for portrait. wl = waterline, canoe = box the ripples leave alone (image fractions).
+  var IMG = { wide: { src: '/images/heroes/lake-wide.webp', wl: .700, canoe: [.287, .672, .350, .716], edge: [241, 235, 227] },
+              tall: { src: '/images/heroes/lake-tall.webp', wl: .632, canoe: [.292, .607, .378, .636], edge: [245, 239, 232] } };
+  var BG = [236, 234, 226];                                 // page background (#ECEAE2): mist and hand-off resolve to it
+  var REDUCE = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var FINE = window.matchMedia && matchMedia('(pointer: fine)').matches;
+  function seg(t, a, b) { return Math.min(1, Math.max(0, (t - a) / (b - a))); }
+  function sstep(a, b, x) { var t = seg(x, a, b); return t * t * (3 - 2 * t); }
+
+  var NOISE = [
+    'float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}',
+    'float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h21(i),h21(i+vec2(1,0)),f.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),f.x),f.y);}',
+    'float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<4;i++){s+=a*vn(p);p=p*2.02+vec2(17.1,9.2);a*=.5;}return s/.9375;}',
+    // wispy mist: domain-warped noise stretched along the horizon
+    'float wisp(vec2 q,float t){vec2 w=vec2(fbm(q*.6+vec2(t*.6,0.)),fbm(q*.6+vec2(4.1,t*.3)));return fbm(q+w*1.6+vec2(t,0.));}'
+  ].join('\n');
+  var HEAD = '#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n';
+  var VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+
+  // Scene: the painting, with depth parallax, water ripples and three drifting mist bands; mist behind the title; rising hand-off.
+  var FS = HEAD + NOISE + '\n' + [
+    'uniform sampler2D tImg;uniform vec2 uRes;uniform vec2 uOff;uniform vec2 uSize;uniform float uWl;uniform vec4 uCanoe;uniform vec3 uBg;uniform vec3 uMatch;',
+    'uniform float uT;uniform float uPr;uniform vec2 uPar;uniform float uRise;uniform float uLift;uniform float uCloud;uniform vec2 uCloudC;uniform float uTall;',
+    'uniform vec4 uRings[8];',
+    'float box(vec2 uv,vec4 b,float s){return smoothstep(b.x-s,b.x+s,uv.x)*smoothstep(b.z+s,b.z-s,uv.x)*smoothstep(b.y-s,b.y+s,uv.y)*smoothstep(b.w+s,b.w-s,uv.y);}',
+    'float depth(vec2 uv){vec2 q=uv;if(q.y>uWl)q.y=2.*uWl-q.y;float d=.06+.32*smoothstep(.25,uWl,q.y);',
+    ' vec4 L=uTall>.5?vec4(-.1,.40,.30,1.):vec4(-.1,.26,.31,1.);vec4 R=uTall>.5?vec4(.76,.50,1.1,1.):vec4(.82,.45,1.1,1.);',
+    ' return max(d,max(box(q,L,.04),box(q,R,.04)));}',
+    'vec3 img(vec2 uv){vec3 c=texture2D(tImg,clamp(uv,vec2(.001),vec2(.999))).rgb*uMatch;return uv.y<0.?mix(uBg,c,smoothstep(-.08,0.,uv.y)):c;}',
+    'void main(){',
+    ' vec2 p=vec2(gl_FragCoord.x,uRes.y-gl_FragCoord.y);vec2 pl=p+vec2(0.,uLift);',
+    ' vec2 uv=(pl-uOff)/uSize;float wlY=uOff.y+uWl*uSize.y;',
+    ' uv-=uPar*depth(uv)/uSize;',
+    ' float water=smoothstep(wlY+2.*uPr,wlY+14.*uPr,pl.y)*(1.-box(uv,uCanoe,.012));',
+    ' float crest=0.;',
+    ' if(water>0.){float dd=(pl.y-wlY)/uSize.y;vec2 dsp=vec2(0.);',
+    // the lake never quite stops: a slow swell plus a faint shimmer, both growing toward the viewer
+    '  float sh=vn(vec2(pl.x/uPr*.006,pl.y/uPr*.07-uT*.25));',
+    '  dsp+=vec2((sh-.5)*1.2,sin(pl.y/uPr*.35-uT*1.2+sh*6.)*.6)*uPr*(.4+dd*3.);',
+    '  dsp.y+=sin(pl.x/uPr*.012+pl.y/uPr*.09-uT*.7)*uPr*(.3+dd*2.2);',
+    '  for(int i=0;i<8;i++){vec4 R=uRings[i];if(R.w<.002)continue;',
+    '   vec2 q=vec2(pl.x-R.x,(pl.y-R.y)/.3);float r=length(q);float w=r-R.z;',
+    '   float env=exp(-w*w/(2.*pow(20.*uPr+R.z*.12,2.)))*R.w;float wave=sin(w/uPr*.17)*env;',
+    '   dsp+=vec2(q.x/max(r,1.)*7.,11.)*wave*uPr;crest+=wave;}',
+    '  uv+=dsp*water/uSize;}',
+    ' vec3 c=img(uv);',
+    ' c*=1.+clamp(crest,-1.,1.)*.07*water;c=mix(c,vec3(1.),smoothstep(.55,1.,crest)*water*.25);',
+    ' vec2 iu=(pl-uOff)/uSize;vec3 mistC=mix(uBg,vec3(1.),.4);',
+    ' float m1=exp(-pow((iu.y-(uWl-.018))/.03,2.))*smoothstep(.42,.75,wisp(vec2(iu.x*3.,iu.y*22.),uT*.035));',
+    ' float m2=exp(-pow((iu.y-(uWl-(uTall>.5?.13:.17)))/.04,2.))*smoothstep(.48,.8,wisp(vec2(iu.x*2.4+3.,iu.y*16.),uT*.022));',
+    ' float m3=smoothstep(uWl+.12,1.02,iu.y)*smoothstep(.35,.75,wisp(vec2(iu.x*2.,iu.y*9.+5.),uT*.03));',
+    ' c=mix(c,mistC,m1*.55+m2*.35);c=mix(c,mistC,m3*.6);',
+    // mist banked behind the title: always a little, thick on arrival, thickening again as you scroll
+    ' vec2 cq=(p-uCloudC)/vec2(uRes.x*.42,uRes.y*.16);float cb=exp(-dot(cq,cq));',
+    ' float cw=smoothstep(.3,.75,wisp(vec2(p.x/uRes.x*3.,p.y/uRes.y*7.),uT*.06));',
+    ' c=mix(c,mix(uBg,vec3(1.),.5),clamp(cb*cw*(.32+uCloud*.9),0.,1.));',
+    ' if(uRise>0.){float yb=1.-p.y/uRes.y;',
+    '  float e1=uRise*1.5-.25+(wisp(vec2(p.x/uRes.x*2.2,yb*3.),uT*.05)-.5)*.35;',
+    '  float e2=uRise*1.5-.4+(wisp(vec2(p.x/uRes.x*3.2+7.,yb*4.),uT*.08)-.5)*.3;',
+    '  float f1=1.-smoothstep(e1-.16,e1,yb);float f2=1.-smoothstep(e2-.08,e2,yb);',
+    '  c=mix(c,mix(uBg,vec3(1.),.2),f1*.75);c=mix(c,uBg,f2);}',
+    ' float g=h21(floor(gl_FragCoord.xy/max(1.,uPr*.8)))-.5;c+=g*.018;',
+    ' gl_FragColor=vec4(c,1.);}'
+  ].join('\n');
+
+  // Veil: wisps that drift in front of the title. Dense on arrival, light while you read, total as you scroll away.
+  var FSV = HEAD + NOISE + '\n' + [
+    'uniform vec2 uRes;uniform float uT;uniform float uAmt;uniform float uIdle;uniform vec3 uCol;',
+    'void main(){vec2 p=gl_FragCoord.xy/uRes;',
+    ' vec2 e=(p-.5)/.5;float edge=1.-smoothstep(.35,1.,length(e*vec2(1.,1.15)));edge*=edge;',
+    ' float n=wisp(vec2(p.x*2.4,p.y*3.6),uT*.05);float n2=wisp(vec2(p.x*3.6+5.,p.y*5.2),uT*.085);',
+    ' float idle=(smoothstep(.55,.85,n)*.7+smoothstep(.6,.85,n2)*.4)*uIdle;',
+    ' float thick=smoothstep(.75-uAmt*.75,1.05-uAmt*.55,n*.6+n2*.4+uAmt*.35);',
+    ' float a=clamp(max(idle,thick*uAmt),0.,1.)*edge;',
+    ' gl_FragColor=vec4(uCol*a,a);}'
+  ].join('\n');
+
+  function program(gl, fs, names) {
+    function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; }
+    var pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(pr));
+    gl.useProgram(pr);
+    var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    var u = {}; names.forEach(function (n) { u[n] = gl.getUniformLocation(pr, n); }); return u;
+  }
+  var gl = null, glv = null, U, UV, tex = null;
+  try {
+    gl = cv.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' }) || cv.getContext('experimental-webgl');
+    if (gl) U = program(gl, FS, ['tImg', 'uRes', 'uOff', 'uSize', 'uWl', 'uCanoe', 'uBg', 'uMatch', 'uT', 'uPr', 'uPar', 'uRise', 'uLift', 'uCloud', 'uCloudC', 'uTall', 'uRings']);
+    glv = veil.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: true, powerPreference: 'low-power' });
+    if (glv) UV = program(glv, FSV, ['uRes', 'uT', 'uAmt', 'uIdle', 'uCol']);
+  } catch (e) { if (window.console) console.error(e); gl = null; }
+  if (!gl) { root.classList.add('lake-no-gl'); glv = null; }
+
+  // ── Layout ──────────────────────────────────────────────────────────────────
+  var L = { lift: 0 }, dpr = Math.min(window.devicePixelRatio || 1, 2), quality = 1, which = null, images = {};
+  function load(key) {
+    if (images[key]) return Promise.resolve(images[key]);
+    return new Promise(function (res) { var i = new Image(); i.onload = function () { images[key] = i; res(i); }; i.onerror = function () { res(null); }; i.src = IMG[key].src; });
+  }
+  function layout() {
+    var w = innerWidth, h = Math.round(stage.getBoundingClientRect().height) || innerHeight;
+    var pr = Math.min(dpr, w < 700 ? 2 : 1.75) * quality;
+    L.cssW = w; L.cssH = h; L.pr = pr; L.w = Math.round(w * pr); L.h = Math.round(h * pr);
+    L.key = w / h < 1 ? 'tall' : 'wide'; L.cfg = IMG[L.key];
+    var im = images[L.key];
+    if (im) { var s = Math.max(L.w / im.width, L.h / im.height); L.sw = im.width * s; L.sh = im.height * s; L.ox = (L.w - L.sw) / 2; L.oy = (L.h - L.sh) / 2;
+      if (L.key === 'wide') L.oy += L.h * .15; }        // wide screens: drop the scene so the peak clears the title (the painting's top edge is plain mist)
+    cv.width = L.w; cv.height = L.h;
+    var cr = copy.getBoundingClientRect(), sr = stage.getBoundingClientRect(), padX = cr.width * .1, padY = cr.height * .55;
+    var ty0 = parseFloat(copy.dataset.ty || 0); L.cloudC = [(cr.left - sr.left + cr.width / 2) * pr, (cr.top - sr.top - ty0 + cr.height / 2) * pr];
+    L.veil = { x: Math.max(0, cr.left - sr.left - padX), y: Math.max(0, cr.top - sr.top - padY - parseFloat(copy.dataset.ty || 0)), w: Math.min(w, cr.width + padX * 2), h: cr.height + padY * 2 };
+    veil.style.left = L.veil.x + 'px'; veil.style.top = L.veil.y + 'px'; veil.style.width = L.veil.w + 'px'; veil.style.height = L.veil.h + 'px';
+    veil.width = Math.max(2, Math.round(L.veil.w * .5)); veil.height = Math.max(2, Math.round(L.veil.h * .5));   // soft mist: half resolution is plenty
+  }
+
+  // ── State ───────────────────────────────────────────────────────────────────
+  var t0 = performance.now(), pS = 0, NR = 8, rings = [], ringBuf = new Float32Array(NR * 4), nextDrop = 2.5;
+  var mouse = { x: 0, y: 0, tx: 0, ty: 0, last: 0, lx: -1e4, ly: -1e4 };
+  function now() { return (performance.now() - t0) / 1000; }
+  function scrollP() { var r = lake.getBoundingClientRect(), track = r.height - L.cssH; return track > 0 ? Math.min(1, Math.max(0, -r.top / track)) : 0; }
+  function addRing(x, y, amp) { rings.push({ t: now(), x: x, y: y, amp: amp }); if (rings.length > NR) rings.shift(); }
+  function wlY() { return L.oy + L.cfg.wl * L.sh - L.lift; }
+  function toCanvas(e) { var r = stage.getBoundingClientRect(); return [(e.clientX - r.left) * L.pr, (e.clientY - r.top) * L.pr]; }
+  stage.addEventListener('pointerdown', function (e) {
+    if (!L.sw || !gl) return;
+    var q = toCanvas(e), w = wlY();
+    if (q[1] > w + 4 * L.pr) addRing(q[0], q[1] + L.lift, 1);
+    else if (w - q[1] < L.h - w) addRing(q[0], 2 * w - q[1] + L.lift, .8);   // tap the sky and its reflection ripples
+    kick();
+  });
+  if (FINE) stage.addEventListener('pointermove', function (e) {
+    var q = toCanvas(e), t = now(); mouse.tx = q[0] / L.w * 2 - 1; mouse.ty = q[1] / L.h * 2 - 1;
+    if (!REDUCE && L.sw && q[1] > wlY() + 8 * L.pr && t - mouse.last > .12 && Math.hypot(q[0] - mouse.lx, q[1] - mouse.ly) > 16 * L.pr) {
+      mouse.last = t; mouse.lx = q[0]; mouse.ly = q[1]; addRing(q[0], q[1] + L.lift, .22);
+    }
+    kick();
+  });
+
+  function draw(t) {
+    if (!L.sw) return;
+    var rise = REDUCE ? sstep(.5, .95, pS) : sstep(.12, .92, pS);
+    L.lift = REDUCE ? 0 : Math.pow(seg(pS, .1, 1), 1.4) * L.h * .32;
+    var arrive = REDUCE ? 0 : 1 - sstep(.1, 2.2, t);
+    var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .26, pS);
+    mouse.x += (mouse.tx - mouse.x) * .04; mouse.y += (mouse.ty - mouse.y) * .04;
+    var k = L.pr, px = (FINE && !REDUCE ? -mouse.x * 4 : 0) * k, py = (FINE && !REDUCE ? -mouse.y * 2 : 0) * k + (REDUCE ? 0 : pS * 12 * k);
+    // the title mists away: blur, fade and a slow drift up while the veil thickens over it
+    var ty = -pS * 10 * L.cssH / 100;
+    copy.dataset.ty = ty;
+    copy.style.opacity = String(1 - away);
+    copy.style.filter = away > 0 ? 'blur(' + (away * 14).toFixed(1) + 'px)' : '';
+    copy.style.transform = 'translateY(' + ty.toFixed(1) + 'px)';
+    veil.style.transform = 'translateY(' + ty.toFixed(1) + 'px)';
+    cue.style.opacity = String(seg(t, 2.4, 3.2) * (1 - sstep(.01, .06, pS)));
+    if (!gl) { still.style.opacity = String(1 - rise); return; }
+
+    if (!REDUCE && t > nextDrop) {                         // now and then a drop lands somewhere on the lake
+      nextDrop = t + 3 + Math.random() * 3.5;
+      var lakeTop = wlY() + L.h * .04;
+      if (lakeTop < L.h * .95) addRing(L.w * (.12 + Math.random() * .76), lakeTop + Math.random() * (L.h - lakeTop) * .8 + L.lift, .2 + Math.random() * .12);
+    }
+    ringBuf.fill(0); rings = rings.filter(function (r) { return t - r.t < 8; });
+    rings.forEach(function (r, i) { var age = t - r.t; ringBuf[i * 4] = r.x; ringBuf[i * 4 + 1] = r.y; ringBuf[i * 4 + 2] = age * 105 * k * Math.max(.75, L.cssW / 1300); ringBuf[i * 4 + 3] = r.amp * Math.exp(-age * .6); });
+    var cb = L.cfg.canoe, e = L.cfg.edge;
+    gl.viewport(0, 0, L.w, L.h);
+    gl.uniform2f(U.uRes, L.w, L.h); gl.uniform2f(U.uOff, L.ox, L.oy); gl.uniform2f(U.uSize, L.sw, L.sh);
+    gl.uniform1f(U.uWl, L.cfg.wl); gl.uniform4f(U.uCanoe, cb[0], cb[1], cb[2], cb[3]);
+    gl.uniform3f(U.uBg, BG[0] / 255, BG[1] / 255, BG[2] / 255); gl.uniform3f(U.uMatch, BG[0] / e[0], BG[1] / e[1], BG[2] / e[2]);
+    gl.uniform1f(U.uT, REDUCE ? 0 : t); gl.uniform1f(U.uPr, k); gl.uniform2f(U.uPar, px, py);
+    gl.uniform1f(U.uRise, rise); gl.uniform1f(U.uLift, L.lift); gl.uniform1f(U.uCloud, Math.max(arrive, away));
+    gl.uniform2f(U.uCloudC, L.cloudC[0], L.cloudC[1] + ty * k); gl.uniform1f(U.uTall, L.key === 'tall' ? 1 : 0); gl.uniform4fv(U.uRings, ringBuf);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (glv) {
+      glv.viewport(0, 0, veil.width, veil.height); glv.clearColor(0, 0, 0, 0); glv.clear(glv.COLOR_BUFFER_BIT);
+      glv.uniform2f(UV.uRes, veil.width, veil.height); glv.uniform1f(UV.uT, REDUCE ? 0 : t);
+      glv.uniform1f(UV.uAmt, Math.max(arrive, away)); glv.uniform1f(UV.uIdle, REDUCE ? 0 : .3);
+      glv.uniform3f(UV.uCol, Math.min(1, BG[0] / 255 + .03), Math.min(1, BG[1] / 255 + .03), Math.min(1, BG[2] / 255 + .03));
+      glv.drawArrays(glv.TRIANGLES, 0, 3);
+    }
+  }
+
+  // ── Loop: only while on screen; drops resolution if frames run slow ───────
+  var raf = 0, onScreen = true, frames = [], lastTs = 0;
+  function loop(ts) {
+    raf = 0; var dt = lastTs ? ts - lastTs : 16; lastTs = ts;
+    var target = scrollP(); pS += (target - pS) * (REDUCE ? 1 : .12);
+    draw(now());
+    frames.push(dt); if (frames.length > 40) { var avg = frames.reduce(function (a, b) { return a + b; }) / frames.length; frames.length = 0;
+      if (avg > 26 && quality > .55) { quality *= .85; layout(); } }
+    var busy = !REDUCE || Math.abs(target - pS) > .001 || rings.length;
+    if (onScreen && !document.hidden && busy) raf = requestAnimationFrame(loop);
+  }
+  function kick() { if (!raf && onScreen && !document.hidden) { lastTs = 0; raf = requestAnimationFrame(loop); } }
+
+  function setImage() {
+    var key = innerWidth / (stage.getBoundingClientRect().height || innerHeight) < 1 ? 'tall' : 'wide';
+    if (still.getAttribute('src') !== IMG[key].src) still.src = IMG[key].src;
+    return load(key).then(function (im) {
+      if (!im) { root.classList.add('lake-no-gl'); return; }
+      if (which !== key) { which = key; if (gl) { if (tex) gl.deleteTexture(tex); tex = gl.createTexture(); gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, im);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); gl.uniform1i(U.tImg, 0); } }
+      layout(); draw(now()); kick();
+    });
+  }
+  layout();
+  setImage().then(function () { requestAnimationFrame(function () { copy.classList.add('lake-go'); }); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; kick(); }).observe(lake);
+  document.addEventListener('visibilitychange', kick);
+  addEventListener('scroll', kick, { passive: true });
+  var rt; addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(setImage, 120); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { layout(); kick(); });
+})();
+</script>
+<!-- still-lake:js:end -->
 </body>
 </html>
