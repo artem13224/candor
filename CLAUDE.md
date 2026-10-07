@@ -334,9 +334,9 @@ When adding a new top-level page or route, check whether a redirect/rewrite rule
 | `images/candor-logo.svg` | Primary logo (used in nav, favicons) |
 | `images/about-portrait.jpg` | Artem Furman portrait |
 | `images/heroes/hero.jpg` | Currently unreferenced (the hero section uses a CSS background); kept for reuse |
-| `images/heroes/break-1.jpg` | Decorative landscape break section |
-| `images/heroes/break-2.jpg` | Decorative landscape break section |
-| `images/heroes/cta-bg.jpg` | CTA section background |
+| `images/heroes/break-1.webp` | Image break 1: forest river (1500×844) |
+| `images/heroes/break-2.webp` | Image break 2: green hills under fog |
+| `images/heroes/cta-bg.webp` | CTA section background: mountains and fields (shown at 28% under a dark gradient) |
 | `images/heroes/webshare.jpg` | Social/OG share image |
 | `images/heroes/lake-wide.webp` / `lake-tall.webp` | Blog index still-lake hero (landscape / portrait) |
 | `images/industry/who-landscape.webp` | Homepage "Who I work with" landscape (transparent sky) |
