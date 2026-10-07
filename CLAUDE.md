@@ -86,7 +86,7 @@ Three flat-fee tiers, all in CAD:
 | Tier | Price | Timeline | What's included |
 |---|---|---|---|
 | Readiness Audit | $1,800 | 2 weeks | Full self-assessment against B Lab's new standards, gap analysis, certification comparison, 10–15 page written report, 60-min walkthrough |
-| Gap-Closing Engagement | $6,500 | 3–4 months | Policy drafts, tracking systems, evidence package, bi-weekly check-ins, post-certification launch plan |
+| Gap-Closing Support | $6,500 | 3–4 months | Policy drafts, tracking systems, evidence package, biweekly check-ins, post-certification launch plan |
 | Full Path to Certification | $12,000+ | 9–12 months | Everything above + submission management, B Lab correspondence, revision round, press release, badge assets |
 
 ### Certifications
