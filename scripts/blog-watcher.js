@@ -19,6 +19,7 @@ const ONCE = process.argv.includes('--once');
 
 function rebuild(reason) {
   try {
+    lib.rebuildFaqs();
     lib.rebuildRelated();   // idempotent, so the writes it triggers settle after one pass
     const idx = lib.rebuildIndex();
     const sm  = lib.rebuildSitemap();

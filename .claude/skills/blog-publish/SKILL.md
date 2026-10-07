@@ -55,14 +55,17 @@ Useful extras:
   it lists every allowed building block (`p`, `h2`, `h3`, `ul.checklist`, `ol.step-list`,
   `div.callout`, `div.pull-quote`, `div.stat-row`, `hr.section-break`, `figure.article-img`).
   Do not invent new classes or add `<style>`; the skeleton already contains all CSS.
-- Delete the instruction comments when done. Tailor the two lines in the CTA section.
+- Delete the instruction comments when done. Don't add an author bio or a CTA box after the
+  article: `sync-shared.js` puts the one shared ending (author line + readiness-score CTA) there.
 - Leave the "More from the blog" section alone: `rebuildRelated()` (run by `npm run rebuild` and
   `publish.js`) fills it on **every** post with the newest post, one post with the same tag, and
   the "All articles" card. So each new post is suggested across the whole blog the day it goes
   out, and its own page suggests older posts. `publish.js` commits the posts whose suggestions changed.
 - Internal links use root-relative paths without `.html` (`/blog/b-impact-assessment-explained`).
-- Optional FAQ: if the article has a real FAQ section, uncomment the `FAQPage` JSON-LD in `<head>`
-  and mirror the visible questions/answers exactly; otherwise remove that comment.
+- Optional FAQ: write the questions and answers in the `FAQPage` JSON-LD in `<head>` (uncomment
+  it), or remove that comment. Don't write a visible FAQ by hand: `applyFaq()` (run by
+  `npm run rebuild` and `publish.js`) renders the JSON-LD as the "Common questions" block at the
+  end of the article, and `validatePost` fails a post whose FAQPage has no visible block.
 - Keep business facts consistent with `CLAUDE.md` (tiers, prices, timelines, certification
   bodies). Voice rules live in the `candor-blog-writer` skill.
 
@@ -118,8 +121,9 @@ Required elements of a post (the template already contains all of them):
 <article class="article-body">…</article>
 ```
 
-Card logic on `blog/index.html`: newest post by `datePublished` is the featured dark card, the
-rest are regular cards newest-first. Never hand-edit `<section class="articles">`; run
+Card logic on `blog/index.html`: newest post by `datePublished` is the featured card (its hero
+photo in its own panel, text on solid ink), the rest are regular cards newest-first, and a
+readiness-score card closes the grid (never hidden by the filters). Every card shows date · read time. Never hand-edit `<section class="articles">`; run
 `npm run rebuild`. The sitemap's blog `<url>` blocks are regenerated between the
 `<!-- Individual Articles -->` and `<!-- Tools -->` markers — keep those comments in place.
 
@@ -144,10 +148,14 @@ The newest post by JSON-LD `datePublished` becomes the big dark featured card at
 `blog/index.html`, and the previous one drops into the regular grid. Nothing to do by hand:
 `rebuildIndex()` handles it. To keep an older post on top, its date would have to be newer, so don't.
 
-## News posts (and the weekly routine)
+## Post types, news posts and the weekly routine
 
-The blog mixes evergreen guides with news. Every existing topic is listed in CLAUDE.md under
-"Existing blog posts"; don't write a second post on one of them. For a news post:
+Post types: `news` (recap of the last weeks/months), `tips` (practical, numbered where order
+matters), `fun facts` (surprising, sourced facts about B Corps), `myth vs fact`, `case study`
+(one company's story), `explainer`, `guide`, `comparison`. Every post in CLAUDE.md's "Existing
+blog posts" table starts its Topic with `[type]`; add it for new posts. The weekly routine picks
+a different type from the newest post's, and avoids any type used in the last three posts when
+it can. Don't write a second post on a topic that's already in the table. For a news post:
 
 1. Cover roughly the last three months of B Corp news that matters to a small business in BC:
    B Lab standards and rules, notable certifications/recertifications/decertifications (Canadian

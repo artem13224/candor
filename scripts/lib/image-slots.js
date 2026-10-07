@@ -24,11 +24,11 @@ const SLOTS = [
     where: 'Background of every generated share image (scripts/make-og.js draws the title and wordmark on top).' },
 
   // ── Photography (film-like, muted, Pacific Northwest) ──────────────────────
-  { name: 'break-1',     dest: 'images/heroes/break-1.jpg',     width: 1920, height: 1080, format: 'jpeg', quality: 76, kind: 'photo',
-    where: 'Full-width landscape break between "Why now" and "Who I work with".' },
-  { name: 'break-2',     dest: 'images/heroes/break-2.jpg',     width: 1920, height: 1080, format: 'jpeg', quality: 76, kind: 'photo',
+  { name: 'break-1',     dest: 'images/heroes/break-1.webp',    width: 1920, height: 1080, format: 'webp', quality: 76, kind: 'photo',
+    where: 'Full-width landscape break between "B Corp in one screen" and "Who I work with".' },
+  { name: 'break-2',     dest: 'images/heroes/break-2.webp',    width: 1920, height: 1080, format: 'webp', quality: 76, kind: 'photo',
     where: 'Full-width landscape break before the About section.' },
-  { name: 'cta-bg',      dest: 'images/heroes/cta-bg.jpg',      width: 1920, height: 1080, format: 'jpeg', quality: 76, kind: 'photo',
+  { name: 'cta-bg',      dest: 'images/heroes/cta-bg.webp',     width: 1920, height: 1080, format: 'webp', quality: 76, kind: 'photo',
     where: 'Background of the final "Start with the free score" call to action (dark overlay on top).' },
   { name: 'who-cannabis', dest: 'images/industry/who-cannabis.jpg', width: 1600, height: 900, format: 'jpeg', quality: 76, kind: 'photo',
     where: 'Industry card: Cannabis brands.' },
@@ -42,6 +42,8 @@ const SLOTS = [
     where: 'Industry card: Coffee & hospitality.' },
   { name: 'who-studio',   dest: 'images/industry/who-studio.jpg',   width: 1600, height: 900, format: 'jpeg', quality: 76, kind: 'photo',
     where: 'Industry card: Studios & agencies.' },
+  { name: 'who-landscape', dest: 'images/industry/who-landscape.webp', width: 1536, height: 1024, format: 'webp', quality: 80, kind: 'photo',
+    where: 'Homepage "Who I work with": transparent-sky BC mountain photo (alpha kept), graded to the palette with grain.' },
 
   // ── Real photographs only ──────────────────────────────────────────────────
   { name: 'about-portrait', dest: 'images/about-portrait.jpg', width: 1200, height: 1200, format: 'jpeg', quality: 80, kind: 'portrait',

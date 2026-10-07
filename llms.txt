@@ -7,8 +7,8 @@ For a full list of our services and compliance summaries, please see our [Full T
 ## Main Pages
 - [Home Page](https://candorcertified.com/): An overview of Candor's consulting model run by Artem Furman.
 - [Contact & Booking](https://calendly.com/artemfurman/30min): Link to book a direct 30-minute consultation call.
-- [Free Impact Assessment](https://candorcertified.com/assessment/): Two-minute self-assessment that estimates certification readiness.
-- [Resources / Blog](https://candorcertified.com/blog/): Articles on B Corp certification, the B Impact Assessment, and verification.
+- [Free Readiness Score](https://candorcertified.com/assessment/): Four-question, two-minute check showing which of B Lab's seven required impact topics a business already covers, the two gaps to close first and a realistic timeline. No email needed.
+- [Resources / Blog](https://candorcertified.com/blog/): Articles on B Corp certification, B Lab's 2026 standards, and verification.
 
 ## Legal
 - [Privacy Policy](https://candorcertified.com/privacy-policy/): PIPEDA / BC PIPA privacy policy, cookie and analytics disclosures.

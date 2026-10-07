@@ -14,8 +14,6 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 <!-- candor-consent-default:end -->
 <!-- candor-a11y:start -->
 <style>
-  /* Footer on phones: a stacked, two-column layout instead of wrapped inline links.
-     'footer .x' outranks each page's own '.x' rules, so this wins without !important. */
   /* Nav at tablet widths: the links tighten, then step aside, so the call-to-action never wraps or spills off screen. */
   #site-nav .nav-cta{white-space:nowrap}
   @media (max-width:1100px){#site-nav .nav-links{padding-left:16px}#site-nav .nav-link{padding:6px 8px;letter-spacing:.1em}}
@@ -28,21 +26,14 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
     #site-nav .nav-wordmark{font-size:12px;letter-spacing:.18em}
   }
   @media (max-width:360px){#site-nav .nav-wordmark{display:none}}
-  @media (max-width:720px){
-    footer{padding-top:32px!important;padding-bottom:40px!important}
-    body:has(#mob-nav) footer{padding-bottom:124px!important}
-    footer .foot-row{flex-direction:column;align-items:flex-start;gap:16px}
-    footer .foot-row+.foot-row{margin-top:22px;padding-top:22px}
-    footer .foot-nav{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
-    footer .foot-links{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
-    footer .foot-links a:first-child{grid-column:1 / -1}
-    footer .foot-copy{margin-top:2px}
-    footer .foot-disclaimer{max-width:none}
-  }
   :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid #3D8A57;outline-offset:3px}
   .skip-link{position:absolute;left:16px;top:-80px;z-index:1000;padding:10px 16px;background:#0D1610;color:#F5F3EE;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;text-decoration:none;transition:top .2s}
   .skip-link:focus{top:12px;outline-color:#F5F3EE}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  /* custom dot cursor: text fields keep the real I-beam, and a light ring keeps the dot visible on dark sections */
+  @media (pointer:fine){input:not([type=checkbox]):not([type=radio]),textarea{cursor:text!important}#cur{box-shadow:0 0 0 1.5px rgba(245,243,238,.85)}}
+  /* the logo link gets a 44px-tall hit area without moving the nav */
+  .nav-logo{padding-block:11px;margin-block:-11px}
 </style>
 <!-- candor-a11y:end -->
 <!-- Google tag (gtag.js) -->
@@ -115,6 +106,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
       --paper:      #F5F3EE;
       --body:       #4A5548;
       --stone:      #C8C3B5;
+      --muted:      #64625A;  /* secondary text: 5.1:1 on --bg, 5.5:1 on --paper, 4.7:1 on --light */
       --pebble:     #D8D3C3;
       --light:      #E4E1D6;
       --green:      #2D6B42;
@@ -250,7 +242,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
       gap: 16px;
       font-family: 'Space Mono', monospace;
       font-size: 0.6875rem;
-      color: var(--stone);
+      color: var(--muted);
       letter-spacing: 0.06em;
     }
     .article-meta .sep { color: var(--pebble); }
@@ -330,7 +322,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
     }
     .policy-table th {
       font-family: 'Space Mono', monospace;
-      font-size: 0.5625rem;
+      font-size: 0.6875rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--body);
@@ -370,7 +362,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
       font-family: 'Space Mono', monospace;
       font-size: 0.6875rem;
       letter-spacing: 0.03em;
-      color: var(--stone);
+      color: var(--muted);
       line-height: 1.65;
       border-top: 1px solid var(--light);
       padding-top: 32px;
@@ -398,12 +390,82 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
       .article-header h1 { font-size: 1.75rem; }
       #site-nav { padding: 0 20px; }
       .policy-table { font-size: 0.8125rem; }
-      .policy-table th, .policy-table td { padding: 9px 10px; }
+      .policy-table th, .policy-table td { padding: 9px 10px; overflow-wrap: anywhere; }
     }
   </style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
+<!-- candor-loader:start -->
+<style>
+  .cl{display:none;position:fixed;inset:0;z-index:10000;align-items:center;justify-content:center;background:#0D1610;opacity:0;transition:opacity .35s ease;pointer-events:none}
+  .cl.cl-ready{display:flex}
+  .cl.cl-show{opacity:1;pointer-events:auto}
+  .cl svg{width:clamp(110px,14vw,148px);height:auto;overflow:visible}
+  .cl-rip{fill:none;stroke:#F5F3EE;stroke-width:8.8;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.06);animation:clRipple 2.8s cubic-bezier(.22,.7,.3,1) infinite}
+  .cl-r3{animation-delay:.3s}
+  .cl-r2{animation-delay:.65s}
+  .cl-r1{animation-delay:1s}
+  .cl-dot{fill:#5AA672;transform-box:fill-box;transform-origin:center;animation:clDrop 2.8s cubic-bezier(.34,1.56,.64,1) infinite}
+  @keyframes clRipple{0%{opacity:0;transform:scale(.06)}8%{opacity:1}42%{transform:scale(1)}70%{opacity:1;transform:scale(1)}92%,100%{opacity:0;transform:scale(1.04)}}
+  @keyframes clDrop{0%{transform:scale(.4)}12%{transform:scale(1.3)}24%,100%{transform:scale(1)}}
+  @keyframes clBreathe{0%,100%{opacity:1}50%{opacity:.45}}
+  @media (prefers-reduced-motion:reduce){
+    .cl{transition:none}
+    .cl-rip{animation:none;opacity:1;transform:none}
+    .cl-dot{animation:clBreathe 1.8s ease-in-out infinite}
+  }
+  /* the homepage hero waits while the loader is up, then plays its entrance */
+  html.cl-on #top,html.cl-on #top *,html.cl-on #top *::before,html.cl-on #top *::after{animation-play-state:paused!important}
+</style>
+<div class="cl" id="candor-loader" aria-hidden="true">
+  <svg viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r1"><path transform="translate(-216.48 -194.16)" d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z"/></g></g>
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r2"><path transform="translate(-216.48 -194.16)" d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z"/></g></g>
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r3"><path transform="translate(-216.48 -194.16)" d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z"/></g></g>
+    <circle class="cl-dot" cx="216.48" cy="194.16" r="10"/>
+  </svg>
+</div>
+<script>
+(function () {
+  var el = document.getElementById('candor-loader'), root = document.documentElement;
+  if (!el) return;
+  var MIN = 600, timer = 0, shownAt = 0, busy = false;
+  function show(delay) {
+    if (busy) return; busy = true;
+    el.classList.add('cl-ready');
+    timer = setTimeout(function () { shownAt = Date.now(); root.classList.add('cl-on'); el.classList.add('cl-show'); }, delay);
+  }
+  function hide() {
+    if (!busy) return;
+    clearTimeout(timer);
+    if (!shownAt) { busy = false; el.classList.remove('cl-ready'); return; }
+    setTimeout(function () {
+      el.classList.remove('cl-show'); root.classList.remove('cl-on');
+      setTimeout(function () { if (!el.classList.contains('cl-show')) { el.classList.remove('cl-ready'); busy = false; shownAt = 0; } }, 380);
+    }, Math.max(0, MIN - (Date.now() - shownAt)));
+  }
+  // first load: up only if the HTML is still arriving 0.9 s into the visit; down once it's readable
+  if (document.readyState === 'loading') {
+    show(Math.max(300, 900 - (window.performance ? performance.now() : 0)));
+    document.addEventListener('DOMContentLoaded', hide);
+    setTimeout(hide, 10000);
+  }
+  // leaving for another page on this site: up only if the next page is slow to arrive
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target && a.target !== '_self' || a.hasAttribute('download')) return;
+    var url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return;
+    if (url.pathname === location.pathname && url.search === location.search) return;
+    show(500);
+  });
+  // coming back via the back/forward cache: never restore a covered page
+  window.addEventListener('pageshow', function (e) { if (e.persisted) { busy = true; shownAt = 0; hide(); } });
+})();
+</script>
+<!-- candor-loader:end -->
 
 <!-- NAV -->
 <header id="site-nav" aria-label="Site navigation">
@@ -421,12 +483,12 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
     </a>
     <nav class="nav-links" aria-label="Main">
       <a href="/#who"       class="nav-link">Who</a>
-      <a href="/#process"   class="nav-link">Process</a>
-      <a href="/#services"  class="nav-link">Services</a>
+      <a href="/#process"   class="nav-link">How it works</a>
+      <a href="/#services"  class="nav-link">Pricing</a>
       <a href="/#about"     class="nav-link">About</a>
       <a href="/#faq"       class="nav-link">FAQ</a>
-      <a href="/blog"       class="nav-link">Resources</a>
-      <a href="/assessment/" class="nav-link">Assessment</a>
+      <a href="/blog"       class="nav-link">Field notes</a>
+      <a href="/assessment/" class="nav-link">Readiness score</a>
     </nav>
     <div class="nav-cta-wrap">
       <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a free call <span class="nav-ar">→</span></a>
@@ -435,14 +497,15 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 </header>
 
 <!-- PAGE HEADER -->
-<header class="article-header" id="main-content" tabindex="-1">
+<main id="main-content" tabindex="-1">
+<header class="article-header">
   <span class="article-tag">Legal</span>
   <h1>Privacy Policy</h1>
   <p class="article-lede">How Candor collects, uses, and protects your personal information — in plain language.</p>
   <div class="article-meta">
     <span>Effective May 28, 2026</span>
     <span class="sep">·</span>
-    <span>Last updated October 4, 2026</span>
+    <span>Last updated October 7, 2026</span>
   </div>
 </header>
 <hr class="article-divider" />
@@ -454,7 +517,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 
   <h2>1. About this policy</h2>
 
-  <p>Candor provides B Corp and Climate Neutral certification consulting to small businesses. Trust is the product we sell, so the way we handle your personal information matters to us as much as the work we do.</p>
+  <p>Candor provides B Corp and sustainability certification consulting to small businesses. Trust is the product we sell, so the way we handle your personal information matters to us as much as the work we do.</p>
 
   <p>This policy explains, in plain language, what personal information we collect through <a href="https://candorcertified.com">candorcertified.com</a> (the "Site") and through our consulting services, why we collect it, how we use and share it, how long we keep it, and the rights you have.</p>
 
@@ -497,7 +560,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
       <tr>
         <td><strong>Assessment responses</strong></td>
         <td>The free self-assessment tool</td>
-        <td>Your answers and the email address you provide so we can return your results, plus whether you ticked the optional box allowing Candor to follow up by email</td>
+        <td>Your answers, saved without your name or email when you see your results. If you choose to leave your email on the results page, it is stored with your answers so Artem can reply to you about them</td>
       </tr>
       <tr>
         <td><strong>Contact information</strong></td>
@@ -547,7 +610,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 
   <p>We collect, use, and disclose personal information only for purposes a reasonable person would consider appropriate, namely to:</p>
   <ul>
-    <li>Score your assessment and send you your results;</li>
+    <li>Score your assessment and, if you ask, reply to you about your results;</li>
     <li>Respond to your enquiries;</li>
     <li>Provide consulting services you've engaged us for;</li>
     <li>Send newsletters to subscribers who've opted in;</li>
@@ -592,10 +655,16 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
         <td>Until you clear your browser data</td>
       </tr>
       <tr>
-        <td><code>loaderSeen</code></td>
+        <td><code>candor-assessment-state</code></td>
         <td>Functional (browser session storage, first-party)</td>
-        <td>Remembers that your browser has already shown the home page intro animation during this visit</td>
-        <td>Until you close the tab</td>
+        <td>Keeps your readiness-score answers and the step you were on, so a page reload doesn't lose them</td>
+        <td>Until you close the tab, or choose "Start over"</td>
+      </tr>
+      <tr>
+        <td><code>candor-assessment-pending</code></td>
+        <td>Functional (browser local storage, first-party)</td>
+        <td>Holds your readiness-score submission only if it failed to send, so it can be retried on your next visit</td>
+        <td>Until it sends on your next visit</td>
       </tr>
       <tr>
         <td><code>_ga</code>, <code>_ga_*</code></td>
@@ -606,7 +675,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
     </tbody>
   </table>
 
-  <p>The first two entries contain no personal identifier and are necessary for the Site to behave as intended, so they don't require consent. The analytics cookies do, and we don't set them until you accept.</p>
+  <p>The first three entries contain no personal identifier (the last one holds your email only if you typed it into a submission that failed to send) and are necessary for the Site to behave as intended, so they don't require consent. The analytics cookies do, and we don't set them until you accept.</p>
 
   <p><strong>What analytics processes either way.</strong> Even in cookieless mode, Google Analytics processes your IP address (truncated by Google before storage), approximate location, and device and browser type to produce aggregate usage statistics. We use it only to see which pages are useful. We don't use it to identify you individually, we don't run advertising or remarketing tags, and we don't share analytics data with advertisers.</p>
 
@@ -742,7 +811,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 
   <h2>14. Third-party links</h2>
 
-  <p>The Site may link to other websites (for example, B Lab or Climate Neutral). We're not responsible for their privacy practices — please review their policies before sharing information with them.</p>
+  <p>The Site may link to other websites (for example, B Lab or The Change Climate Project). We're not responsible for their privacy practices — please review their policies before sharing information with them.</p>
 
   <h2>15. Changes to this policy</h2>
 
@@ -762,36 +831,173 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 
 </article>
 
-<footer>
-  <div class="foot-row">
-    <div class="foot-l">
-      <svg width="22" height="22" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="rgba(61,138,87,.55)"/></svg>
-      <span class="foot-name">Candor</span>
+</main>
+<!-- candor-footer:start -->
+<style>
+  footer.cf{position:relative;overflow:hidden;background:#0B0F0C;color:rgba(245,243,238,.72);border-top:1px solid rgba(245,243,238,.06);
+    padding:clamp(56px,7vw,96px) clamp(20px,5vw,80px) 30px;font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .cf-in{position:relative;z-index:1;max-width:1200px;margin:0 auto}
+  .cf-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,2fr);gap:clamp(40px,7vw,110px)}
+  .cf-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#F5F3EE;margin-bottom:26px}
+  .cf-logo{width:26px;height:26px;flex-shrink:0}
+  .cf-word{font:800 13px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase}
+  .cf-pitch{margin:0 0 28px;max-width:21ch;font:300 clamp(22px,2.2vw,30px)/1.25 'Urbanist',system-ui,sans-serif;letter-spacing:-.015em;color:#F5F3EE}
+  .cf-pitch em{font-style:italic;color:#7CC08F}
+  .cf-sub{margin:-12px 0 28px;font-size:14px;line-height:1.6;color:rgba(245,243,238,.55);max-width:36ch}
+  .cf-ctas{display:flex;flex-wrap:wrap;gap:10px}
+  .cf-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:2px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .25s,color .25s,border-color .25s}
+  .cf-btn-p{background:#F5F3EE;color:#0E110D}
+  .cf-btn-p:hover{background:#5AA672;color:#0E110D}
+  .cf-btn-s{border:1px solid rgba(245,243,238,.22);color:rgba(245,243,238,.85)}
+  .cf-btn-s:hover{border-color:rgba(245,243,238,.6);color:#F5F3EE}
+  .cf-cols{display:flex;justify-content:flex-end;align-items:flex-start;gap:clamp(56px,8vw,120px)}
+  .cf-h{margin:4px 0 16px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#5AA672}
+  .cf-col ul{list-style:none;margin:0;padding:0}
+  .cf-col li{margin:0}
+  .cf-col a{display:inline-block;padding:6px 0;font-size:14.5px;line-height:1.4;color:rgba(245,243,238,.72);text-decoration:none;transition:color .2s}
+  .cf-col a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(124,192,143,.7)}
+  .cf-bot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:clamp(48px,6vw,80px);padding-top:22px;border-top:1px solid rgba(245,243,238,.08);font-size:12.5px;color:rgba(245,243,238,.5)}
+  .cf-legal{display:flex;flex-wrap:wrap;gap:6px 22px}
+  .cf-legal a{display:inline-block;padding:4px 0;color:rgba(245,243,238,.6);text-decoration:none}
+  .cf-legal a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:3px}
+  .cf-disc{margin:16px 0 0;max-width:none;font-size:11.5px;line-height:1.65;color:rgba(245,243,238,.55)}
+  /* the faint wordmark is drawn from a pseudo-element: pure decoration, so it is not text to contrast checkers or AT */
+  .cf-mark::before{content:attr(data-word)}
+  .cf-mark{position:relative;z-index:0;display:block;margin:clamp(28px,4vw,48px) auto -.18em;max-width:1200px;font:800 clamp(64px,17vw,220px)/.8 'Urbanist',system-ui,sans-serif;letter-spacing:-.05em;color:rgba(245,243,238,.035);user-select:none;pointer-events:none;white-space:nowrap}
+  @media (max-width:820px){
+    .cf-top{grid-template-columns:1fr;gap:44px}
+    .cf-cols{display:grid;grid-template-columns:1fr 1fr;gap:30px 20px;justify-content:start}
+  }
+  @media (max-width:520px){
+    footer.cf{padding-top:56px}
+    .cf-ctas{flex-direction:column}
+    .cf-btn{justify-content:center;padding:15px 20px}
+    .cf-bot{flex-direction:column;align-items:flex-start}
+  }
+  body:has(#mob-nav) footer.cf{padding-bottom:120px}
+  .cf-dlg{position:fixed;inset:0;margin:auto;height:fit-content;width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:6px;background:#F5F3EE;color:#0E110D;box-shadow:0 30px 80px -20px rgba(0,0,0,.45)}
+  .cf-dlg,.cf-dlg *{cursor:auto!important}
+  .cf-dlg input,.cf-dlg textarea{cursor:text!important}
+  .cf-dlg button,.cf-dlg a,.cf-dlg label{cursor:pointer!important}
+  html:has(.cf-dlg[open]) #cur,html:has(.cf-dlg[open]) #cur2{display:none!important}
+  html:has(.cf-dlg[open]) body{cursor:auto!important}
+  .cf-dlg::backdrop{background:rgba(11,15,12,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .cf-dlg form,.cf-done{padding:30px clamp(20px,5vw,34px) 28px}
+  .cf-dlg h2{margin:0 0 6px;font:800 26px/1.1 'Urbanist',system-ui,sans-serif;letter-spacing:-.02em}
+  .cf-dlg h2 em{font-style:italic;font-weight:300;color:#2D6B42}
+  .cf-dlg p{margin:0 0 20px;font:400 14px/1.6 'Open Sans',system-ui,sans-serif;color:#4A5548}
+  .cf-dlg label{display:block;margin:0 0 6px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#4A5548}
+  .cf-dlg input,.cf-dlg textarea{box-sizing:border-box;width:100%;margin:0 0 16px;padding:12px 14px;border:1px solid #C8C3B5;border-radius:3px;background:#fff;font:400 15px/1.4 'Open Sans',system-ui,sans-serif;color:#0E110D}
+  .cf-dlg textarea{min-height:120px;resize:vertical}
+  .cf-dlg input:focus,.cf-dlg textarea:focus{outline:2px solid #3D8A57;outline-offset:1px;border-color:#3D8A57}
+  .cf-hp{position:absolute;left:-9999px}
+  .cf-send{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .cf-dlg .cf-btn-p{background:#0E110D;color:#F5F3EE;border:0;cursor:pointer}
+  .cf-dlg .cf-btn-p:hover{background:#2D6B42;color:#F5F3EE}
+  .cf-dlg .cf-btn-p[disabled]{opacity:.6;cursor:progress}
+  .cf-small{font:400 12px/1.5 'Open Sans',system-ui,sans-serif;color:#5E6E5E}
+  .cf-small a{color:#2D6B42}
+  .cf-x{position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;font:400 22px/1 system-ui,sans-serif;color:#4A5548;cursor:pointer}
+  .cf-x:hover{background:#E4E1D6}
+  .cf-err{display:none;margin:0 0 14px;font:400 13px/1.5 'Open Sans',system-ui,sans-serif;color:#8A3B2E}
+  .cf-dlg.is-err .cf-err{display:block}
+  .cf-err a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+  .cf-done{display:none}
+  .cf-dlg.is-done form{display:none}
+  .cf-dlg.is-done .cf-done{display:block}
+</style>
+<footer class="cf">
+  <div class="cf-in">
+    <div class="cf-top">
+      <div>
+        <a class="cf-brand" href="/" aria-label="Candor home"><svg class="cf-logo" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="#5AA672"/></svg><span class="cf-word">Candor</span></a>
+        <p class="cf-pitch">B Corp certification for small businesses, <em>without the guesswork.</em></p>
+        <p class="cf-sub">Flat fees and one consultant, working with clients across Canada from Vancouver, BC.</p>
+        <div class="cf-ctas">
+          <a class="cf-btn cf-btn-p" href="https://calendly.com/artemfurman/30min" target="_blank" rel="noopener noreferrer">Book a free call <span aria-hidden="true">→</span></a>
+          <a class="cf-btn cf-btn-s" href="/assessment/">Free readiness score</a>
+        </div>
+      </div>
+      <nav class="cf-cols" aria-label="Footer">
+        <div class="cf-col">
+          <h2 class="cf-h">Navigate</h2>
+          <ul>
+            <li><a href="/#who">Who it's for</a></li>
+            <li><a href="/#process">How it works</a></li>
+            <li><a href="/#services">Pricing</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="cf-col">
+          <h2 class="cf-h">Resources</h2>
+          <ul>
+            <li><a href="/blog/">Field notes</a></li>
+            <li><a href="/assessment/">Readiness score</a></li>
+            <li><a href="mailto:candorcertified@gmail.com" data-contact-open>Contact</a></li>
+          </ul>
+        </div>
+      </nav>
     </div>
-    <nav class="foot-nav" aria-label="Footer navigation">
-      <a href="/#services">Services</a>
-      <a href="/#process">How It Works</a>
-      <a href="/#about">About</a>
-      <a href="/#faq">FAQ</a>
-      <a href="/blog">Resources</a>
-      <a href="/assessment/">Assessment</a>
-    </nav>
-  </div>
-  <div class="foot-row">
-    <div class="foot-links">
-      <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a>
-      <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="/privacy-policy/" aria-current="page">Privacy Policy</a>
-      <a href="/privacy-policy/">Privacy Policy</a>
-      <a href="/terms/">Terms</a>
-      <a href="/privacy-policy/#cookies" data-consent-open>Cookie settings</a>
+    <div class="cf-bot">
+      <div>© 2026 Candor · Vancouver, BC</div>
+      <div class="cf-legal">
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/privacy-policy/#cookies" data-consent-open>Cookie settings</a>
+        <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      </div>
     </div>
-    <div class="foot-copy">© 2026 Candor · Vancouver, BC, Canada</div>
+    <p class="cf-disc">Candor is an independent consultancy for B Corp and other sustainability certifications. It is not affiliated with or endorsed by B Lab, The Change Climate Project (The Climate Label), or 1% for the Planet.</p>
   </div>
-  <div class="foot-row">
-    <p class="foot-disclaimer">Candor – B Corp &amp; Sustainability Certification Consultant provides independent advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
-  </div>
+  <span class="cf-mark" aria-hidden="true" data-word="Candor"></span>
 </footer>
+<dialog class="cf-dlg" id="cf-contact" aria-labelledby="cf-contact-title">
+  <button class="cf-x" type="button" aria-label="Close" data-contact-close>×</button>
+  <form name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="contact">
+    <p class="cf-hp" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <h2 id="cf-contact-title">Send a <em>note.</em></h2>
+    <p>Questions about certification, your business, or the site? I read every message and reply by email.</p>
+    <label for="cf-name">Name</label>
+    <input id="cf-name" name="name" autocomplete="name" required>
+    <label for="cf-email">Email</label>
+    <input id="cf-email" name="email" type="email" autocomplete="email" required>
+    <label for="cf-msg">Message</label>
+    <textarea id="cf-msg" name="message" required></textarea>
+    <p class="cf-err" role="alert">That didn't send. Please email <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a> instead.</p>
+    <div class="cf-send">
+      <button class="cf-btn cf-btn-p" type="submit">Send message <span aria-hidden="true">→</span></button>
+      <span class="cf-small">Used only to reply to you. <a href="/privacy-policy/">Privacy</a></span>
+    </div>
+  </form>
+  <div class="cf-done" role="status">
+    <h2>Thanks, <em>message received.</em></h2>
+    <p>Your message is on its way. I’ll reply by email.</p>
+    <button class="cf-btn cf-btn-p" type="button" data-contact-close>Close</button>
+  </div>
+</dialog>
+<script>
+(function () {
+  // on the assessment itself, the footer's "Free readiness score" button would only link back to this page
+  if (location.pathname === '/assessment/' || location.pathname === '/assessment') { var self = document.querySelector('.cf-btn-s[href="/assessment/"]'); if (self) self.remove(); }
+  var dlg = document.getElementById('cf-contact');
+  if (!dlg || typeof dlg.showModal !== 'function') return;          // very old browsers keep the mailto link
+  var form = dlg.querySelector('form'), btn = form.querySelector('[type=submit]');
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-contact-open]')) { e.preventDefault(); dlg.classList.remove('is-done', 'is-err'); dlg.showModal(); }
+    else if (e.target.closest('[data-contact-close]') || e.target === dlg) dlg.close();
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); btn.disabled = true; dlg.classList.remove('is-err');
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+      .then(function (r) { if (!r.ok) throw r; form.reset(); dlg.classList.add('is-done'); })
+      .catch(function () { dlg.classList.add('is-err'); })
+      .then(function () { btn.disabled = false; });
+  });
+})();
+</script>
+<!-- candor-footer:end -->
 
 <!-- NAV SCROLL EFFECT -->
 <script>
@@ -828,7 +1034,10 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
   .cc-decline:hover{background:#E4E1D6}
   .cc-btn:focus-visible,.cc-desc a:focus-visible{outline:2px solid #2D6B42;outline-offset:2px}
   @media (prefers-reduced-motion: reduce){.cc-banner{transition:none;transform:none}}
+  @media (max-width:639px){.cc-banner{left:12px;right:12px;bottom:12px;padding:12px 14px;font-size:13px;line-height:1.45}.cc-title{display:inline;margin:0 6px 0 0;font-size:10px}.cc-desc{display:inline}.cc-actions{margin-top:10px;flex-wrap:nowrap}.cc-btn{flex:1;padding:12px 8px}}
   @media (min-width:640px){.cc-banner{left:24px;bottom:24px;right:auto}}
+  /* while the banner is open, keyboard focus scrolls clear of it instead of landing underneath */
+  html.cc-open{scroll-padding-bottom:var(--cc-h,0px)}
 </style>
 <script>
 (function () {
@@ -842,13 +1051,22 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'candor_consent', consent_state: v });
   }
-  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
-  function hide(){ banner.classList.remove('cc-in'); setTimeout(function(){ banner.hidden = true; }, 300); }
+  /* --cc-h lets fixed page UI (e.g. the mobile nav pill) sit above the banner while it is open */
+  /* the banner never takes focus on its own: Accept and Decline stay equal, and keyboard users start at the skip link */
+  var root = document.documentElement;
+  function show(){ banner.hidden = false; root.classList.add('cc-open'); requestAnimationFrame(function(){ banner.classList.add('cc-in'); root.style.setProperty('--cc-h', (banner.offsetHeight + 16) + 'px'); }); }
+  function hide(){ banner.classList.remove('cc-in'); root.classList.remove('cc-open'); root.style.removeProperty('--cc-h'); setTimeout(function(){ banner.hidden = true; }, 300); }
   banner.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cc]'); if (!b) return;
     var v = b.getAttribute('data-cc'); write(v); apply(v); hide();
   });
   banner.addEventListener('keydown', function (e) { if (e.key === 'Escape') { write('denied'); apply('denied'); hide(); } });
+  // keyboard focus that lands under the open banner is scrolled clear of it (scroll-padding alone skips elements already on screen)
+  document.addEventListener('focusin', function (e) {
+    if (banner.hidden || banner.contains(e.target) || e.target === document.body) return;
+    var a = e.target.getBoundingClientRect(), b = banner.getBoundingClientRect();
+    if (a.bottom > b.top - 8 && a.top < b.bottom && a.right > b.left && a.left < b.right) window.scrollBy({ top: a.bottom - b.top + 16, behavior: 'instant' });
+  });
   document.addEventListener('click', function (e) {
     var a = e.target.closest('[data-consent-open]'); if (!a) return;
     e.preventDefault(); show();

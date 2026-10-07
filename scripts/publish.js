@@ -88,6 +88,7 @@ if (DRY_RUN) {
   try {
     console.log(`[dry-run] Would run: node scripts/sync-shared.js ${rel(destPath)}`);
     syncShared(tmpFile, true);
+    lib.applyFaq(tmpFile);
     problems = lib.validatePost(tmpFile);
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -135,6 +136,9 @@ syncShared(destPath);
 // ── 2b. Hero image, if blog/images/<slug>.* exists ────────────────────────────
 const hero = lib.applyHeroImage(destPath);
 if (hero.changed) console.log(`✓ Added hero image ${hero.url} (${hero.width}×${hero.height})`);
+
+// ── 2c. Visible FAQ from the post's FAQPage JSON-LD ──────────────────────────
+if (lib.applyFaq(destPath).changed) console.log('✓ Added the visible FAQ block from the FAQPage JSON-LD');
 
 // ── 3. Validate ───────────────────────────────────────────────────────────────
 const problems = lib.validatePost(destPath);

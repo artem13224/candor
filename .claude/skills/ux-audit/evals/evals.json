@@ -1,0 +1,17 @@
+{
+  "skill_name": "ux-audit",
+  "evals": [
+    {"id": 1, "name": "ux-guidelines-casual",
+     "prompt": "can you audit https://www.ux-guidelines.com/ for me? want to know whats wrong with it ux/ui wise, be thorough but keep the writeup short",
+     "expected_output": "Short severity-ranked audit with measured evidence across a11y, usability, visual, motion, content, performance",
+     "files": []},
+    {"id": 2, "name": "candor-local-mobile-motion",
+     "prompt": "do a UX/UI audit of the landing page i have running locally at http://127.0.0.1:8765/ — it's a B Corp consultancy site. mobile matters most and i care a lot about the animations/motion",
+     "expected_output": "Mobile-first audit with a substantive motion section (works / problems / opportunities with timing numbers) and reduced-motion + no-JS findings",
+     "files": []},
+    {"id": 3, "name": "hci-textbook-pre-recommend",
+     "prompt": "Before I recommend https://introductiontohci.org/ to my students, can you check whether the site itself is accessible and easy to use? Short answer please.",
+     "expected_output": "Very short verdict-led audit focused on accessibility and usability with evidence",
+     "files": []}
+  ]
+}

@@ -14,8 +14,6 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 <!-- candor-consent-default:end -->
 <!-- candor-a11y:start -->
 <style>
-  /* Footer on phones: a stacked, two-column layout instead of wrapped inline links.
-     'footer .x' outranks each page's own '.x' rules, so this wins without !important. */
   /* Nav at tablet widths: the links tighten, then step aside, so the call-to-action never wraps or spills off screen. */
   #site-nav .nav-cta{white-space:nowrap}
   @media (max-width:1100px){#site-nav .nav-links{padding-left:16px}#site-nav .nav-link{padding:6px 8px;letter-spacing:.1em}}
@@ -28,21 +26,14 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
     #site-nav .nav-wordmark{font-size:12px;letter-spacing:.18em}
   }
   @media (max-width:360px){#site-nav .nav-wordmark{display:none}}
-  @media (max-width:720px){
-    footer{padding-top:32px!important;padding-bottom:40px!important}
-    body:has(#mob-nav) footer{padding-bottom:124px!important}
-    footer .foot-row{flex-direction:column;align-items:flex-start;gap:16px}
-    footer .foot-row+.foot-row{margin-top:22px;padding-top:22px}
-    footer .foot-nav{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
-    footer .foot-links{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;width:100%}
-    footer .foot-links a:first-child{grid-column:1 / -1}
-    footer .foot-copy{margin-top:2px}
-    footer .foot-disclaimer{max-width:none}
-  }
   :where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:2px solid #3D8A57;outline-offset:3px}
   .skip-link{position:absolute;left:16px;top:-80px;z-index:1000;padding:10px 16px;background:#0D1610;color:#F5F3EE;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;border-radius:2px;text-decoration:none;transition:top .2s}
   .skip-link:focus{top:12px;outline-color:#F5F3EE}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  /* custom dot cursor: text fields keep the real I-beam, and a light ring keeps the dot visible on dark sections */
+  @media (pointer:fine){input:not([type=checkbox]):not([type=radio]),textarea{cursor:text!important}#cur{box-shadow:0 0 0 1.5px rgba(245,243,238,.85)}}
+  /* the logo link gets a 44px-tall hit area without moving the nav */
+  .nav-logo{padding-block:11px;margin-block:-11px}
 </style>
 <!-- candor-a11y:end -->
 <!-- Google Tag Manager -->
@@ -63,7 +54,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resources — B Corp Certification Guides | Candor</title>
+  <title>Field Notes: B Corp Certification Guides | Candor</title>
   <meta name="description" content="Practical guides on B Corp certification, sustainability credentials, and what it actually takes to certify as a BC small business.">
   <link rel="canonical" href="https://candorcertified.com/blog">
   <link rel="icon" type="image/svg+xml" href="/images/candor-logo.svg">
@@ -264,7 +255,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .card-date {
       font-size: 11px;
       letter-spacing: 0.06em;
-      opacity: 0.4;
+      color: var(--muted, #64625A);
       text-transform: uppercase;
     }
 
@@ -276,30 +267,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     .article-card:hover .card-arrow { transform: translateX(4px); }
 
-    /* FEATURED CARD — full width */
+    /* FEATURED CARD: full width, photo in its own panel, text on solid ink */
     .article-card.featured {
       grid-column: 1 / -1;
-      flex-direction: row;
-      align-items: center;
-      gap: 48px;
-      padding: 56px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      padding: 0;
       background: var(--dark);
       color: var(--white);
       border-color: transparent;
     }
-
-    .article-card.featured .card-tag { color: var(--green2); }
-    .article-card.featured .card-title { font-size: clamp(28px, 4vw, 44px); color: var(--white); flex: 1; }
-    .article-card.featured .card-excerpt { color: rgba(245,243,238,0.6); max-width: 44ch; }
-    .article-card.featured .card-date { color: rgba(245,243,238,0.35); }
+    .article-card.featured.has-img { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+    .featured-media { position: relative; min-height: 340px; overflow: hidden; background: #141f17; }
+    .featured-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+    .article-card.featured:hover .featured-media img { transform: scale(1.03); }
+    .featured-body { display: flex; flex-direction: column; gap: 16px; padding: 52px 48px; }
+    .article-card.featured .card-tag { color: #5AA672; }
+    .article-card.featured .card-title { font-size: clamp(28px, 3.4vw, 40px); color: var(--white); }
+    .article-card.featured .card-excerpt { color: rgba(245,243,238,0.78); opacity: 1; max-width: 46ch; }
+    .article-card.featured .card-meta { border-top-color: rgba(245,243,238,0.14); }
+    .article-card.featured .card-date { color: rgba(245,243,238,0.72); }
     .article-card.featured .card-arrow { color: var(--green2); font-size: 20px; }
     .article-card.featured::after { background: var(--green2); }
-.article-card.featured.has-img { background-image: linear-gradient(90deg, rgba(13,22,16,.97) 0%, rgba(13,22,16,.9) 48%, rgba(13,22,16,.45) 100%), var(--card-img); background-size: cover; background-position: right center; }
-.article-card.featured.has-img:hover { background-image: linear-gradient(90deg, rgba(20,31,23,.97) 0%, rgba(20,31,23,.9) 48%, rgba(20,31,23,.4) 100%), var(--card-img); }
     .article-card.featured:hover { background: #141f17; transform: translateY(-2px); }
 
-    .featured-left { flex: 1; display: flex; flex-direction: column; gap: 16px; }
-    .featured-right { display: flex; flex-direction: column; gap: 16px; max-width: 380px; }
+    /* READINESS-SCORE CARD: closes the grid, never filtered out */
+    .article-card.promo { background: #E3EDE4; border-color: rgba(45,107,66,0.28); }
+    .article-card.promo:hover { background: #D8E8DB; }
+    .article-card.promo .card-excerpt { opacity: 1; color: var(--ink3); }
 
     /* EMPTY STATE */
     .empty {
@@ -336,38 +332,41 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       gap: 12px;
       flex-wrap: wrap;
     }
-    .filter-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-tags { display: flex; gap: 8px; flex-wrap: wrap; }
     .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-family: 'Urbanist', sans-serif;
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
       background: transparent;
       color: var(--ink3);
-      border: 1.5px solid rgba(13,22,16,0.18);
-      border-radius: 2px;
-      padding: 7px 14px;
+      border: 1.5px solid rgba(13,22,16,0.22);
+      border-radius: 999px;
+      padding: 8px 16px;
+      min-height: 40px;
       cursor: pointer;
       line-height: 1;
       transition: background 0.22s, color 0.22s, border-color 0.22s;
     }
-    .filter-btn:hover { border-color: rgba(13,22,16,0.45); color: var(--dark); }
+    .filter-n { font-size: 12px; font-weight: 700; min-width: 22px; padding: 4px 6px; border-radius: 999px; background: rgba(13,22,16,0.07); color: var(--ink3); text-align: center; }
+    .filter-btn:hover { border-color: rgba(13,22,16,0.5); color: var(--dark); }
     .filter-btn.active { background: var(--dark); color: #F5F3EE; border-color: var(--dark); }
+    .filter-btn.active .filter-n { background: rgba(245,243,238,0.16); color: #F5F3EE; }
     .sort-btn {
       font-family: 'Urbanist', sans-serif;
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
       background: transparent;
       color: var(--ink3);
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
-      padding: 7px 0;
+      gap: 6px;
+      min-height: 40px;
+      padding: 8px 0;
       white-space: nowrap;
       transition: color 0.22s;
     }
@@ -378,6 +377,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     /* Normalized card state when filter or sort is active */
     .articles.filter-active .article-card.featured {
       grid-column: auto;
+      display: flex;
       flex-direction: column;
       padding: 40px;
       background: var(--white);
@@ -385,14 +385,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       border-color: rgba(13,22,16,0.07);
       gap: 16px;
     }
+    .articles.filter-active .featured-media { display: none; }
+    .articles.filter-active .featured-body { display: contents; }
     .articles.filter-active .article-card.featured:hover { background: var(--bg); transform: translateY(-2px); }
     .articles.filter-active .article-card.featured::after { background: var(--green); }
-    .articles.filter-active .featured-left,
-    .articles.filter-active .featured-right { display: contents; }
     .articles.filter-active .article-card.featured .card-tag { color: var(--green); }
-    .articles.filter-active .article-card.featured .card-title { font-size: 22px; color: var(--dark); flex: none; }
+    .articles.filter-active .article-card.featured .card-title { font-size: 22px; color: var(--dark); }
     .articles.filter-active .article-card.featured .card-excerpt { color: rgba(13,22,16,0.62); max-width: none; }
-    .articles.filter-active .article-card.featured .card-date { opacity: 0.4; color: var(--dark); }
+    .articles.filter-active .article-card.featured .card-meta { border-top-color: rgba(13,22,16,0.08); }
+    .articles.filter-active .article-card.featured .card-date { color: var(--muted, #64625A); }
     .articles.filter-active .article-card.featured .card-arrow { color: var(--green); font-size: 16px; }
     .article-card.hidden { display: none; }
 
@@ -403,7 +404,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       .divider { width: calc(100% - 40px); }
       .filter-bar { padding: 20px 20px 0; }
       .articles { padding: 40px 20px 80px; grid-template-columns: 1fr; }
-      .article-card.featured { flex-direction: column; padding: 36px 28px; }
+      .article-card.featured.has-img { grid-template-columns: minmax(0, 1fr); }
+      .featured-media { min-height: 0; aspect-ratio: 16 / 9; }
+      .featured-body { padding: 32px 26px 30px; }
     }
   </style>
   <style>@media(pointer:fine){*{cursor:none!important}#cur{position:fixed;width:12px;height:12px;background:#2D6B42;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background .3s;will-change:left,top}body.hov #cur{width:15px;height:15px;background:#3D8A57}}@media(pointer:coarse){#cur{display:none}}</style>
@@ -414,10 +417,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* the posts rise out of the fog: they overlap the last 30svh of the pinned track, under a soft mist lip */
   .lake ~ *{position:relative;z-index:3}
   .lake + *{margin-top:-30svh}
-  .lake-lip{position:absolute;left:0;right:0;bottom:0;height:62svh;z-index:2;pointer-events:none;
-    background:radial-gradient(38% 22% at 18% 47%,rgba(236,234,226,.75),rgba(236,234,226,0) 70%),radial-gradient(34% 20% at 62% 44%,rgba(236,234,226,.7),rgba(236,234,226,0) 70%),radial-gradient(30% 18% at 90% 49%,rgba(236,234,226,.7),rgba(236,234,226,0) 70%),
-      linear-gradient(to bottom,rgba(236,234,226,0),rgba(236,234,226,.35) 22%,rgba(236,234,226,.8) 38%,#ECEAE2 52%)}
-  .lake-stage{position:sticky;top:0;height:100svh;overflow:hidden;background:#ECEAE2;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+  .lake-lip{position:absolute;left:0;right:0;bottom:0;height:48svh;z-index:2;pointer-events:none;
+    background:radial-gradient(38% 20% at 18% 34%,rgba(236,234,226,.75),rgba(236,234,226,0) 70%),radial-gradient(34% 18% at 62% 31%,rgba(236,234,226,.7),rgba(236,234,226,0) 70%),radial-gradient(30% 16% at 90% 36%,rgba(236,234,226,.7),rgba(236,234,226,0) 70%),
+      linear-gradient(to bottom,rgba(236,234,226,0),rgba(236,234,226,.35) 14%,rgba(236,234,226,.8) 26%,#ECEAE2 38%)}
+  /* fog in front of the incoming filter bar and cards; its opacity follows the scroll and lifts as they settle */
+  .lake-front{position:absolute;left:0;right:0;bottom:8svh;height:40svh;z-index:4;pointer-events:none;overflow:hidden;opacity:0}
+  .lake-front i{position:absolute;inset:0 -20%;will-change:transform}
+  .lake-front i:nth-child(1){background:radial-gradient(26% 30% at 12% 48%,rgba(240,239,233,.95),rgba(240,239,233,0) 72%),radial-gradient(30% 26% at 40% 40%,rgba(240,239,233,.9),rgba(240,239,233,0) 72%),radial-gradient(26% 32% at 66% 54%,rgba(240,239,233,.92),rgba(240,239,233,0) 72%),radial-gradient(30% 28% at 92% 44%,rgba(240,239,233,.9),rgba(240,239,233,0) 72%);animation:lakeDrift 46s ease-in-out infinite alternate}
+  .lake-front i:nth-child(2){background:radial-gradient(34% 24% at 26% 60%,rgba(236,234,226,.85),rgba(236,234,226,0) 72%),radial-gradient(30% 22% at 58% 36%,rgba(236,234,226,.8),rgba(236,234,226,0) 72%),radial-gradient(32% 26% at 84% 62%,rgba(236,234,226,.85),rgba(236,234,226,0) 72%),linear-gradient(to bottom,rgba(236,234,226,0),rgba(236,234,226,.7) 36%,rgba(236,234,226,.7) 58%,rgba(236,234,226,0));animation:lakeDrift 34s ease-in-out infinite alternate-reverse}
+  @keyframes lakeDrift{from{transform:translateX(-6%)}to{transform:translateX(6%)}}
+  @media (prefers-reduced-motion: reduce){.lake .lake-front i:nth-child(n){animation:none}}   /* must outrank the :nth-child() drift rules above */
+  .lake-stage{position:sticky;top:0;height:100svh;height:100lvh;overflow:hidden;background:#ECEAE2;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
   .lake-gl,.lake-still,.lake-veil{position:absolute;display:block}
   .lake-gl,.lake-still{inset:0;width:100%;height:100%}
   .lake-still{object-fit:cover;display:none}
@@ -438,6 +448,76 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
+<!-- candor-loader:start -->
+<style>
+  .cl{display:none;position:fixed;inset:0;z-index:10000;align-items:center;justify-content:center;background:#0D1610;opacity:0;transition:opacity .35s ease;pointer-events:none}
+  .cl.cl-ready{display:flex}
+  .cl.cl-show{opacity:1;pointer-events:auto}
+  .cl svg{width:clamp(110px,14vw,148px);height:auto;overflow:visible}
+  .cl-rip{fill:none;stroke:#F5F3EE;stroke-width:8.8;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.06);animation:clRipple 2.8s cubic-bezier(.22,.7,.3,1) infinite}
+  .cl-r3{animation-delay:.3s}
+  .cl-r2{animation-delay:.65s}
+  .cl-r1{animation-delay:1s}
+  .cl-dot{fill:#5AA672;transform-box:fill-box;transform-origin:center;animation:clDrop 2.8s cubic-bezier(.34,1.56,.64,1) infinite}
+  @keyframes clRipple{0%{opacity:0;transform:scale(.06)}8%{opacity:1}42%{transform:scale(1)}70%{opacity:1;transform:scale(1)}92%,100%{opacity:0;transform:scale(1.04)}}
+  @keyframes clDrop{0%{transform:scale(.4)}12%{transform:scale(1.3)}24%,100%{transform:scale(1)}}
+  @keyframes clBreathe{0%,100%{opacity:1}50%{opacity:.45}}
+  @media (prefers-reduced-motion:reduce){
+    .cl{transition:none}
+    .cl-rip{animation:none;opacity:1;transform:none}
+    .cl-dot{animation:clBreathe 1.8s ease-in-out infinite}
+  }
+  /* the homepage hero waits while the loader is up, then plays its entrance */
+  html.cl-on #top,html.cl-on #top *,html.cl-on #top *::before,html.cl-on #top *::after{animation-play-state:paused!important}
+</style>
+<div class="cl" id="candor-loader" aria-hidden="true">
+  <svg viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r1"><path transform="translate(-216.48 -194.16)" d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z"/></g></g>
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r2"><path transform="translate(-216.48 -194.16)" d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z"/></g></g>
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r3"><path transform="translate(-216.48 -194.16)" d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z"/></g></g>
+    <circle class="cl-dot" cx="216.48" cy="194.16" r="10"/>
+  </svg>
+</div>
+<script>
+(function () {
+  var el = document.getElementById('candor-loader'), root = document.documentElement;
+  if (!el) return;
+  var MIN = 600, timer = 0, shownAt = 0, busy = false;
+  function show(delay) {
+    if (busy) return; busy = true;
+    el.classList.add('cl-ready');
+    timer = setTimeout(function () { shownAt = Date.now(); root.classList.add('cl-on'); el.classList.add('cl-show'); }, delay);
+  }
+  function hide() {
+    if (!busy) return;
+    clearTimeout(timer);
+    if (!shownAt) { busy = false; el.classList.remove('cl-ready'); return; }
+    setTimeout(function () {
+      el.classList.remove('cl-show'); root.classList.remove('cl-on');
+      setTimeout(function () { if (!el.classList.contains('cl-show')) { el.classList.remove('cl-ready'); busy = false; shownAt = 0; } }, 380);
+    }, Math.max(0, MIN - (Date.now() - shownAt)));
+  }
+  // first load: up only if the HTML is still arriving 0.9 s into the visit; down once it's readable
+  if (document.readyState === 'loading') {
+    show(Math.max(300, 900 - (window.performance ? performance.now() : 0)));
+    document.addEventListener('DOMContentLoaded', hide);
+    setTimeout(hide, 10000);
+  }
+  // leaving for another page on this site: up only if the next page is slow to arrive
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target && a.target !== '_self' || a.hasAttribute('download')) return;
+    var url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return;
+    if (url.pathname === location.pathname && url.search === location.search) return;
+    show(500);
+  });
+  // coming back via the back/forward cache: never restore a covered page
+  window.addEventListener('pageshow', function (e) { if (e.persisted) { busy = true; shownAt = 0; hide(); } });
+})();
+</script>
+<!-- candor-loader:end -->
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKSHZN82"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -458,12 +538,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </a>
       <nav class="nav-links" aria-label="Main">
         <a href="/#who"      class="nav-link" data-nav="who">Who</a>
-        <a href="/#process"  class="nav-link" data-nav="process">Process</a>
-        <a href="/#services" class="nav-link" data-nav="services">Services</a>
+        <a href="/#process"  class="nav-link" data-nav="process">How it works</a>
+        <a href="/#services" class="nav-link" data-nav="services">Pricing</a>
         <a href="/#about"    class="nav-link" data-nav="about">About</a>
         <a href="/#faq"      class="nav-link" data-nav="faq">FAQ</a>
-        <a href="/blog"      class="nav-link nav-hide-mobile">Resources</a>
-        <a href="/assessment/" class="nav-link nav-hide-mobile">Assessment</a>
+        <a href="/blog"      class="nav-link nav-hide-mobile">Field notes</a>
+        <a href="/assessment/" class="nav-link nav-hide-mobile">Readiness score</a>
       </nav>
       <div class="nav-cta-wrap">
         <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a free call <span class="nav-ar">→</span></a>
@@ -473,7 +553,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- still-lake:start -->
   <script>document.documentElement.classList.add('lake-js')</script>
-  <section class="lake" id="main-content" tabindex="-1" aria-label="Field notes">
+  <main id="main-content" tabindex="-1">
+<section class="lake" aria-label="Field notes">
     <div class="lake-stage">
       <canvas class="lake-gl" aria-hidden="true"></canvas>
       <img class="lake-still" src="/images/heroes/lake-wide.webp" alt="" aria-hidden="true" width="2000" height="1126" decoding="async">
@@ -485,6 +566,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="lake-cue" aria-hidden="true">Scroll<i></i></div>
     </div>
     <div class="lake-lip" aria-hidden="true"></div>
+    <div class="lake-front" aria-hidden="true"><i></i><i></i></div>
   </section>
   <!-- still-lake:end -->
 
@@ -500,16 +582,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section class="articles">
 
-    <a href="/blog/b-corp-news-fall-2026" class="article-card featured has-img" style="--card-img:url('/blog/images/b-corp-news-fall-2026.webp')" data-tag="B Corp Basics" data-date="2026-10-06">
-      <div class="featured-left">
+    <a href="/blog/b-corp-news-fall-2026" class="article-card featured has-img" data-tag="B Corp Basics" data-date="2026-10-06">
+      <div class="featured-media"><img src="/blog/images/b-corp-news-fall-2026.webp" alt="" width="1600" height="900" loading="lazy" decoding="async" /></div>
+      <div class="featured-body">
         <span class="card-tag">B Corp Basics</span>
         <h2 class="card-title">B Corp News Fall 2026: What Changed This Quarter</h2>
-      </div>
-      <div class="featured-right">
         <p class="card-excerpt">B Corp news from July to October 2026: the logo now comes with stricter claim rules, and the first companies have certified on B Lab's new standards.</p>
         <div class="card-meta">
-          <span class="card-date">Oct 2026</span>
-          <span class="card-arrow">&#8594;</span>
+          <span class="card-date">Oct 2026 · 5 min read</span>
+          <span class="card-arrow" aria-hidden="true">&#8594;</span>
         </div>
       </div>
     </a>
@@ -519,18 +600,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">B Corps That Lost Their Certification</h2>
       <p class="card-excerpt">What actually happens when B Corp certification is revoked — four high-profile decertification cases and what small businesses should take from each.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 5 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
     <a href="/blog/b-lab-verification-process" class="article-card" data-tag="Process" data-date="2026-05-27">
       <span class="card-tag">Process</span>
       <h2 class="card-title">The B Lab Verification Process: What Happens After You Submit</h2>
-      <p class="card-excerpt">You submitted your B Impact Assessment. Now what? A step-by-step walkthrough of the B Lab verification process — what they ask for, what the review involves, and what causes stalls.</p>
+      <p class="card-excerpt">You submitted for B Corp certification. Now what? A step-by-step walkthrough of the B Lab verification process — what they ask for, what the review involves, and what causes stalls.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 5 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -539,8 +620,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">B Corp vs 1% for the Planet: The Real Difference</h2>
       <p class="card-excerpt">B Corp and 1% for the Planet are not the same thing. Here's how they differ, what each actually requires, and which makes sense for your business.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 4 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -549,18 +630,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">B Corp Certification Changes in 2026</h2>
       <p class="card-excerpt">B Lab replaced the 80-point system with 7 mandatory impact topics. What changed in 2026, what it means for your timeline, and what to do now.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 5 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
     <a href="/blog/b-impact-assessment-explained" class="article-card" data-tag="B Corp Basics" data-date="2026-05-24">
       <span class="card-tag">B Corp Basics</span>
       <h2 class="card-title">What the B Impact Assessment Actually Scores</h2>
-      <p class="card-excerpt">B Impact Assessment explained: how the tool scores your business, what the 2026 mandatory topic requirements mean for certification, and why most businesses lose points to documentation gaps.</p>
+      <p class="card-excerpt">B Impact Assessment explained: how the old 80-point tool scored businesses, what replaced it in 2026, and why documentation gaps still stall most applications.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 6 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -569,8 +650,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">How Long B Corp Certification Takes in 2026</h2>
       <p class="card-excerpt">How long does B Corp certification take? The honest timeline breakdown — what controls it, what slows it down, and how to move faster.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 5 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -579,42 +660,190 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">How to Get B Corp Certified in BC: What It Actually Takes</h2>
       <p class="card-excerpt">The practical breakdown of what B Corp certification requires for BC small businesses — documentation, timelines, and costs.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 6 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
+      </div>
+    </a>
+
+    <a href="/assessment/" class="article-card promo">
+      <span class="card-tag">Readiness score</span>
+      <h2 class="card-title">How close are you to B&nbsp;Corp?</h2>
+      <p class="card-excerpt">Four questions, about two minutes. See which of B Lab's seven required topics you already cover, and the two gaps to close first. No email needed.</p>
+      <div class="card-meta">
+        <span class="card-date">2-minute check</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
   </section>
 
-  <footer>
-    <div class="foot-row">
-      <div class="foot-l">
-        <svg width="22" height="22" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.35)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="rgba(61,138,87,.55)"/></svg>
-        <span class="foot-name">Candor</span>
+</main>
+<!-- candor-footer:start -->
+<style>
+  footer.cf{position:relative;overflow:hidden;background:#0B0F0C;color:rgba(245,243,238,.72);border-top:1px solid rgba(245,243,238,.06);
+    padding:clamp(56px,7vw,96px) clamp(20px,5vw,80px) 30px;font-family:'Open Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .cf-in{position:relative;z-index:1;max-width:1200px;margin:0 auto}
+  .cf-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,2fr);gap:clamp(40px,7vw,110px)}
+  .cf-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#F5F3EE;margin-bottom:26px}
+  .cf-logo{width:26px;height:26px;flex-shrink:0}
+  .cf-word{font:800 13px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase}
+  .cf-pitch{margin:0 0 28px;max-width:21ch;font:300 clamp(22px,2.2vw,30px)/1.25 'Urbanist',system-ui,sans-serif;letter-spacing:-.015em;color:#F5F3EE}
+  .cf-pitch em{font-style:italic;color:#7CC08F}
+  .cf-sub{margin:-12px 0 28px;font-size:14px;line-height:1.6;color:rgba(245,243,238,.55);max-width:36ch}
+  .cf-ctas{display:flex;flex-wrap:wrap;gap:10px}
+  .cf-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:2px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .25s,color .25s,border-color .25s}
+  .cf-btn-p{background:#F5F3EE;color:#0E110D}
+  .cf-btn-p:hover{background:#5AA672;color:#0E110D}
+  .cf-btn-s{border:1px solid rgba(245,243,238,.22);color:rgba(245,243,238,.85)}
+  .cf-btn-s:hover{border-color:rgba(245,243,238,.6);color:#F5F3EE}
+  .cf-cols{display:flex;justify-content:flex-end;align-items:flex-start;gap:clamp(56px,8vw,120px)}
+  .cf-h{margin:4px 0 16px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#5AA672}
+  .cf-col ul{list-style:none;margin:0;padding:0}
+  .cf-col li{margin:0}
+  .cf-col a{display:inline-block;padding:6px 0;font-size:14.5px;line-height:1.4;color:rgba(245,243,238,.72);text-decoration:none;transition:color .2s}
+  .cf-col a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(124,192,143,.7)}
+  .cf-bot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin-top:clamp(48px,6vw,80px);padding-top:22px;border-top:1px solid rgba(245,243,238,.08);font-size:12.5px;color:rgba(245,243,238,.5)}
+  .cf-legal{display:flex;flex-wrap:wrap;gap:6px 22px}
+  .cf-legal a{display:inline-block;padding:4px 0;color:rgba(245,243,238,.6);text-decoration:none}
+  .cf-legal a:hover{color:#F5F3EE;text-decoration:underline;text-underline-offset:3px}
+  .cf-disc{margin:16px 0 0;max-width:none;font-size:11.5px;line-height:1.65;color:rgba(245,243,238,.55)}
+  /* the faint wordmark is drawn from a pseudo-element: pure decoration, so it is not text to contrast checkers or AT */
+  .cf-mark::before{content:attr(data-word)}
+  .cf-mark{position:relative;z-index:0;display:block;margin:clamp(28px,4vw,48px) auto -.18em;max-width:1200px;font:800 clamp(64px,17vw,220px)/.8 'Urbanist',system-ui,sans-serif;letter-spacing:-.05em;color:rgba(245,243,238,.035);user-select:none;pointer-events:none;white-space:nowrap}
+  @media (max-width:820px){
+    .cf-top{grid-template-columns:1fr;gap:44px}
+    .cf-cols{display:grid;grid-template-columns:1fr 1fr;gap:30px 20px;justify-content:start}
+  }
+  @media (max-width:520px){
+    footer.cf{padding-top:56px}
+    .cf-ctas{flex-direction:column}
+    .cf-btn{justify-content:center;padding:15px 20px}
+    .cf-bot{flex-direction:column;align-items:flex-start}
+  }
+  body:has(#mob-nav) footer.cf{padding-bottom:120px}
+  .cf-dlg{position:fixed;inset:0;margin:auto;height:fit-content;width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:6px;background:#F5F3EE;color:#0E110D;box-shadow:0 30px 80px -20px rgba(0,0,0,.45)}
+  .cf-dlg,.cf-dlg *{cursor:auto!important}
+  .cf-dlg input,.cf-dlg textarea{cursor:text!important}
+  .cf-dlg button,.cf-dlg a,.cf-dlg label{cursor:pointer!important}
+  html:has(.cf-dlg[open]) #cur,html:has(.cf-dlg[open]) #cur2{display:none!important}
+  html:has(.cf-dlg[open]) body{cursor:auto!important}
+  .cf-dlg::backdrop{background:rgba(11,15,12,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .cf-dlg form,.cf-done{padding:30px clamp(20px,5vw,34px) 28px}
+  .cf-dlg h2{margin:0 0 6px;font:800 26px/1.1 'Urbanist',system-ui,sans-serif;letter-spacing:-.02em}
+  .cf-dlg h2 em{font-style:italic;font-weight:300;color:#2D6B42}
+  .cf-dlg p{margin:0 0 20px;font:400 14px/1.6 'Open Sans',system-ui,sans-serif;color:#4A5548}
+  .cf-dlg label{display:block;margin:0 0 6px;font:600 11px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#4A5548}
+  .cf-dlg input,.cf-dlg textarea{box-sizing:border-box;width:100%;margin:0 0 16px;padding:12px 14px;border:1px solid #C8C3B5;border-radius:3px;background:#fff;font:400 15px/1.4 'Open Sans',system-ui,sans-serif;color:#0E110D}
+  .cf-dlg textarea{min-height:120px;resize:vertical}
+  .cf-dlg input:focus,.cf-dlg textarea:focus{outline:2px solid #3D8A57;outline-offset:1px;border-color:#3D8A57}
+  .cf-hp{position:absolute;left:-9999px}
+  .cf-send{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .cf-dlg .cf-btn-p{background:#0E110D;color:#F5F3EE;border:0;cursor:pointer}
+  .cf-dlg .cf-btn-p:hover{background:#2D6B42;color:#F5F3EE}
+  .cf-dlg .cf-btn-p[disabled]{opacity:.6;cursor:progress}
+  .cf-small{font:400 12px/1.5 'Open Sans',system-ui,sans-serif;color:#5E6E5E}
+  .cf-small a{color:#2D6B42}
+  .cf-x{position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;font:400 22px/1 system-ui,sans-serif;color:#4A5548;cursor:pointer}
+  .cf-x:hover{background:#E4E1D6}
+  .cf-err{display:none;margin:0 0 14px;font:400 13px/1.5 'Open Sans',system-ui,sans-serif;color:#8A3B2E}
+  .cf-dlg.is-err .cf-err{display:block}
+  .cf-err a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+  .cf-done{display:none}
+  .cf-dlg.is-done form{display:none}
+  .cf-dlg.is-done .cf-done{display:block}
+</style>
+<footer class="cf">
+  <div class="cf-in">
+    <div class="cf-top">
+      <div>
+        <a class="cf-brand" href="/" aria-label="Candor home"><svg class="cf-logo" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="#5AA672"/></svg><span class="cf-word">Candor</span></a>
+        <p class="cf-pitch">B Corp certification for small businesses, <em>without the guesswork.</em></p>
+        <p class="cf-sub">Flat fees and one consultant, working with clients across Canada from Vancouver, BC.</p>
+        <div class="cf-ctas">
+          <a class="cf-btn cf-btn-p" href="https://calendly.com/artemfurman/30min" target="_blank" rel="noopener noreferrer">Book a free call <span aria-hidden="true">→</span></a>
+          <a class="cf-btn cf-btn-s" href="/assessment/">Free readiness score</a>
+        </div>
       </div>
-      <nav class="foot-nav" aria-label="Footer navigation">
-        <a href="/#services">Services</a>
-        <a href="/#process">How It Works</a>
-        <a href="/#about">About</a>
-        <a href="/#faq">FAQ</a>
-        <a href="/blog">Resources</a>
-        <a href="/assessment/">Assessment</a>
+      <nav class="cf-cols" aria-label="Footer">
+        <div class="cf-col">
+          <h2 class="cf-h">Navigate</h2>
+          <ul>
+            <li><a href="/#who">Who it's for</a></li>
+            <li><a href="/#process">How it works</a></li>
+            <li><a href="/#services">Pricing</a></li>
+            <li><a href="/#about">About</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="cf-col">
+          <h2 class="cf-h">Resources</h2>
+          <ul>
+            <li><a href="/blog/">Field notes</a></li>
+            <li><a href="/assessment/">Readiness score</a></li>
+            <li><a href="mailto:candorcertified@gmail.com" data-contact-open>Contact</a></li>
+          </ul>
+        </div>
       </nav>
     </div>
-    <div class="foot-row">
-      <div class="foot-links">
-        <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a>
-        <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="/privacy-policy/">Privacy Policy</a>
-      <a href="/terms/">Terms</a>
-      <a href="/privacy-policy/#cookies" data-consent-open>Cookie settings</a>
+    <div class="cf-bot">
+      <div>© 2026 Candor · Vancouver, BC</div>
+      <div class="cf-legal">
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms/">Terms</a>
+        <a href="/privacy-policy/#cookies" data-consent-open>Cookie settings</a>
+        <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      </div>
     </div>
-      <div class="foot-copy">© 2026 Candor · Vancouver, BC, Canada</div>
+    <p class="cf-disc">Candor is an independent consultancy for B Corp and other sustainability certifications. It is not affiliated with or endorsed by B Lab, The Change Climate Project (The Climate Label), or 1% for the Planet.</p>
+  </div>
+  <span class="cf-mark" aria-hidden="true" data-word="Candor"></span>
+</footer>
+<dialog class="cf-dlg" id="cf-contact" aria-labelledby="cf-contact-title">
+  <button class="cf-x" type="button" aria-label="Close" data-contact-close>×</button>
+  <form name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="contact">
+    <p class="cf-hp" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <h2 id="cf-contact-title">Send a <em>note.</em></h2>
+    <p>Questions about certification, your business, or the site? I read every message and reply by email.</p>
+    <label for="cf-name">Name</label>
+    <input id="cf-name" name="name" autocomplete="name" required>
+    <label for="cf-email">Email</label>
+    <input id="cf-email" name="email" type="email" autocomplete="email" required>
+    <label for="cf-msg">Message</label>
+    <textarea id="cf-msg" name="message" required></textarea>
+    <p class="cf-err" role="alert">That didn't send. Please email <a href="mailto:candorcertified@gmail.com">candorcertified@gmail.com</a> instead.</p>
+    <div class="cf-send">
+      <button class="cf-btn cf-btn-p" type="submit">Send message <span aria-hidden="true">→</span></button>
+      <span class="cf-small">Used only to reply to you. <a href="/privacy-policy/">Privacy</a></span>
     </div>
-    <div class="foot-row">
-      <p class="foot-disclaimer">Candor – B Corp &amp; Sustainability Certification Consultant provides independent advisory services and is not affiliated with, endorsed by, or a part of B Lab, Climate Neutral, or 1% for the Planet.</p>
-    </div>
-  </footer>
+  </form>
+  <div class="cf-done" role="status">
+    <h2>Thanks, <em>message received.</em></h2>
+    <p>Your message is on its way. I’ll reply by email.</p>
+    <button class="cf-btn cf-btn-p" type="button" data-contact-close>Close</button>
+  </div>
+</dialog>
+<script>
+(function () {
+  // on the assessment itself, the footer's "Free readiness score" button would only link back to this page
+  if (location.pathname === '/assessment/' || location.pathname === '/assessment') { var self = document.querySelector('.cf-btn-s[href="/assessment/"]'); if (self) self.remove(); }
+  var dlg = document.getElementById('cf-contact');
+  if (!dlg || typeof dlg.showModal !== 'function') return;          // very old browsers keep the mailto link
+  var form = dlg.querySelector('form'), btn = form.querySelector('[type=submit]');
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-contact-open]')) { e.preventDefault(); dlg.classList.remove('is-done', 'is-err'); dlg.showModal(); }
+    else if (e.target.closest('[data-contact-close]') || e.target === dlg) dlg.close();
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); btn.disabled = true; dlg.classList.remove('is-err');
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+      .then(function (r) { if (!r.ok) throw r; form.reset(); dlg.classList.add('is-done'); })
+      .catch(function () { dlg.classList.add('is-err'); })
+      .then(function () { btn.disabled = false; });
+  });
+})();
+</script>
+<!-- candor-footer:end -->
 
 
 <script>
@@ -676,18 +905,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const sortBtn = document.getElementById('sortBtn');
   if (!articles || !filterTagsEl || !sortBtn) return;
 
-  const cards = Array.from(articles.querySelectorAll('.article-card'));
+  const cards = Array.from(articles.querySelectorAll('.article-card:not(.promo)'));
+  const promo = articles.querySelector('.article-card.promo');
 
-  // Build category list from card data attributes
-  const cats = ['All', ...new Set(
-    cards.map(c => c.dataset.tag).filter(Boolean)
-  )];
+  // Build the category list (with a post count on each) from the cards' data-tag
+  const counts = {};
+  cards.forEach(c => { if (c.dataset.tag) counts[c.dataset.tag] = (counts[c.dataset.tag] || 0) + 1; });
+  const cats = ['All', ...Object.keys(counts)];
 
   cats.forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
+    btn.type = 'button';
+    btn.setAttribute('aria-pressed', cat === 'All' ? 'true' : 'false');
     btn.dataset.cat = cat;
-    btn.textContent = cat;
+    const n = cat === 'All' ? cards.length : counts[cat];
+    btn.innerHTML = '';
+    btn.append(cat + ' ');
+    const badge = document.createElement('span');
+    badge.className = 'filter-n';
+    badge.innerHTML = n + '<span class="sr-only"> ' + (n === 1 ? 'post' : 'posts') + '</span>';
+    btn.appendChild(badge);
     filterTagsEl.appendChild(btn);
   });
 
@@ -706,6 +944,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       return sortNewest ? db - da : da - db;
     });
     sorted.forEach(c => articles.appendChild(c));
+    if (promo) articles.appendChild(promo);
 
     // Show / hide by category
     cards.forEach(card => {
@@ -717,8 +956,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   filterTagsEl.addEventListener('click', function (e) {
     const btn = e.target.closest('.filter-btn');
     if (!btn) return;
-    filterTagsEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    filterTagsEl.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
     btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
     activeFilter = btn.dataset.cat;
     apply();
   });
@@ -930,7 +1170,10 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
   .cc-decline:hover{background:#E4E1D6}
   .cc-btn:focus-visible,.cc-desc a:focus-visible{outline:2px solid #2D6B42;outline-offset:2px}
   @media (prefers-reduced-motion: reduce){.cc-banner{transition:none;transform:none}}
+  @media (max-width:639px){.cc-banner{left:12px;right:12px;bottom:12px;padding:12px 14px;font-size:13px;line-height:1.45}.cc-title{display:inline;margin:0 6px 0 0;font-size:10px}.cc-desc{display:inline}.cc-actions{margin-top:10px;flex-wrap:nowrap}.cc-btn{flex:1;padding:12px 8px}}
   @media (min-width:640px){.cc-banner{left:24px;bottom:24px;right:auto}}
+  /* while the banner is open, keyboard focus scrolls clear of it instead of landing underneath */
+  html.cc-open{scroll-padding-bottom:var(--cc-h,0px)}
 </style>
 <script>
 (function () {
@@ -944,13 +1187,22 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'candor_consent', consent_state: v });
   }
-  function show(){ banner.hidden = false; requestAnimationFrame(function(){ banner.classList.add('cc-in'); }); banner.querySelector('.cc-accept').focus({ preventScroll: true }); }
-  function hide(){ banner.classList.remove('cc-in'); setTimeout(function(){ banner.hidden = true; }, 300); }
+  /* --cc-h lets fixed page UI (e.g. the mobile nav pill) sit above the banner while it is open */
+  /* the banner never takes focus on its own: Accept and Decline stay equal, and keyboard users start at the skip link */
+  var root = document.documentElement;
+  function show(){ banner.hidden = false; root.classList.add('cc-open'); requestAnimationFrame(function(){ banner.classList.add('cc-in'); root.style.setProperty('--cc-h', (banner.offsetHeight + 16) + 'px'); }); }
+  function hide(){ banner.classList.remove('cc-in'); root.classList.remove('cc-open'); root.style.removeProperty('--cc-h'); setTimeout(function(){ banner.hidden = true; }, 300); }
   banner.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cc]'); if (!b) return;
     var v = b.getAttribute('data-cc'); write(v); apply(v); hide();
   });
   banner.addEventListener('keydown', function (e) { if (e.key === 'Escape') { write('denied'); apply('denied'); hide(); } });
+  // keyboard focus that lands under the open banner is scrolled clear of it (scroll-padding alone skips elements already on screen)
+  document.addEventListener('focusin', function (e) {
+    if (banner.hidden || banner.contains(e.target) || e.target === document.body) return;
+    var a = e.target.getBoundingClientRect(), b = banner.getBoundingClientRect();
+    if (a.bottom > b.top - 8 && a.top < b.bottom && a.right > b.left && a.left < b.right) window.scrollBy({ top: a.bottom - b.top + 16, behavior: 'instant' });
+  });
   document.addEventListener('click', function (e) {
     var a = e.target.closest('[data-consent-open]'); if (!a) return;
     e.preventDefault(); show();
@@ -1063,6 +1315,9 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     ' float big=wisp(q/420.+vec2(3.1+uT*.01,1.7),0.);',
     ' float f=1.-uDis*1.45+(big-.5)*.5+(p.y-.55)*.25;',
     ' float vis=smoothstep(0.,.7,f);vec4 tx=texture2D(tText,p);float ta=tx.a*vis*uHasText;',
+    // while you read, the drifting wisps stay thin over the letters themselves (≤8%, so the subheading keeps ≥4.5:1);
+    // arrival and the scroll-away dissolve (uAmt → 1) still mist them fully
+    ' D=mix(D,min(D,mix(.08,1.,uAmt)),tx.a*uHasText);',
     ' D=max(D,(1.-vis)*vis*4.*tx.a*uHasText*.06);',      // the faintest breath of mist where it fades
     ' gl_FragColor=vec4(col*D+tx.rgb*ta*(1.-D),D+ta*(1.-D));}'
   ].join('\n');
@@ -1166,9 +1421,19 @@ document.addEventListener('DOMContentLoaded',function(){var dot=document.getElem
     kick();
   });
 
+  var nxt = lake.nextElementSibling, front = lake.querySelector('.lake-front'), fq = 0;
+  function frontFog() { fq = 0; if (!nxt || !front) return; var f = nxt.getBoundingClientRect().top / innerHeight; front.style.opacity = String(sstep(.14, .52, f)); }
+  addEventListener('scroll', function () { if (!fq) fq = requestAnimationFrame(frontFog); }, { passive: true });
+  addEventListener('resize', frontFog); frontFog();
+
   function draw(t) {
     if (!L.sw) return;
-    var rise = REDUCE ? sstep(.5, .95, pS) : sstep(.1, .8, pS);
+    // the rising fog hugs the top edge of the incoming posts instead of filling the whole screen:
+    // ct = how far up the stage their top edge has come (0 at the bottom, 1 at the top);
+    // past the middle of the track it keeps climbing on its own so the mountain is veiled by the time the posts settle
+    var sr = stage.getBoundingClientRect(), nt = nxt ? nxt.getBoundingClientRect().top : innerHeight;
+    var ct = nxt ? (sr.bottom - nt) / sr.height : pS, cv = 1 - nt / innerHeight;   // cv: the same edge, measured up the screen
+    var rise = REDUCE ? sstep(.5, .95, pS) : Math.max(sstep(.1, .5, pS) * .35, Math.min(1, (ct + .44) / 1.5), sstep(.1, .6, cv));
     L.lift = REDUCE ? 0 : Math.pow(seg(pS, .1, 1), 1.4) * L.h * .32;
     var arrive = REDUCE ? 0 : 1 - sstep(.3, 2.8, t);
     var away = REDUCE ? sstep(.05, .3, pS) : sstep(.02, .42, pS);
