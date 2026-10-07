@@ -15,10 +15,12 @@ const dryRun = process.argv.includes('--dry-run');
 
 const heroes = lib.applyHeroImages({ dryRun });
 heroes.forEach(h => console.log(`${dryRun ? '[dry-run] would add' : '✓ added'} hero ${h.url} (${h.width}×${h.height}) to blog/${h.file}`));
+const faq = lib.rebuildFaqs({ dryRun });
 const rel = lib.rebuildRelated({ dryRun });
 const idx = lib.rebuildIndex({ dryRun });
 const sm  = lib.rebuildSitemap({ dryRun });
 const verb = s => dryRun ? (s ? 'would change' : 'up to date') : (s ? 'rebuilt' : 'unchanged');
 console.log(`blog/index.html: ${verb(idx.changed)} — ${idx.count} posts, featured: ${idx.featured}`);
 console.log(`sitemap.xml:     ${verb(sm.changed)} — ${sm.count} blog URLs`);
+console.log(`visible FAQs:    ${faq.changed.length ? `${dryRun ? 'would update' : 'updated'} ${faq.changed.join(', ')}` : 'unchanged'}`);
 console.log(`related posts:   ${rel.changed.length ? `${dryRun ? 'would update' : 'updated'} ${rel.changed.join(', ')}` : 'unchanged'}`);

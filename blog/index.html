@@ -267,31 +267,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     .article-card:hover .card-arrow { transform: translateX(4px); }
 
-    /* FEATURED CARD — full width */
+    /* FEATURED CARD: full width, photo in its own panel, text on solid ink */
     .article-card.featured {
       grid-column: 1 / -1;
-      flex-direction: row;
-      align-items: center;
-      gap: 48px;
-      padding: 56px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      padding: 0;
       background: var(--dark);
       color: var(--white);
       border-color: transparent;
     }
-
-    .article-card.featured .card-tag { color: var(--green2); }
-    .article-card.featured .card-title { font-size: clamp(28px, 4vw, 44px); color: var(--white); flex: 1; }
-    .article-card.featured .card-excerpt { color: rgba(245,243,238,0.78); max-width: 44ch; }
-    .article-card.featured .card-date { color: rgba(245,243,238,0.7); }
+    .article-card.featured.has-img { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+    .featured-media { position: relative; min-height: 340px; overflow: hidden; background: #141f17; }
+    .featured-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+    .article-card.featured:hover .featured-media img { transform: scale(1.03); }
+    .featured-body { display: flex; flex-direction: column; gap: 16px; padding: 52px 48px; }
+    .article-card.featured .card-tag { color: #5AA672; }
+    .article-card.featured .card-title { font-size: clamp(28px, 3.4vw, 40px); color: var(--white); }
+    .article-card.featured .card-excerpt { color: rgba(245,243,238,0.78); opacity: 1; max-width: 46ch; }
+    .article-card.featured .card-meta { border-top-color: rgba(245,243,238,0.14); }
+    .article-card.featured .card-date { color: rgba(245,243,238,0.72); }
     .article-card.featured .card-arrow { color: var(--green2); font-size: 20px; }
     .article-card.featured::after { background: var(--green2); }
-/* the photo shows through on the right; the scrim stays dark enough there (≥.78) for the excerpt and date to read at AA */
-.article-card.featured.has-img { background-image: linear-gradient(90deg, rgba(13,22,16,.97) 0%, rgba(13,22,16,.9) 48%, rgba(13,22,16,.78) 100%), var(--card-img); background-size: cover; background-position: right center; }
-.article-card.featured.has-img:hover { background-image: linear-gradient(90deg, rgba(20,31,23,.97) 0%, rgba(20,31,23,.9) 48%, rgba(20,31,23,.74) 100%), var(--card-img); }
     .article-card.featured:hover { background: #141f17; transform: translateY(-2px); }
 
-    .featured-left { flex: 1; display: flex; flex-direction: column; gap: 16px; }
-    .featured-right { display: flex; flex-direction: column; gap: 16px; max-width: 380px; }
+    /* READINESS-SCORE CARD: closes the grid, never filtered out */
+    .article-card.promo { background: #E3EDE4; border-color: rgba(45,107,66,0.28); }
+    .article-card.promo:hover { background: #D8E8DB; }
+    .article-card.promo .card-excerpt { opacity: 1; color: var(--ink3); }
 
     /* EMPTY STATE */
     .empty {
@@ -328,39 +332,41 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       gap: 12px;
       flex-wrap: wrap;
     }
-    .filter-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-tags { display: flex; gap: 8px; flex-wrap: wrap; }
     .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-family: 'Urbanist', sans-serif;
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
       background: transparent;
       color: var(--ink3);
-      border: 1.5px solid rgba(13,22,16,0.18);
-      border-radius: 2px;
-      padding: 7px 14px;
-      min-height: 32px;
+      border: 1.5px solid rgba(13,22,16,0.22);
+      border-radius: 999px;
+      padding: 8px 16px;
+      min-height: 40px;
       cursor: pointer;
       line-height: 1;
       transition: background 0.22s, color 0.22s, border-color 0.22s;
     }
-    .filter-btn:hover { border-color: rgba(13,22,16,0.45); color: var(--dark); }
+    .filter-n { font-size: 12px; font-weight: 700; min-width: 22px; padding: 4px 6px; border-radius: 999px; background: rgba(13,22,16,0.07); color: var(--ink3); text-align: center; }
+    .filter-btn:hover { border-color: rgba(13,22,16,0.5); color: var(--dark); }
     .filter-btn.active { background: var(--dark); color: #F5F3EE; border-color: var(--dark); }
+    .filter-btn.active .filter-n { background: rgba(245,243,238,0.16); color: #F5F3EE; }
     .sort-btn {
       font-family: 'Urbanist', sans-serif;
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
       background: transparent;
       color: var(--ink3);
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
-      padding: 7px 0;
+      gap: 6px;
+      min-height: 40px;
+      padding: 8px 0;
       white-space: nowrap;
       transition: color 0.22s;
     }
@@ -371,6 +377,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     /* Normalized card state when filter or sort is active */
     .articles.filter-active .article-card.featured {
       grid-column: auto;
+      display: flex;
       flex-direction: column;
       padding: 40px;
       background: var(--white);
@@ -378,13 +385,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       border-color: rgba(13,22,16,0.07);
       gap: 16px;
     }
+    .articles.filter-active .featured-media { display: none; }
+    .articles.filter-active .featured-body { display: contents; }
     .articles.filter-active .article-card.featured:hover { background: var(--bg); transform: translateY(-2px); }
     .articles.filter-active .article-card.featured::after { background: var(--green); }
-    .articles.filter-active .featured-left,
-    .articles.filter-active .featured-right { display: contents; }
     .articles.filter-active .article-card.featured .card-tag { color: var(--green); }
-    .articles.filter-active .article-card.featured .card-title { font-size: 22px; color: var(--dark); flex: none; }
+    .articles.filter-active .article-card.featured .card-title { font-size: 22px; color: var(--dark); }
     .articles.filter-active .article-card.featured .card-excerpt { color: rgba(13,22,16,0.62); max-width: none; }
+    .articles.filter-active .article-card.featured .card-meta { border-top-color: rgba(13,22,16,0.08); }
     .articles.filter-active .article-card.featured .card-date { color: var(--muted, #64625A); }
     .articles.filter-active .article-card.featured .card-arrow { color: var(--green); font-size: 16px; }
     .article-card.hidden { display: none; }
@@ -396,9 +404,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       .divider { width: calc(100% - 40px); }
       .filter-bar { padding: 20px 20px 0; }
       .articles { padding: 40px 20px 80px; grid-template-columns: 1fr; }
-      .article-card.featured { flex-direction: column; padding: 36px 28px; }
-      /* stacked: text runs the full width, so the scrim runs top to bottom instead */
-      .article-card.featured.has-img, .article-card.featured.has-img:hover { background-image: linear-gradient(180deg, rgba(13,22,16,.93), rgba(13,22,16,.84)), var(--card-img); background-position: center; }
+      .article-card.featured.has-img { grid-template-columns: minmax(0, 1fr); }
+      .featured-media { min-height: 0; aspect-ratio: 16 / 9; }
+      .featured-body { padding: 32px 26px 30px; }
     }
   </style>
   <style>@media(pointer:fine){*{cursor:none!important}#cur{position:fixed;width:12px;height:12px;background:#2D6B42;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background .3s;will-change:left,top}body.hov #cur{width:15px;height:15px;background:#3D8A57}}@media(pointer:coarse){#cur{display:none}}</style>
@@ -504,16 +512,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section class="articles">
 
-    <a href="/blog/b-corp-news-fall-2026" class="article-card featured has-img" style="--card-img:url('/blog/images/b-corp-news-fall-2026.webp')" data-tag="B Corp Basics" data-date="2026-10-06">
-      <div class="featured-left">
+    <a href="/blog/b-corp-news-fall-2026" class="article-card featured has-img" data-tag="B Corp Basics" data-date="2026-10-06">
+      <div class="featured-media"><img src="/blog/images/b-corp-news-fall-2026.webp" alt="" width="1600" height="900" loading="lazy" decoding="async" /></div>
+      <div class="featured-body">
         <span class="card-tag">B Corp Basics</span>
         <h2 class="card-title">B Corp News Fall 2026: What Changed This Quarter</h2>
-      </div>
-      <div class="featured-right">
         <p class="card-excerpt">B Corp news from July to October 2026: the logo now comes with stricter claim rules, and the first companies have certified on B Lab's new standards.</p>
         <div class="card-meta">
-          <span class="card-date">Oct 2026</span>
-          <span class="card-arrow">&#8594;</span>
+          <span class="card-date">Oct 2026 · 5 min read</span>
+          <span class="card-arrow" aria-hidden="true">&#8594;</span>
         </div>
       </div>
     </a>
@@ -523,8 +530,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">B Corps That Lost Their Certification</h2>
       <p class="card-excerpt">What actually happens when B Corp certification is revoked — four high-profile decertification cases and what small businesses should take from each.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 5 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -533,8 +540,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">The B Lab Verification Process: What Happens After You Submit</h2>
       <p class="card-excerpt">You submitted for B Corp certification. Now what? A step-by-step walkthrough of the B Lab verification process — what they ask for, what the review involves, and what causes stalls.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 5 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -543,8 +550,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">B Corp vs 1% for the Planet: The Real Difference</h2>
       <p class="card-excerpt">B Corp and 1% for the Planet are not the same thing. Here's how they differ, what each actually requires, and which makes sense for your business.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 4 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -553,8 +560,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">B Corp Certification Changes in 2026</h2>
       <p class="card-excerpt">B Lab replaced the 80-point system with 7 mandatory impact topics. What changed in 2026, what it means for your timeline, and what to do now.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 5 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -563,8 +570,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">What the B Impact Assessment Actually Scores</h2>
       <p class="card-excerpt">B Impact Assessment explained: how the old 80-point tool scored businesses, what replaced it in 2026, and why documentation gaps still stall most applications.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 6 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -573,8 +580,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">How Long B Corp Certification Takes in 2026</h2>
       <p class="card-excerpt">How long does B Corp certification take? The honest timeline breakdown — what controls it, what slows it down, and how to move faster.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 5 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -583,8 +590,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h2 class="card-title">How to Get B Corp Certified in BC: What It Actually Takes</h2>
       <p class="card-excerpt">The practical breakdown of what B Corp certification requires for BC small businesses — documentation, timelines, and costs.</p>
       <div class="card-meta">
-        <span class="card-date">May 2026</span>
-        <span class="card-arrow">&#8594;</span>
+        <span class="card-date">May 2026 · 6 min read</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
+      </div>
+    </a>
+
+    <a href="/assessment/" class="article-card promo">
+      <span class="card-tag">Readiness score</span>
+      <h2 class="card-title">How close are you to B&nbsp;Corp?</h2>
+      <p class="card-excerpt">Four questions, about two minutes. See which of B Lab's seven required topics you already cover, and the two gaps to close first. No email needed.</p>
+      <div class="card-meta">
+        <span class="card-date">2-minute check</span>
+        <span class="card-arrow" aria-hidden="true">&#8594;</span>
       </div>
     </a>
 
@@ -818,12 +835,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const sortBtn = document.getElementById('sortBtn');
   if (!articles || !filterTagsEl || !sortBtn) return;
 
-  const cards = Array.from(articles.querySelectorAll('.article-card'));
+  const cards = Array.from(articles.querySelectorAll('.article-card:not(.promo)'));
+  const promo = articles.querySelector('.article-card.promo');
 
-  // Build category list from card data attributes
-  const cats = ['All', ...new Set(
-    cards.map(c => c.dataset.tag).filter(Boolean)
-  )];
+  // Build the category list (with a post count on each) from the cards' data-tag
+  const counts = {};
+  cards.forEach(c => { if (c.dataset.tag) counts[c.dataset.tag] = (counts[c.dataset.tag] || 0) + 1; });
+  const cats = ['All', ...Object.keys(counts)];
 
   cats.forEach(cat => {
     const btn = document.createElement('button');
@@ -831,7 +849,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     btn.type = 'button';
     btn.setAttribute('aria-pressed', cat === 'All' ? 'true' : 'false');
     btn.dataset.cat = cat;
-    btn.textContent = cat;
+    const n = cat === 'All' ? cards.length : counts[cat];
+    btn.innerHTML = '';
+    btn.append(cat + ' ');
+    const badge = document.createElement('span');
+    badge.className = 'filter-n';
+    badge.innerHTML = n + '<span class="sr-only"> ' + (n === 1 ? 'post' : 'posts') + '</span>';
+    btn.appendChild(badge);
     filterTagsEl.appendChild(btn);
   });
 
@@ -850,6 +874,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       return sortNewest ? db - da : da - db;
     });
     sorted.forEach(c => articles.appendChild(c));
+    if (promo) articles.appendChild(promo);
 
     // Show / hide by category
     cards.forEach(card => {

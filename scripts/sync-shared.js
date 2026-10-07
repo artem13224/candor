@@ -9,6 +9,7 @@
  *      Privacy Policy · Terms · Cookie settings, © YEAR, disclaimer)
  *   6. Paper-grain texture overlay (images/textures/grain.png)
  *   7. Blog key-point highlighter (<mark> in .article-body) — Article pages only
+ *   8. Shared post ending (author line + readiness-score CTA) after </article> — Article pages only
  *   5. Shared accessibility styles (focus-visible, .sr-only) + a skip link
  *      pointing at id="main-content" (added to <main>, the article header, or
  *      the first <section> if the page has none)
@@ -235,6 +236,56 @@ const HL_SNIPPET = `${HL_START}
 </script>
 ${HL_END}`;
 const isArticle = html => /"@type"\s*:\s*"Article"/.test(html);
+
+// One shared ending for every blog post, right after </article>: who wrote it, then one
+// next step (the readiness score) with the free call as the secondary option. Replaces the
+// old per-post author bio + CTA blocks the first time it runs on a post. Article pages only.
+const PE_START = '<!-- candor-post-end:start -->';
+const PE_END   = '<!-- candor-post-end:end -->';
+const PE_SNIPPET = `${PE_START}
+<style>
+  .pe{max-width:768px;margin:clamp(40px,6vw,64px) auto 0;padding:0 24px}
+  .pe-card{display:grid;gap:22px;padding:clamp(26px,5vw,44px);border-radius:6px;background:#0E110D;color:#F5F3EE}
+  .pe-by{margin:0;padding-bottom:18px;border-bottom:1px solid rgba(245,243,238,.12);font:400 14px/1.55 'Open Sans',system-ui,sans-serif;color:rgba(245,243,238,.72)}
+  .pe-by strong{display:block;margin-bottom:2px;font:800 16px/1.3 'Urbanist',system-ui,sans-serif;color:#F5F3EE}
+  .pe h2{margin:0;font:800 clamp(24px,3.4vw,34px)/1.08 'Urbanist',system-ui,sans-serif;letter-spacing:-.02em;color:#F5F3EE}
+  .pe h2 em{font-style:italic;font-weight:300;color:#7CC08F}
+  .pe-txt{margin:10px 0 0;max-width:54ch;font:400 15.5px/1.6 'Open Sans',system-ui,sans-serif;color:rgba(245,243,238,.78)}
+  .pe-acts{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+  .pe-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:2px;background:#F5F3EE;color:#0E110D;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .25s}
+  .pe-btn:hover{background:#5AA672}
+  .pe-link{font:600 14.5px/1.4 'Open Sans',system-ui,sans-serif;color:#A9D8B6;text-decoration:underline;text-underline-offset:3px}
+  .pe-link:hover{color:#F5F3EE}
+</style>
+<section class="pe" aria-labelledby="pe-h">
+  <div class="pe-card">
+    <p class="pe-by"><strong>Written by Artem Furman</strong>B Corp certification consultant in Vancouver, BC. I help small businesses across Canada prepare for certification.</p>
+    <div>
+      <h2 id="pe-h">Where does your business <em>stand?</em></h2>
+      <p class="pe-txt">Four questions, about two minutes. See which of B Lab's seven required topics you already cover and the two gaps I'd close first. No email needed.</p>
+    </div>
+    <div class="pe-acts">
+      <a class="pe-btn" href="/assessment/">Get your readiness score <span aria-hidden="true">&#8594;</span></a>
+      <a class="pe-link" href="https://calendly.com/artemfurman/30min" target="_blank" rel="noopener noreferrer">Or book a free call</a>
+    </div>
+  </div>
+</section>
+${PE_END}`;
+
+// Put the shared ending in place on a post: refresh it if present; otherwise replace whatever
+// sits between </article> and the related-posts block (the old bio + CTA) with it.
+function postEnd(html, article) {
+  const replaced = replaceBetween(html, PE_START, PE_END, PE_SNIPPET);
+  if (!article) {
+    if (!replaced) return html;
+    const a = html.indexOf(PE_START), b = html.indexOf(PE_END) + PE_END.length;
+    return html.slice(0, a) + html.slice(b).replace(/^\n/, '');
+  }
+  if (replaced) return replaced;
+  const re = /(<\/article>)[\s\S]*?(?=[ \t]*(?:<!-- MORE ARTICLES|<section class="more-articles">))/;
+  if (re.test(html)) return html.replace(re, (m, close) => `${close}\n\n${PE_SNIPPET}\n\n`);
+  return html.replace(/<\/article>/, m => `${m}\n\n${PE_SNIPPET}\n`);
+}
 
 const BODY_START = '<!-- candor-consent:start -->';
 const BODY_END   = '<!-- candor-consent:end -->';
@@ -549,6 +600,7 @@ function transform(html) {
   // 1e. Blog-only block (highlighter) — posts only, before the grain/banner blocks
   const article = isArticle(out);
   out = articleBlock(out, article, HL_START, HL_END, HL_SNIPPET);
+  out = postEnd(out, article);
 
   // 2. Banner — before </body>
   const replacedBody = replaceBetween(out, BODY_START, BODY_END, BODY_SNIPPET);

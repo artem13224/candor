@@ -76,8 +76,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
-  <!-- OPTIONAL — FAQ schema. Keep only if the article has a real FAQ section with the same
-       questions and answers in the visible body. Remove this whole comment if not used.
+  <!-- OPTIONAL — FAQ schema. Uncomment to add FAQs; npm run rebuild / publish.js render the visible
+       "Common questions" block from it. Remove this whole comment if not used.
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -719,7 +719,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
          <figcaption>Caption — source / licence</figcaption>
        </figure>                                  every <img> needs alt + width + height; lazy/async on all but the first image
 
-       The CTA box and author bio below the article are shared — tailor the CTA copy only.
+       The ending after the article (author line + readiness-score CTA) is added by sync-shared.js.
+       FAQs: fill the FAQPage JSON-LD in <head>; npm run rebuild renders the visible "Common questions".
        ══════════════════════════════════════════════════════════════════════ -->
 
   <p>Opening paragraph. State the reader's situation in one or two plain sentences, then say what this post will do for them.</p>
@@ -734,24 +735,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </article>
 
-<!-- AUTHOR BIO -->
-<div style="max-width:720px;margin:0 auto;padding:32px 24px;border-top:1px solid var(--light);display:flex;align-items:flex-start;gap:20px;">
-  <div>
-    <p style="font-family:'Urbanist',sans-serif;font-weight:800;font-size:1rem;letter-spacing:-0.02em;color:var(--ink);margin:0 0 4px;">Artem Furman</p>
-    <p style="font-family:'Space Mono',monospace;font-size:0.625rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--forest);margin:0 0 10px;">B Corp Certification Consultant · Vancouver, BC</p>
-    <p style="font-size:0.9375rem;color:var(--body);line-height:1.65;margin:0;">Artem works with small businesses across Canada to navigate B Corp certification and The Climate Label (formerly Climate Neutral Certified) — from gap analysis to verified submission. <a href="https://candorcertified.com" style="color:var(--forest);">candorcertified.com</a></p>
-  </div>
-</div>
-
-<!-- CTA SECTION -->
-<section class="cta-section">
-  <div class="cta-inner">
-    <!-- Tailor these two lines to the post's topic -->
-    <h2>Find out where you actually stand before you commit.</h2>
-    <p>A readiness assessment maps your gaps against the current B Corp standards. Two weeks, flat fee, no obligation to continue.</p>
-    <a href="https://calendly.com/artemfurman/30min" class="cta-btn" target="_blank" rel="noopener noreferrer">Book a free call</a>
+<!-- candor-post-end:start -->
+<style>
+  .pe{max-width:768px;margin:clamp(40px,6vw,64px) auto 0;padding:0 24px}
+  .pe-card{display:grid;gap:22px;padding:clamp(26px,5vw,44px);border-radius:6px;background:#0E110D;color:#F5F3EE}
+  .pe-by{margin:0;padding-bottom:18px;border-bottom:1px solid rgba(245,243,238,.12);font:400 14px/1.55 'Open Sans',system-ui,sans-serif;color:rgba(245,243,238,.72)}
+  .pe-by strong{display:block;margin-bottom:2px;font:800 16px/1.3 'Urbanist',system-ui,sans-serif;color:#F5F3EE}
+  .pe h2{margin:0;font:800 clamp(24px,3.4vw,34px)/1.08 'Urbanist',system-ui,sans-serif;letter-spacing:-.02em;color:#F5F3EE}
+  .pe h2 em{font-style:italic;font-weight:300;color:#7CC08F}
+  .pe-txt{margin:10px 0 0;max-width:54ch;font:400 15.5px/1.6 'Open Sans',system-ui,sans-serif;color:rgba(245,243,238,.78)}
+  .pe-acts{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
+  .pe-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:2px;background:#F5F3EE;color:#0E110D;font:600 12px/1 'Urbanist',system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;transition:background .25s}
+  .pe-btn:hover{background:#5AA672}
+  .pe-link{font:600 14.5px/1.4 'Open Sans',system-ui,sans-serif;color:#A9D8B6;text-decoration:underline;text-underline-offset:3px}
+  .pe-link:hover{color:#F5F3EE}
+</style>
+<section class="pe" aria-labelledby="pe-h">
+  <div class="pe-card">
+    <p class="pe-by"><strong>Written by Artem Furman</strong>B Corp certification consultant in Vancouver, BC. I help small businesses across Canada prepare for certification.</p>
+    <div>
+      <h2 id="pe-h">Where does your business <em>stand?</em></h2>
+      <p class="pe-txt">Four questions, about two minutes. See which of B Lab's seven required topics you already cover and the two gaps I'd close first. No email needed.</p>
+    </div>
+    <div class="pe-acts">
+      <a class="pe-btn" href="/assessment/">Get your readiness score <span aria-hidden="true">&#8594;</span></a>
+      <a class="pe-link" href="https://calendly.com/artemfurman/30min" target="_blank" rel="noopener noreferrer">Or book a free call</a>
+    </div>
   </div>
 </section>
+<!-- candor-post-end:end -->
 
 <!-- MORE ARTICLES — filled in automatically by npm run rebuild / publish (newest post + newest same-tag post + "All articles") -->
 <section class="more-articles">
@@ -872,7 +884,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div>
         <a class="cf-brand" href="/" aria-label="Candor home"><svg class="cf-logo" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(245,243,238,.06)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="rgba(245,243,238,.5)" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="4.55" fill="#5AA672"/></svg><span class="cf-word">Candor</span></a>
         <p class="cf-pitch">B Corp certification for small businesses, <em>without the guesswork.</em></p>
-        <p class="cf-sub">Flat fees and one consultant, working online from Vancouver, BC.</p>
+        <p class="cf-sub">Flat fees and one consultant, working with clients across Canada from Vancouver, BC.</p>
         <div class="cf-ctas">
           <a class="cf-btn cf-btn-p" href="https://calendly.com/artemfurman/30min" target="_blank" rel="noopener noreferrer">Book a free call <span aria-hidden="true">→</span></a>
           <a class="cf-btn cf-btn-s" href="/assessment/">Free readiness score</a>
@@ -908,7 +920,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="https://linkedin.com/company/candorcertified" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
       </div>
     </div>
-    <p class="cf-disc">Candor provides independent B Corp and sustainability certification advisory services and is not affiliated with, endorsed by, or a part of B Lab, The Change Climate Project (The Climate Label), or 1% for the Planet.</p>
+    <p class="cf-disc">Candor is an independent consultancy for B Corp and other sustainability certifications. It is not affiliated with or endorsed by B Lab, The Change Climate Project (The Climate Label), or 1% for the Planet.</p>
   </div>
   <span class="cf-mark" aria-hidden="true" data-word="Candor"></span>
 </footer>
@@ -918,7 +930,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <input type="hidden" name="form-name" value="contact">
     <p class="cf-hp" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
     <h2 id="cf-contact-title">Send a <em>note.</em></h2>
-    <p>A question about certification, your business, or anything on the site. I read every message and reply by email.</p>
+    <p>Questions about certification, your business, or the site? I read every message and reply by email.</p>
     <label for="cf-name">Name</label>
     <input id="cf-name" name="name" autocomplete="name" required>
     <label for="cf-email">Email</label>
@@ -932,8 +944,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </form>
   <div class="cf-done" role="status">
-    <h2>Thanks, <em>got it.</em></h2>
-    <p>Your message is on its way. I'll reply by email.</p>
+    <h2>Thanks, <em>message received.</em></h2>
+    <p>Your message is on its way. I’ll reply by email.</p>
     <button class="cf-btn cf-btn-p" type="button" data-contact-close>Close</button>
   </div>
 </dialog>
