@@ -548,9 +548,12 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .cert-grid{display:grid;grid-template-columns:1fr;gap:56px;max-width:1400px;margin:0 auto;position:relative;z-index:1;width:100%}
 .cert-heading-row{display:flex;align-items:flex-end;gap:20px;margin-bottom:28px;flex-wrap:wrap}
 .cert-h{font-family:var(--u);font-weight:800;font-size:clamp(44px,14vw,128px);line-height:.88;letter-spacing:-.04em;color:var(--ink);opacity:0;transform:translateY(-28px)}
-.cert-ring-svg{display:block;opacity:0;width:52px;height:52px;flex-shrink:0;margin-bottom:6px}
-.cert-ring-n{font-family:var(--u);font-weight:800;font-size:18px;fill:var(--green)}
-.cert-ring-lbl{font-family:var(--u);font-size:7px;font-weight:500;letter-spacing:.1em;fill:rgba(14,17,13,.45)}
+/* the 7-topic ring: the number is real text inside the ring, the label sits beside it at a readable size */
+.cert-topics{display:flex;align-items:center;gap:14px;opacity:0;margin-bottom:.12em}
+.cert-topics-ring{position:relative;width:64px;height:64px;flex-shrink:0}
+.cert-topics-ring svg{display:block;width:100%;height:100%}
+.cert-topics-n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--u);font-weight:800;font-size:26px;line-height:1;color:var(--green)}
+.cert-topics-lbl{font-family:var(--u);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;line-height:1.45;color:#64625A}
 .cert-desc{font-family:var(--o);font-size:16px;line-height:1.68;color:var(--ink3);max-width:420px;margin-bottom:32px;opacity:0;transform:translateY(20px)}
 .cert-fees{display:flex;gap:40px;margin-bottom:24px;flex-wrap:wrap}
 .cert-fee-item{opacity:0;transform:translateY(12px)}
@@ -570,9 +573,8 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 @media(min-width:1024px){
   .cert-grid{grid-template-columns:62fr 38fr;gap:72px}
   .cert-desc{max-width:420px}
-  .cert-ring-svg{width:72px;height:72px}
-  .cert-ring-n{font-size:22px}
-  .cert-ring-lbl{font-size:8px}
+  .cert-topics-ring{width:80px;height:80px}
+  .cert-topics-n{font-size:32px}
 }
 
 /* ── Problem: the pull quote now opens the section ── */
@@ -583,20 +585,21 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .cert-section .cert-stats{position:relative;z-index:1;width:100%;max-width:1400px;margin:clamp(44px,6vw,72px) auto 0;border-color:rgba(14,17,13,.12)}
 .cert-section .cert-stats .stat-c{border-color:rgba(14,17,13,.12);padding-top:28px;padding-bottom:28px}
 .cert-section .cert-stats .st-n{color:var(--ink);font-size:clamp(40px,5vw,64px)}
-.cert-section .cert-stats .st-n sub{color:var(--green)}
+.cert-section .cert-stats .st-u{font-size:.6em;margin-left:.04em;letter-spacing:-.02em;color:var(--green)}
 .cert-section .cert-stats .st-l{color:var(--ink3);font-weight:400;max-width:none}
 .cert-section .cert-stats .st-src{color:#64625A}
 
 /* ── How it works & pricing: one free call, then three flat-fee cards ── */
 .plan{list-style:none;margin:44px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;align-items:stretch}
+@media(max-width:1099px){.plan-free{align-self:start}}   /* 2×2 and stacked: the free-call card keeps its own height (no empty dashed box); the priced cards still pair up evenly */
 @media(min-width:1100px){.plan{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .plan-card{display:flex;flex-direction:column;gap:12px;padding:28px 26px;border:1px solid rgba(245,243,238,.18);border-radius:2px;color:rgba(245,243,238,.78)}
 .plan-free{border-style:dashed;border-color:rgba(245,243,238,.32)}
 .plan-key{background:var(--paper,#F5F3EE);border-color:var(--paper,#F5F3EE);color:var(--ink3)}
-.plan-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.plan-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;min-height:24px}   /* same height with or without the badge, so titles line up */
 .plan-when{font-family:var(--u);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--green2)}
 .plan-key .plan-when{color:var(--green)}
-.plan-badge{font-family:var(--u);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--green);color:#F5F3EE;padding:5px 8px;border-radius:2px}
+.plan-badge{font-family:var(--u);font-size:10px;font-weight:700;line-height:1;letter-spacing:.1em;text-transform:uppercase;background:var(--green);color:#F5F3EE;padding:7px 8px;border-radius:2px}
 .plan-name{font-family:var(--u);font-weight:700;font-size:22px;line-height:1.15;letter-spacing:-.015em;color:var(--white);margin:0}
 .plan-key .plan-name,.plan-key .plan-price{color:var(--ink)}
 .plan-price{font-family:var(--u);font-weight:800;font-size:clamp(28px,2.6vw,34px);line-height:1;letter-spacing:-.02em;color:var(--white)}
@@ -604,7 +607,7 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .plan-feats{list-style:none;margin:2px 0 0;padding:14px 0 0;border-top:1px solid rgba(245,243,238,.14);display:flex;flex-direction:column;gap:6px;font-family:var(--o);font-size:14px;line-height:1.45;flex-grow:1}
 .plan-key .plan-feats{border-top-color:rgba(14,17,13,.12)}
 .plan-feats li{position:relative;padding-left:18px}
-.plan-feats li::before{content:'';position:absolute;left:0;top:.62em;width:8px;height:1.5px;background:var(--green2)}
+.plan-feats li::before{content:'';position:absolute;left:0;top:9px;width:8px;height:2px;background:var(--green2)}   /* whole pixels, so every dash renders the same */
 .plan-key .plan-feats li::before{background:var(--green)}
 .plan-free .plan-txt{flex-grow:1}
 .plan-link{font-family:var(--u);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--white);text-decoration:underline;text-underline-offset:4px;align-self:flex-start;padding:6px 0}
@@ -824,7 +827,8 @@ html.cc-open #mob-dial{opacity:0;visibility:hidden;pointer-events:none;transitio
 <!-- without JS nothing would dismiss the intro loader, so never show it -->
 <noscript><style>#loader{display:none}
 /* no JS: the certification panel shows its final state */
-.cert-h,.cert-ring-svg,.cert-desc,.cert-fee-item,.cert-tags,.cert-card{opacity:1;transform:none}
+.cert-h,.cert-topics,.cert-desc,.cert-fee-item,.cert-tags,.cert-card{opacity:1;transform:none}
+.cert-ring-arc{stroke-dashoffset:0}
 </style></noscript>
 <style>/* who-land:css:start */
 /* Base = the static layout (no JS, reduced motion). .wl-js turns on the pinned timeline. */
@@ -1073,14 +1077,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="cert-left">
         <div class="cert-heading-row">
           <h2 class="cert-h" id="certH">B Corp.</h2>
-          <svg class="cert-ring-svg" id="certRing" viewBox="0 0 72 72" fill="none" aria-label="Seven B Corp impact topics">
-            <circle cx="36" cy="36" r="32" stroke="rgba(45,107,66,.15)" stroke-width="2"/>
-            <circle class="cert-ring-arc" cx="36" cy="36" r="32" stroke="var(--green)" stroke-width="2"
-              stroke-linecap="round" transform="rotate(-90 36 36)"
-              stroke-dasharray="201" stroke-dashoffset="201"/>
-            <text class="cert-ring-n" id="certScore" x="36" y="33" text-anchor="middle" dominant-baseline="middle">7</text>
-            <text class="cert-ring-lbl" x="36" y="47" text-anchor="middle" dominant-baseline="middle">topics</text>
-          </svg>
+          <div class="cert-topics" id="certRing" role="img" aria-label="Seven B Corp impact topics, each required">
+            <span class="cert-topics-ring" aria-hidden="true">
+              <svg viewBox="0 0 72 72" fill="none"><circle cx="36" cy="36" r="33" stroke="rgba(45,107,66,.18)" stroke-width="2"/><circle class="cert-ring-arc" cx="36" cy="36" r="33" stroke="var(--green)" stroke-width="2" stroke-linecap="round" transform="rotate(-90 36 36)" stroke-dasharray="208" stroke-dashoffset="208"/></svg>
+              <span class="cert-topics-n" id="certScore">7</span>
+            </span>
+            <span class="cert-topics-lbl" aria-hidden="true">Impact topics,<br>each required</span>
+          </div>
         </div>
         <p class="cert-desc" id="certDesc">The most rigorous certification available to a small business. Since 2026, B Lab sets minimum requirements in seven impact topics, scaled to your company's size, instead of one points total. Independently verified, with a follow-up audit in year three. This is what Candor primarily prepares businesses for.</p>
         <div class="cert-fees">
@@ -1124,8 +1127,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </div>
   <div class="stats-g cert-stats stg" role="group" aria-label="B Corp by the numbers">
-      <div class="stat-c"><div class="st-n"><span data-cnt="10">10</span><sub>K+</sub></div><p class="st-l">Certified B Corps worldwide</p><span class="st-src">— B Lab, July 2025</span></div>
-      <div class="stat-c"><div class="st-n"><span data-cnt="1">1</span><sub>M+</sub></div><p class="st-l">People working at Certified B Corps</p><span class="st-src">— B Lab, July 2025</span></div>
+      <div class="stat-c"><div class="st-n"><span data-cnt="10">10</span><span class="st-u">K+</span></div><p class="st-l">Certified B Corps worldwide</p><span class="st-src">— B Lab, July 2025</span></div>
+      <div class="stat-c"><div class="st-n"><span data-cnt="1">1</span><span class="st-u">M+</span></div><p class="st-l">People working at Certified B Corps</p><span class="st-src">— B Lab, July 2025</span></div>
       <div class="stat-c"><div class="st-n"><span data-cnt="103">103</span></div><p class="st-l">Countries with Certified B Corps</p><span class="st-src">— B Lab, July 2025</span></div>
       <div class="stat-c"><div class="st-n"><span data-cnt="160">160</span></div><p class="st-l">Industries represented</p><span class="st-src">— B Lab, July 2025</span></div>
     </div>
@@ -1209,7 +1212,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="sec fu" id="problem">
   <div class="mw">
     <h2 class="dh" style="max-width:720px">Good businesses get overlooked. <em>Here's why.</em></h2>
-    <p class="prob-quote">"Most of the work is already done. It just isn't written down the way B Lab wants, and <em>the last stretch is where the costly mistakes tend to hide.</em>"</p>
+    <p class="prob-quote">“Most of the work is already done. It just isn't written down the way B Lab wants, and <em>the last stretch is where the costly mistakes tend to hide.</em>”</p>
     <p class="body-p" style="max-width:580px;margin-bottom:0"><a href="#certifications">Sustainability certification</a> is one of the most powerful marketing assets a small business can earn. Most that deserve it never get there, not because they don't qualify, but because the system wasn't built for them.</p>
     <dl class="prob-ledger stg">
       <div class="prob-card">
@@ -2180,13 +2183,22 @@ onScroll();
     });
   }
 
-  var sectionObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) setActive(e.target.id);
+  // the section holding the middle of the screen wins; the smallest match wins when one sits inside another
+  // (Pricing's cards live inside How it works), and sections that aren't in the nav clear the highlight
+  var tracked = sections.filter(Boolean).concat(['top', 'certifications', 'problem', 'contact']
+    .map(function(id) { return document.getElementById(id); }).filter(Boolean));
+  var navRaf = 0;
+  function trackActive() {
+    navRaf = 0;
+    var mid = window.innerHeight / 2, best = null, bestH = Infinity;
+    tracked.forEach(function(el) {
+      var r = el.getBoundingClientRect();
+      if (r.top <= mid && r.bottom >= mid && r.height < bestH) { best = el; bestH = r.height; }
     });
-  }, { threshold: 0.2, rootMargin: '-60px 0px -35% 0px' });
-
-  sections.forEach(function(s) { if (s) sectionObs.observe(s); });
+    setActive(best ? best.id : '');
+  }
+  window.addEventListener('scroll', function() { if (!navRaf) navRaf = requestAnimationFrame(trackActive); }, { passive: true });
+  trackActive();
 
   /* Click: flash + section entrance line */
   links.forEach(function(link) {
