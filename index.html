@@ -465,35 +465,6 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .body-p a,.fq-ans a,.cert-desc a,.prob-txt a{color:var(--green);text-decoration:underline;text-decoration-color:rgba(45,107,66,.32);text-underline-offset:2px;transition:color .2s,text-decoration-color .2s}
 .body-p a:hover,.fq-ans a:hover,.cert-desc a:hover,.prob-txt a:hover{color:var(--green2);text-decoration-color:rgba(61,138,87,.6)}
 
-/* ── PAGE LOAD ANIMATION: the Candor mark assembles on the page colour, then the page opens up
-   through its dot. Shown once per session (html.ld-on is set in <head>); never with reduced
-   motion or without JS. Every beat lands by 1.5 s; the reveal is over by about 2.4 s. ── */
-@property --lr{syntax:'<length>';inherits:false;initial-value:-2px}
-#loader{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;background:var(--bg,#ECEAE2);cursor:pointer;
-  -webkit-mask:radial-gradient(circle at var(--lx,50%) var(--ly,50%),transparent var(--lr),#000 calc(var(--lr) + 1px));
-          mask:radial-gradient(circle at var(--lx,50%) var(--ly,50%),transparent var(--lr),#000 calc(var(--lr) + 1px))}
-html.ld-on #loader{display:flex;animation:ldFailsafe 0s 4s forwards}
-html.ld-on body{overflow:hidden}
-/* the hero waits behind the loader and plays its entrance as the page opens */
-html.ld-on #top,html.ld-on #top *,html.ld-on #top *::before,html.ld-on #top *::after{animation-play-state:paused!important}
-#loader-inner{display:flex;flex-direction:column;align-items:center;gap:22px}
-#loader-mark{width:clamp(118px,15vw,150px);height:auto;display:block;overflow:visible}
-#loader-mark .ld-blob{transform-box:fill-box;transform-origin:center;opacity:0;transform:scale(.8);animation:ldBlob .6s .08s cubic-bezier(.16,1,.3,1) forwards}
-#loader-mark .ld-ring{fill:none;stroke:#F5F3EE;stroke-width:8.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:ldDraw .7s cubic-bezier(.65,0,.35,1) forwards}
-#loader-mark .ld-r1{animation-delay:.32s}
-#loader-mark .ld-r2{animation-delay:.46s;animation-duration:.62s}
-#loader-mark .ld-r3{animation-delay:.6s;animation-duration:.54s}
-#loader-mark .ld-dot{transform-box:fill-box;transform-origin:center;transform:scale(0);animation:ldDot .42s 1.08s cubic-bezier(.34,1.56,.64,1) forwards}
-#loader-word{font:800 12px/1 var(--u);letter-spacing:.34em;text-indent:.34em;text-transform:uppercase;color:var(--ink,#0D1610);opacity:0;transform:translateY(6px);animation:ldWord .5s .98s cubic-bezier(.16,1,.3,1) forwards}
-#loader.out{display:flex;--lr:150vmax;transition:--lr .85s cubic-bezier(.7,0,.2,1)}
-#loader.out #loader-inner{transform:scale(1.35);opacity:0;transition:transform .85s cubic-bezier(.7,0,.2,1),opacity .45s .2s ease}
-#loader.out.fade{opacity:0;transition:opacity .45s ease}
-@keyframes ldBlob{to{opacity:1;transform:scale(1)}}
-@keyframes ldDraw{99%{stroke-dashoffset:0;stroke-dasharray:1}to{stroke-dashoffset:0;stroke-dasharray:none}}
-@keyframes ldDot{to{transform:scale(1)}}
-@keyframes ldWord{to{opacity:1;transform:none}}
-@keyframes ldFailsafe{to{opacity:0;visibility:hidden;pointer-events:none}}
-@media (prefers-reduced-motion:reduce){#loader{display:none!important}}
 
 
 
@@ -806,8 +777,7 @@ html.cc-open #mob-dial{opacity:0;visibility:hidden;pointer-events:none;transitio
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png">
-<!-- without JS nothing would dismiss the intro loader, so never show it -->
-<noscript><style>#loader{display:none}
+<noscript><style>
 /* no JS: the certification panel shows its final state */
 .cert-h,.cert-topics,.cert-desc,.cert-fee-item,.cert-tags,.cert-card{opacity:1;transform:none}
 .cert-ring-arc{stroke-dashoffset:0}
@@ -925,51 +895,83 @@ html.cc-open #mob-dial{opacity:0;visibility:hidden;pointer-events:none;transitio
 /* .wl prefix: must outrank the .wl-mist-a/-b i:nth-child() drift rules above */
 @media (prefers-reduced-motion:reduce){.wl .wl-mist i:nth-child(n),.wl .wl-btn::after{animation:none}}
 /* who-land:css:end */</style>
-<!-- intro loader: only on the first visit this session, never with reduced motion (no JS: never) -->
-<script>try{if(!sessionStorage.getItem('loaderSeen')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('ld-on')}catch(e){}</script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
+<!-- candor-loader:start -->
+<style>
+  .cl{display:none;position:fixed;inset:0;z-index:10000;align-items:center;justify-content:center;background:#0D1610;opacity:0;transition:opacity .35s ease;pointer-events:none}
+  .cl.cl-ready{display:flex}
+  .cl.cl-show{opacity:1;pointer-events:auto}
+  .cl svg{width:clamp(110px,14vw,148px);height:auto;overflow:visible}
+  .cl-rip{fill:none;stroke:#F5F3EE;stroke-width:8.8;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.06);animation:clRipple 2.8s cubic-bezier(.22,.7,.3,1) infinite}
+  .cl-r3{animation-delay:.3s}
+  .cl-r2{animation-delay:.65s}
+  .cl-r1{animation-delay:1s}
+  .cl-dot{fill:#5AA672;transform-box:fill-box;transform-origin:center;animation:clDrop 2.8s cubic-bezier(.34,1.56,.64,1) infinite}
+  @keyframes clRipple{0%{opacity:0;transform:scale(.06)}8%{opacity:1}42%{transform:scale(1)}70%{opacity:1;transform:scale(1)}92%,100%{opacity:0;transform:scale(1.04)}}
+  @keyframes clDrop{0%{transform:scale(.4)}12%{transform:scale(1.3)}24%,100%{transform:scale(1)}}
+  @keyframes clBreathe{0%,100%{opacity:1}50%{opacity:.45}}
+  @media (prefers-reduced-motion:reduce){
+    .cl{transition:none}
+    .cl-rip{animation:none;opacity:1;transform:none}
+    .cl-dot{animation:clBreathe 1.8s ease-in-out infinite}
+  }
+  /* the homepage hero waits while the loader is up, then plays its entrance */
+  html.cl-on #top,html.cl-on #top *,html.cl-on #top *::before,html.cl-on #top *::after{animation-play-state:paused!important}
+</style>
+<div class="cl" id="candor-loader" aria-hidden="true">
+  <svg viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r1"><path transform="translate(-216.48 -194.16)" d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z"/></g></g>
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r2"><path transform="translate(-216.48 -194.16)" d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z"/></g></g>
+    <g transform="translate(216.48 194.16)"><g class="cl-rip cl-r3"><path transform="translate(-216.48 -194.16)" d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z"/></g></g>
+    <circle class="cl-dot" cx="216.48" cy="194.16" r="10"/>
+  </svg>
+</div>
+<script>
+(function () {
+  var el = document.getElementById('candor-loader'), root = document.documentElement;
+  if (!el) return;
+  var MIN = 600, timer = 0, shownAt = 0, busy = false;
+  function show(delay) {
+    if (busy) return; busy = true;
+    el.classList.add('cl-ready');
+    timer = setTimeout(function () { shownAt = Date.now(); root.classList.add('cl-on'); el.classList.add('cl-show'); }, delay);
+  }
+  function hide() {
+    if (!busy) return;
+    clearTimeout(timer);
+    if (!shownAt) { busy = false; el.classList.remove('cl-ready'); return; }
+    setTimeout(function () {
+      el.classList.remove('cl-show'); root.classList.remove('cl-on');
+      setTimeout(function () { if (!el.classList.contains('cl-show')) { el.classList.remove('cl-ready'); busy = false; shownAt = 0; } }, 380);
+    }, Math.max(0, MIN - (Date.now() - shownAt)));
+  }
+  // first load: up only if the HTML is still arriving 0.9 s into the visit; down once it's readable
+  if (document.readyState === 'loading') {
+    show(Math.max(300, 900 - (window.performance ? performance.now() : 0)));
+    document.addEventListener('DOMContentLoaded', hide);
+    setTimeout(hide, 10000);
+  }
+  // leaving for another page on this site: up only if the next page is slow to arrive
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target && a.target !== '_self' || a.hasAttribute('download')) return;
+    var url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return;
+    if (url.pathname === location.pathname && url.search === location.search) return;
+    show(500);
+  });
+  // coming back via the back/forward cache: never restore a covered page
+  window.addEventListener('pageshow', function (e) { if (e.persisted) { busy = true; shownAt = 0; hide(); } });
+})();
+</script>
+<!-- candor-loader:end -->
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKSHZN82"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<!-- PAGE LOAD ANIMATION (decorative; skippable with a click, tap or any key) -->
-<div id="loader" aria-hidden="true">
-  <div id="loader-inner">
-    <svg id="loader-mark" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg">
-      <path class="ld-blob" d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="#0D1610"/>
-      <path class="ld-ring ld-r1" pathLength="1" d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z"/>
-      <path class="ld-ring ld-r2" pathLength="1" d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z"/>
-      <path class="ld-ring ld-r3" pathLength="1" d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z"/>
-      <circle class="ld-dot" cx="216.48" cy="194.16" r="6.5" fill="#3D8A57"/>
-    </svg>
-    <div id="loader-word">Candor</div>
-  </div>
-</div>
-<script>
-(function () {
-  var root = document.documentElement, loader = document.getElementById('loader');
-  if (!loader) return;
-  if (!root.classList.contains('ld-on')) { loader.remove(); return; }
-  try { sessionStorage.setItem('loaderSeen', '1'); } catch (e) {}
-  var done = false, canMask = !!(window.CSS && CSS.registerProperty);
-  function reveal(fast) {
-    if (done) return; done = true;
-    var dot = loader.querySelector('.ld-dot').getBoundingClientRect();
-    loader.style.setProperty('--lx', (dot.left + dot.width / 2) + 'px');
-    loader.style.setProperty('--ly', (dot.top + dot.height / 2) + 'px');
-    loader.classList.add('out');
-    if (!canMask || fast === true) loader.classList.add('fade');
-    root.classList.remove('ld-on');
-    setTimeout(function () { loader.remove(); }, 950);
-  }
-  loader.addEventListener('click', function () { reveal(true); });
-  loader.addEventListener('touchend', function (e) { e.preventDefault(); reveal(true); }, { passive: false });
-  document.addEventListener('keydown', function onKey() { reveal(true); document.removeEventListener('keydown', onKey); });
-  setTimeout(reveal, 1550);
-})();
-</script>
 
 <div id="cur"></div>
 <div id="cur2"></div>

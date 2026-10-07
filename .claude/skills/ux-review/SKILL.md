@@ -204,11 +204,11 @@ These are single-evaluator findings: treat them as likely problems and confirm b
 **Fixed (Oct 2026)**
 - **Grey meta text (was a 1.4.3 failure, severity 3).** `--stone` text (about 1.6:1) in the blog `.article-meta`, `.card-meta`, figcaptions and `.timeline-label`, and in the `.article-meta` / `.policy-note` of the 404, privacy and terms pages, now uses the new `--muted` token. The post template `scripts/templates/post.html` was updated too.
 - **Small `--field` labels on the dark assessment page** (eyebrows, question number, verdict eyebrow at 3.90:1 on the verdict banner, metric labels, mobile-menu link) now use `--sage`: 6.26:1 on ink, 5.59:1 on the banner. The large headline `em` keeps `--field`, since large text needs only 3:1.
-- **Homepage loader** (`index.html`, "PAGE LOAD ANIMATION", rebuilt Oct 2026):
-  - The Candor mark assembles on the page colour (shape 0.6 s, three rings drawn 0.32–1.14 s, dot at 1.08 s, small wordmark), then the page opens through a circle growing from the dot (0.85 s) while the hero entrance plays. Every beat lands by 1.5 s; it's gone by about 2.4 s. No tagline, so the hero h1 stays the LCP (0.2–0.6 s, was 2.9 s).
-  - `html.ld-on` is set by a tiny script in `<head>` (first visit this session, motion allowed), so repeat visits, reduced motion and no-JS never render it; a CSS failsafe hides it at 4 s if its script fails.
-  - Skippable with a click, tap or any key (quick fade). Verified in Chromium in normal, repeat-visit, reduced-motion and no-JS modes.
-- When adding beats to the loader, keep them before the 1.55 s reveal.
+- **Site loader** (`scripts/sync-shared.js`, `candor-loader` block on every page; replaced the homepage-only intro in Oct 2026):
+  - Only for real waits (Nielsen: indicate waits around 1 s and longer): shown if the HTML is still parsing 0.9 s into a visit, or 0.5 s after a click on a link to another page; once shown it stays ≥600 ms so it never flickers, and fades out at DOM ready. Fast loads never see it (verified on all 7 page types).
+  - Motion has a job (progress) and loops calmly: dot drop, three rings ripple out 0.35 s apart, hold, fade, 2.8 s cycle. Reduced motion: static mark, breathing dot. No JS: never shown. bfcache restores: hidden.
+  - It never covers a readable page: images and fonts are allowed to finish after it fades.
+- When changing the loader, keep it gated on real waits; a splash on every load is a delay, not feedback.
 - **Brand Guide** (`Brand Guide/Brand Guide.html`): its four `--stone` type rules now use `--muted`; there is a new "13 / Muted" swatch; and the Stone swatch no longer recommends Stone for input outlines (1.5:1, where form-field borders need 3:1).
 
 **Checked and passing**

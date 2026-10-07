@@ -9,6 +9,7 @@
  *      Privacy Policy · Terms · Cookie settings, © YEAR, disclaimer)
  *   6. Paper-grain texture overlay (images/textures/grain.png)
  *   7. Blog key-point highlighter (<mark> in .article-body) — Article pages only
+ *   9. Site loader (dot + rippling rings) right after <body>, shown only when a page is slow
  *   8. Shared post ending (author line + readiness-score CTA) after </article> — Article pages only
  *   5. Shared accessibility styles (focus-visible, .sr-only) + a skip link
  *      pointing at id="main-content" (added to <main>, the article header, or
@@ -236,6 +237,85 @@ const HL_SNIPPET = `${HL_START}
 </script>
 ${HL_END}`;
 const isArticle = html => /"@type"\s*:\s*"Article"/.test(html);
+
+// Site loader: a green dot with the logo's rings rippling out of it, on ink. It appears only
+// when a page is actually slow: the HTML isn't ready 0.9 s into the visit, or the next page
+// hasn't arrived 0.5 s after a click on a link to another page. Once up it stays at least
+// 600 ms so it never flickers, then fades as soon as the page is readable (DOM ready). Never without
+// JS (it starts display:none); reduced motion gets a still mark with a soft breathing dot.
+const CL_START = '<!-- candor-loader:start -->';
+const CL_END   = '<!-- candor-loader:end -->';
+const CL_RING = (cls, d) => `<g transform="translate(216.48 194.16)"><g class="cl-rip ${cls}"><path transform="translate(-216.48 -194.16)" d="${d}"/></g></g>`;
+const CL_SNIPPET = `${CL_START}
+<style>
+  .cl{display:none;position:fixed;inset:0;z-index:10000;align-items:center;justify-content:center;background:#0D1610;opacity:0;transition:opacity .35s ease;pointer-events:none}
+  .cl.cl-ready{display:flex}
+  .cl.cl-show{opacity:1;pointer-events:auto}
+  .cl svg{width:clamp(110px,14vw,148px);height:auto;overflow:visible}
+  .cl-rip{fill:none;stroke:#F5F3EE;stroke-width:8.8;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.06);animation:clRipple 2.8s cubic-bezier(.22,.7,.3,1) infinite}
+  .cl-r3{animation-delay:.3s}
+  .cl-r2{animation-delay:.65s}
+  .cl-r1{animation-delay:1s}
+  .cl-dot{fill:#5AA672;transform-box:fill-box;transform-origin:center;animation:clDrop 2.8s cubic-bezier(.34,1.56,.64,1) infinite}
+  @keyframes clRipple{0%{opacity:0;transform:scale(.06)}8%{opacity:1}42%{transform:scale(1)}70%{opacity:1;transform:scale(1)}92%,100%{opacity:0;transform:scale(1.04)}}
+  @keyframes clDrop{0%{transform:scale(.4)}12%{transform:scale(1.3)}24%,100%{transform:scale(1)}}
+  @keyframes clBreathe{0%,100%{opacity:1}50%{opacity:.45}}
+  @media (prefers-reduced-motion:reduce){
+    .cl{transition:none}
+    .cl-rip{animation:none;opacity:1;transform:none}
+    .cl-dot{animation:clBreathe 1.8s ease-in-out infinite}
+  }
+  /* the homepage hero waits while the loader is up, then plays its entrance */
+  html.cl-on #top,html.cl-on #top *,html.cl-on #top *::before,html.cl-on #top *::after{animation-play-state:paused!important}
+</style>
+<div class="cl" id="candor-loader" aria-hidden="true">
+  <svg viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg">
+    ${CL_RING('cl-r1', 'M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z')}
+    ${CL_RING('cl-r2', 'M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z')}
+    ${CL_RING('cl-r3', 'M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z')}
+    <circle class="cl-dot" cx="216.48" cy="194.16" r="10"/>
+  </svg>
+</div>
+<script>
+(function () {
+  var el = document.getElementById('candor-loader'), root = document.documentElement;
+  if (!el) return;
+  var MIN = 600, timer = 0, shownAt = 0, busy = false;
+  function show(delay) {
+    if (busy) return; busy = true;
+    el.classList.add('cl-ready');
+    timer = setTimeout(function () { shownAt = Date.now(); root.classList.add('cl-on'); el.classList.add('cl-show'); }, delay);
+  }
+  function hide() {
+    if (!busy) return;
+    clearTimeout(timer);
+    if (!shownAt) { busy = false; el.classList.remove('cl-ready'); return; }
+    setTimeout(function () {
+      el.classList.remove('cl-show'); root.classList.remove('cl-on');
+      setTimeout(function () { if (!el.classList.contains('cl-show')) { el.classList.remove('cl-ready'); busy = false; shownAt = 0; } }, 380);
+    }, Math.max(0, MIN - (Date.now() - shownAt)));
+  }
+  // first load: up only if the HTML is still arriving 0.9 s into the visit; down once it's readable
+  if (document.readyState === 'loading') {
+    show(Math.max(300, 900 - (window.performance ? performance.now() : 0)));
+    document.addEventListener('DOMContentLoaded', hide);
+    setTimeout(hide, 10000);
+  }
+  // leaving for another page on this site: up only if the next page is slow to arrive
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target && a.target !== '_self' || a.hasAttribute('download')) return;
+    var url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || !/^https?:$/.test(url.protocol)) return;
+    if (url.pathname === location.pathname && url.search === location.search) return;
+    show(500);
+  });
+  // coming back via the back/forward cache: never restore a covered page
+  window.addEventListener('pageshow', function (e) { if (e.persisted) { busy = true; shownAt = 0; hide(); } });
+})();
+</script>
+${CL_END}`;
 
 // One shared ending for every blog post, right after </article>: who wrote it, then one
 // next step (the readiness score) with the free call as the secondary option. Replaces the
@@ -591,6 +671,11 @@ function transform(html) {
     // drop an invisible, focusable anchor in front of it instead.
     if (!placed) out = out.replace(/<section\b/i, '<div id="main-content" tabindex="-1"></div>\n<section');
   }
+
+  // 1c2. Site loader: right after <body> (and the skip link) so it can cover a slow page from the start
+  const replacedCl = replaceBetween(out, CL_START, CL_END, CL_SNIPPET);
+  if (replacedCl) out = replacedCl;
+  else out = out.replace(/<body([^>]*)>(\n<a class="skip-link"[^\n]*)?/i, m => `${m}\n${CL_SNIPPET}`);
 
   // 1d. Paper grain overlay — right before the consent banner
   const replacedGrain = replaceBetween(out, GRAIN_START, GRAIN_END, GRAIN_SNIPPET);
