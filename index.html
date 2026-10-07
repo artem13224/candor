@@ -465,53 +465,36 @@ footer{background:#080B08;padding:28px var(--px);border-top:1px solid rgba(245,2
 .body-p a,.fq-ans a,.cert-desc a,.prob-txt a{color:var(--green);text-decoration:underline;text-decoration-color:rgba(45,107,66,.32);text-underline-offset:2px;transition:color .2s,text-decoration-color .2s}
 .body-p a:hover,.fq-ans a:hover,.cert-desc a:hover,.prob-txt a:hover{color:var(--green2);text-decoration-color:rgba(61,138,87,.6)}
 
-/* ── PAGE LOAD ANIMATION ── */
-#loader{
-  position:fixed;inset:0;z-index:9999;
-  background:#0D1610;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;
-  cursor:pointer;
-}
-#loader.dismiss{
-  opacity:0;pointer-events:none;
-  transition:opacity .5s ease;
-}
-#loader-inner{
-  display:flex;flex-direction:column;align-items:center;
-}
-@media (prefers-reduced-motion: reduce){#loader{display:none}}
-#loader-mark-wrap{
-  opacity:0;transform:scale(.91);
-  transition:opacity .45s ease,transform .45s ease;
-}
-#loader-mark-wrap.mark-in{opacity:1;transform:scale(1)}
-#loader-mark{width:210px;height:auto;display:block;overflow:visible}
-#loader-wordmark{
-  font-family:var(--u);font-weight:800;font-size:50px;
-  letter-spacing:-2.5px;color:#F5F3EE;
-  opacity:0;transform:translateY(14px);
-  transition:opacity .5s ease,transform .5s ease;
-  margin-top:18px;line-height:1;
-}
-#loader-wordmark.wm-in{opacity:1;transform:translateY(0)}
-#loader-tagline{
-  font-family:'Open Sans',sans-serif;font-weight:300;
-  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
-  color:#F5F3EE;opacity:0;
-  transition:opacity .4s ease;
-  margin-top:10px;
-}
-#loader-tagline.tl-in{opacity:.5}
-@keyframes dotPop{
-  0%{transform:scale(0);opacity:0}
-  60%{transform:scale(1.4);opacity:1}
-  100%{transform:scale(1);opacity:1}
-}
-@keyframes ringPulse{
-  0%{transform:scale(1);opacity:.6}
-  100%{transform:scale(4);opacity:0}
-}
+/* ── PAGE LOAD ANIMATION: the Candor mark assembles on the page colour, then the page opens up
+   through its dot. Shown once per session (html.ld-on is set in <head>); never with reduced
+   motion or without JS. Every beat lands by 1.5 s; the reveal is over by about 2.4 s. ── */
+@property --lr{syntax:'<length>';inherits:false;initial-value:-2px}
+#loader{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;background:var(--bg,#ECEAE2);cursor:pointer;
+  -webkit-mask:radial-gradient(circle at var(--lx,50%) var(--ly,50%),transparent var(--lr),#000 calc(var(--lr) + 1px));
+          mask:radial-gradient(circle at var(--lx,50%) var(--ly,50%),transparent var(--lr),#000 calc(var(--lr) + 1px))}
+html.ld-on #loader{display:flex;animation:ldFailsafe 0s 4s forwards}
+html.ld-on body{overflow:hidden}
+/* the hero waits behind the loader and plays its entrance as the page opens */
+html.ld-on #top,html.ld-on #top *,html.ld-on #top *::before,html.ld-on #top *::after{animation-play-state:paused!important}
+#loader-inner{display:flex;flex-direction:column;align-items:center;gap:22px}
+#loader-mark{width:clamp(118px,15vw,150px);height:auto;display:block;overflow:visible}
+#loader-mark .ld-blob{transform-box:fill-box;transform-origin:center;opacity:0;transform:scale(.8);animation:ldBlob .6s .08s cubic-bezier(.16,1,.3,1) forwards}
+#loader-mark .ld-ring{fill:none;stroke:#F5F3EE;stroke-width:8.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:ldDraw .7s cubic-bezier(.65,0,.35,1) forwards}
+#loader-mark .ld-r1{animation-delay:.32s}
+#loader-mark .ld-r2{animation-delay:.46s;animation-duration:.62s}
+#loader-mark .ld-r3{animation-delay:.6s;animation-duration:.54s}
+#loader-mark .ld-dot{transform-box:fill-box;transform-origin:center;transform:scale(0);animation:ldDot .42s 1.08s cubic-bezier(.34,1.56,.64,1) forwards}
+#loader-word{font:800 12px/1 var(--u);letter-spacing:.34em;text-indent:.34em;text-transform:uppercase;color:var(--ink,#0D1610);opacity:0;transform:translateY(6px);animation:ldWord .5s .98s cubic-bezier(.16,1,.3,1) forwards}
+#loader.out{display:flex;--lr:150vmax;transition:--lr .85s cubic-bezier(.7,0,.2,1)}
+#loader.out #loader-inner{transform:scale(1.35);opacity:0;transition:transform .85s cubic-bezier(.7,0,.2,1),opacity .45s .2s ease}
+#loader.out.fade{opacity:0;transition:opacity .45s ease}
+@keyframes ldBlob{to{opacity:1;transform:scale(1)}}
+@keyframes ldDraw{99%{stroke-dashoffset:0;stroke-dasharray:1}to{stroke-dashoffset:0;stroke-dasharray:none}}
+@keyframes ldDot{to{transform:scale(1)}}
+@keyframes ldWord{to{opacity:1;transform:none}}
+@keyframes ldFailsafe{to{opacity:0;visibility:hidden;pointer-events:none}}
+@media (prefers-reduced-motion:reduce){#loader{display:none!important}}
+
 
 
 /* ── INK SPLASH ── */
@@ -942,6 +925,8 @@ html.cc-open #mob-dial{opacity:0;visibility:hidden;pointer-events:none;transitio
 /* .wl prefix: must outrank the .wl-mist-a/-b i:nth-child() drift rules above */
 @media (prefers-reduced-motion:reduce){.wl .wl-mist i:nth-child(n),.wl .wl-btn::after{animation:none}}
 /* who-land:css:end */</style>
+<!-- intro loader: only on the first visit this session, never with reduced motion (no JS: never) -->
+<script>try{if(!sessionStorage.getItem('loaderSeen')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('ld-on')}catch(e){}</script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -949,25 +934,42 @@ html.cc-open #mob-dial{opacity:0;visibility:hidden;pointer-events:none;transitio
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKSHZN82"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<!-- PAGE LOAD ANIMATION -->
+<!-- PAGE LOAD ANIMATION (decorative; skippable with a click, tap or any key) -->
 <div id="loader" aria-hidden="true">
   <div id="loader-inner">
-    <div id="loader-mark-wrap">
-      <svg id="loader-mark" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg">
-        <path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="#0d1610"/>
-        <path id="ld-ring1" d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
-        <path id="ld-ring2" d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
-        <path id="ld-ring3" d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
-        <g transform="translate(216.48,194.16)">
-          <circle id="ld-pulse" cx="0" cy="0" r="8" fill="none" stroke="#3d8a57" stroke-width="1.5" opacity="0" style="transform-box:fill-box;transform-origin:center"/>
-          <circle id="ld-dot" cx="0" cy="0" r="5.5" fill="#3d8a57" opacity="0" style="transform-box:fill-box;transform-origin:center"/>
-        </g>
-      </svg>
-    </div>
-    <div id="loader-wordmark">Candor</div>
-    <div id="loader-tagline">Sustainability certification consulting, based in Vancouver</div>
+    <svg id="loader-mark" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg">
+      <path class="ld-blob" d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="#0D1610"/>
+      <path class="ld-ring ld-r1" pathLength="1" d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z"/>
+      <path class="ld-ring ld-r2" pathLength="1" d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z"/>
+      <path class="ld-ring ld-r3" pathLength="1" d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z"/>
+      <circle class="ld-dot" cx="216.48" cy="194.16" r="6.5" fill="#3D8A57"/>
+    </svg>
+    <div id="loader-word">Candor</div>
   </div>
 </div>
+<script>
+(function () {
+  var root = document.documentElement, loader = document.getElementById('loader');
+  if (!loader) return;
+  if (!root.classList.contains('ld-on')) { loader.remove(); return; }
+  try { sessionStorage.setItem('loaderSeen', '1'); } catch (e) {}
+  var done = false, canMask = !!(window.CSS && CSS.registerProperty);
+  function reveal(fast) {
+    if (done) return; done = true;
+    var dot = loader.querySelector('.ld-dot').getBoundingClientRect();
+    loader.style.setProperty('--lx', (dot.left + dot.width / 2) + 'px');
+    loader.style.setProperty('--ly', (dot.top + dot.height / 2) + 'px');
+    loader.classList.add('out');
+    if (!canMask || fast === true) loader.classList.add('fade');
+    root.classList.remove('ld-on');
+    setTimeout(function () { loader.remove(); }, 950);
+  }
+  loader.addEventListener('click', function () { reveal(true); });
+  loader.addEventListener('touchend', function (e) { e.preventDefault(); reveal(true); }, { passive: false });
+  document.addEventListener('keydown', function onKey() { reveal(true); document.removeEventListener('keydown', onKey); });
+  setTimeout(reveal, 1550);
+})();
+</script>
 
 <div id="cur"></div>
 <div id="cur2"></div>
@@ -1708,119 +1710,6 @@ document.querySelectorAll('.fq').forEach(item => {
 /* ════════════════════════════════════
    EXTRA POLISH — 5 EFFECTS
    ════════════════════════════════════ */
-
-/* 1. PAGE LOAD ANIMATION */
-(function(){
-  var loader    = document.getElementById('loader');
-  if (!loader) return;
-
-  /* skip on repeat visits this session, and for reduced motion (the CSS already hides it) */
-  if (sessionStorage.getItem('loaderSeen') ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    loader.style.display = 'none';
-    document.documentElement.style.background = '';
-    return;
-  }
-  sessionStorage.setItem('loaderSeen', '1');
-
-  document.body.style.overflow = 'hidden';
-
-  var ring1    = document.getElementById('ld-ring1');
-  var ring2    = document.getElementById('ld-ring2');
-  var ring3    = document.getElementById('ld-ring3');
-  var dot      = document.getElementById('ld-dot');
-  var pulse    = document.getElementById('ld-pulse');
-  var markWrap = document.getElementById('loader-mark-wrap');
-  var wordmark = document.getElementById('loader-wordmark');
-  var tagline  = document.getElementById('loader-tagline');
-
-  var dismissed = false;
-
-  function dismiss() {
-    if (dismissed) return;
-    dismissed = true;
-    document.documentElement.style.background = '';
-    loader.classList.add('dismiss');
-    setTimeout(function() {
-      loader.style.display = 'none';
-      document.body.style.overflow = '';
-    }, 520);
-  }
-
-  loader.addEventListener('click', dismiss);
-  loader.addEventListener('touchend', function(e) { e.preventDefault(); dismiss(); }, { passive: false });
-  document.addEventListener('keydown', function onKey(e) {
-    if (e.key === 'Escape') { dismiss(); document.removeEventListener('keydown', onKey); }
-  });
-
-  /* measure ring lengths and hide via dasharray */
-  var len1 = ring1.getTotalLength();
-  var len2 = ring2.getTotalLength();
-  var len3 = ring3.getTotalLength();
-  [ring1, ring2, ring3].forEach(function(r, i) {
-    var l = [len1, len2, len3][i];
-    r.style.strokeDasharray  = l;
-    r.style.strokeDashoffset = l;
-  });
-
-  /* Every beat lands by ~2.4s so the whole sequence fits the 2.6s budget.
-     Keep it that way: anything scheduled after the dismiss never shows. */
-
-  /* 70ms: mark scales in */
-  setTimeout(function() { markWrap.classList.add('mark-in'); }, 70);
-
-  /* 350ms: ring 1 draws over .66s */
-  setTimeout(function() {
-    ring1.style.transition = 'stroke-dashoffset .66s cubic-bezier(.37,0,.2,1)';
-    ring1.style.strokeDashoffset = '0';
-  }, 350);
-
-  /* 670ms: ring1 dims, ring2 draws over .57s */
-  setTimeout(function() {
-    ring1.style.transition = 'stroke-dashoffset .66s cubic-bezier(.37,0,.2,1),opacity .3s ease';
-    ring1.style.opacity = '0.7';
-    ring2.style.transition = 'stroke-dashoffset .57s cubic-bezier(.37,0,.2,1)';
-    ring2.style.strokeDashoffset = '0';
-  }, 670);
-
-  /* 990ms: ring2 dims, ring3 draws over .51s */
-  setTimeout(function() {
-    ring2.style.transition = 'stroke-dashoffset .57s cubic-bezier(.37,0,.2,1),opacity .3s ease';
-    ring2.style.opacity = '0.75';
-    ring3.style.transition = 'stroke-dashoffset .51s cubic-bezier(.37,0,.2,1)';
-    ring3.style.strokeDashoffset = '0';
-  }, 990);
-
-  /* 1370ms: dot pop */
-  setTimeout(function() {
-    dot.style.opacity = '1';
-    dot.style.animation = 'dotPop .4s cubic-bezier(.34,1.56,.64,1) forwards';
-  }, 1370);
-
-  /* 1380ms: all rings return to full opacity */
-  setTimeout(function() {
-    [ring1, ring2, ring3].forEach(function(r) {
-      r.style.transition = 'opacity .3s ease';
-      r.style.opacity = '1';
-    });
-  }, 1380);
-
-  /* 1560ms: pulse ring */
-  setTimeout(function() {
-    pulse.style.opacity = '1';
-    pulse.style.animation = 'ringPulse .6s ease-out forwards';
-  }, 1560);
-
-  /* 1740ms: wordmark (in by ~2.24s) */
-  setTimeout(function() { wordmark.classList.add('wm-in'); }, 1740);
-
-  /* 2010ms: tagline (in by ~2.41s) */
-  setTimeout(function() { tagline.classList.add('tl-in'); }, 2010);
-
-  /* 2600ms: auto-dismiss (.5s fade) */
-  setTimeout(dismiss, 2600);
-})();
-
 
 /* 3. CLICK INK SPLASH */
 document.addEventListener('click', e => {
