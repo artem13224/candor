@@ -435,7 +435,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
   <div class="article-meta">
     <span>Effective May 28, 2026</span>
     <span class="sep">·</span>
-    <span>Last updated October 4, 2026</span>
+    <span>Last updated October 7, 2026</span>
   </div>
 </header>
 <hr class="article-divider" />
@@ -490,7 +490,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
       <tr>
         <td><strong>Assessment responses</strong></td>
         <td>The free self-assessment tool</td>
-        <td>Your answers and the email address you provide so we can return your results, plus whether you ticked the optional box allowing Candor to follow up by email</td>
+        <td>Your answers, saved without your name or email when you see your results. If you choose to leave your email on the results page, it is stored with your answers so Artem can reply to you about them</td>
       </tr>
       <tr>
         <td><strong>Contact information</strong></td>
@@ -540,7 +540,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
 
   <p>We collect, use, and disclose personal information only for purposes a reasonable person would consider appropriate, namely to:</p>
   <ul>
-    <li>Score your assessment and send you your results;</li>
+    <li>Score your assessment and, if you ask, reply to you about your results;</li>
     <li>Respond to your enquiries;</li>
     <li>Provide consulting services you've engaged us for;</li>
     <li>Send newsletters to subscribers who've opted in;</li>
@@ -591,6 +591,18 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
         <td>Until you close the tab</td>
       </tr>
       <tr>
+        <td><code>candor-assessment-state</code></td>
+        <td>Functional (browser session storage, first-party)</td>
+        <td>Keeps your readiness-score answers and the step you were on, so a page reload doesn't lose them</td>
+        <td>Until you close the tab, or choose "Start over"</td>
+      </tr>
+      <tr>
+        <td><code>candor-assessment-pending</code></td>
+        <td>Functional (browser local storage, first-party)</td>
+        <td>Holds your readiness-score submission only if it failed to send, so it can be retried on your next visit</td>
+        <td>Until it sends on your next visit</td>
+      </tr>
+      <tr>
         <td><code>_ga</code>, <code>_ga_*</code></td>
         <td>Analytics (Google Analytics, set only after you accept)</td>
         <td>Distinguishes returning visitors so Google Analytics can count sessions and page views</td>
@@ -599,7 +611,7 @@ try { if (localStorage.getItem('candor-consent') === 'granted') { gtag('consent'
     </tbody>
   </table>
 
-  <p>The first two entries contain no personal identifier and are necessary for the Site to behave as intended, so they don't require consent. The analytics cookies do, and we don't set them until you accept.</p>
+  <p>The first four entries contain no personal identifier (the last one holds your email only if you typed it into a submission that failed to send) and are necessary for the Site to behave as intended, so they don't require consent. The analytics cookies do, and we don't set them until you accept.</p>
 
   <p><strong>What analytics processes either way.</strong> Even in cookieless mode, Google Analytics processes your IP address (truncated by Google before storage), approximate location, and device and browser type to produce aggregate usage statistics. We use it only to see which pages are useful. We don't use it to identify you individually, we don't run advertising or remarketing tags, and we don't share analytics data with advertisers.</p>
 

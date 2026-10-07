@@ -54,17 +54,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>B Corp Readiness Assessment | Candor</title>
-  <meta name="description" content="Four questions, two minutes: see how ready your business is for B Corp certification, which 2026 impact topics you already cover, and a realistic timeline." />
+  <title>B Corp Readiness Score | Candor</title>
+  <meta name="description" content="Four questions, about two minutes: see which of B Lab’s seven required impact topics your business already covers, the two gaps to close first, and a realistic timeline. No email needed." />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="B Corp Readiness Assessment | Candor" />
-  <meta property="og:description" content="Four questions, two minutes: see how ready your business is for B Corp certification, which 2026 impact topics you already cover, and a realistic timeline." />
+  <meta property="og:title" content="B Corp Readiness Score | Candor" />
+  <meta property="og:description" content="Four questions, about two minutes: see which of B Lab’s seven required impact topics your business already covers, the two gaps to close first, and a realistic timeline. No email needed." />
   <meta property="og:url" content="https://candorcertified.com/assessment/" />
   <meta property="og:image" content="https://candorcertified.com/images/heroes/webshare.jpg" />
   <meta property="og:site_name" content="Candor" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="B Corp Readiness Assessment | Candor" />
-  <meta name="twitter:description" content="Four questions, two minutes: see how ready your business is for B Corp certification and what to do next." />
+  <meta name="twitter:title" content="B Corp Readiness Score | Candor" />
+  <meta name="twitter:description" content="Four questions, two minutes: see which of B Lab’s seven required topics you already cover and what to do next." />
   <meta name="twitter:image" content="https://candorcertified.com/images/heroes/webshare.jpg" />
   <script type="application/ld+json">
   {
@@ -72,8 +72,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "@graph": [
       {
         "@type": "WebPage",
-        "name": "B Corp Readiness Assessment",
-        "description": "Free four-question self-assessment that estimates B Corp certification readiness for small businesses in Canada.",
+        "name": "B Corp Readiness Score",
+        "description": "Free four-question check that estimates B Corp certification readiness for small businesses in Canada.",
         "url": "https://candorcertified.com/assessment/",
         "isPartOf": { "@type": "WebSite", "name": "Candor", "url": "https://candorcertified.com/" },
         "publisher": { "@type": "Organization", "name": "Candor", "url": "https://candorcertified.com" }
@@ -82,7 +82,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://candorcertified.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Assessment", "item": "https://candorcertified.com/assessment/" }
+          { "@type": "ListItem", "position": 2, "name": "Readiness score", "item": "https://candorcertified.com/assessment/" }
         ]
       }
     ]
@@ -90,747 +90,205 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </script>
   <link rel="canonical" href="https://candorcertified.com/assessment/" />
 
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:     #0D1610;
-      --ink2:    #141f17;
-      --forest:  #2D6B42;
-      --field:   #3D8A57;
-      --sage:    #5aA672;
-      --oat:     #ECEAE2;
-      --paper:   #F5F3EE;
-      --body:    #4A5548;
-      --stone:   #C8C3B5;
-      --light:   #E4E1D6;
-      --u:       'Urbanist', sans-serif;
-      --mono:    'Space Mono', monospace;
-      --ease:    cubic-bezier(.16,1,.3,1);
-      --ease2:   cubic-bezier(.4,0,.2,1);
-      --px:      clamp(20px, 5vw, 80px);
+      --bg:     #ECEAE2;
+      --paper:  #F5F3EE;
+      --ink:    #0D1610;
+      --ink0:   #0E110D;
+      --green:  #2D6B42;
+      --field:  #3D8A57;
+      --sage:   #5AA672;
+      --body:   #4A5548;
+      --muted:  #64625A;  /* secondary text: 5.1:1 on --bg, 5.5:1 on --paper */
+      --stone:  #C8C3B5;  /* rules and decoration only */
+      --light:  #E4E1D6;
+      --line:   rgba(13,22,16,.12);
+      --err:    #8A3B2E;
+      --u:      'Urbanist', system-ui, sans-serif;
+      --ease:   cubic-bezier(.16,1,.3,1);
     }
 
-    html { font-size: 16px; scroll-behavior: smooth; height: 100%; }
+    html { font-size: 16px; }
     body {
-      background: var(--ink);
-      color: var(--paper);
-      font-family: 'Open Sans', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
+      background: var(--bg); color: var(--ink);
+      font-family: 'Open Sans', system-ui, sans-serif; font-size: 1rem; line-height: 1.65;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
-    #site-nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 600;
-      height: 58px; padding: 0 40px;
-      display: flex; align-items: center;
-    }
-    .nav-bg {
-      position: absolute; inset: 0;
-      background: rgba(13,22,16,0);
-      border-bottom: 1px solid transparent;
-      backdrop-filter: blur(0px);
-      transition: background .5s, border-color .5s, backdrop-filter .5s;
-      z-index: 0;
-    }
-    #site-nav.nav-up .nav-bg {
-      background: rgba(13,22,16,.88);
-      border-bottom-color: rgba(255,255,255,.06);
-      backdrop-filter: blur(20px);
-    }
-    .nav-inner {
-      position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-      width: 100%; max-width: 1400px; margin: 0 auto;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 9px;
-      text-decoration: none; transition: opacity .3s;
-    }
+    /* ── NAV (same light shell as the legal pages) ── */
+    #site-nav { display: flex; position: fixed; top: 0; left: 0; right: 0; z-index: 600; height: 58px; padding: 0 40px; align-items: center; }
+    .nav-bg { position: absolute; inset: 0; background: rgba(236,234,226,0); border-bottom: 1px solid transparent; transition: background .5s ease, border-color .5s ease; z-index: 0; }
+    #site-nav.nav-up .nav-bg { background: rgba(236,234,226,.92); border-bottom-color: rgba(14,17,13,.07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .nav-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; max-width: 1400px; margin: 0 auto; }
+    .nav-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; flex-shrink: 0; transition: opacity .3s; }
     .nav-logo:hover { opacity: .6; }
-    .nav-logo-svg { width: 22px; height: 22px; flex-shrink: 0; transition: transform .7s var(--ease); }
-    .nav-logo:hover .nav-logo-svg { transform: rotate(14deg); }
-    .nav-wordmark {
-      font-family: var(--u); font-weight: 800; font-size: 14px;
-      letter-spacing: .22em; text-transform: uppercase; color: var(--paper);
-    }
-    .nav-links {
-      display: flex; align-items: center;
-      margin-left: auto; margin-right: auto; padding-left: 40px;
-    }
-    .nav-link {
-      font-family: var(--u); font-size: 11px; font-weight: 500;
-      letter-spacing: .13em; text-transform: uppercase;
-      color: rgba(245,243,238,.62); text-decoration: none;
-      padding: 6px 13px; border-radius: 2px; position: relative;
-      transition: color .3s;
-    }
-    .nav-link:hover { color: var(--paper); }
+    .nav-logo-svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .nav-wordmark { font-family: var(--u); font-weight: 800; font-size: 14px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink0); }
+    .nav-links { display: flex; align-items: center; margin: 0 auto; padding-left: 40px; }
+    .nav-link { font-family: var(--u); font-size: 11px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--body); text-decoration: none; padding: 6px 13px; position: relative; transition: color .3s; }
+    .nav-link::after { content: ''; position: absolute; bottom: 1px; left: 13px; right: 13px; height: 1.5px; background: var(--green); transform: scaleX(0); transform-origin: left; transition: transform .38s var(--ease); }
+    .nav-link:hover, .nav-link[aria-current="page"] { color: var(--ink0); }
+    .nav-link:hover::after { transform: scaleX(.6); }
+    .nav-link[aria-current="page"]::after { transform: scaleX(1); }
     .nav-cta-wrap { justify-self: end; }
-    .nav-cta {
-      font-family: var(--u); font-weight: 600; font-size: 11px;
-      letter-spacing: .12em; text-transform: uppercase;
-      text-decoration: none; padding: 9px 18px;
-      background: var(--forest); color: var(--paper);
-      border-radius: 2px; display: inline-flex; align-items: center; gap: 8px;
-      transition: background .28s, transform .35s var(--ease);
-      position: relative; overflow: hidden;
-    }
-    .nav-cta:hover { background: #235437; transform: translateY(-1px); }
-    .nav-ar { display: inline-block; transition: transform .35s var(--ease); }
-    .nav-cta:hover .nav-ar { transform: translateX(4px); }
+    .nav-cta { font-family: var(--u); font-weight: 600; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; padding: 9px 18px; background: var(--ink0); color: var(--paper); border-radius: 2px; display: inline-flex; align-items: center; gap: 8px; transition: background .28s; }
+    .nav-cta:hover { background: var(--green); }
+    @media (max-width: 680px) { #site-nav { padding: 0 20px; } }
 
-    /* ── TOPO BACKGROUND ── */
-    #topo-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    #topo-bg-canvas { width: 100%; height: 100%; display: block; }
+    /* ── LAYOUT ── */
+    .qz { max-width: 780px; margin: 0 auto; padding: clamp(104px, 14vh, 140px) 20px clamp(64px, 10vw, 120px); min-height: 100vh; }
+    .screen { display: none; }
+    .screen.is-on { display: block; animation: fadeIn .45s var(--ease) both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-    /* ── PROGRESS BAR ── */
-    #progress-wrap {
-      position: fixed; top: 58px; left: 0; right: 0; z-index: 500;
-      height: 2px; background: rgba(255,255,255,.06);
-      opacity: 0; transition: opacity .4s;
-    }
-    #progress-wrap.visible { opacity: 1; }
-    #progress-bar { height: 100%; background: var(--field); width: 0%; transition: width .6s var(--ease); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 600 11px/1 var(--u); letter-spacing: .2em; text-transform: uppercase; color: var(--green); }
+    .eyebrow::before { content: ''; width: 22px; height: 1.5px; background: var(--green); }
 
-    /* ── SCREENS ── */
-    .screen {
-      position: relative; z-index: 10;
-      min-height: 100vh;
-      display: none; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 80px 24px calc(60px + env(safe-area-inset-bottom));
-      padding-left: max(24px, env(safe-area-inset-left));
-      padding-right: max(24px, env(safe-area-inset-right));
-      opacity: 0; pointer-events: none;
-      transform: translateY(24px);
-      transition: opacity .5s var(--ease), transform .5s var(--ease);
-    }
-    .screen.active { display: flex; opacity: 1; pointer-events: all; transform: translateY(0); }
-    .screen.exit   { opacity: 0; transform: translateY(-20px); }
+    .btn { font: 600 13px/1 var(--u); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; padding: 16px 26px; border-radius: 2px; border: 0; display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: background .28s, color .28s, border-color .28s; }
+    .btn-d { background: var(--ink0); color: var(--paper); }
+    .btn-d:hover { background: var(--green); }
+    .btn-o { background: transparent; color: var(--ink0); border: 1px solid var(--muted); }
+    .btn-o:hover { border-color: var(--ink0); background: rgba(13,22,16,.04); }
+    .btn .ar { transition: transform .35s var(--ease); }
+    .btn:hover .ar { transform: translateX(4px); }
+    .link { color: var(--green); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .link:hover { color: var(--ink0); }
+    button.link { background: none; border: 0; font: inherit; cursor: pointer; padding: 0; }
 
     /* ── INTRO ── */
-    .intro-eyebrow {
-      font-family: var(--mono); font-size: 0.625rem;
-      letter-spacing: .18em; text-transform: uppercase;
-      color: var(--sage); margin-bottom: 28px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .intro-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--field); }
-    .intro-headline {
-      font-family: var(--u); font-weight: 900;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      line-height: 1.0; letter-spacing: -0.04em;
-      color: var(--paper); max-width: 700px;
-      text-align: center; margin-bottom: 28px;
-    }
-    .intro-headline em { font-style: normal; color: var(--field); }
-    .intro-sub {
-      font-size: 1.0625rem; line-height: 1.65;
-      color: rgba(245,243,238,.68);
-      max-width: 460px; text-align: center; margin-bottom: 48px;
-    }
-    .intro-meta { display: flex; align-items: center; gap: 20px; margin-bottom: 48px; }
-    .intro-meta span {
-      font-family: var(--mono); font-size: 0.625rem;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(245,243,238,.62);
-    }
-    .intro-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(245,243,238,.2); }
-    .btn-primary {
-      font-family: var(--u); font-weight: 700; font-size: 0.9375rem;
-      letter-spacing: -.01em; text-decoration: none;
-      padding: 16px 40px; border-radius: 3px;
-      background: var(--forest); color: var(--paper);
-      border: none; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 10px;
-      transition: background .2s, transform .35s var(--ease);
-      position: relative; overflow: hidden;
-    }
-    .btn-primary:hover { background: #235437; transform: translateY(-2px); }
-    .btn-primary .arr { transition: transform .35s var(--ease); }
-    .btn-primary:hover .arr { transform: translateX(5px); }
+    .intro h1 { margin: 22px 0 22px; font: 800 clamp(42px, 7vw, 76px)/.95 var(--u); letter-spacing: -.035em; color: var(--ink0); }
+    .intro h1 em { font-style: italic; font-weight: 300; color: var(--green); }
+    .intro-lede { max-width: 56ch; font-size: clamp(17px, 1.6vw, 19px); line-height: 1.6; color: var(--body); }
+    .intro-meta { display: flex; flex-wrap: wrap; gap: 8px 8px; margin: 28px 0 36px; padding: 0; list-style: none; }
+    .intro-meta li { display: inline-flex; align-items: center; gap: 8px; font: 600 12px/1 var(--u); letter-spacing: .12em; text-transform: uppercase; color: var(--body); }
+    .intro-meta li + li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--sage); margin-right: 8px; }
+    .intro-note { margin-top: 18px; max-width: 60ch; font-size: 13.5px; color: var(--muted); }
+    .intro-resume { margin-top: 26px; padding: 14px 16px; border-left: 2px solid var(--green); background: rgba(245,243,238,.7); font-size: 14.5px; color: var(--body); }
 
-    /* ── QUESTION WRAP ── */
-    .q-wrap { width: 100%; max-width: 680px; }
+    /* ── QUESTION CARD ── */
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: clamp(22px, 4.5vw, 48px); }
+    .q-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+    .q-back { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 4px 0; background: none; border: 0; font: 600 12px/1 var(--u); letter-spacing: .12em; text-transform: uppercase; color: var(--body); cursor: pointer; }
+    .q-back:hover { color: var(--ink0); }
+    .q-step { font: 600 12px/1 var(--u); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .q-bar { height: 3px; background: var(--light); border-radius: 2px; overflow: hidden; margin-bottom: clamp(26px, 4vw, 40px); }
+    .q-bar i { display: block; height: 100%; background: var(--green); border-radius: 2px; transition: width .6s var(--ease); }
 
-    .q-back {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: none; border: none; cursor: pointer;
-      font-family: var(--mono); font-size: 0.625rem;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(245,243,238,.62);
-      margin-bottom: 20px; padding: 0;
-      transition: color .2s;
-    }
-    .q-back:hover { color: rgba(245,243,238,.9); }
-    .q-back-icon { width: 10px; height: 10px; }
+    fieldset { border: 0; min-width: 0; }
+    legend { width: 100%; padding: 0; }
+    .q-title { font: 800 clamp(26px, 3.6vw, 38px)/1.08 var(--u); letter-spacing: -.02em; color: var(--ink0); outline: none; }
+    .q-sub { margin: 10px 0 24px; font-size: 15px; color: var(--muted); }
 
-    .q-number {
-      font-family: var(--mono); font-size: 0.625rem;
-      letter-spacing: .16em; text-transform: uppercase;
-      color: var(--sage); margin-bottom: 16px;
-    }
-    .q-title {
-      font-family: var(--u); font-weight: 800;
-      font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-      line-height: 1.15; letter-spacing: -0.03em;
-      color: var(--paper); margin-bottom: 10px;
-    }
-    .q-sub {
-      font-size: 0.9375rem; color: rgba(245,243,238,.62);
-      margin-bottom: 40px; line-height: 1.6;
-    }
+    .opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .opts.one { grid-template-columns: minmax(0, 1fr); }
+    @media (max-width: 560px) { .opts { grid-template-columns: minmax(0, 1fr); } }
 
-    /* ── OPT GRID (Q1, Q2) ── */
-    .opt-grid {
-      display: grid; gap: 10px;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    }
-    .opt-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
-    .opt-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+    .opt { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: start; align-content: start; gap: 2px 14px; padding: 16px 18px; min-height: 64px; background: #FBFAF7; border: 1px solid var(--stone); border-radius: 4px; cursor: pointer; transition: border-color .2s, background .2s, box-shadow .2s; }
+    .opt:hover { border-color: var(--muted); }
+    .opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .opt-mark { grid-row: 1 / span 2; width: 20px; height: 20px; margin-top: 1px; border: 1.5px solid var(--muted); background: #fff; display: grid; place-items: center; transition: border-color .2s, background .2s; }
+    .opt-mark.radio { border-radius: 50%; }
+    .opt-mark.check { border-radius: 4px; }
+    .opt-mark::after { content: ''; opacity: 0; transition: opacity .15s, transform .25s var(--ease); transform: scale(.5); }
+    .opt-mark.radio::after { width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+    .opt-mark.check::after { width: 10px; height: 5px; border: solid #fff; border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg) scale(.5); }
+    .opt-main { font: 700 16px/1.3 var(--u); color: var(--ink0); }
+    .opt-sub { font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+    .opt:has(input:checked) { border-color: var(--green); background: #fff; box-shadow: inset 0 0 0 1px var(--green); }
+    .opt:has(input:checked) .opt-mark { border-color: var(--green); }
+    .opt:has(input:checked) .opt-mark::after { opacity: 1; transform: scale(1); }
+    .opt:has(input:checked) .opt-mark.check { background: var(--green); }
+    .opt:has(input:checked) .opt-mark.check::after { transform: translateY(-1px) rotate(-45deg) scale(1); }
+    .opt:has(input:focus-visible) { outline: 2px solid var(--field); outline-offset: 3px; }
 
-    .opt-card {
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 4px; padding: 20px 18px;
-      cursor: pointer; text-align: left;
-      transition: background .2s, border-color .2s;
-      position: relative; overflow: hidden;
-    }
-    .opt-card::after {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; width: 0; height: 2px;
-      background: var(--field);
-      transition: width .3s var(--ease);
-    }
-    .opt-card:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); }
-    .opt-card:hover::after { width: 100%; }
-    .opt-card.selected { background: rgba(61,138,87,.15); border-color: var(--field); }
-    .opt-card.selected::after { width: 100%; }
-    .opt-card.settle { animation: settle .18s var(--ease2) forwards; }
-    @keyframes settle { 0%{transform:scale(1)} 50%{transform:scale(.98)} 100%{transform:scale(1)} }
-
-    .opt-ripple {
-      position: absolute; inset: 0; pointer-events: none; border-radius: 4px;
-      background: radial-gradient(circle at var(--rx,50%) var(--ry,50%), rgba(61,138,87,.12) 0%, transparent 65%);
-      opacity: 0; transition: opacity .35s;
-    }
-    .opt-card.ripple-show .opt-ripple { opacity: 1; }
-
-    .opt-label {
-      font-family: var(--u); font-weight: 700; font-size: 1rem;
-      color: var(--paper); letter-spacing: -.01em;
-      display: block; margin-bottom: 4px;
-    }
-    .opt-sub {
-      font-size: 0.75rem; color: rgba(245,243,238,.62);
-      font-family: var(--mono); letter-spacing: .04em;
-    }
-
-    /* ── Q3 JOURNEY CARDS (vertical stack) ── */
-    .journey-list { display: flex; flex-direction: column; gap: 10px; }
-    .journey-card {
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 4px; padding: 24px 24px 24px 20px;
-      cursor: pointer; position: relative; overflow: hidden;
-      display: flex; align-items: flex-start; gap: 16px;
-      transition: background .2s, border-color .2s;
-      width: 100%; text-align: left;
-    }
-    .journey-card::after {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; width: 0; height: 2px;
-      background: var(--field); transition: width .3s var(--ease);
-    }
-    .journey-card:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); }
-    .journey-card:hover::after { width: 100%; }
-    .journey-card.selected { background: rgba(61,138,87,.15); border-color: var(--field); }
-    .journey-card.selected::after { width: 100%; }
-    .journey-marker {
-      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
-      border: 1.5px solid rgba(255,255,255,.2); margin-top: 3px;
-      transition: border-color .2s, background .2s; position: relative;
-    }
-    .journey-card.selected .journey-marker { border-color: var(--field); background: var(--field); }
-    .journey-card.selected .journey-marker::after {
-      content: ''; position: absolute;
-      top: 50%; left: 50%; transform: translate(-50%,-50%);
-      width: 6px; height: 6px; border-radius: 50%; background: var(--paper);
-    }
-    .journey-text { flex: 1; }
-    .journey-label {
-      font-family: var(--u); font-weight: 700; font-size: 1rem;
-      color: var(--paper); letter-spacing: -.01em; display: block; margin-bottom: 4px;
-    }
-    .journey-sub {
-      font-size: 0.8125rem; color: rgba(245,243,238,.62);
-      font-family: var(--mono); letter-spacing: .04em; line-height: 1.5;
-    }
-
-    /* ── Q4 CHECKLIST CARDS ── */
-    .check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .check-card {
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 4px; padding: 18px 20px;
-      cursor: pointer; position: relative; overflow: hidden;
-      text-align: left; width: 100%;
-      transition: background .2s, border-color .2s;
-    }
-    .check-card::after {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; width: 0; height: 2px;
-      background: var(--field); transition: width .3s var(--ease);
-    }
-    .check-card:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); }
-    .check-card:hover::after { width: 100%; }
-    .check-card.checked { background: rgba(61,138,87,.13); border-color: rgba(61,138,87,.5); }
-    .check-card.checked::after { width: 100%; }
-    .check-card.toggling { animation: checkToggle .2s var(--ease2) forwards; }
-    @keyframes checkToggle { 0%{transform:scale(1)} 50%{transform:scale(1.02)} 100%{transform:scale(1)} }
-
-    .check-badge {
-      position: absolute; top: 10px; right: 10px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: var(--field);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; transform: scale(0);
-      transition: opacity .22s, transform .22s var(--ease);
-      font-size: 9px; color: var(--paper); font-weight: 700; line-height: 1;
-    }
-    .check-card.checked .check-badge { opacity: 1; transform: scale(1); }
-    .check-label {
-      font-family: var(--u); font-weight: 700; font-size: 0.9375rem;
-      color: var(--paper); letter-spacing: -.01em;
-      display: block; margin-bottom: 4px; padding-right: 24px;
-    }
-    .check-sub {
-      font-size: 0.6875rem; color: rgba(245,243,238,.62);
-      font-family: var(--mono); letter-spacing: .04em; line-height: 1.5;
-    }
-
-    /* ── CONTINUE BUTTON ── */
-    .q-next {
-      margin-top: 36px;
-      font-family: var(--u); font-weight: 600; font-size: 0.875rem;
-      letter-spacing: -.01em; padding: 14px 32px;
-      background: var(--forest); color: var(--paper);
-      border: none; border-radius: 3px; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px;
-      transition: background .2s, transform .3s var(--ease), opacity .3s;
-      opacity: 0; pointer-events: none;
-      position: relative; overflow: hidden;
-    }
-    .q-next.ready { opacity: 1; pointer-events: all; }
-    .q-next.nudge { animation: nudge .45s var(--ease2); opacity: .75; }
-    @keyframes nudge { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
-    .q-next.ready.shimmer-once::before {
-      content: '';
-      position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.09), transparent);
-      animation: shimmer .8s var(--ease2) .05s forwards;
-    }
-    @keyframes shimmer { 0%{left:-100%} 100%{left:160%} }
-    .q-next:hover { background: #235437; transform: translateY(-1px); }
-    .q-next.always-ready { opacity: 1; pointer-events: all; }
-
-    /* ── EMAIL ── */
-    .email-wrap { width: 100%; max-width: 500px; text-align: center; }
-    .email-back-row { display: flex; justify-content: center; margin-bottom: 24px; }
-    .email-icon {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: rgba(61,138,87,.15); border: 1px solid rgba(61,138,87,.3);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 28px;
-    }
-    .email-title {
-      font-family: var(--u); font-weight: 800;
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      letter-spacing: -0.03em; color: var(--paper);
-      margin-bottom: 14px; line-height: 1.15;
-    }
-    .email-sub {
-      font-size: 0.9375rem; color: rgba(245,243,238,.62);
-      margin-bottom: 36px; line-height: 1.65;
-    }
-    .email-field-wrap {
-      display: flex;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 4px; overflow: hidden;
-      transition: border-color .2s;
-    }
-    .email-field-wrap:focus-within { border-color: var(--field); }
-    #email-input {
-      flex: 1; background: transparent; border: none; outline: none;
-      padding: 16px 20px; color: var(--paper);
-      font-family: 'Open Sans', sans-serif; font-size: 0.9375rem;
-    }
-    #email-input::placeholder { color: rgba(245,243,238,.55); }
-    #email-submit {
-      font-family: var(--u); font-weight: 700; font-size: 0.8125rem;
-      letter-spacing: -.01em; padding: 16px 24px;
-      background: var(--forest); color: var(--paper);
-      border: none; cursor: pointer;
-      transition: background .2s; white-space: nowrap;
-      position: relative; overflow: hidden;
-    }
-    #email-submit:hover { background: #235437; }
-    .results-disclaimer {
-      max-width: 640px; margin: 22px auto 32px; text-align: center;
-      font-size: 0.8rem; line-height: 1.6; color: rgba(245,243,238,.62);
-    }
-    .email-consent {
-      display: flex; gap: 10px; align-items: flex-start; text-align: left;
-      max-width: 520px; margin: 18px auto 0; cursor: pointer;
-      font-size: 0.8125rem; line-height: 1.55; color: rgba(245,243,238,.62);
-    }
-    .email-consent input { margin-top: 3px; width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--field); cursor: pointer; }
-    .email-note {
-      margin-top: 14px; font-family: var(--mono);
-      font-size: 0.6875rem; letter-spacing: .06em;
-      color: rgba(245,243,238,.62); text-transform: uppercase;
-    }
-    .email-privacy {
-      margin-top: 10px; font-family: var(--mono);
-      font-size: 0.6875rem; letter-spacing: .08em;
-      color: rgba(245,243,238,.62); text-transform: uppercase;
-    }
-    .email-privacy a { color: rgba(245,243,238,.62); text-decoration: underline; text-underline-offset: 3px; }
-    .email-privacy a:hover { color: rgba(245,243,238,.9); }
+    .q-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 28px; }
+    .q-err { font-size: 14px; color: var(--err); min-height: 1.4em; }
+    .q-err:empty { display: none; }
 
     /* ── RESULTS ── */
-    .results-wrap { width: 100%; max-width: 900px; }
+    .res-head { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: clamp(20px, 4vw, 40px); margin: 20px 0 28px; }
+    .ring { position: relative; width: clamp(104px, 16vw, 140px); aspect-ratio: 1; }
+    .ring svg { width: 100%; height: 100%; display: block; transform: rotate(-90deg); }
+    .ring .seg { fill: none; stroke: var(--stone); stroke-width: 7; stroke-linecap: round; transition: stroke .5s ease; }
+    .ring .seg.on { stroke: var(--green); }
+    .ring-n { position: absolute; inset: 0; display: grid; place-items: center; font: 800 clamp(26px, 4vw, 34px)/1 var(--u); color: var(--ink0); letter-spacing: -.02em; }
+    .ring-n small { font-size: .5em; font-weight: 600; color: var(--muted); margin-left: 2px; }
+    .res-title { font: 800 clamp(30px, 4.6vw, 50px)/1.02 var(--u); letter-spacing: -.03em; color: var(--ink0); outline: none; }
+    .res-title em { font-style: italic; font-weight: 300; color: var(--green); }
+    .res-verdict { margin-top: 12px; font-size: clamp(16px, 1.5vw, 18px); color: var(--body); max-width: 52ch; }
+    @media (max-width: 520px) { .res-head { grid-template-columns: minmax(0, 1fr); } }
 
-    .dual-gauge {
-      display: flex; align-items: flex-start; justify-content: center;
-      margin-bottom: 40px;
-    }
-    .gauge-item {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 14px; flex: 1; max-width: 280px;
-      opacity: 0; transform: translateY(16px);
-      transition: opacity .6s var(--ease), transform .6s var(--ease);
-    }
-    .gauge-item.visible { opacity: 1; transform: translateY(0); }
-    .gauge-canvas-wrap { position: relative; flex-shrink: 0; }
-    .gauge-canvas {
-      display: block; border-radius: 50%;
-      box-shadow: 0 0 50px rgba(61,138,87,.12), 0 0 0 1px rgba(61,138,87,.08);
-      transition: box-shadow 1s var(--ease);
-    }
-    .gauge-canvas.glow { box-shadow: 0 0 60px rgba(61,138,87,.28), 0 0 0 1px rgba(61,138,87,.18); }
-    .gauge-score-label {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      text-align: center; pointer-events: none;
-    }
-    .gauge-score-num {
-      font-family: var(--u); font-weight: 900;
-      font-size: 2.25rem; letter-spacing: -0.04em;
-      color: var(--paper); display: block; line-height: 1;
-      transition: text-shadow .6s;
-    }
-    .gauge-score-num.pulse { text-shadow: 0 0 22px rgba(90,166,114,.55); }
-    .gauge-label-text {
-      font-family: var(--mono); font-size: 0.5rem;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: rgba(245,243,238,.62); display: block; margin-top: 4px;
-    }
-    .gauge-meta { text-align: center; }
-    .gauge-title {
-      font-family: var(--u); font-weight: 700; font-size: 0.875rem;
-      color: var(--paper); letter-spacing: -.01em; margin-bottom: 3px;
-    }
-    .gauge-subtitle {
-      font-family: var(--mono); font-size: 0.5625rem;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(245,243,238,.62);
-    }
-    .gauge-divider {
-      width: 1px; background: rgba(255,255,255,.08);
-      align-self: stretch; margin: 0 20px; flex-shrink: 0;
-    }
+    .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 4px; background: var(--paper); margin-bottom: 40px; }
+    .fact { padding: 18px 20px; }
+    .fact + .fact { border-left: 1px solid var(--line); }
+    .fact dt { font: 600 11px/1.3 var(--u); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .fact dd { margin-top: 8px; font: 700 clamp(18px, 2vw, 21px)/1.2 var(--u); color: var(--ink0); }
+    .fact dd span { display: block; margin-top: 4px; font: 400 13px/1.45 'Open Sans', system-ui, sans-serif; color: var(--muted); }
+    @media (max-width: 640px) { .facts { grid-template-columns: minmax(0, 1fr); } .fact + .fact { border-left: 0; border-top: 1px solid var(--line); } }
 
-    /* Verdict */
-    .verdict-banner {
-      background: rgba(45,107,66,.15);
-      border: 1px solid rgba(45,107,66,.3);
-      border-radius: 6px; padding: 28px 36px;
-      margin-bottom: 28px; text-align: center;
-      opacity: 0; transform: translateY(20px);
-      transition: opacity .6s var(--ease), transform .6s var(--ease);
-    }
-    .verdict-banner.visible { opacity: 1; transform: translateY(0); }
-    .verdict-eyebrow {
-      font-family: var(--mono); font-size: 0.5625rem;
-      letter-spacing: .18em; text-transform: uppercase;
-      color: var(--sage); margin-bottom: 10px; display: block;
-    }
-    .verdict-text {
-      font-family: var(--u); font-weight: 900;
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-      letter-spacing: -0.03em; color: var(--paper); line-height: 1.15;
-    }
+    .res-h { font: 800 clamp(22px, 2.6vw, 28px)/1.15 var(--u); letter-spacing: -.02em; color: var(--ink0); margin-bottom: 6px; }
+    .res-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 16px; }
 
-    /* Metrics grid */
-    .metrics-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 6px; overflow: hidden; margin-bottom: 32px;
-    }
-    .metric-cell {
-      background: rgba(13,22,16,.8); padding: 28px 24px;
-      backdrop-filter: blur(12px);
-      opacity: 0; transform: translateY(12px);
-      transition: opacity .5s var(--ease), transform .5s var(--ease);
-    }
-    .metric-cell.visible { opacity: 1; transform: translateY(0); }
-    .metric-icon {
-      font-family: var(--mono); font-size: 0.5625rem;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--sage); margin-bottom: 14px; display: block;
-    }
-    .metric-num {
-      font-family: var(--u); font-weight: 900;
-      font-size: clamp(1.5rem, 2.5vw, 2.25rem);
-      letter-spacing: -0.04em; color: var(--paper);
-      display: block; line-height: 1; margin-bottom: 8px;
-    }
-    .metric-label { font-size: 0.8125rem; color: rgba(245,243,238,.62); line-height: 1.5; }
-    .metric-num.is-text { font-size: clamp(1.05rem, 1.6vw, 1.35rem); letter-spacing: -0.01em; line-height: 1.2; }
-    .results-cta-actions { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; flex-shrink: 0; }
-    .results-secondary { font-size: 0.8125rem; color: rgba(245,243,238,.7); text-decoration: underline; text-underline-offset: 3px; }
-    .results-secondary:hover { color: var(--paper); }
-    .results-retake { text-align: center; margin-top: 22px; font-size: 0.8rem; }
-    .results-retake a { color: rgba(245,243,238,.62); text-decoration: underline; text-underline-offset: 3px; }
-    .results-retake a:hover { color: var(--paper); }
-    /* skipping is as easy as submitting: a full-size secondary button right under the field, not fine print */
-    #email-skip {
-      display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; padding: 0 2px;
-      background: none; border: 0; font: 600 0.875rem/1.3 var(--u); letter-spacing: .01em;
-      color: rgba(245,243,238,.85); text-decoration: underline; text-underline-offset: 4px; cursor: pointer;
-    }
-    #email-skip:hover { color: #F5F3EE; }
+    .topics { list-style: none; border-top: 1px solid var(--line); margin-bottom: 44px; }
+    .topic { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 2px 14px; padding: 14px 2px; border-bottom: 1px solid var(--line); }
+    .t-mark { grid-row: 1 / span 2; width: 22px; height: 22px; margin-top: 1px; border-radius: 50%; border: 1.5px solid var(--muted); display: grid; place-items: center; }
+    .topic.on .t-mark { background: var(--green); border-color: var(--green); }
+    .topic.on .t-mark::after { content: ''; width: 9px; height: 5px; border: solid #fff; border-width: 0 0 2px 2px; transform: translateY(-1px) rotate(-45deg); }
+    .t-name { font: 700 16px/1.35 var(--u); color: var(--ink0); }
+    .t-note { font-size: 13.5px; color: var(--muted); }
+    .topic.on .t-note { color: var(--green); }
+
+    .gaps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; list-style: none; }
+    .gap { padding: 20px 22px; background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--green); border-radius: 4px; }
+    .gap-n { font: 600 11px/1 var(--u); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .gap h4 { margin: 10px 0 6px; font: 700 17px/1.3 var(--u); color: var(--ink0); }
+    .gap p { font-size: 14.5px; line-height: 1.55; color: var(--body); }
+    @media (max-width: 640px) { .gaps { grid-template-columns: minmax(0, 1fr); } }
+    .no-gaps { margin-bottom: 20px; font-size: 15px; color: var(--body); }
+
+    .disclaimer { margin: 6px 0 44px; font-size: 13px; line-height: 1.6; color: var(--muted); max-width: 70ch; }
+
+    .next { background: var(--ink0); color: var(--paper); border-radius: 4px; padding: clamp(26px, 4.5vw, 44px); margin-bottom: 14px; }
+    .next h3 { font: 800 clamp(24px, 3vw, 32px)/1.1 var(--u); letter-spacing: -.02em; }
+    .next h3 em { font-style: italic; font-weight: 300; color: #7CC08F; }
+    .next p { margin: 12px 0 24px; max-width: 54ch; font-size: 15.5px; color: rgba(245,243,238,.78); }
+    .next-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+    .next .btn-l { background: var(--paper); color: var(--ink0); }
+    .next .btn-l:hover { background: var(--sage); }
+    .next .link { color: #A9D8B6; }
+    .next .link:hover { color: var(--paper); }
+
+    .follow { padding: clamp(22px, 4vw, 34px); background: var(--paper); border: 1px solid var(--line); border-radius: 4px; }
+    .follow h3 { font: 800 21px/1.2 var(--u); color: var(--ink0); }
+    .follow > p { margin: 6px 0 18px; font-size: 14.5px; color: var(--body); max-width: 58ch; }
+    .follow label { display: block; margin-bottom: 6px; font: 600 11px/1 var(--u); letter-spacing: .16em; text-transform: uppercase; color: var(--body); }
+    .f-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .f-row input { flex: 1 1 240px; min-width: 0; padding: 14px 14px; border: 1px solid var(--muted); border-radius: 3px; background: #fff; font: 400 16px/1.3 'Open Sans', system-ui, sans-serif; color: var(--ink0); }
+    .f-row input:focus { outline: 2px solid var(--field); outline-offset: 1px; border-color: var(--field); }
+    .f-row input[aria-invalid="true"] { border-color: var(--err); }
+    .f-note { margin-top: 10px; font-size: 12.5px; line-height: 1.55; color: var(--muted); }
+    .f-err { margin-top: 10px; font-size: 14px; color: var(--err); }
+    .f-err:empty { display: none; }
+    .f-done { font-size: 15px; color: var(--green); font-weight: 600; }
+
+    .res-foot { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 26px; font-size: 14px; }
+
+    noscript p { max-width: 640px; margin: 0 auto; padding: 140px 20px 60px; text-align: center; color: var(--body); }
+
     @media (prefers-reduced-motion: reduce) {
-      .screen, .opt-card, .journey-card, .check-card, .q-next, .metric-cell, .gauge-item, .verdict-banner, .gap-section, .results-cta-block { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .screen.is-on { animation: none; }
+      .q-bar i, .ring .seg, .opt, .opt-mark, .opt-mark::after { transition: none; }
     }
-
-    /* Gap section */
-    .gap-section {
-      margin-bottom: 28px;
-      opacity: 0; transform: translateY(12px);
-      transition: opacity .5s var(--ease), transform .5s var(--ease);
-    }
-    .gap-section.visible { opacity: 1; transform: translateY(0); }
-    .gap-heading {
-      font-family: var(--mono); font-size: 0.5625rem;
-      letter-spacing: .18em; text-transform: uppercase;
-      color: rgba(245,243,238,.62); margin-bottom: 14px; display: block;
-    }
-    .gap-list { display: flex; flex-direction: column; gap: 10px; }
-    .gap-item {
-      background: rgba(255,255,255,.03);
-      border: 1px solid rgba(255,255,255,.06);
-      border-left: 2px solid rgba(61,138,87,.4);
-      border-radius: 0 4px 4px 0;
-      padding: 14px 18px;
-      font-size: 0.8125rem; color: rgba(245,243,238,.62); line-height: 1.55;
-    }
-
-    /* Results CTA */
-    .results-cta-block {
-      background: rgba(45,107,66,.12); border: 1px solid rgba(45,107,66,.25);
-      border-radius: 6px; padding: 32px 36px;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 24px; flex-wrap: wrap;
-      opacity: 0; transform: translateY(16px);
-      transition: opacity .5s var(--ease), transform .5s var(--ease);
-    }
-    .results-cta-block.visible { opacity: 1; transform: translateY(0); }
-    .results-cta-text h3 {
-      font-family: var(--u); font-weight: 800;
-      font-size: 1.125rem; letter-spacing: -0.02em;
-      color: var(--paper); margin-bottom: 6px;
-    }
-    .results-cta-text p { font-size: 0.875rem; color: rgba(245,243,238,.62); line-height: 1.55; }
-
-    /* ── FOOTER ── */
-    footer { background:#080B08; padding:28px var(--px); border-top:1px solid rgba(245,243,238,.07); padding-bottom:max(28px,env(safe-area-inset-bottom)); }
-    .foot-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
-    .foot-row+.foot-row { margin-top:18px; padding-top:18px; border-top:1px solid rgba(245,243,238,.06); }
-    .foot-l { display:flex; align-items:center; gap:8px; }
-    .foot-name { font-family:var(--u); font-weight:800; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,243,238,.7); }
-    .foot-nav { display:flex; gap:22px; flex-wrap:wrap; align-items:center; }
-    .foot-nav a { font-family:var(--u); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:rgba(245,243,238,.62); text-decoration:none; }
-    .foot-nav a:hover { color:rgba(245,243,238,.7); }
-    .foot-links { display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
-    .foot-links a { font-family:var(--u); font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; color:rgba(245,243,238,.65); text-decoration:none; }
-    .foot-links a:hover { color:rgba(245,243,238,.7); text-decoration:underline; }
-    .foot-copy { font-family:var(--u); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:rgba(245,243,238,.62); }
-    .foot-disclaimer { font-family:var(--u); font-size:10px; font-weight:400; color:rgba(245,243,238,.62); line-height:1.55; }
-
-    /* ── HAMBURGER ── */
-    .nav-hamburger {
-      display: none; flex-direction: column; justify-content: center;
-      align-items: center; gap: 5px; background: transparent; border: none;
-      cursor: pointer; padding: 8px; margin-left: 8px; flex-shrink: 0;
-    }
-    .nav-hamburger span {
-      display: block; width: 22px; height: 1.5px;
-      background: var(--paper); border-radius: 1px;
-      transition: transform .3s var(--ease), opacity .2s;
-    }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* ── MOBILE MENU ── */
-    .nav-mobile-menu {
-      display: none; position: fixed; top: 58px; left: 0; right: 0;
-      background: rgba(13,22,16,.97); border-bottom: 1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      z-index: 590; padding: 16px 24px 28px;
-      flex-direction: column; gap: 0;
-    }
-    .nav-mobile-menu.open { display: flex; }
-    .nav-mobile-menu .nav-link {
-      font-family: var(--u); font-size: 13px; font-weight: 500;
-      letter-spacing: .13em; text-transform: uppercase;
-      color: rgba(245,243,238,.65); text-decoration: none;
-      padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,.07);
-      transition: color .2s;
-    }
-    .nav-mobile-menu .nav-link:last-child { border-bottom: none; }
-    .nav-mobile-menu .nav-link:hover { color: var(--paper); }
-    .nav-mobile-menu .nav-link-assessment { color: var(--sage); margin-top: 6px; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 680px) {
-      .nav-links { display: none; }
-      .nav-cta-wrap { display: none; }
-      .nav-hamburger { display: flex; }
-      #site-nav { padding: 0 20px; }
-      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-      .opt-grid.cols-2 { grid-template-columns: 1fr; }
-      .opt-grid.cols-5 { grid-template-columns: repeat(2, 1fr); }
-      .results-cta-block { flex-direction: column; align-items: flex-start; }
-      .results-cta-block .btn-primary { width: 100%; justify-content: center; }
-      .results-cta-actions { width: 100%; align-items: stretch; text-align: center; }
-      .dual-gauge { flex-direction: column; align-items: center; gap: 32px; }
-      .gauge-divider { display: none; }
-      .gauge-item { max-width: 100%; }
-    }
-    @media (max-width: 480px) {
-      .opt-grid { grid-template-columns: 1fr !important; }
-      .check-grid { grid-template-columns: 1fr !important; }
-      .email-field-wrap { flex-direction: column; border-radius: 4px; }
-      #email-input { border-radius: 4px 4px 0 0; }
-      #email-submit { width: 100%; border-radius: 0 0 4px 4px; text-align: center; }
-    }
-
-    /* ═══════════════════════ ANIMATION ADDITIONS ═══════════════════════ */
-
-    /* 1. Progress terrain canvas */
-    #progress-canvas { display: block; width: 100%; height: 100%; }
-
-    /* 2. Word reveal */
-    .word-reveal-wrap  { display: inline-block; overflow: hidden; vertical-align: bottom; margin-right: 0.25em; }
-    .word-reveal-inner { display: inline-block;
-      transition: transform 420ms cubic-bezier(.16,1,.3,1), opacity 420ms ease;
-      transform: translateY(110%); opacity: 0; }
-    .word-reveal-inner.landed { transform: translateY(0); opacity: 1; }
-
-    /* 4. Checklist badge animations */
-    .check-badge { display: flex; align-items: center; justify-content: center; }
-    @keyframes badge-in {
-      0%   { transform: scale(0);    opacity: 0; }
-      65%  { transform: scale(1.25); opacity: 1; }
-      100% { transform: scale(1);    opacity: 1; }
-    }
-    @keyframes badge-out {
-      from { transform: scale(1); opacity: 1; }
-      to   { transform: scale(0); opacity: 0; }
-    }
-    @keyframes card-pop    { 0%{transform:scale(1)} 50%{transform:scale(1.03)} 100%{transform:scale(1)} }
-    @keyframes card-shrink { 0%{transform:scale(1)} 50%{transform:scale(0.98)} 100%{transform:scale(1)} }
-    .check-badge.badge-in  { animation: badge-in  260ms cubic-bezier(.34,1.56,.64,1) forwards; transition: none; }
-    .check-badge.badge-out { animation: badge-out 180ms ease-in forwards; transition: none; }
-    .check-card.card-pop    { animation: card-pop    180ms var(--ease2) forwards; }
-    .check-card.card-shrink { animation: card-shrink 180ms var(--ease2) forwards; }
-
-    /* 8. Metric cell fault-line reveal – override cell-level opacity animation */
-    .metric-cell {
-      position: relative; overflow: hidden;
-      opacity: 1 !important; transform: none !important; transition: none !important;
-    }
-    .metric-cell::before {
-      content: ''; position: absolute;
-      left: 50%; top: 50%; height: 1px;
-      background: rgba(90,166,114,.5);
-      width: 0; transform: translateX(-50%);
-      transition: none; pointer-events: none; z-index: 1;
-    }
-    .metric-cell.visible::before { animation: fault-crack 500ms ease forwards; }
-    .metric-cell .metric-content {
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 280ms ease 180ms, transform 280ms var(--ease) 180ms;
-    }
-    .metric-cell.visible .metric-content { opacity: 1; transform: translateY(0); }
-    @keyframes fault-crack {
-      0%   { width: 0;    opacity: 1; }
-      55%  { width: 100%; opacity: 1; }
-      100% { width: 100%; opacity: 0; }
-    }
-
-    /* 9. Journey card terrain hover – override existing ::after bottom-bar */
-    .journey-card::after {
-      position: absolute; inset: 0;
-      width: auto; height: auto; bottom: auto; left: auto;
-      background:
-        radial-gradient(ellipse at 20% 60%, rgba(45,107,66,.0) 0%, transparent 70%),
-        radial-gradient(ellipse at 60% 30%, rgba(45,107,66,.0) 0%, transparent 60%);
-      opacity: 0; transition: opacity .3s ease; z-index: 0;
-    }
-    .journey-card:hover::after {
-      opacity: 1;
-      background:
-        radial-gradient(ellipse at 20% 60%, rgba(45,107,66,.06) 0%, transparent 70%),
-        radial-gradient(ellipse at 60% 30%, rgba(45,107,66,.04) 0%, transparent 60%);
-    }
-    .journey-card.selected::after {
-      opacity: 1;
-      background:
-        radial-gradient(ellipse at 20% 60%, rgba(45,107,66,.10) 0%, transparent 70%),
-        radial-gradient(ellipse at 60% 30%, rgba(45,107,66,.07) 0%, transparent 60%);
-    }
-    .journey-card::before {
-      content: ''; position: absolute;
-      left: 0; bottom: 0; width: 2px; height: 0%;
-      background: var(--field); transition: height .22s var(--ease); z-index: 1;
-    }
-    .journey-card:hover::before,
-    .journey-card.selected::before { height: 100%; }
-
-    /* 10. Score altitude shimmer */
-    @keyframes altitude-shimmer {
-      0%   { text-shadow: none; color: var(--paper); }
-      30%  { text-shadow: 0 0 20px rgba(90,166,114,.7); color: #fff; }
-      70%  { text-shadow: 0 0 12px rgba(90,166,114,.4); color: #fff; }
-      100% { text-shadow: none; color: var(--paper); }
-    }
-    .altitude-shimmer { animation: altitude-shimmer 580ms cubic-bezier(.16,1,.3,1) forwards; }
   </style>
-  <style>@media(pointer:fine){*{cursor:none!important}#cur{position:fixed;width:12px;height:12px;background:#2D6B42;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),background .3s;will-change:left,top}body.hov #cur{width:15px;height:15px;background:#3D8A57}}@media(pointer:coarse){#cur{display:none}}</style>
+  <noscript><style>#quiz{display:none}</style></noscript>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -858,379 +316,172 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="/#process"   class="nav-link">How it works</a>
       <a href="/#services"  class="nav-link">Pricing</a>
       <a href="/#about"     class="nav-link">About</a>
+      <a href="/#faq"       class="nav-link">FAQ</a>
       <a href="/blog"       class="nav-link">Field notes</a>
-      <a href="/assessment/" class="nav-link">Readiness score</a>
+      <a href="/assessment/" class="nav-link" aria-current="page">Readiness score</a>
     </nav>
     <div class="nav-cta-wrap">
-      <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a call <span class="nav-ar">→</span></a>
+      <a href="https://calendly.com/artemfurman/30min" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a free call <span class="nav-ar">→</span></a>
     </div>
-    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </header>
 
-<div class="nav-mobile-menu" id="nav-mobile-menu" aria-hidden="true">
-  <a href="/#who"       class="nav-link" onclick="closeMobileNav()">Who</a>
-  <a href="/#process"   class="nav-link" onclick="closeMobileNav()">How it works</a>
-  <a href="/#services"  class="nav-link" onclick="closeMobileNav()">Pricing</a>
-  <a href="/#about"     class="nav-link" onclick="closeMobileNav()">About</a>
-  <a href="/blog"       class="nav-link" onclick="closeMobileNav()">Field notes</a>
-  <a href="/assessment/" class="nav-link nav-link-assessment" onclick="closeMobileNav()">Readiness score</a>
-</div>
-
-<!-- PROGRESS BAR -->
-<div id="progress-wrap" aria-hidden="true"><canvas id="progress-canvas"></canvas></div>
 <p id="step-live" class="sr-only" aria-live="polite" aria-atomic="true"></p>
-<noscript><p style="padding:120px 24px 40px;text-align:center;font-family:sans-serif;color:#F5F3EE">The assessment needs JavaScript. If you'd rather not enable it, <a href="https://calendly.com/artemfurman/30min" style="color:#5aA672">book a free call</a> and Artem will walk you through it.</p></noscript>
 
-<!-- TOPO BACKGROUND -->
-<div id="topo-bg" aria-hidden="true"><canvas id="topo-bg-canvas"></canvas></div>
-
-<!-- ══════════════════════════════════════ INTRO -->
 <main id="main-content" tabindex="-1">
-<section class="screen active" id="screen-intro">
-  <p class="intro-eyebrow">Impact Assessment</p>
-  <h1 class="intro-headline">See the terrain of your<br><em>certification impact.</em></h1>
-  <p class="intro-sub">Answer 4 questions. You'll get a readiness read, the 2026 impact topics you already cover, and a realistic timeline — no score inflation.</p>
-  <div class="intro-meta">
-    <span>4 questions</span>
-    <div class="dot"></div>
-    <span>2 minutes</span>
-    <div class="dot"></div>
-    <span>Free</span>
-  </div>
-  <button class="btn-primary" onclick="assessmentStarted = true; goTo('q1')">
-    Start the assessment <span class="arr">→</span>
-  </button>
-</section>
+<noscript><p>The readiness score needs JavaScript to work out your results. If you'd rather not turn it on, <a class="link" href="https://calendly.com/artemfurman/30min">book a free call</a> and I'll walk you through it.</p></noscript>
 
-<!-- ══════════════════════════════════════ Q1: REVENUE -->
-<section class="screen" id="screen-q1">
-  <div class="q-wrap">
-    <button class="q-back" onclick="goBack()">
-      <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
-      Back
-    </button>
-    <p class="q-number">Question 01 / 04</p>
-    <h2 class="q-title" tabindex="-1">What's your annual revenue?</h2>
-    <p class="q-sub">An estimate is fine. This shapes your impact potential and certification timeline.</p>
-    <div class="opt-grid cols-5">
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','under-500k','next-q1')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Under $500K</span>
-        <span class="opt-sub">Early stage</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','500k-2m','next-q1')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">$500K – $2M</span>
-        <span class="opt-sub">Growing</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','2m-10m','next-q1')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">$2M – $10M</span>
-        <span class="opt-sub">Established</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','10m-50m','next-q1')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">$10M – $50M</span>
-        <span class="opt-sub">Scaling</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'revenue','50m-plus','next-q1')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">$50M+</span>
-        <span class="opt-sub">Enterprise</span>
-      </button>
-    </div>
-    <button class="q-next" id="next-q1" onclick="goTo('q2')">Continue <span>→</span></button>
-  </div>
-</section>
+<form class="qz" id="quiz" novalidate>
 
-<!-- ══════════════════════════════════════ Q2: INDUSTRY -->
-<section class="screen" id="screen-q2">
-  <div class="q-wrap">
-    <button class="q-back" onclick="goBack()">
-      <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
-      Back
-    </button>
-    <p class="q-number">Question 02 / 04</p>
-    <h2 class="q-title" tabindex="-1">What sector does your business operate in?</h2>
-    <p class="q-sub">Pick the closest match.</p>
-    <div class="opt-grid cols-2">
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','food-bev','next-q2')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Food & Beverage</span>
-        <span class="opt-sub">Restaurants, CPG, brewing</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','retail','next-q2')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Retail & E-commerce</span>
-        <span class="opt-sub">Apparel, home goods, DTC</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','services','next-q2')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Professional Services</span>
-        <span class="opt-sub">Consulting, legal, marketing</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','manufacturing','next-q2')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Manufacturing</span>
-        <span class="opt-sub">Production, fabrication</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','tech','next-q2')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Tech & Software</span>
-        <span class="opt-sub">SaaS, digital products</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','health-edu','next-q2')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Health, Education & Nonprofit</span>
-        <span class="opt-sub">Care, learning, mission-driven</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','creative','next-q2')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Creative & Media</span>
-        <span class="opt-sub">Design, content, film, PR</span>
-      </button>
-      <button class="opt-card" aria-pressed="false" onclick="selectOpt(this,'industry','other','next-q2')">
-        <div class="opt-ripple"></div>
-        <span class="opt-label">Other</span>
-        <span class="opt-sub">Agriculture, construction, logistics, or mixed</span>
-      </button>
-    </div>
-    <button class="q-next" id="next-q2" onclick="goTo('q3')">Continue <span>→</span></button>
-  </div>
-</section>
+  <!-- ══════════ INTRO -->
+  <section class="screen intro is-on" id="s-intro" aria-labelledby="intro-h">
+    <span class="eyebrow">Readiness score</span>
+    <h1 id="intro-h">How close are you to <em>B&nbsp;Corp?</em></h1>
+    <p class="intro-lede">Four questions, about two minutes. You'll see which of B Lab's seven required impact topics you already cover, the two gaps I'd close first, and a realistic timeline.</p>
+    <ul class="intro-meta" aria-label="About this check">
+      <li>4 questions</li><li>2 minutes</li><li>No email needed</li>
+    </ul>
+    <button type="button" class="btn btn-d" data-go="q1">Start <span class="ar" aria-hidden="true">→</span></button>
+    <p class="intro-resume" id="intro-resume" hidden>Your earlier answers are saved in this tab. <button type="button" class="link" id="resume-btn">Pick up where you left off</button></p>
+    <p class="intro-note">A quick estimate, not a B Lab assessment. When you see your results, your answers are saved without your name or email so I can see how people use this.</p>
+  </section>
 
-<!-- ══════════════════════════════════════ Q3: JOURNEY -->
-<section class="screen" id="screen-q3">
-  <div class="q-wrap">
-    <button class="q-back" onclick="goBack()">
-      <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
-      Back
-    </button>
-    <p class="q-number">Question 03 / 04</p>
-    <h2 class="q-title" tabindex="-1">Where are you in the B Corp journey?</h2>
-    <p class="q-sub">Be honest — it directly shapes your readiness estimate.</p>
-    <div class="journey-list">
-      <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'exploring')">
-        <div class="journey-marker"></div>
-        <div class="journey-text">
-          <span class="journey-label">Just heard about it</span>
-          <span class="journey-sub">Exploring what B Corp certification means</span>
-        </div>
-      </button>
-      <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'researching')">
-        <div class="journey-marker"></div>
-        <div class="journey-text">
-          <span class="journey-label">Actively researching</span>
-          <span class="journey-sub">Read up on B Lab's requirements, comparing options</span>
-        </div>
-      </button>
-      <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'in-progress')">
-        <div class="journey-marker"></div>
-        <div class="journey-text">
-          <span class="journey-label">Started the process</span>
-          <span class="journey-sub">Started B Lab's self-assessment or working with a consultant</span>
-        </div>
-      </button>
-      <button class="journey-card" aria-pressed="false" onclick="selectJourney(this,'certified')">
-        <div class="journey-marker"></div>
-        <div class="journey-text">
-          <span class="journey-label">Already certified</span>
-          <span class="journey-sub">Certified or in recertification</span>
-        </div>
-      </button>
-    </div>
-    <button class="q-next" id="next-q3" onclick="goTo('q4')">Continue <span>→</span></button>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════ Q4: PRACTICES -->
-<section class="screen" id="screen-q4">
-  <div class="q-wrap">
-    <button class="q-back" onclick="goBack()">
-      <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
-      Back
-    </button>
-    <p class="q-number">Question 04 / 04</p>
-    <h2 class="q-title" tabindex="-1">Which of these does your business currently have?</h2>
-    <p class="q-sub">Select everything that applies. No minimum required.</p>
-    <div class="check-grid">
-      <button class="check-card" data-id="hr-policies" aria-pressed="false" onclick="toggleCheck(this)">
-        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
-        <span class="check-label">Written HR policies</span>
-        <span class="check-sub">Hiring, conduct, pay equity</span>
-      </button>
-      <button class="check-card" data-id="energy-tracking" aria-pressed="false" onclick="toggleCheck(this)">
-        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
-        <span class="check-label">Energy tracking or reduction</span>
-        <span class="check-sub">Monitoring, offsets, or efficiency programs</span>
-      </button>
-      <button class="check-card" data-id="supplier-vetting" aria-pressed="false" onclick="toggleCheck(this)">
-        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
-        <span class="check-label">Supplier vetting process</span>
-        <span class="check-sub">Know where your top suppliers source from</span>
-      </button>
-      <button class="check-card" data-id="mission-statement" aria-pressed="false" onclick="toggleCheck(this)">
-        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
-        <span class="check-label">Formal mission or values</span>
-        <span class="check-sub">Documented stakeholder or impact commitment</span>
-      </button>
-      <button class="check-card" data-id="employee-benefits" aria-pressed="false" onclick="toggleCheck(this)">
-        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
-        <span class="check-label">Enhanced employee benefits</span>
-        <span class="check-sub">Profit share, extended leave, wellness</span>
-      </button>
-      <button class="check-card" data-id="community-giving" aria-pressed="false" onclick="toggleCheck(this)">
-        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
-        <span class="check-label">Community or local sourcing</span>
-        <span class="check-sub">Giving programs or local supplier priority</span>
-      </button>
-      <button class="check-card" data-id="env-certification" aria-pressed="false" onclick="toggleCheck(this)">
-        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
-        <span class="check-label">Environmental certification</span>
-        <span class="check-sub">ISO 14001, Green certification, or audit</span>
-      </button>
-      <button class="check-card" data-id="dei-initiatives" aria-pressed="false" onclick="toggleCheck(this)">
-        <div class="check-badge"><svg width="12" height="12" viewBox="30 90 340 235" xmlns="http://www.w3.org/2000/svg"><path d="M361.78,207.28c5.13,58.78-55.13,92.95-104.46,106.03-52.16,13.84-109.97,9.36-158.44-14.89-28.13-14.14-52.66-40.01-54.67-72.76-1.93-27.64,9.72-54.51,24.88-77.04,14.39-21.2,34.99-38.54,59.16-47.38,42.18-15.78,88.35-7.24,130.64,3.83,53.37,14.34,100.53,40.86,102.89,102.05v.17h0Z" fill="rgba(255,255,255,.0)"/><path d="M321.02,197.81c11.14,65.3-91.48,105.45-143.3,96.47-41.63-6.39-67.99-44.63-77.8-82.84-12.27-41.61,20.46-81.5,59.84-92.24,28.29-8.96,59.78-4.52,86.28,7.76,29.65,14.63,68.91,30.87,74.98,70.85Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M278.88,203c-.9,12-9.27,25.3-19.12,34.4-15.51,14.36-36.52,23.05-57.76,24.2-22.86,1.15-44.01-8.83-54-29.92-5.74-12.41-10.57-27.81-8.28-41.48,2.66-16.33,16.88-27.62,31.28-34.12,16.85-7.68,35.85-11.88,54.44-9.48,20.71,2.64,40.9,15.33,48.84,35,2.78,6.87,5.5,9.4,4.6,21.4h0Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M252.28,194.62c-.78,8.99-6.66,16.34-14.5,21.5-11.97,7.77-28.52,8.76-41.54,2.93-11.21-4.79-20.29-17.1-16.39-29.46,3.42-10.5,13.59-15.89,23.96-19.28,12.09-3.77,26.07-5.19,36.83,1.94,7.24,4.8,12.41,13.4,11.66,22.18v.18h-.02Z" fill="none" stroke="#F5F3EE" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><circle cx="216.48" cy="194.16" r="9" fill="#5aA672"/></svg></div>
-        <span class="check-label">DEI initiatives</span>
-        <span class="check-sub">Formal diversity, equity &amp; inclusion programs</span>
-      </button>
-    </div>
-    <button class="q-next always-ready" id="next-q4" onclick="goTo('email')">Continue <span>→</span></button>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════ EMAIL -->
-<section class="screen" id="screen-email">
-  <div class="email-wrap">
-    <div class="email-back-row">
-      <button class="q-back" onclick="goBack()">
-        <svg class="q-back-icon" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 5l3 3"/></svg>
-        Back
-      </button>
-    </div>
-    <div class="email-icon">
-      <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="#3D8A57" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-      </svg>
-    </div>
-    <h2 class="email-title" tabindex="-1">Your readiness report is ready.</h2>
-    <p class="email-sub">Enter your email to see your full assessment. Your answers and email are stored so Artem can review them — and he only follows up if you tick the box below.</p>
-    <div class="email-field-wrap">
-      <label for="email-input" class="sr-only">Work email</label>
-      <input type="email" id="email-input" name="email" placeholder="your@email.com" autocomplete="email" inputmode="email" required aria-required="true" aria-describedby="email-note" />
-      <button id="email-submit" type="button" onclick="submitEmail()">View report →</button>
-    </div>
-    <button type="button" id="email-skip">Skip, show my results without an email</button>
-    <label class="email-consent" for="followup-consent">
-      <input type="checkbox" id="followup-consent" name="followup" />
-      <span>Yes, Candor may email me about these results and my certification options. Optional — you get the report either way, and you can unsubscribe any time.</span>
-    </label>
-    <p class="email-note" id="email-note">No newsletters, no list sharing. See how your data is handled in the Privacy Policy.</p>
-    <p class="email-privacy"><a href="/privacy-policy/">Privacy Policy</a></p>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════ RESULTS -->
-<section class="screen" id="screen-results">
-  <div class="results-wrap">
-    <h2 class="sr-only" id="results-heading" tabindex="-1">Your results</h2>
-
-    <div class="dual-gauge" id="dual-gauge">
-      <div class="gauge-item" id="gauge-impact">
-        <div class="gauge-canvas-wrap">
-          <canvas class="gauge-canvas" id="canvas-impact" width="200" height="200"></canvas>
-          <div class="gauge-score-label">
-            <span class="gauge-score-num" id="num-impact">0</span>
-            <span class="gauge-label-text">/ 100</span>
-          </div>
-        </div>
-        <div class="gauge-meta">
-          <div class="gauge-title">Impact Potential</div>
-          <div class="gauge-subtitle">Scale of what certification could touch, from size and sector</div>
-        </div>
+  <!-- ══════════ Q1 REVENUE -->
+  <section class="screen card" id="s-q1">
+    <div class="q-top"><button type="button" class="q-back" data-back>← Back</button><span class="q-step">Question 1 of 4</span></div>
+    <div class="q-bar" aria-hidden="true"><i style="width:25%"></i></div>
+    <fieldset aria-describedby="q1-sub">
+      <legend><h2 class="q-title" tabindex="-1">What's your annual revenue?</h2></legend>
+      <p class="q-sub" id="q1-sub">An estimate is fine. B Lab's fees and the size of the work both scale with it.</p>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="revenue" value="under-500k"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Under $500K</span><span class="opt-sub">Early stage</span></label>
+        <label class="opt"><input type="radio" name="revenue" value="500k-2m"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">$500K to $2M</span><span class="opt-sub">Growing</span></label>
+        <label class="opt"><input type="radio" name="revenue" value="2m-10m"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">$2M to $10M</span><span class="opt-sub">Established</span></label>
+        <label class="opt"><input type="radio" name="revenue" value="10m-50m"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">$10M to $50M</span><span class="opt-sub">Scaling</span></label>
+        <label class="opt"><input type="radio" name="revenue" value="50m-plus"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Over $50M</span><span class="opt-sub">Large</span></label>
       </div>
+    </fieldset>
+    <div class="q-actions"><button type="button" class="btn btn-d" data-next="q2">Continue <span class="ar" aria-hidden="true">→</span></button><p class="q-err" role="alert"></p></div>
+  </section>
 
-      <div class="gauge-divider"></div>
+  <!-- ══════════ Q2 SECTOR -->
+  <section class="screen card" id="s-q2">
+    <div class="q-top"><button type="button" class="q-back" data-back>← Back</button><span class="q-step">Question 2 of 4</span></div>
+    <div class="q-bar" aria-hidden="true"><i style="width:50%"></i></div>
+    <fieldset aria-describedby="q2-sub">
+      <legend><h2 class="q-title" tabindex="-1">What kind of business is it?</h2></legend>
+      <p class="q-sub" id="q2-sub">Pick the closest match. It changes which gaps come first.</p>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="industry" value="outdoor"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Outdoor &amp; Apparel</span><span class="opt-sub">Gear, clothing, outdoor brands</span></label>
+        <label class="opt"><input type="radio" name="industry" value="food-bev"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Food &amp; Beverage</span><span class="opt-sub">Packaged food, drinks, producers</span></label>
+        <label class="opt"><input type="radio" name="industry" value="beauty"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Clean Beauty</span><span class="opt-sub">Skincare, cosmetics, personal care</span></label>
+        <label class="opt"><input type="radio" name="industry" value="hospitality"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Coffee &amp; Hospitality</span><span class="opt-sub">Roasters, cafés, restaurants</span></label>
+        <label class="opt"><input type="radio" name="industry" value="studio"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Studios &amp; Agencies</span><span class="opt-sub">Architecture, design, creative</span></label>
+        <label class="opt"><input type="radio" name="industry" value="cannabis"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Cannabis</span><span class="opt-sub">Licensed producers and retailers</span></label>
+        <label class="opt"><input type="radio" name="industry" value="other"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Something else</span><span class="opt-sub">Any other kind of business</span></label>
+      </div>
+    </fieldset>
+    <div class="q-actions"><button type="button" class="btn btn-d" data-next="q3">Continue <span class="ar" aria-hidden="true">→</span></button><p class="q-err" role="alert"></p></div>
+  </section>
 
-      <div class="gauge-item" id="gauge-readiness">
-        <div class="gauge-canvas-wrap">
-          <canvas class="gauge-canvas" id="canvas-readiness" width="200" height="200"></canvas>
-          <div class="gauge-score-label">
-            <span class="gauge-score-num" id="num-readiness">0</span>
-            <span class="gauge-label-text">/ 100</span>
-          </div>
-        </div>
-        <div class="gauge-meta">
-          <div class="gauge-title">Readiness</div>
-          <div class="gauge-subtitle">How much of the 2026 evidence you already have</div>
-        </div>
+  <!-- ══════════ Q3 JOURNEY -->
+  <section class="screen card" id="s-q3">
+    <div class="q-top"><button type="button" class="q-back" data-back>← Back</button><span class="q-step">Question 3 of 4</span></div>
+    <div class="q-bar" aria-hidden="true"><i style="width:75%"></i></div>
+    <fieldset aria-describedby="q3-sub">
+      <legend><h2 class="q-title" tabindex="-1">Where are you with B Corp so far?</h2></legend>
+      <p class="q-sub" id="q3-sub">Your practices count for more than this answer, so there's no need to round up.</p>
+      <div class="opts one">
+        <label class="opt"><input type="radio" name="journey" value="exploring"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Just looking into it</span><span class="opt-sub">Working out what B Corp means for you</span></label>
+        <label class="opt"><input type="radio" name="journey" value="researching"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Actively researching</span><span class="opt-sub">Reading B Lab's requirements, comparing options</span></label>
+        <label class="opt"><input type="radio" name="journey" value="in-progress"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Already started</span><span class="opt-sub">Working through B Lab's self-assessment, alone or with help</span></label>
+        <label class="opt"><input type="radio" name="journey" value="certified"><span class="opt-mark radio" aria-hidden="true"></span><span class="opt-main">Already certified</span><span class="opt-sub">Certified, or coming up for recertification</span></label>
+      </div>
+    </fieldset>
+    <div class="q-actions"><button type="button" class="btn btn-d" data-next="q4">Continue <span class="ar" aria-hidden="true">→</span></button><p class="q-err" role="alert"></p></div>
+  </section>
+
+  <!-- ══════════ Q4 PRACTICES -->
+  <section class="screen card" id="s-q4">
+    <div class="q-top"><button type="button" class="q-back" data-back>← Back</button><span class="q-step">Question 4 of 4</span></div>
+    <div class="q-bar" aria-hidden="true"><i style="width:100%"></i></div>
+    <fieldset aria-describedby="q4-sub">
+      <legend><h2 class="q-title" tabindex="-1">Which of these does your business already have?</h2></legend>
+      <p class="q-sub" id="q4-sub">Tick everything that applies, or none at all.</p>
+      <div class="opts">
+        <label class="opt"><input type="checkbox" name="practices" value="mission-statement"><span class="opt-mark check" aria-hidden="true"></span><span class="opt-main">A mission or values statement</span><span class="opt-sub">A written commitment to the people you affect</span></label>
+        <label class="opt"><input type="checkbox" name="practices" value="hr-policies"><span class="opt-mark check" aria-hidden="true"></span><span class="opt-main">HR policies</span><span class="opt-sub">Hiring, pay, conduct</span></label>
+        <label class="opt"><input type="checkbox" name="practices" value="employee-benefits"><span class="opt-mark check" aria-hidden="true"></span><span class="opt-main">Benefits beyond the legal minimum</span><span class="opt-sub">Extended leave, profit share, wellness</span></label>
+        <label class="opt"><input type="checkbox" name="practices" value="dei-initiatives"><span class="opt-mark check" aria-hidden="true"></span><span class="opt-main">An equity and inclusion plan</span><span class="opt-sub">Goals for fair hiring and pay</span></label>
+        <label class="opt"><input type="checkbox" name="practices" value="supplier-vetting"><span class="opt-mark check" aria-hidden="true"></span><span class="opt-main">Supplier checks</span><span class="opt-sub">You know where your main suppliers source from</span></label>
+        <label class="opt"><input type="checkbox" name="practices" value="energy-tracking"><span class="opt-mark check" aria-hidden="true"></span><span class="opt-main">Energy or emissions tracking</span><span class="opt-sub">Bills monitored, a footprint, or reduction goals</span></label>
+        <label class="opt"><input type="checkbox" name="practices" value="env-certification"><span class="opt-mark check" aria-hidden="true"></span><span class="opt-main">An environmental credential</span><span class="opt-sub">ISO 14001, a green business program, or an audit</span></label>
+        <label class="opt"><input type="checkbox" name="practices" value="community-giving"><span class="opt-mark check" aria-hidden="true"></span><span class="opt-main">Community giving or local sourcing</span><span class="opt-sub">A giving program or local supplier priority</span></label>
+      </div>
+    </fieldset>
+    <div class="q-actions"><button type="button" class="btn btn-d" data-next="results">See my results <span class="ar" aria-hidden="true">→</span></button></div>
+  </section>
+
+  <!-- ══════════ RESULTS -->
+  <section class="screen" id="s-results" aria-labelledby="res-title">
+    <span class="eyebrow">Your readiness score</span>
+    <div class="res-head">
+      <div class="ring" aria-hidden="true"><svg viewBox="0 0 100 100" id="ring-svg"></svg><span class="ring-n" id="ring-n"><span>0<small>/7</small></span></span></div>
+      <div>
+        <h2 class="res-title" id="res-title" tabindex="-1">You cover <em>0 of 7</em> required topics.</h2>
+        <p class="res-verdict" id="res-verdict"></p>
       </div>
     </div>
 
-    <div class="verdict-banner" id="verdict-banner">
-      <span class="verdict-eyebrow">Your Verdict</span>
-      <div class="verdict-text" id="verdict-text">—</div>
+    <dl class="facts">
+      <div class="fact"><dt>Where you stand</dt><dd id="f-level">—</dd></div>
+      <div class="fact"><dt>Realistic timeline</dt><dd id="f-time">—</dd></div>
+      <div class="fact"><dt>Next step</dt><dd id="f-step">—</dd></div>
+    </dl>
+
+    <h3 class="res-h">B Lab's seven required topics</h3>
+    <p class="res-sub">Since 2026, every company has to meet a minimum in all seven. A tick means you already have some evidence for it.</p>
+    <ul class="topics" id="topics"></ul>
+
+    <div id="gap-wrap">
+      <h3 class="res-h" id="gap-h">The two gaps I'd close first</h3>
+      <p class="res-sub" id="gap-sub">Picked from what you don't have yet, in the order that usually matters most for your kind of business.</p>
+      <ol class="gaps" id="gaps"></ol>
     </div>
 
-    <div class="metrics-grid">
-      <div class="metric-cell" id="mc-timeline">
-        <div class="metric-content">
-          <span class="metric-icon">Est. timeline</span>
-          <span class="metric-num" id="m-timeline">—</span>
-          <span class="metric-label">Realistic time to certification, including B Lab's current review window</span>
-        </div>
-      </div>
-      <div class="metric-cell" id="mc-topics">
-        <div class="metric-content">
-          <span class="metric-icon">2026 impact topics</span>
-          <span class="metric-num" id="m-topics">—</span>
-          <span class="metric-label">Of B Lab's 7 mandatory topics where you already have at least one practice in place</span>
-        </div>
-      </div>
-      <div class="metric-cell" id="mc-practices">
-        <div class="metric-content">
-          <span class="metric-icon">Practices in place</span>
-          <span class="metric-num" id="m-practices">—</span>
-          <span class="metric-label">Of the 8 foundations we asked about — each one is evidence you won't have to build from scratch</span>
-        </div>
-      </div>
-      <div class="metric-cell" id="mc-tier">
-        <div class="metric-content">
-          <span class="metric-icon">Suggested first step</span>
-          <span class="metric-num" id="m-tier">—</span>
-          <span class="metric-label">Every path starts with the two-week Readiness Audit; this is what usually follows it</span>
-        </div>
+    <p class="disclaimer">These are modelled estimates from four questions, not a B Lab self-assessment result or a certification decision. The timeline weighs what you already have in place more than where you say you are. The Readiness Audit is where the real numbers come from.</p>
+
+    <div class="next">
+      <h3>Want the <em>real numbers?</em></h3>
+      <p>The Readiness Audit runs your business through B Lab's full self-assessment and maps exactly what has to change, with costs and a timeline. It takes two weeks, and the report is yours either way.</p>
+      <div class="next-actions">
+        <a class="btn btn-l" href="https://calendly.com/artemfurman/30min" target="_blank" rel="noopener noreferrer">Book a free call <span class="ar" aria-hidden="true">→</span></a>
+        <a class="link" href="/#services">See the Readiness Audit ($1,800 CAD)</a>
       </div>
     </div>
 
-    <p class="results-disclaimer">These are estimates from four questions, not a B Lab self-assessment result and not a certification decision. The readiness score weights what you actually have in place more than where you say you are. The Readiness Audit is where the real numbers come from.</p>
-
-    <div class="gap-section" id="gap-section">
-      <span class="gap-heading">Your strongest gaps</span>
-      <div class="gap-list" id="gap-list"></div>
+    <div class="follow" id="follow">
+      <h3>Want me to look at these with you?</h3>
+      <p>Leave your email and I'll reply personally with what I'd look at first. No newsletter, and your email isn't shared.</p>
+      <div id="follow-form">
+        <label for="f-email">Your email</label>
+        <div class="f-row">
+          <input type="email" id="f-email" name="email" autocomplete="email" inputmode="email" aria-describedby="f-note f-err" />
+          <button type="button" class="btn btn-d" id="f-send">Send</button>
+        </div>
+        <p class="f-err" id="f-err" role="alert"></p>
+        <p class="f-note" id="f-note">I'll use it only to reply about these results. Your answers are stored with it so I can see what you picked. <a class="link" href="/privacy-policy/">Privacy Policy</a></p>
+      </div>
+      <p class="f-done" id="f-done" role="status" hidden></p>
     </div>
 
-    <div class="results-cta-block" id="results-cta">
-      <div class="results-cta-text">
-        <h3>Want a real gap assessment?</h3>
-        <p>Candor's Readiness Audit runs your business through B Lab's full self-assessment and maps exactly what needs to change. You keep the report either way.</p>
-      </div>
-      <div class="results-cta-actions">
-        <a href="https://calendly.com/artemfurman/30min" class="btn-primary" target="_blank" rel="noopener noreferrer">
-          Book a call <span class="arr">→</span>
-        </a>
-        <a href="/#services" class="results-secondary">See the Readiness Audit ($1,800 CAD)</a>
-      </div>
+    <div class="res-foot">
+      <button type="button" class="link" id="edit-btn">Change my answers</button>
+      <button type="button" class="link" id="retake-btn">Start over</button>
     </div>
-    <p class="results-retake"><a href="#" id="retake-link">Retake the assessment</a></p>
+  </section>
 
-  </div>
-</section>
-
-<!-- FOOTER -->
+</form>
 </main>
 <!-- candor-footer:start -->
 <style>
@@ -1398,1032 +649,347 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 <!-- candor-footer:end -->
-
 <script>
-/* ─── State ─────────────────────────────────── */
-let assessmentStarted = false;
-
-const state = {
-  revenue:   null,
-  industry:  null,
-  journey:   null,
-  practices: [],
-  email:     '',
-  impact:    null
-};
-
-const screenHistory = [];
-
-const PROGRESS = { intro:0, q1:17, q2:34, q3:52, q4:70, email:85, results:100 };
-
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwxxXRo2dYACAE5trwLQ1dmR5OGgs1xaObafau8_Gb9wGTgugmZqme5PdkZ3MbWQa1q/exec';
-
-/* ─── Navigation ─────────────────────────────── */
-const ORDER = ['intro', 'q1', 'q2', 'q3', 'q4', 'email', 'results'];
-const STEP_LABEL = { q1: 'Question 1 of 4', q2: 'Question 2 of 4', q3: 'Question 3 of 4', q4: 'Question 4 of 4', email: 'Almost done — your email', results: 'Your results' };
-
-// A screen may only be left once its answer exists; keyboard users can still
-// activate a pointer-events:none button, so the guard lives here, not in CSS.
-const REQUIRED = { q1: () => !!state.revenue, q2: () => !!state.industry, q3: () => !!state.journey };
-
-function currentScreenId() {
-  const current = document.querySelector('.screen.active');
-  return current ? current.id.replace('screen-', '') : null;
-}
-
-function transition(fromEl, toId) {
-  if (fromEl) {
-    fromEl.classList.add('exit');
-    setTimeout(() => {
-      fromEl.classList.remove('active', 'exit');
-      fromEl.style.display = 'none';
-      showScreen(toId);
-    }, 300);
-  } else {
-    showScreen(toId);
-  }
-}
-
-function goTo(id) {
-  const fromId = currentScreenId();
-  if (fromId === id) return;
-  if (fromId && REQUIRED[fromId] && !REQUIRED[fromId]()) {
-    const btn = document.querySelector('#screen-' + fromId + ' .q-next');
-    if (btn) { btn.classList.add('nudge'); setTimeout(() => btn.classList.remove('nudge'), 500); }
-    return;
-  }
-  if (fromId) {
-    screenHistory.push(fromId);
-    try { history.pushState({ screen: id }, '', location.pathname + location.search); } catch (e) {}
-  }
-  transition(document.querySelector('.screen.active'), id);
-}
-
-// Internal back: used by the in-page Back buttons and the browser's own Back.
-function goBackInternal() {
-  if (!screenHistory.length) return false;
-  const prevId = screenHistory.pop();
-  transition(document.querySelector('.screen.active'), prevId);
-  return true;
-}
-
-function goBack() {
-  if (!screenHistory.length) return;
-  // Prefer history.back() so the browser's forward/back stack stays in sync;
-  // popstate below performs the actual screen change.
-  if (history.state && history.state.screen) history.back();
-  else goBackInternal();
-}
-
-try { history.replaceState({ screen: 'intro' }, '', location.pathname + location.search); } catch (e) {}
-window.addEventListener('popstate', function (e) {
-  const target = e.state && e.state.screen;
-  const current = currentScreenId();
-  if (!target || target === current) return;
-  const idx = screenHistory.lastIndexOf(target);
-  if (idx !== -1) {                       // going back to a screen we came from
-    screenHistory.length = idx;
-    transition(document.querySelector('.screen.active'), target);
-  } else if (ORDER.indexOf(target) > ORDER.indexOf(current)) { // browser Forward
-    if (REQUIRED[current] && !REQUIRED[current]()) { history.back(); return; }
-    screenHistory.push(current);
-    transition(document.querySelector('.screen.active'), target);
-  }
-});
-
-function showScreen(id) {
-  const el = document.getElementById('screen-' + id);
-  if (!el) return;
-  el.style.display = 'flex';
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    el.classList.add('active');
-    if (id !== 'intro') {
-      setTimeout(() => {
-        const titleEl = el.querySelector('.q-title');
-        if (titleEl) revealWords(titleEl, 80);
-      }, 80);
-    }
-    // Move focus so keyboard and screen-reader users land on the new step.
-    const focusTarget = el.querySelector('.q-title, .email-title, #results-heading');
-    if (focusTarget && id !== 'intro') setTimeout(() => focusTarget.focus({ preventScroll: true }), 120);
-  }));
-
-  const live = document.getElementById('step-live');
-  if (live && STEP_LABEL[id]) live.textContent = STEP_LABEL[id];
-
-  const wrap = document.getElementById('progress-wrap');
-  const isVisible = id !== 'intro';
-  wrap.classList.toggle('visible', isVisible);
-  progressVisible = isVisible;
-  setProgressPct(PROGRESS[id] || 0);
-  if (isVisible) startProgressRaf();
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (id === 'results') initResults();
-}
-
-/* ─── Q1/Q2 generic single-select ─────────────── */
-function selectOpt(el, stateKey, val, nextId) {
-  el.closest('.opt-grid').querySelectorAll('.opt-card').forEach(c => { c.classList.remove('selected', 'settle', 'ripple-show'); c.setAttribute('aria-pressed', 'false'); });
-  el.classList.add('selected');
-  el.setAttribute('aria-pressed', 'true');
-
-  // settle animation
-  el.classList.add('settle');
-  setTimeout(() => el.classList.remove('settle'), 200);
-
-  // ripple from click center
-  const rect = el.getBoundingClientRect();
-  const ev = (typeof event !== 'undefined' && event && event.clientX) ? event : { clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height / 2 };
-  const rx = ((ev.clientX - rect.left) / rect.width * 100).toFixed(1) + '%';
-  const ry = ((ev.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
-  el.style.setProperty('--rx', rx);
-  el.style.setProperty('--ry', ry);
-  el.classList.add('ripple-show');
-  setTimeout(() => el.classList.remove('ripple-show'), 380);
-
-  topoRingBurst(el, ev.clientX - rect.left, ev.clientY - rect.top);
-
-  state[stateKey] = val;
-  persistState();
-
-  const btn = document.getElementById(nextId);
-  if (!btn.classList.contains('ready')) {
-    btn.classList.add('ready', 'shimmer-once');
-    setTimeout(() => btn.classList.remove('shimmer-once'), 1000);
-  }
-}
-
-/* ─── Q3: Journey ────────────────────────────── */
-function selectJourney(el, val) {
-  document.querySelectorAll('#screen-q3 .journey-card').forEach(c => { c.classList.remove('selected'); c.setAttribute('aria-pressed', 'false'); });
-  el.classList.add('selected');
-  el.setAttribute('aria-pressed', 'true');
-  var jRect = el.getBoundingClientRect();
-  var jEv = (typeof event !== 'undefined' && event && event.clientX) ? event : { clientX: jRect.left + jRect.width / 2, clientY: jRect.top + jRect.height / 2 };
-  topoRingBurst(el, jEv.clientX - jRect.left, jEv.clientY - jRect.top);
-  state.journey = val;
-  persistState();
-  const btn = document.getElementById('next-q3');
-  if (!btn.classList.contains('ready')) {
-    btn.classList.add('ready', 'shimmer-once');
-    setTimeout(() => btn.classList.remove('shimmer-once'), 1000);
-  }
-}
-
-/* ─── Q4: Practices (multi-select) ──────────── */
-function toggleCheck(el) {
-  const badge = el.querySelector('.check-badge');
-  const id = el.dataset.id;
-  if (el.classList.contains('checked')) {
-    el.classList.remove('checked');
-    el.setAttribute('aria-pressed', 'false');
-    state.practices = state.practices.filter(p => p !== id);
-    persistState();
-    if (badge) {
-      badge.classList.remove('badge-in');
-      void badge.offsetWidth;
-      badge.classList.add('badge-out');
-      setTimeout(() => badge.classList.remove('badge-out'), 200);
-    }
-    el.classList.remove('card-pop');
-    void el.offsetWidth;
-    el.classList.add('card-shrink');
-    setTimeout(() => el.classList.remove('card-shrink'), 200);
-  } else {
-    el.classList.add('checked');
-    el.setAttribute('aria-pressed', 'true');
-    if (!state.practices.includes(id)) state.practices.push(id);
-    persistState();
-    if (badge) {
-      badge.classList.remove('badge-out');
-      void badge.offsetWidth;
-      badge.classList.add('badge-in');
-      setTimeout(() => badge.classList.remove('badge-in'), 300);
-    }
-    el.classList.remove('card-shrink');
-    void el.offsetWidth;
-    el.classList.add('card-pop');
-    setTimeout(() => el.classList.remove('card-pop'), 200);
-  }
-}
-
-/* ─── Email ──────────────────────────────────── */
-const PENDING_KEY = 'candor-assessment-pending';
-
-function persistState() {
-  try { sessionStorage.setItem('candor-assessment-state', JSON.stringify({ revenue: state.revenue, industry: state.industry, journey: state.journey, practices: state.practices })); } catch (e) {}
-}
-
-// Fire-and-forget to the Apps Script endpoint. The response is opaque
-// (no-cors), so we can't confirm delivery; keepalive survives navigation and
-// a failed attempt is queued in localStorage and retried on the next visit.
-function sendSubmission(params) {
-  if (!SHEETS_URL) return;
-  const url = SHEETS_URL + '?' + params.toString();
-  let queued = [];
-  try { queued = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]'); } catch (e) {}
-  const attempt = (u) => fetch(u, { mode: 'no-cors', keepalive: true, cache: 'no-store' });
-  try {
-    attempt(url).catch(() => { try { localStorage.setItem(PENDING_KEY, JSON.stringify(queued.concat(url).slice(-5))); } catch (e) {} });
-  } catch (e) {
-    try { localStorage.setItem(PENDING_KEY, JSON.stringify(queued.concat(url).slice(-5))); } catch (e2) {}
-  }
-}
-
-(function retryPending() {
-  let queued = [];
-  try { queued = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]'); } catch (e) { return; }
-  if (!queued.length) return;
-  try { localStorage.removeItem(PENDING_KEY); } catch (e) {}
-  queued.forEach(u => { try { fetch(u, { mode: 'no-cors', keepalive: true, cache: 'no-store' }).catch(() => {}); } catch (e) {} });
-})();
-
-function buildParams(email, followup) {
-  const impact = state.impact || calculate();
-  state.impact = impact;
-  return new URLSearchParams({
-    email:           email || '',
-    followup:        followup ? 'yes' : 'no',
-    consent_text:    followup ? 'Yes, Candor may email me about these results and my certification options.' : '',
-    revenue:         state.revenue  || '',
-    industry:        state.industry || '',
-    journey:         state.journey  || '',
-    practices:       state.practices.length ? state.practices.join(',') : 'none',
-    impact_score:    impact.impactScore,
-    readiness_score: impact.readinessScore,
-    verdict:         impact.verdict,
-    timeline:        impact.timeline,
-    topics_covered:  impact.topics.length,
-    suggested_step:  impact.tier,
-    // Legacy columns kept blank so an existing sheet layout doesn't shift.
-    co2:             '',
-    workers:         '',
-    page:            location.pathname,
-    timestamp:       new Date().toISOString()
-  });
-}
-
-function submitEmail() {
-  const input = document.getElementById('email-input');
-  const wrap  = input.closest('.email-field-wrap');
-  const email = input.value.trim();
-
-  const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
-  if (!email || !emailRegex.test(email)) {
-    wrap.style.borderColor = '#c0392b';
-    input.setAttribute('aria-invalid', 'true');
-    input.addEventListener('input', function reset() {
-      wrap.style.borderColor = '';
-      input.removeAttribute('aria-invalid');
-      input.removeEventListener('input', reset);
-    });
-    input.focus();
-    return;
-  }
-
-  wrap.style.borderColor = '';
-  state.email = email;
-  state.followup = !!document.getElementById('followup-consent').checked;
-  state.impact = calculate();
-
-  sendSubmission(buildParams(email, state.followup));
-  goTo('results');
-}
-
-function skipEmail() {
-  state.email = '';
-  state.followup = false;
-  state.impact = calculate();
-  // Anonymous row: lets Artem see completion volume without an identity attached.
-  sendSubmission(buildParams('', false));
-  goTo('results');
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  const input = document.getElementById('email-input');
-  if (input) input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitEmail(); } });
-  const skip = document.getElementById('email-skip');
-  if (skip) skip.addEventListener('click', e => { e.preventDefault(); skipEmail(); });
-  const retake = document.getElementById('retake-link');
-  if (retake) retake.addEventListener('click', e => { e.preventDefault(); try { sessionStorage.removeItem('candor-assessment-state'); } catch (err) {} location.href = location.pathname; });
-});
-
-/* ─── Scoring ─────────────────────────────────── */
-// B Lab's 2025/2026 standards replaced the 80-point score with seven mandatory
-// impact topics. Each practice we ask about is mapped to the nearest topic so
-// the result can say which topics the business already has evidence for.
-const TOPICS = {
-  governance:  'Purpose & Stakeholder Governance',
-  fairwork:    'Fair Work',
-  jedi:        'Justice, Equity, Diversity & Inclusion',
-  humanrights: 'Human Rights',
-  climate:     'Climate Action',
-  environment: 'Environmental Stewardship & Circularity',
-  collective:  'Government Affairs & Collective Action'
-};
-const PRACTICE_TOPIC = {
-  'mission-statement': 'governance',
-  'hr-policies':       'fairwork',
-  'employee-benefits': 'fairwork',
-  'dei-initiatives':   'jedi',
-  'supplier-vetting':  'humanrights',
-  'energy-tracking':   'climate',
-  'env-certification': 'environment',
-  'community-giving':  'collective'
-};
-
-function calculate() {
-  // Impact potential = how much a certification could touch. Honest reading: it
-  // scales with size and sector footprint; it is not a prediction of outcomes.
-  const revenueBase = {
-    'under-500k': 12, '500k-2m': 28, '2m-10m': 50,
-    '10m-50m': 72, '50m-plus': 90
-  }[state.revenue] || 28;
-
-  const industryMult = {
-    'food-bev': 1.15, 'manufacturing': 1.20, 'retail': 1.10,
-    'health-edu': 0.95, 'services': 0.85, 'tech': 0.80, 'creative': 0.75
-  }[state.industry] || 0.90;
-
-  const impactScore = Math.min(Math.round(revenueBase * industryMult), 100);
-
-  // Readiness: evidence in hand (practices) counts for up to 64 of 100 points;
-  // self-reported stage adds at most 34. Previously stage alone could produce
-  // "ready" with nothing documented, which is the opposite of how B Lab reviews.
-  const journeyBase = {
-    'exploring': 6, 'researching': 16, 'in-progress': 34, 'certified': 90
-  }[state.journey] || 6;
-
-  const practiceBonus = Math.min(state.practices.length * 8, 64);
-  const readinessScore = Math.min(Math.round(journeyBase + practiceBonus), 100);
-
-  const topicKeys = Array.from(new Set(state.practices.map(p => PRACTICE_TOPIC[p]).filter(Boolean)));
-  const topics = topicKeys.map(k => TOPICS[k]);
-
-  // Timeline brackets mirror the ranges in /blog/how-long-does-b-corp-certification-take:
-  // organised businesses 4–6 months, average 6–9, starting from zero 9–15 (split here
-  // into 9–12 and 12–15), with B Lab's review window included. Larger multi-site
-  // businesses get the next bracket.
-  const brackets = ['4–6 mo', '6–9 mo', '9–12 mo', '12–15 mo'];
-  let bi;
-  if (readinessScore >= 70) bi = 0;
-  else if (readinessScore >= 45) bi = 1;
-  else if (readinessScore >= 25) bi = 2;
-  else bi = 3;
-  if ((state.revenue === '10m-50m' || state.revenue === '50m-plus') && bi < 3) bi += 1;
-  let timeline = state.journey === 'certified' ? 'Recert. review' : brackets[bi];
-
-  let verdict, tier;
-  if (state.journey === 'certified') {
-    verdict = 'Recertification is a fresh review under the 2026 standards. Worth knowing where you stand before the deadline.';
-    tier = 'Audit → Recert plan';
-  } else if (readinessScore >= 70) {
-    verdict = 'Well positioned. An audit would confirm it and set the submission plan.';
-    tier = 'Audit → Submit';
-  } else if (readinessScore >= 45) {
-    verdict = 'Partway there. The remaining gaps are specific and closable.';
-    tier = 'Audit → Gap work';
-  } else if (readinessScore >= 25) {
-    verdict = 'Early, but with real foundations to build on.';
-    tier = 'Audit → Gap work';
-  } else {
-    verdict = 'Starting from the beginning — which is where most businesses start.';
-    tier = 'Audit → Full path';
-  }
-
-  return { impactScore, readinessScore, topics, timeline, verdict, tier };
-}
-
-/* ─── Gap analysis ─────────────────────────────── */
-const GAP_COPY = {
-  'hr-policies':       'Written HR policies — Fair Work is a mandatory 2026 topic, and it starts with documented pay, conduct and hiring standards.',
-  'energy-tracking':   'Energy and emissions tracking — Climate Action now requires Scope 1 and 2 measurement; basic monitoring is the first step.',
-  'supplier-vetting':  'Supply chain visibility — Human Rights due diligence needs you to know where your top suppliers source from.',
-  'mission-statement': 'Formal mission or values — Purpose & Stakeholder Governance expects a documented stakeholder commitment.',
-  'employee-benefits': 'Enhanced benefits — profit sharing, extended leave or wellness programs strengthen your Fair Work evidence.',
-  'community-giving':  'Community programs — local sourcing and giving support the Collective Action topic and your community story.',
-  'env-certification': 'Environmental certification — existing credentials (ISO 14001 and similar) shortcut Environmental Stewardship documentation.',
-  'dei-initiatives':   'DEI programs — Justice, Equity, Diversity & Inclusion is a mandatory topic; a written plan is the minimum.'
-};
-
-const INDUSTRY_PRIORITY = {
-  'manufacturing': ['supplier-vetting','energy-tracking','env-certification','hr-policies','employee-benefits','dei-initiatives','mission-statement','community-giving'],
-  'food-bev':      ['supplier-vetting','energy-tracking','community-giving','env-certification','hr-policies','dei-initiatives','mission-statement','employee-benefits'],
-  'retail':        ['supplier-vetting','energy-tracking','community-giving','hr-policies','dei-initiatives','mission-statement','env-certification','employee-benefits'],
-  'health-edu':    ['hr-policies','dei-initiatives','mission-statement','employee-benefits','community-giving','energy-tracking','supplier-vetting','env-certification'],
-  'services':      ['mission-statement','hr-policies','dei-initiatives','employee-benefits','community-giving','energy-tracking','supplier-vetting','env-certification'],
-  'tech':          ['mission-statement','hr-policies','dei-initiatives','energy-tracking','employee-benefits','community-giving','supplier-vetting','env-certification'],
-  'creative':      ['mission-statement','dei-initiatives','hr-policies','community-giving','employee-benefits','energy-tracking','supplier-vetting','env-certification'],
-  'other':         ['mission-statement','hr-policies','energy-tracking','dei-initiatives','employee-benefits','supplier-vetting','community-giving','env-certification']
-};
-
-function getTopGaps() {
-  const missing = Object.keys(GAP_COPY).filter(id => !state.practices.includes(id));
-  if (!missing.length) return [];
-  const priority = INDUSTRY_PRIORITY[state.industry] || Object.keys(GAP_COPY);
-  const sorted = priority.filter(id => missing.includes(id));
-  const rest   = missing.filter(id => !sorted.includes(id));
-  return [...sorted, ...rest].slice(0, 2);
-}
-
-/* ─── Topo canvas (shared) ───────────────────── */
-function drawTopoMap(canvas, score) {
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  const cx = W / 2, cy = H / 2;
-  ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = '#0D1610';
-  ctx.fillRect(0, 0, W, H);
-
-  const levels = 14;
-  const maxR = Math.min(W, H) * 0.46;
-
-  for (let i = levels; i >= 1; i--) {
-    const t = i / levels;
-    const r = maxR * t;
-    const activated = (1 - t) <= (score / 100);
-    const alpha = activated ? 0.08 + (1 - t) * 0.22 : 0.03 + (1 - t) * 0.04;
-    const green = activated ? '#3D8A57' : '#2D6B42';
-
-    ctx.beginPath();
-    const pts = 120;
-    for (let j = 0; j <= pts; j++) {
-      const angle = (j / pts) * Math.PI * 2;
-      const wobble = 1 +
-        Math.sin(angle * 3 + i * 0.7) * 0.04 * (1 - t) +
-        Math.sin(angle * 5 + i * 1.2) * 0.025 * (1 - t) +
-        Math.cos(angle * 7 + i * 0.4) * 0.015;
-      const rx = cx + Math.cos(angle) * r * wobble;
-      const ry = cy + Math.sin(angle) * r * wobble * 0.85;
-      j === 0 ? ctx.moveTo(rx, ry) : ctx.lineTo(rx, ry);
-    }
-    ctx.closePath();
-    if (activated) {
-      ctx.fillStyle = `rgba(45,107,66,${alpha * 0.4})`;
-      ctx.fill();
-    }
-    ctx.strokeStyle = green;
-    ctx.globalAlpha = alpha;
-    ctx.lineWidth = activated ? 1.2 : 0.8;
-    ctx.stroke();
-    ctx.globalAlpha = 1;
-  }
-
-}
-
-/* ─── Animated counter ───────────────────────── */
-function animateCount(el, target, suffix, duration) {
-  if (typeof target !== 'number') { el.textContent = target; return; }
-  const start = performance.now();
-  function tick(now) {
-    const t = Math.min((now - start) / duration, 1);
-    const ease = 1 - Math.pow(1 - t, 3);
-    el.textContent = Math.round(target * ease).toLocaleString() + (suffix || '');
-    if (t < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
-
-/* ─── Results init ───────────────────────────── */
-function initResults() {
-  // reduced motion: everything lands in its final state at once (no count-ups, no staggered reveals)
-  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches, at = ms => RM ? 0 : ms;
-  const impact = state.impact || calculate();
-  state.impact = impact;
-
-  // Reset animated elements for clean re-entry
-  ['gauge-impact','gauge-readiness'].forEach(id => document.getElementById(id).classList.remove('visible'));
-  document.getElementById('verdict-banner').classList.remove('visible');
-  document.querySelectorAll('.metric-cell').forEach(c => c.classList.remove('visible'));
-  document.getElementById('gap-section').classList.remove('visible');
-  document.getElementById('results-cta').classList.remove('visible');
-
-  document.getElementById('verdict-text').textContent = impact.verdict;
-
-  // Build gap list
-  const gapSection = document.getElementById('gap-section');
-  const gapList    = document.getElementById('gap-list');
-  gapList.innerHTML = '';
-
-  const showGaps = impact.readinessScore < 80 && state.journey !== 'certified';
-  if (showGaps) {
-    const gaps = getTopGaps();
-    if (gaps.length) {
-      gaps.forEach(id => {
-        const div = document.createElement('div');
-        div.className = 'gap-item';
-        div.textContent = GAP_COPY[id];
-        gapList.appendChild(div);
-      });
-      gapSection.style.display = '';
-    } else {
-      gapSection.style.display = 'none';
-    }
-  } else {
-    gapSection.style.display = 'none';
-  }
-
-  // t=0: both gauges animate simultaneously
-  const cImpact    = document.getElementById('canvas-impact');
-  const cReadiness = document.getElementById('canvas-readiness');
-  const nImpact    = document.getElementById('num-impact');
-  const nReadiness = document.getElementById('num-readiness');
-  const ANIM_DUR   = RM ? 1 : 2000;
-
-  document.getElementById('gauge-impact').classList.add('visible');
-  document.getElementById('gauge-readiness').classList.add('visible');
-
-  function animateGauge(canvas, numEl, target, onDone) {
-    const t0 = performance.now();
-    function frame(now) {
-      const t = Math.min((now - t0) / ANIM_DUR, 1);
-      const ease = 1 - Math.pow(1 - t, 3);
-      const cur = Math.round(target * ease);
-      drawTopoMap(canvas, cur);
-      numEl.textContent = cur;
-      if (t < 1) {
-        requestAnimationFrame(frame);
-      } else if (onDone) {
-        onDone(canvas, numEl);
-      }
-    }
-    requestAnimationFrame(frame);
-  }
-
-  function onGaugeDone(canvas, numEl) {
-    if (RM) return;
-    particleBurst(canvas);
-    numEl.classList.add('pulse');
-    setTimeout(() => numEl.classList.remove('pulse'), 1200);
-    numEl.classList.add('altitude-shimmer');
-    setTimeout(() => numEl.classList.remove('altitude-shimmer'), 600);
-  }
-
-  animateGauge(cImpact,    nImpact,    impact.impactScore,    onGaugeDone);
-  animateGauge(cReadiness, nReadiness, impact.readinessScore, onGaugeDone);
-
-  // t=200: verdict banner
-  setTimeout(() => document.getElementById('verdict-banner').classList.add('visible'), at(200));
-
-  // t=600: metric cells stagger
-  ['mc-timeline','mc-topics','mc-practices','mc-tier'].forEach((id, i) => {
-    setTimeout(() => document.getElementById(id).classList.add('visible'), at(600 + i * 120));
-  });
-
-  // t=900: counters
-  setTimeout(() => {
-    const tl = document.getElementById('m-timeline');
-    tl.textContent = impact.timeline;
-    tl.classList.toggle('is-text', impact.timeline.length > 8);
-    animateCount(document.getElementById('m-topics'),    impact.topics.length,   ' / 7', at(900) || 1);
-    animateCount(document.getElementById('m-practices'), state.practices.length, ' / 8', at(900) || 1);
-    const tier = document.getElementById('m-tier');
-    tier.textContent = impact.tier;
-    tier.classList.add('is-text');
-  }, at(900));
-
-  // t=1400: gap section
-  setTimeout(() => {
-    if (gapSection.style.display !== 'none') gapSection.classList.add('visible');
-  }, at(1400));
-
-  // t=1600: CTA
-  setTimeout(() => document.getElementById('results-cta').classList.add('visible'), at(1600));
-}
-
-/* ─── Nav scroll ─────────────────────────────── */
 (function () {
-  var nav = document.getElementById('site-nav');
-  function checkScroll() { nav.classList.toggle('nav-up', window.scrollY > 32); }
-  window.addEventListener('scroll', checkScroll, { passive: true });
-  checkScroll();
-})();
+  'use strict';
 
-/* ════════════════════════════════════════════════════════
-   TOPOGRAPHIC BACKGROUND — Marching Squares + Multi-octave noise
-   ════════════════════════════════════════════════════════ */
-(function () {
-  const canvas = document.getElementById('topo-bg-canvas');
-  const ctx = canvas.getContext('2d');
+  /* ─── Data ─────────────────────────────────────── */
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwxxXRo2dYACAE5trwLQ1dmR5OGgs1xaObafau8_Gb9wGTgugmZqme5PdkZ3MbWQa1q/exec';
+  const STATE_KEY = 'candor-assessment-state';
+  const PENDING_KEY = 'candor-assessment-pending';
+  const ORDER = ['intro', 'q1', 'q2', 'q3', 'q4', 'results'];
+  const STEP_LABEL = { q1: 'Question 1 of 4', q2: 'Question 2 of 4', q3: 'Question 3 of 4', q4: 'Question 4 of 4', results: 'Your results' };
+  const NEEDS = { q1: 'revenue', q2: 'industry', q3: 'journey' };
+  const NEED_MSG = { revenue: 'Pick a revenue range to continue.', industry: 'Pick the closest match to continue.', journey: 'Pick where you are to continue.' };
 
-  const SMALL = window.innerWidth < 700;
-  const COLS = SMALL ? 56 : 90, ROWS = SMALL ? 36 : 56, LEVELS = 14;
-  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const FRAME_MS = 1000 / 30;   // 30 fps is plenty for a slow-drifting background
-  let lastDraw = 0;
-  const THRESHOLDS = [];
-  for (let i = 0; i < LEVELS; i++) THRESHOLDS.push(-0.9 + (i / (LEVELS - 1)) * 1.8);
-
-  const H = new Float32Array((COLS + 1) * (ROWS + 1));
-  const mouse = { nx: -1, ny: -1, strength: 0, targetStrength: 0 };
-
-  window.addEventListener('mousemove', function (e) {
-    if (assessmentStarted) return;
-    mouse.nx = e.clientX / window.innerWidth;
-    mouse.ny = e.clientY / window.innerHeight;
-    mouse.targetStrength = 0.72;
-  }, { passive: true });
-
-  window.addEventListener('mouseleave', function () { mouse.targetStrength = 0; });
-
-  window.addEventListener('touchmove', function (e) {
-    if (assessmentStarted) return;
-    const t = e.touches[0];
-    mouse.nx = t.clientX / window.innerWidth;
-    mouse.ny = t.clientY / window.innerHeight;
-    mouse.targetStrength = 0.72;
-  }, { passive: true });
-
-  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  window.addEventListener('resize', resize, { passive: true });
-  window.addEventListener('orientationchange', function () { setTimeout(resize, 120); }, { passive: true });
-  resize();
-
-  function sampleH(nx, ny, t) {
-    let h =       Math.sin(nx * 3.8 + t * 0.09)  * Math.cos(ny * 2.6 - t * 0.06)
-         + 0.50 * Math.sin(nx * 8.4 - t * 0.16 + 1.91) * Math.cos(ny * 5.9 + t * 0.12)
-         + 0.25 * Math.sin(nx * 16.1 + t * 0.26) * Math.cos(ny * 12.3 - t * 0.22 + 3.14);
-    h /= 1.75;
-    if (mouse.strength > 0.001) {
-      const dx = nx - mouse.nx, dy = ny - mouse.ny;
-      h += mouse.strength * Math.exp(-(dx * dx + dy * dy) / 0.016);
-    }
-    return h;
-  }
-
-  const SEG_TABLE = [
-    [], [[2,3]], [[1,2]], [[1,3]], [[0,1]], [[0,1],[2,3]], [[0,2]], [[0,3]],
-    [[0,3]], [[0,2]], [[0,3],[1,2]], [[0,1]], [[1,3]], [[1,2]], [[2,3]], []
+  // B Lab's 2026 standards: a minimum in each of seven impact topics. Each practice we
+  // ask about is mapped to the nearest topic so the results can say what's covered.
+  const TOPICS = [
+    ['governance',  'Purpose & Stakeholder Governance'],
+    ['fairwork',    'Fair Work'],
+    ['jedi',        'Justice, Equity, Diversity & Inclusion'],
+    ['humanrights', 'Human Rights'],
+    ['climate',     'Climate Action'],
+    ['environment', 'Environmental Stewardship & Circularity'],
+    ['collective',  'Government Affairs & Collective Action']
   ];
+  const PRACTICES = {
+    'mission-statement': { topic: 'governance',  name: 'Mission or values statement' },
+    'hr-policies':       { topic: 'fairwork',    name: 'HR policies' },
+    'employee-benefits': { topic: 'fairwork',    name: 'Benefits beyond the minimum' },
+    'dei-initiatives':   { topic: 'jedi',        name: 'Equity and inclusion plan' },
+    'supplier-vetting':  { topic: 'humanrights', name: 'Supplier checks' },
+    'energy-tracking':   { topic: 'climate',     name: 'Energy or emissions tracking' },
+    'env-certification': { topic: 'environment', name: 'Environmental credential' },
+    'community-giving':  { topic: 'collective',  name: 'Community giving or local sourcing' }
+  };
+  const GAPS = {
+    'mission-statement': ['A written mission or values statement', 'Purpose & Stakeholder Governance expects a documented commitment to the people your business affects. It is also the quickest gap to close.'],
+    'hr-policies':       ['Written HR policies', 'Fair Work is one of the seven required topics, and it starts with documented hiring, pay and conduct standards.'],
+    'employee-benefits': ['Benefits beyond the minimum', 'Extended leave, profit sharing or wellness support add evidence under Fair Work.'],
+    'dei-initiatives':   ['An equity and inclusion plan', 'Justice, Equity, Diversity & Inclusion is a required topic, and a written plan with goals is the starting point.'],
+    'supplier-vetting':  ['Supplier checks', 'Human Rights asks you to know where your main suppliers source from and what risks sit in that chain.'],
+    'energy-tracking':   ['Energy and emissions tracking', 'Climate Action asks you to measure your emissions. Tracking your energy use is the first step.'],
+    'env-certification': ['An environmental credential', 'An existing credential, such as ISO 14001, shortens the documentation for Environmental Stewardship.'],
+    'community-giving':  ['Community programs', 'Giving and local sourcing support Government Affairs & Collective Action, and give you a story to tell.']
+  };
+  // Which missing practice to suggest first, by kind of business.
+  const PRIORITY = {
+    'outdoor':     ['supplier-vetting', 'energy-tracking', 'env-certification', 'hr-policies', 'dei-initiatives', 'mission-statement', 'employee-benefits', 'community-giving'],
+    'food-bev':    ['supplier-vetting', 'energy-tracking', 'community-giving', 'env-certification', 'hr-policies', 'dei-initiatives', 'mission-statement', 'employee-benefits'],
+    'beauty':      ['supplier-vetting', 'env-certification', 'energy-tracking', 'hr-policies', 'mission-statement', 'dei-initiatives', 'community-giving', 'employee-benefits'],
+    'hospitality': ['hr-policies', 'employee-benefits', 'supplier-vetting', 'energy-tracking', 'community-giving', 'dei-initiatives', 'mission-statement', 'env-certification'],
+    'studio':      ['mission-statement', 'hr-policies', 'dei-initiatives', 'employee-benefits', 'energy-tracking', 'community-giving', 'supplier-vetting', 'env-certification'],
+    'cannabis':    ['hr-policies', 'supplier-vetting', 'energy-tracking', 'community-giving', 'mission-statement', 'dei-initiatives', 'employee-benefits', 'env-certification'],
+    'other':       ['mission-statement', 'hr-policies', 'energy-tracking', 'dei-initiatives', 'employee-benefits', 'supplier-vetting', 'community-giving', 'env-certification']
+  };
 
-  function edgePt(edge, x0, y0, cw, ch, vTL, vTR, vBR, vBL, thresh) {
-    let t;
-    switch (edge) {
-      case 0: t = (thresh - vTL) / (vTR - vTL); return [x0 + t * cw, y0];
-      case 1: t = (thresh - vTR) / (vBR - vTR); return [x0 + cw, y0 + t * ch];
-      case 2: t = (thresh - vBR) / (vBL - vBR); return [x0 + (1 - t) * cw, y0 + ch];
-      case 3: t = (thresh - vBL) / (vTL - vBL); return [x0, y0 + (1 - t) * ch];
+  const form = document.getElementById('quiz');
+  const $ = id => document.getElementById(id);
+  let current = 'intro';
+  let sentKey = null;
+
+  /* ─── State (survives a reload in this tab) ───────── */
+  function answers() {
+    const v = name => { const el = form.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : null; };
+    return {
+      revenue: v('revenue'), industry: v('industry'), journey: v('journey'),
+      practices: Array.from(form.querySelectorAll('input[name="practices"]:checked')).map(el => el.value)
+    };
+  }
+  function save() {
+    try { sessionStorage.setItem(STATE_KEY, JSON.stringify(Object.assign(answers(), { screen: current, sent: sentKey }))); } catch (e) {}
+  }
+  function load() {
+    let s = null;
+    try { s = JSON.parse(sessionStorage.getItem(STATE_KEY) || 'null'); } catch (e) {}
+    if (!s) return null;
+    ['revenue', 'industry', 'journey'].forEach(n => {
+      const el = s[n] && form.querySelector('input[name="' + n + '"][value="' + s[n] + '"]');
+      if (el) el.checked = true;
+    });
+    (s.practices || []).forEach(p => { const el = form.querySelector('input[name="practices"][value="' + p + '"]'); if (el) el.checked = true; });
+    sentKey = s.sent || null;
+    return s;
+  }
+  // The furthest screen these answers allow.
+  function allowed(id) {
+    const a = answers();
+    const idx = ORDER.indexOf(id);
+    if (idx < 0) return 'intro';
+    for (let i = 1; i < idx; i++) { const need = NEEDS[ORDER[i]]; if (need && !a[need]) return ORDER[i]; }
+    return id;
+  }
+
+  /* ─── Screens ─────────────────────────────────── */
+  function show(id, opts) {
+    opts = opts || {};
+    id = allowed(id);
+    form.querySelectorAll('.screen').forEach(s => s.classList.toggle('is-on', s.id === 's-' + id));
+    current = id;
+    if (id === 'results') renderResults();
+    if (opts.push) { try { history.pushState({ screen: id }, '', location.pathname + location.search); } catch (e) {} }
+    else if (opts.replace) { try { history.replaceState({ screen: id }, '', location.pathname + location.search); } catch (e) {} }
+    save();
+    const live = $('step-live');
+    if (live) live.textContent = STEP_LABEL[id] || '';
+    if (!opts.initial) {
+      window.scrollTo(0, 0);
+      const target = document.querySelector('#s-' + id + ' .q-title, #s-' + id + ' .res-title');
+      if (target) target.focus({ preventScroll: true });
     }
   }
 
-  function levelColor(li, n) {
-    const t = li / (n - 1);
-    const a = 0.035 + t * 0.22;
-    return `rgba(${Math.round(45 + t * 45)},${Math.round(107 + t * 59)},${Math.round(66 + t * 48)},${a})`;
-  }
-  function mouseColor(li, n) {
-    const t = li / (n - 1);
-    return `rgba(90,166,114,${(0.08 + t * 0.32) * mouse.strength})`;
-  }
-
-  let time = 0, lastFrame = 0;
-
-  function render(ts) {
-    if (document.hidden) { lastFrame = ts; requestAnimationFrame(render); return; }
-    if (ts - lastDraw < FRAME_MS) { requestAnimationFrame(render); return; }
-    lastDraw = ts;
-    const dt = Math.min((ts - lastFrame) / 1000, 0.05);
-    lastFrame = ts;
-    if (!REDUCED) time += dt;
-
-    if (assessmentStarted) mouse.targetStrength = 0;
-    mouse.strength += (mouse.targetStrength - mouse.strength) * 0.06;
-
-    const W = canvas.width, Ht = canvas.height;
-    const cw = W / COLS, ch = Ht / ROWS;
-    ctx.clearRect(0, 0, W, Ht);
-
-    for (let row = 0; row <= ROWS; row++) {
-      const ny = row / ROWS;
-      for (let col = 0; col <= COLS; col++)
-        H[row * (COLS + 1) + col] = sampleH(col / COLS, ny, time);
-    }
-
-    for (let li = 0; li < LEVELS; li++) {
-      const thresh = THRESHOLDS[li];
-      const baseColor = levelColor(li, LEVELS);
-      const mColor    = mouseColor(li, LEVELS);
-      ctx.lineWidth = li > LEVELS * 0.75 ? 1.1 : 0.7;
-
-      for (let row = 0; row < ROWS; row++) {
-        for (let col = 0; col < COLS; col++) {
-          const vTL = H[ row      * (COLS+1) + col    ];
-          const vTR = H[ row      * (COLS+1) + col + 1];
-          const vBR = H[(row + 1) * (COLS+1) + col + 1];
-          const vBL = H[(row + 1) * (COLS+1) + col    ];
-          const idx = (vTL > thresh ? 8 : 0) | (vTR > thresh ? 4 : 0) |
-                      (vBR > thresh ? 2 : 0) | (vBL > thresh ? 1 : 0);
-          const segs = SEG_TABLE[idx];
-          if (!segs.length) continue;
-
-          const x0 = col * cw, y0 = row * ch;
-          const cdx = col / COLS - mouse.nx, cdy = row / ROWS - mouse.ny;
-          const nearMouse = mouse.strength > 0.01 && (cdx * cdx + cdy * cdy) < 0.06;
-          ctx.strokeStyle = nearMouse ? mColor : baseColor;
-
-          for (let s = 0; s < segs.length; s++) {
-            const [e0, e1] = segs[s];
-            const p0 = edgePt(e0, x0, y0, cw, ch, vTL, vTR, vBR, vBL, thresh);
-            const p1 = edgePt(e1, x0, y0, cw, ch, vTL, vTR, vBR, vBL, thresh);
-            if (!p0 || !p1) continue;
-            ctx.beginPath();
-            ctx.moveTo(p0[0], p0[1]);
-            ctx.lineTo(p1[0], p1[1]);
-            ctx.stroke();
-          }
-        }
+  form.addEventListener('click', function (e) {
+    const go = e.target.closest('[data-go]');
+    if (go) { show(go.dataset.go, { push: true }); return; }
+    const next = e.target.closest('[data-next]');
+    if (next) {
+      const need = NEEDS[current];
+      const err = document.querySelector('#s-' + current + ' .q-err');
+      if (need && !answers()[need]) {
+        if (err) err.textContent = NEED_MSG[need];
+        const first = document.querySelector('#s-' + current + ' input');
+        if (first) first.focus();
+        return;
       }
+      if (err) err.textContent = '';
+      show(next.dataset.next, { push: true });
+      return;
     }
-
-    if (mouse.strength > 0.01) {
-      const gx = mouse.nx * W, gy = mouse.ny * Ht;
-      const gr = ctx.createRadialGradient(gx, gy, 0, gx, gy, Math.min(W, Ht) * 0.22);
-      gr.addColorStop(0,   `rgba(61,138,87,${0.07 * mouse.strength})`);
-      gr.addColorStop(0.4, `rgba(45,107,66,${0.03 * mouse.strength})`);
-      gr.addColorStop(1,   'rgba(13,22,16,0)');
-      ctx.fillStyle = gr;
-      ctx.fillRect(0, 0, W, Ht);
+    if (e.target.closest('[data-back]')) {
+      if (history.state && history.state.screen && ORDER.indexOf(history.state.screen) > 0) history.back();
+      else show(ORDER[Math.max(0, ORDER.indexOf(current) - 1)], { replace: true });
     }
-
-    if (!REDUCED) requestAnimationFrame(render);   // reduced motion: one static frame
-  }
-
-  requestAnimationFrame(render);
-  document.addEventListener('visibilitychange', function () { if (!document.hidden && !REDUCED) { lastFrame = performance.now(); } });
-}());
-
-/* ─── Mobile nav ─────────────────────────────── */
-function closeMobileNav() {
-  var btn = document.getElementById('nav-hamburger');
-  var menu = document.getElementById('nav-mobile-menu');
-  if (!btn || !menu) return;
-  menu.classList.remove('open');
-  btn.classList.remove('open');
-  btn.setAttribute('aria-expanded', 'false');
-  menu.setAttribute('aria-hidden', 'true');
-}
-
-(function () {
-  var btn = document.getElementById('nav-hamburger');
-  var menu = document.getElementById('nav-mobile-menu');
-  if (!btn || !menu) return;
-
-  btn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    var open = menu.classList.toggle('open');
-    btn.classList.toggle('open', open);
-    btn.setAttribute('aria-expanded', String(open));
-    menu.setAttribute('aria-hidden', String(!open));
   });
 
-  document.addEventListener('click', function (e) {
-    if (!document.getElementById('site-nav').contains(e.target) && !menu.contains(e.target))
-      closeMobileNav();
+  form.addEventListener('change', function (e) {
+    const err = document.querySelector('#s-' + current + ' .q-err');
+    if (err) err.textContent = '';
+    save();
   });
-}());
-
-/* Enter in the email field is handled once, in the DOMContentLoaded block above (a second listener here sent every submission twice) */
-
-/* ════════════════════════════════════════════════════════
-   ANIMATION FUNCTIONS
-   ════════════════════════════════════════════════════════ */
-
-/* ─── 1. Terrain Progress Bar ────────────────── */
-let progressPct = 0;
-let progressTargetPct = 0;
-let progressAnimFrom = 0;
-let progressAnimStart = null;
-let progressPhase = 0;
-let progressRafId = null;
-let progressVisible = false;
-
-function startProgressRaf() {
-  if (progressRafId) return;
-  function loop() {
-    if (!progressVisible) { progressRafId = null; return; }
-    progressPhase += 0.012;
-    if (progressAnimStart !== null) {
-      const elapsed = performance.now() - progressAnimStart;
-      const t = Math.min(elapsed / 600, 1);
-      const ease = 1 - Math.pow(1 - t, 3);
-      progressPct = progressAnimFrom + (progressTargetPct - progressAnimFrom) * ease;
-      if (t >= 1) { progressAnimStart = null; progressPct = progressTargetPct; }
-    }
-    drawProgressTerrain(progressPct);
-    progressRafId = requestAnimationFrame(loop);
-  }
-  progressRafId = requestAnimationFrame(loop);
-}
-
-function setProgressPct(newPct) {
-  progressAnimFrom = progressPct;
-  progressTargetPct = newPct;
-  progressAnimStart = performance.now();
-}
-
-function drawProgressTerrain(pct) {
-  const canvas = document.getElementById('progress-canvas');
-  if (!canvas) return;
-  const dpr = window.devicePixelRatio || 1;
-  const logW = window.innerWidth;
-  const logH = 2;
-  const physW = Math.round(logW * dpr);
-  const physH = Math.round(logH * dpr);
-  if (canvas.width !== physW || canvas.height !== physH) {
-    canvas.width = physW; canvas.height = physH;
-    canvas.style.width = logW + 'px'; canvas.style.height = logH + 'px';
-  }
-  const ctx = canvas.getContext('2d');
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, logW, logH);
-  const fillW = logW * pct / 100;
-
-  function terrainY(x) {
-    return 1.0 + Math.sin(x * 0.04 + progressPhase) * 0.5 + Math.sin(x * 0.09 + progressPhase * 1.3) * 0.3;
-  }
-
-  if (fillW > 0) {
-    ctx.beginPath();
-    ctx.moveTo(0, logH);
-    for (let x = 0; x <= fillW; x += 1) {
-      const y = Math.min(Math.max(terrainY(x), 0.1), logH - 0.1);
-      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    }
-    ctx.lineTo(fillW, logH); ctx.lineTo(0, logH); ctx.closePath();
-    ctx.fillStyle = '#3D8A57'; ctx.fill();
-  }
-
-  if (fillW < logW) {
-    ctx.beginPath();
-    const startX = Math.floor(fillW);
-    for (let x = startX; x <= logW; x += 1) {
-      const y = Math.min(Math.max(terrainY(x), 0.1), logH - 0.1);
-      x === startX ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    }
-    ctx.lineTo(logW, logH); ctx.lineTo(startX, logH); ctx.closePath();
-    ctx.fillStyle = 'rgba(255,255,255,.04)'; ctx.fill();
-  }
-
-  if (fillW > 0 && fillW < logW) {
-    const pulseAlpha = (Math.sin(Date.now() * 0.006) * 0.3 + 0.7) * 0.6;
-    ctx.strokeStyle = `rgba(90,166,114,${pulseAlpha.toFixed(2)})`;
-    ctx.lineWidth = 2; ctx.beginPath();
-    ctx.moveTo(fillW, 0); ctx.lineTo(fillW, logH); ctx.stroke();
-  }
-}
-
-window.addEventListener('resize', function () {
-  const canvas = document.getElementById('progress-canvas');
-  if (canvas) { canvas.width = 0; canvas.height = 0; }
-}, { passive: true });
-
-/* ─── 2. Staggered Word Reveal ───────────────── */
-function revealWords(el, delayStart) {
-  const text = el.textContent.trim();
-  if (!text) return;
-  const words = text.split(/\s+/);
-  el.textContent = '';
-  const inners = [];
-  words.forEach(function (word) {
-    const wrap = document.createElement('span');
-    wrap.className = 'word-reveal-wrap';
-    const inner = document.createElement('span');
-    inner.className = 'word-reveal-inner';
-    inner.textContent = word;
-    wrap.appendChild(inner);
-    el.appendChild(wrap);
-    inners.push(inner);
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+  // Enter on an option moves on, like a normal form.
+  form.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' || !e.target.matches('.opt input')) return;
+    e.preventDefault();
+    const next = document.querySelector('#s-' + current + ' [data-next]');
+    if (next) next.click();
   });
-  inners.forEach(function (inner, i) {
-    setTimeout(function () { inner.classList.add('landed'); }, delayStart + i * 38);
+
+  window.addEventListener('popstate', function (e) {
+    const target = (e.state && e.state.screen) || 'intro';
+    show(target);
   });
-  const totalMs = delayStart + (words.length - 1) * 38 + 480;
-  setTimeout(function () { el.textContent = text; }, totalMs);
-}
 
-/* ─── 3. Topo Ring Burst (card-contained) ────── */
-function topoRingBurst(originEl, clickX, clickY) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var dpr = window.devicePixelRatio || 1;
-  var W = originEl.offsetWidth, H = originEl.offsetHeight;
-  var cx = (clickX !== undefined) ? clickX : W / 2;
-  var cy = (clickY !== undefined) ? clickY : H / 2;
-  var ringCount = 3 + Math.floor(Math.random() * 4);
-  var rotOffset = Math.random() * Math.PI * 2;
-  var canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:10;border-radius:inherit;';
-  canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-  originEl.appendChild(canvas);
-  var ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  var colors = ['#5aA672','#3D8A57','#5aA672','#2D6B42','#3D8A57','#5aA672'];
-  var maxR = Math.max(W, H) * 1.1;
-  var dur = 520;
-  var t0 = performance.now();
-  var rafId;
-  function draw(now) {
-    var t = Math.min((now - t0) / dur, 1);
-    ctx.clearRect(0, 0, W, H);
-    var flashA = Math.max(0, 0.19 * (1 - t * 2.5));
-    if (flashA > 0) {
-      var gr = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.5);
-      gr.addColorStop(0, 'rgba(90,166,114,' + flashA.toFixed(3) + ')');
-      gr.addColorStop(1, 'rgba(90,166,114,0)');
-      ctx.fillStyle = gr; ctx.fillRect(0, 0, W, H);
+  /* ─── Scoring ─────────────────────────────────── */
+  function calculate(a) {
+    // Readiness: evidence in hand counts for up to 64 points; the self-reported
+    // stage adds at most 34, so saying "started" with nothing written can't read as ready.
+    const journeyBase = { 'exploring': 6, 'researching': 16, 'in-progress': 34, 'certified': 90 }[a.journey] || 6;
+    const readiness = Math.min(Math.round(journeyBase + Math.min(a.practices.length * 8, 64)), 100);
+
+    const covered = new Set(a.practices.map(p => PRACTICES[p] && PRACTICES[p].topic).filter(Boolean));
+
+    // Timeline brackets mirror /blog/how-long-does-b-corp-certification-take:
+    // well documented 4–6 months, average 6–9, from zero 9–15 (split 9–12 / 12–15),
+    // B Lab's review included. Larger businesses move up one bracket.
+    const brackets = ['4 to 6 months', '6 to 9 months', '9 to 12 months', '12 to 15 months'];
+    let bi = readiness >= 70 ? 0 : readiness >= 45 ? 1 : readiness >= 25 ? 2 : 3;
+    if ((a.revenue === '10m-50m' || a.revenue === '50m-plus') && bi < 3) bi += 1;
+
+    let level, verdict, step, stepNote, timeline, timeNote;
+    timeline = brackets[bi];
+    timeNote = 'Total, including B Lab’s review';
+    if (a.journey === 'certified') {
+      level = 'Recertifying'; timeline = 'Before your renewal'; timeNote = 'Recertification is a fresh review';
+      verdict = 'Recertification is a fresh review under the 2026 standards, so it’s worth checking where you stand well before your renewal date.';
+      step = 'Readiness Audit'; stepNote = 'Then a plan for the new standards';
+    } else if (readiness >= 70) {
+      level = 'Well positioned';
+      verdict = 'You’re in good shape. An audit would confirm it and plan the submission.';
+      step = 'Readiness Audit'; stepNote = 'Then straight to submission';
+    } else if (readiness >= 45) {
+      level = 'Partway there';
+      verdict = 'You’re partway there. The gaps left are specific, and they can be closed.';
+      step = 'Readiness Audit'; stepNote = 'Then Gap-Closing Support';
+    } else if (readiness >= 25) {
+      level = 'Early, with foundations';
+      verdict = 'It’s early, but you already have real foundations to build on.';
+      step = 'Readiness Audit'; stepNote = 'Then Gap-Closing Support';
+    } else {
+      level = 'Starting out';
+      verdict = 'You’re starting from the beginning. That’s a fine place to start, and it’s where an audit saves the most time.';
+      step = 'Readiness Audit'; stepNote = 'Then the Full Path to Certification';
     }
-    for (var ri = 0; ri < ringCount; ri++) {
-      var delay = ri * 0.1;
-      var rt = Math.max(0, Math.min((t - delay) / (1 - delay * 0.6), 1));
-      if (rt <= 0) continue;
-      var r = maxR * (0.15 + ri * 0.18) * rt;
-      var alpha = 0.40 * (1 - rt) * (ri === 0 ? 1.4 : 1);
-      ctx.beginPath();
-      for (var j = 0; j <= 64; j++) {
-        var angle = (j / 64) * Math.PI * 2 + rotOffset;
-        var wobble = 1 + Math.sin(angle * 3 + ri * 0.9 + t * 6) * 0.07
-                       + Math.sin(angle * 7 + ri * 1.4 + t * 4) * 0.03;
-        var rx = cx + Math.cos(angle) * r * wobble;
-        var ry = cy + Math.sin(angle) * r * wobble;
-        j === 0 ? ctx.moveTo(rx, ry) : ctx.lineTo(rx, ry);
-      }
-      ctx.closePath();
-      ctx.strokeStyle = colors[ri % colors.length];
-      ctx.globalAlpha = Math.max(alpha, 0);
-      ctx.lineWidth = 1.8 - ri * 0.25;
-      ctx.stroke();
-      ctx.globalAlpha = 1;
-    }
-    if (t < 1) { rafId = requestAnimationFrame(draw); } else { canvas.remove(); }
+    return { readiness, covered, level, verdict, timeline, timeNote, step, stepNote };
   }
-  rafId = requestAnimationFrame(draw);
-  setTimeout(function() { canvas.remove(); if (rafId) cancelAnimationFrame(rafId); }, 580);
-}
 
-/* ─── 7. Particle Tick Burst ─────────────────── */
-function particleBurst(gaugeCanvas) {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const rect = gaugeCanvas.getBoundingClientRect();
-  const cx = rect.left + rect.width / 2;
-  const cy = rect.top + rect.height / 2;
-  const dpr = window.devicePixelRatio || 1;
-  const W = window.innerWidth, H = window.innerHeight;
-  const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:100;';
-  canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-  document.body.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  const colors = ['#3D8A57', '#5aA672', '#2D6B42', '#C8C3B5'];
-  const particles = [];
-  for (let i = 0; i < 45; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const speed = 1.8 + Math.random() * 3.4;
-    particles.push({
-      x: cx, y: cy,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
-      length: 3 + Math.random() * 5,
-      rotation: angle,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      life: 0, maxLife: 35 + Math.floor(Math.random() * 30)
+  function topGaps(a) {
+    const missing = Object.keys(GAPS).filter(id => a.practices.indexOf(id) === -1);
+    const order = PRIORITY[a.industry] || PRIORITY.other;
+    return order.filter(id => missing.indexOf(id) !== -1).slice(0, 2);
+  }
+
+  /* ─── Results ─────────────────────────────────── */
+  function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+  function drawRing(n) {
+    const svg = $('ring-svg'); const segs = 7, r = 42, C = 2 * Math.PI * r, gap = 7, len = C / segs - gap;
+    let html = '';
+    for (let i = 0; i < segs; i++) {
+      html += '<circle class="seg' + (i < n ? ' on' : '') + '" cx="50" cy="50" r="' + r + '" stroke-dasharray="' + len.toFixed(2) + ' ' + (C - len).toFixed(2) + '" stroke-dashoffset="' + (-(i * C / segs) - gap / 2).toFixed(2) + '"/>';
+    }
+    svg.innerHTML = html;
+  }
+
+  function renderResults() {
+    const a = answers();
+    const r = calculate(a);
+    const n = r.covered.size;
+
+    $('res-title').innerHTML = 'You cover <em>' + n + ' of 7</em> required topics.';
+    $('res-verdict').textContent = r.verdict;
+    $('ring-n').innerHTML = '<span>' + n + '<small>/7</small></span>';
+    drawRing(n);
+    $('f-level').innerHTML = esc(r.level);
+    $('f-time').innerHTML = esc(r.timeline) + '<span>' + esc(r.timeNote) + '</span>';
+    $('f-step').innerHTML = esc(r.step) + '<span>' + esc(r.stepNote) + '</span>';
+
+    const byTopic = {};
+    a.practices.forEach(p => { const t = PRACTICES[p] && PRACTICES[p].topic; if (t) (byTopic[t] = byTopic[t] || []).push(PRACTICES[p].name); });
+    $('topics').innerHTML = TOPICS.map(([k, name]) => {
+      const on = !!byTopic[k];
+      return '<li class="topic' + (on ? ' on' : '') + '"><span class="t-mark" aria-hidden="true"></span><span class="t-name">' + esc(name) +
+        '<span class="sr-only">' + (on ? ': covered' : ': not covered yet') + '</span></span><span class="t-note">' +
+        (on ? 'From: ' + esc(byTopic[k].join(', ')) : 'Nothing in place yet') + '</span></li>';
+    }).join('');
+
+    const gaps = topGaps(a);
+    const wrap = $('gap-wrap');
+    if (!gaps.length) {
+      $('gap-h').textContent = 'No obvious gaps from these questions';
+      $('gap-sub').textContent = 'You have something in place for everything we asked about. The audit checks whether it holds up against B Lab’s actual requirements.';
+      $('gaps').innerHTML = '';
+    } else {
+      $('gap-h').textContent = gaps.length === 1 ? 'The gap I’d close first' : 'The two gaps I’d close first';
+      $('gap-sub').textContent = 'Picked from what you don’t have yet, in the order that usually matters most for your kind of business.';
+      $('gaps').innerHTML = gaps.map((id, i) => '<li class="gap"><span class="gap-n">Gap ' + (i + 1) + '</span><h4>' + esc(GAPS[id][0]) + '</h4><p>' + esc(GAPS[id][1]) + '</p></li>').join('');
+    }
+    wrap.hidden = false;
+
+    // One anonymous row per completed set of answers, so reloads don't double-count.
+    const key = [a.revenue, a.industry, a.journey, a.practices.slice().sort().join('+')].join('|');
+    if (sentKey !== key) { sentKey = key; send(params(a, r, '', false)); }
+  }
+
+  /* ─── Saving to the sheet ─────────────────────── */
+  // Columns stay in the order the Apps Script sheet expects; impact_score, co2 and
+  // workers are kept blank (legacy) so existing rows don't shift.
+  function params(a, r, email, followup) {
+    return new URLSearchParams({
+      email: email || '',
+      followup: followup ? 'yes' : 'no',
+      consent_text: followup ? 'Asked for a personal reply about these results.' : '',
+      revenue: a.revenue || '', industry: a.industry || '', journey: a.journey || '',
+      practices: a.practices.length ? a.practices.join(',') : 'none',
+      impact_score: '',
+      readiness_score: r.readiness,
+      verdict: r.level,
+      timeline: r.timeline,
+      topics_covered: r.covered.size,
+      suggested_step: r.step + ' / ' + r.stepNote,
+      co2: '', workers: '',
+      page: location.pathname,
+      timestamp: new Date().toISOString()
     });
   }
-  let rafId;
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    let allDead = true;
-    particles.forEach(function (p) {
-      if (p.life >= p.maxLife) return;
-      allDead = false;
-      p.vx *= 0.94; p.vy *= 0.94; p.vy += 0.08;
-      p.x += p.vx; p.y += p.vy; p.life++;
-      const a = 0.9 * (1 - p.life / p.maxLife);
-      ctx.save();
-      ctx.translate(p.x, p.y); ctx.rotate(p.rotation);
-      ctx.globalAlpha = a; ctx.strokeStyle = p.color; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(p.length, 0); ctx.stroke();
-      ctx.restore();
-    });
-    if (!allDead) rafId = requestAnimationFrame(draw);
-    else canvas.remove();
+  function queue(url) {
+    try { const q = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]'); localStorage.setItem(PENDING_KEY, JSON.stringify(q.concat(url).slice(-5))); } catch (e) {}
   }
-  rafId = requestAnimationFrame(draw);
-  setTimeout(function () { canvas.remove(); if (rafId) cancelAnimationFrame(rafId); }, 4000);
-}
+  // Fire-and-forget (no-cors, so delivery can't be confirmed); a failed attempt is queued and retried next visit.
+  function send(p) {
+    if (!SHEETS_URL) return;
+    const url = SHEETS_URL + '?' + p.toString();
+    try { fetch(url, { mode: 'no-cors', keepalive: true, cache: 'no-store' }).catch(() => queue(url)); } catch (e) { queue(url); }
+  }
+  (function retryPending() {
+    let q = [];
+    try { q = JSON.parse(localStorage.getItem(PENDING_KEY) || '[]'); localStorage.removeItem(PENDING_KEY); } catch (e) { return; }
+    q.forEach(u => { try { fetch(u, { mode: 'no-cors', keepalive: true, cache: 'no-store' }).catch(() => {}); } catch (e) {} });
+  })();
 
-/* ─── Topo burst on primary CTAs ─────────────── */
-document.querySelectorAll('.btn-primary, .q-next, #email-submit, .nav-cta').forEach(function(el) {
-  el.addEventListener('click', function(e) {
-    var r = el.getBoundingClientRect();
-    topoRingBurst(el, e.clientX - r.left, e.clientY - r.top);
+  /* ─── Follow-up email ─────────────────────────── */
+  $('f-send').addEventListener('click', sendEmail);
+  $('f-email').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendEmail(); } });
+  $('f-email').addEventListener('input', () => { $('f-email').removeAttribute('aria-invalid'); $('f-err').textContent = ''; });
+  function sendEmail() {
+    const input = $('f-email');
+    const email = input.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      input.setAttribute('aria-invalid', 'true');
+      $('f-err').textContent = email ? 'That email doesn’t look complete. Check it and try again.' : 'Enter your email so I can reply.';
+      input.focus();
+      return;
+    }
+    const a = answers();
+    send(params(a, calculate(a), email, true));
+    $('follow-form').hidden = true;
+    const done = $('f-done');
+    done.hidden = false;
+    done.textContent = 'Thanks. I’ll reply to ' + email + ' personally.';
+  }
+
+  /* ─── Edit / start over ───────────────────────── */
+  $('edit-btn').addEventListener('click', () => show('q1', { push: true }));
+  $('retake-btn').addEventListener('click', () => {
+    form.reset(); sentKey = null;
+    try { sessionStorage.removeItem(STATE_KEY); } catch (e) {}
+    $('follow-form').hidden = false; $('f-done').hidden = true;
+    $('intro-resume').hidden = true;
+    show('intro', { push: true });
   });
-});
-document.addEventListener('DOMContentLoaded',function(){var dot=document.getElementById('cur');if(!dot)return;document.addEventListener('mousemove',function(e){dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'},{passive:true});document.querySelectorAll('a,button,[role="button"]').forEach(function(el){el.addEventListener('mouseenter',function(){document.body.classList.add('hov')});el.addEventListener('mouseleave',function(){document.body.classList.remove('hov')});});});
+  $('resume-btn').addEventListener('click', () => {
+    const a = answers();
+    const first = ['q1', 'q2', 'q3'].find(id => !a[NEEDS[id]]) || 'q4';
+    show(first, { push: true });
+  });
+
+  /* ─── Start: restore where this tab left off ─── */
+  const saved = load();
+  if (saved && saved.screen && saved.screen !== 'intro') {
+    show(saved.screen, { replace: true, initial: true });
+  } else {
+    if (saved && (saved.revenue || saved.industry || saved.journey || (saved.practices || []).length)) $('intro-resume').hidden = false;
+    show('intro', { replace: true, initial: true });
+  }
+
+  /* ─── Nav background on scroll ────────────────── */
+  const nav = $('site-nav');
+  const onScroll = () => nav.classList.toggle('nav-up', window.scrollY > 24);
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
 </script>
-<div id="cur"></div>
 <!-- candor-consent:start -->
 <div id="cc-banner" class="cc-banner" role="dialog" aria-modal="false" aria-labelledby="cc-title" aria-describedby="cc-desc" hidden>
   <p id="cc-title" class="cc-title">Cookies &amp; analytics</p>

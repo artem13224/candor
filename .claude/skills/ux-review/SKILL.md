@@ -215,7 +215,7 @@ These are single-evaluator findings: treat them as likely problems and confirm b
 
 **Checked and passing**
 - **Consent banner:** Accept and Decline are both one-click buttons of the same size; Esc declines; GPC is honoured; the default is denied. Decline is outlined and Accept filled, a mild asymmetry that is acceptable.
-- **Assessment email gate:** instructions are written above the field (3.3.2); it has `autocomplete="email"` (1.3.5) and an `aria-live` step announcer (4.1.3).
+- **Assessment (rebuilt Oct 2026, light theme, no email gate):** native radio/checkbox inputs in fieldsets with the question as the legend (1.3.1, 4.1.2); a text error appears if Continue is pressed without an answer (3.3.1); the optional email field has a visible label, `autocomplete="email"` (1.3.5) and a text error (3.3.3); an `aria-live` step announcer (4.1.3); focus moves to each new question; axe clean on every screen; no reflow at 320px.
 - **Blog body links:** underlined, `--forest` (5.75:1 on paper).
 
 Use `--muted` for small secondary text on light backgrounds. `--sage` and `--stone` are fine for decoration (the highlighter stroke, rules and borders that carry no meaning), but not for text on light backgrounds.
