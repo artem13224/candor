@@ -514,13 +514,13 @@ function allArticlesCard(variant, pad) {
   if (variant === 'more-grid') {
     return `${pad}    <a href="/blog" class="more-card">
 ${pad}      <span class="card-tag">All articles</span>
-${pad}      <h4>Back to the full resources list.</h4>
+${pad}      <h4>Back to all field notes.</h4>
 ${pad}      <span class="arrow">&#8594;</span>
 ${pad}    </a>`;
   }
   return `${pad}    <a href="/blog" class="article-card">
 ${pad}      <span class="card-tag">All articles</span>
-${pad}      <h2 class="card-title">Back to the full resources list.</h2>
+${pad}      <h2 class="card-title">Back to all field notes.</h2>
 ${pad}      <p class="card-excerpt">Everything Candor has published on B Corp, the other certifications worth knowing, and certification strategy.</p>
 ${pad}      <div class="card-meta">
 ${pad}        <span class="card-date"></span>
